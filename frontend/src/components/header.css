@@ -1,0 +1,79 @@
+/* Header container */
+.header {
+  /*   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: orange;
+  color: white;
+  position: relative; */
+}
+
+.nav {
+}
+
+/* Title */
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Desktop menu */
+.desktop-menu {
+  display: none;
+  gap: 1.5rem;
+}
+
+.desktop-menu a {
+  text-decoration: none;
+  color: white;
+  transition: text-decoration 0.3s;
+}
+
+.desktop-menu a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile menu button */
+.mobile-menu-button {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  background-color: #1e40af;
+  padding: 1rem 0;
+  align-items: center;
+}
+
+/* Mobile menu links */
+.mobile-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.mobile-menu a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive: show desktop menu on medium screens */
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+  }
+  .mobile-menu-button {
+    display: none;
+  }
+  .mobile-menu {
+    display: none;
+  }
+}
