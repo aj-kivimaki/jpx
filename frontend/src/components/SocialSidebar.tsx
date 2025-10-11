@@ -37,13 +37,13 @@ function SocialSidebar() {
       >
         <FaSpotify />
       </a>
-      {/* <a
-        href="https://www.yourshop.com"
+      <a
+        href="https://www.temu.com/fi"
         target="_blank"
         rel="noopener noreferrer"
       >
         <FaShopify />
-      </a> */}
+      </a>
     </div>
   );
 }

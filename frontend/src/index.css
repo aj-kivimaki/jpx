@@ -1,5 +1,15 @@
 /* bare-reset.css — minimal CSS reset (React-friendly) */
 
+html {
+  scroll-padding-top: 128px; /* height of header */
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 160px; /* adjust for mobile header if different */
+  }
+}
+
 html,
 body {
   margin: 0;
@@ -48,6 +58,7 @@ textarea {
   padding: 0;
   border: none;
   background: none;
+  color: white;
 }
 
 a {

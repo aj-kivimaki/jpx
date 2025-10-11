@@ -8,38 +8,47 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
+  // Scroll to a section by id and optionally close the mobile menu
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setIsOpen(false); // close mobile menu after scroll
+  };
+
   return (
     <header className="header">
       <div>
-        <a href="#top">
-          <h1 className="title">J. Partynen</h1>
-        </a>
+        <h1
+          className="title"
+          style={{ cursor: 'pointer' }}
+          onClick={() => scrollToSection('top')}
+        >
+          J. Partynen
+        </h1>
       </div>
-      <div>
-        <nav className="desktop-menu">
-          <a href="#gigs">Keikat</a>
-          <a href="#news">Uutiset</a>
-          <a href="#promo">Promo</a>
-          <a href="#contact">Yhteys</a>
-        </nav>
-      </div>
+
+      {/* Desktop Menu */}
+      <nav className="desktop-menu">
+        <button onClick={() => scrollToSection('gigs')}>Keikat</button>
+        <button onClick={() => scrollToSection('news')}>Uutiset</button>
+        <button onClick={() => scrollToSection('promo')}>Promo</button>
+        <button onClick={() => scrollToSection('contact')}>Yhteys</button>
+      </nav>
+
+      {/* Mobile Menu Button */}
       <div className="mobile-menu-button" onClick={toggleMenu}>
         {isOpen ? '✖' : '☰'}
       </div>
+
+      {/* Mobile Menu */}
       {isOpen && (
         <nav className="mobile-menu">
-          <a href="#gigs" onClick={toggleMenu}>
-            Keikat
-          </a>
-          <a href="#news" onClick={toggleMenu}>
-            Uutiset
-          </a>
-          <a href="#promo" onClick={toggleMenu}>
-            Promo
-          </a>
-          <a href="#contact" onClick={toggleMenu}>
-            Yhteys
-          </a>
+          <button onClick={() => scrollToSection('gigs')}>Keikat</button>
+          <button onClick={() => scrollToSection('news')}>Uutiset</button>
+          <button onClick={() => scrollToSection('promo')}>Promo</button>
+          <button onClick={() => scrollToSection('contact')}>Yhteys</button>
         </nav>
       )}
     </header>
