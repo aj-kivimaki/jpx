@@ -5,7 +5,6 @@ import News from './components/News';
 import Contact from './components/Contact';
 import Promo from './components/Promo';
 import SocialSidebar from './components/SocialSidebar';
-import './app.css';
 
 function App() {
   return (
