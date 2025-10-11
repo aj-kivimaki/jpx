@@ -4,7 +4,12 @@
   padding: 1rem 2rem;
   background-color: rgb(240, 156, 0);
   color: white;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 128px;
+  width: 100%;
+  z-index: 1000;
 }
 
 .title {

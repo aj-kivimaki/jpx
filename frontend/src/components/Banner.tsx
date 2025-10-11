@@ -1,7 +1,11 @@
 const Banner = () => {
   return (
-    <div>
-      <img src="/images/j-partynen-band.jpg" alt="Banner" />
+    <div id="top" className="banner">
+      <img
+        src="/images/j-partynen-band.jpg"
+        alt="Banner"
+        className="banner-img"
+      />
     </div>
   );
 };

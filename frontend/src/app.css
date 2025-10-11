@@ -1,5 +1,12 @@
+.banner {
+  margin-top: 128px;
+  scroll-margin-top: 128px;
+}
+
 .section {
   padding: 2rem;
+  min-height: 100vh;
+  scroll-margin-top: 128px;
 }
 
 .gigs-table {
@@ -16,4 +23,10 @@ h2 {
   font-size: 2.2rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   padding-bottom: 2rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
