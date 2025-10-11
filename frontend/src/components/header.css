@@ -1,27 +1,24 @@
-/* Header container */
 .header {
-  /*   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   padding: 1rem 2rem;
-  background-color: orange;
+  background-color: rgb(240, 156, 0);
   color: white;
-  position: relative; */
+  position: relative;
 }
 
-.nav {
-}
-
-/* Title */
 .title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-family: 'Fascinate Inline', system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.8rem;
 }
 
 /* Desktop menu */
 .desktop-menu {
   display: none;
   gap: 1.5rem;
+  font-size: 1.125rem;
 }
 
 .desktop-menu a {
@@ -46,12 +43,11 @@
   flex-direction: column;
   gap: 1rem;
   position: absolute;
-  top: 4rem;
+  top: 8rem;
   left: 0;
   width: 100%;
-  background-color: #1e40af;
-  padding: 1rem 0;
-  align-items: center;
+  background-color: rgb(255, 187, 61);
+  padding: 1rem 2rem;
 }
 
 /* Mobile menu links */
