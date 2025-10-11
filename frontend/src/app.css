@@ -5,6 +5,7 @@
 
 .section {
   padding: 2rem;
+  padding-right: 3.5rem;
   min-height: calc(100vh - 128px);
   scroll-margin-top: 128px;
 }
@@ -60,3 +61,37 @@ h2 {
   height: auto;
   display: block;
 }
+
+.social-sidebar {
+  position: fixed;
+  top: 50%; /* vertically center */
+  right: 0; /* stick to right edge */
+  transform: translateY(-50%); /* exact vertical center */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* spacing between icons */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* slightly transparent background */
+  padding: 0.5rem;
+  border-radius: 8px 0 0 8px; /* rounded left edge */
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* stay on top */
+}
+
+.social-sidebar a {
+  color: #000; /* icon color */
+  font-size: 1.8rem;
+  transition:
+    transform 0.2s,
+    color 0.2s;
+}
+
+.social-sidebar a:hover {
+  transform: scale(1.2);
+  color: #f39c12; /* optional hover color */
+}
+
