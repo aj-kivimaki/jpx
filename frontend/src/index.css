@@ -8,6 +8,7 @@ body {
   box-sizing: border-box;
   overflow-x: hidden; /* remove horizontal scroll */
   scroll-behavior: smooth;
+  background: #fffcf5;
 }
 
 *,
@@ -73,7 +74,6 @@ body {
     Roboto,
     sans-serif;
   line-height: 1.4;
-  background: #fff;
   color: #111;
   font-synthesis: none; /* prevent fake bold/italic */
   text-rendering: optimizeLegibility; /* improve kerning & ligatures */

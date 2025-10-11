@@ -5,18 +5,48 @@
 
 .section {
   padding: 2rem;
-  min-height: 100vh;
+  min-height: calc(100vh - 128px);
   scroll-margin-top: 128px;
 }
 
+/* Base table styling */
 .gigs-table {
+  width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
-td {
-  padding-right: 3.5rem;
+.gigs-table td {
+  padding: 0.75rem 1rem;
   font-family: monospace;
   font-size: 1.125rem;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .gigs-table,
+  .gigs-table tbody,
+  .gigs-table tr,
+  .gigs-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .gigs-table tr {
+    margin-bottom: 2rem; /* more space between "chunks" */
+    padding: 1rem; /* adds inner breathing room */
+    border: 1px solid #eee; /* optional: soft border around each gig block */
+    border-radius: 0.75rem; /* rounded corners */
+    background-color: #fffdf8; /* subtle warm background for each gig */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* soft shadow for separation */
+  }
+
+  .gigs-table td {
+    padding: 0.5rem 0;
+    text-align: left;
+    position: relative;
+    border-bottom: none; /* remove individual cell borders */
+  }
 }
 
 h2 {
