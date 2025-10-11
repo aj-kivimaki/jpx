@@ -1,13 +1,14 @@
-import Header from './components/header';
-import Banner from './components/home';
+import Header from './components/Header';
+import Banner from './components/Banner';
+import Gigs from './components/Gigs';
+import './app.css';
 
 function App() {
   return (
     <>
-      <div>
-        <Header />
-        <Banner />
-      </div>
+      <Header />
+      <Banner />
+      <Gigs />
     </>
   );
 }

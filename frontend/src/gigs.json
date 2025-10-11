@@ -1,0 +1,72 @@
+[
+  {
+    "date": "18.10.2025",
+    "lineup": "Trio",
+    "venue": "Jurtti Pub",
+    "city": "Joutsa",
+    "description": ""
+  },
+  {
+    "date": "24.10.2025",
+    "lineup": "Duo",
+    "venue": "Harry's",
+    "city": "Jyväskylä",
+    "description": ""
+  },
+  {
+    "date": "25.10.2025",
+    "lineup": "Duo",
+    "venue": "Harry's",
+    "city": "Jyväskylä",
+    "description": ""
+  },
+  {
+    "date": "31.10.2025",
+    "lineup": "J. Partynen & M. Kuosma",
+    "venue": "Pappatunturibaari",
+    "city": "Puerto Rico",
+    "description": "Gran Canaria Tour"
+  },
+  {
+    "date": "02.11.2025",
+    "lineup": "J. Partynen & M. Kuosma",
+    "venue": "Pikku Kuppila",
+    "city": "Playa del Ingles",
+    "description": "Gran Canaria Tour"
+  },
+  {
+    "date": "14.11.2025",
+    "lineup": "Bändi",
+    "venue": "TBA",
+    "city": "",
+    "description": "*** varaus ***"
+  },
+  {
+    "date": "21.11.2025",
+    "lineup": "Bändi",
+    "venue": "Storyville",
+    "city": "Helsinki",
+    "description": ""
+  },
+  {
+    "date": "29.11.2025",
+    "lineup": "Soolo",
+    "venue": "Yksityistilaisuus",
+    "city": "",
+    "description": ""
+  },
+  {
+    "date": "19.12.2025",
+    "lineup": "Duo",
+    "venue": "Kultainen Kulaus",
+    "city": "Seinäjoki",
+    "description": ""
+  },
+  {
+    "date": "20.12.2025",
+    "lineup": "Duo",
+    "venue": "Kultainen Kulaus",
+    "city": "Seinäjoki",
+    "description": ""
+  }
+]

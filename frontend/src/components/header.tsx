@@ -16,9 +16,9 @@ const Header = () => {
       <div>
         <nav className="desktop-menu">
           <a href="#gigs">Keikat</a>
-          <a href="#contact">Yhteys</a>
-          <a href="#promo">Promo</a>
           <a href="#news">Uutiset</a>
+          <a href="#promo">Promo</a>
+          <a href="#contact">Yhteys</a>
         </nav>
       </div>
       <div className="mobile-menu-button" onClick={toggleMenu}>
@@ -29,11 +29,14 @@ const Header = () => {
           <a href="#gigs" onClick={toggleMenu}>
             Keikat
           </a>
-          <a href="#contact" onClick={toggleMenu}>
-            Yhteys
+          <a href="#news" onClick={toggleMenu}>
+            Uutiset
           </a>
           <a href="#promo" onClick={toggleMenu}>
             Promo
+          </a>
+          <a href="#contact" onClick={toggleMenu}>
+            Yhteys
           </a>
         </nav>
       )}
