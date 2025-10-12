@@ -4,7 +4,7 @@ const Gigs = () => {
   return (
     <div id="gigs" className="section">
       <h2>Keikat</h2>
-      <GigsTable />
+      <GigsTable data={null} />
     </div>
   );
 };
