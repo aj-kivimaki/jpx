@@ -1,16 +1,17 @@
-const express = require('express');
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import gigsRouter from "./routes/gigs.js";
+
+dotenv.config();
 const app = express();
 
-// Middleware to parse JSON
+app.use(cors());
 app.use(express.json());
 
-// Simple route
-app.get('/', (req, res) => {
-  res.send('Hello from Express backend!');
-});
+app.use("/api/gigs", gigsRouter);
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.get("/", (req, res) => res.send("Band API is live!"));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
