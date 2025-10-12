@@ -6,7 +6,7 @@ import {
   FaShopify,
 } from 'react-icons/fa';
 
-function SocialSidebar() {
+const SocialSidebar = () => {
   return (
     <div className="social-sidebar">
       <a
@@ -46,6 +46,6 @@ function SocialSidebar() {
       </a>
     </div>
   );
-}
+};
 
 export default SocialSidebar;

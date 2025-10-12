@@ -1,10 +1,9 @@
+import SocialSidebar from './components/SocialSidebar';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Gigs from './components/Gigs';
-import News from './components/News';
-import Contact from './components/Contact';
-import Promo from './components/Promo';
-import SocialSidebar from './components/SocialSidebar';
+import Esittely from './components/Esittely';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -13,9 +12,8 @@ function App() {
       <Header />
       <Banner />
       <Gigs />
-      <News />
-      <Promo />
-      <Contact />
+      <Esittely />
+      <Footer />
     </div>
   );
 }

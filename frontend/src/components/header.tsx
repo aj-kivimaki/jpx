@@ -31,8 +31,7 @@ const Header = () => {
       {/* Desktop Menu */}
       <nav className="desktop-menu">
         <button onClick={() => scrollToSection('gigs')}>Keikat</button>
-        <button onClick={() => scrollToSection('news')}>Uutiset</button>
-        <button onClick={() => scrollToSection('promo')}>Promo</button>
+        <button onClick={() => scrollToSection('esittely')}>Esittely</button>
         <button onClick={() => scrollToSection('contact')}>Yhteys</button>
       </nav>
 
@@ -45,8 +44,7 @@ const Header = () => {
       {isOpen && (
         <nav className="mobile-menu">
           <button onClick={() => scrollToSection('gigs')}>Keikat</button>
-          <button onClick={() => scrollToSection('news')}>Uutiset</button>
-          <button onClick={() => scrollToSection('promo')}>Promo</button>
+          <button onClick={() => scrollToSection('esittely')}>Esittely</button>
           <button onClick={() => scrollToSection('contact')}>Yhteys</button>
         </nav>
       )}

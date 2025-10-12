@@ -5,7 +5,7 @@
   --header-height: 128px; /* desktop header height */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   :root {
     --header-height: 160px; /* mobile header height */
   }
@@ -204,6 +204,17 @@ h2 {
   padding-bottom: 2rem;
 }
 
+.gigs {
+  background-image: url('/images/syksy.jpeg'); /* 🔁 your image path */
+  background-size: cover; /* fill the section */
+  background-position: center; /* center the image */
+  background-repeat: no-repeat; /* no tiling */
+  padding: 4rem 2rem; /* spacing around the card */
+  display: flex;
+  justify-content: center; /* center card horizontally */
+  align-items: center; /* center vertically if tall enough */
+}
+
 /* =========================================
    Table Styling
    ========================================= */
@@ -220,7 +231,7 @@ h2 {
 }
 
 /* Responsive table for mobile */
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .gigs-table,
   .gigs-table tbody,
   .gigs-table tr,
@@ -275,4 +286,45 @@ h2 {
 .social-sidebar a:hover {
   transform: scale(1.2);
   color: #f39c12;
+}
+
+.footer {
+  display: flex;
+  gap: 10rem;
+  background-color: #333;
+  color: white;
+  padding: 3rem;
+}
+
+.esittely {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  text-align: center;
+}
+
+.esittely img {
+  border-radius: 50%;
+}
+
+/* Desktop card for gigs table */
+.gigs-card {
+  background-color: #fffdf8;
+  border: 1px solid #eee;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto; /* center it */
+}
+
+/* Only apply the big card look on wider screens */
+@media (max-width: 868px) {
+  .gigs-card {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
 }
