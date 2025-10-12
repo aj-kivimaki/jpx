@@ -290,10 +290,11 @@ h2 {
 
 .footer {
   display: flex;
-  gap: 10rem;
+  gap: 4rem;
   background-color: #333;
   color: white;
   padding: 3rem;
+  font-size: 0.85rem;
 }
 
 .esittely {
