@@ -316,8 +316,29 @@ h2 {
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto; /* center it */
+}
+
+/* Light underline between gigs inside the big card */
+.gigs-card .gigs-table tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* soft gray line */
+}
+
+/* Remove underline on the last row */
+.gigs-card .gigs-table tr:last-child {
+  border-bottom: none;
+}
+
+/* Add a little vertical spacing for breathing room */
+.gigs-card .gigs-table td {
+  padding: 1rem;
+}
+
+/* Optional: hover effect for subtle interactivity */
+.gigs-card .gigs-table tr:hover {
+  background-color: rgba(240, 156, 0, 0.2);
+  transition: background-color 0.2s ease;
 }
 
 /* Only apply the big card look on wider screens */

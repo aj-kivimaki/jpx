@@ -5,7 +5,7 @@ const Info = () => {
         <h2>BÄNDI</h2>
         <p>Visa Ruokolainen, basso</p>
         <p>Olli Tanttu, kitara</p>
-        <p>Jani Partinen, laulu</p>
+        <p>Jani Partinen, laulu & kitara</p>
         <p>Touko Ruokolainen, rummut</p>
         <p>Atte Kivimäki, koskettimet</p>
       </div>
