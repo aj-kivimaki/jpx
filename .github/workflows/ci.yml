@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+  pull_request:
+    # Only run the workflow when files under the frontend/ folder are changed
+    paths:
+      - 'frontend/**'
+
+jobs:
+  frontend-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies (frontend)
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests (frontend)
+        working-directory: frontend
+        run: npm test --silent
+
+      - name: Upload vitest snapshot (if present)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-failure-logs
+          path: frontend/vitest-report

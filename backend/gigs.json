@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "date": "18.10.2025",
     "lineup": "Trio",
     "venue": "Jurtti Pub",
@@ -7,6 +8,7 @@
     "description": ""
   },
   {
+    "id": 2,
     "date": "24.10.2025",
     "lineup": "Duo",
     "venue": "Harry's",
@@ -14,6 +16,7 @@
     "description": ""
   },
   {
+    "id": 3,
     "date": "25.10.2025",
     "lineup": "Duo",
     "venue": "Harry's",
@@ -21,6 +24,7 @@
     "description": ""
   },
   {
+    "id": 4,
     "date": "31.10.2025",
     "lineup": "J. Partynen & M. Kuosma",
     "venue": "Pappatunturibaari",
@@ -28,6 +32,7 @@
     "description": "Gran Canaria Tour"
   },
   {
+    "id": 5,
     "date": "02.11.2025",
     "lineup": "J. Partynen & M. Kuosma",
     "venue": "Pikku Kuppila",
@@ -35,6 +40,7 @@
     "description": "Gran Canaria Tour"
   },
   {
+    "id": 6,
     "date": "14.11.2025",
     "lineup": "Bändi",
     "venue": "TBA",
@@ -42,6 +48,7 @@
     "description": "*** varaus ***"
   },
   {
+    "id": 7,
     "date": "21.11.2025",
     "lineup": "Bändi",
     "venue": "Storyville",
@@ -49,6 +56,7 @@
     "description": ""
   },
   {
+    "id": 8,
     "date": "29.11.2025",
     "lineup": "Soolo",
     "venue": "Yksityistilaisuus",
@@ -56,6 +64,7 @@
     "description": ""
   },
   {
+    "id": 9,
     "date": "19.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
@@ -63,6 +72,7 @@
     "description": ""
   },
   {
+    "id": 10,
     "date": "20.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
