@@ -2,17 +2,19 @@ import SocialSidebar from './components/SocialSidebar';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Gigs from './components/Gigs';
-import Esittely from './components/Esittely';
+import Info from './components/Info';
 import Footer from './components/Footer';
 
-function App() {
+
+const App = () => {
   return (
     <div>
+      <title>J. Partynen</title>
       <SocialSidebar />
       <Header />
       <Banner />
       <Gigs />
-      <Esittely />
+      <Info />
       <Footer />
     </div>
   );

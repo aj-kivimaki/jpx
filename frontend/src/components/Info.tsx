@@ -1,6 +1,6 @@
 const Info = () => {
   return (
-    <div id="esittely" className="section esittely">
+    <div id="info" className="section info">
       <div>
         <h2>BÄNDI</h2>
         <p>Visa Ruokolainen, basso</p>

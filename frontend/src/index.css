@@ -297,7 +297,7 @@ h2 {
   font-size: 0.85rem;
 }
 
-.esittely {
+.info {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -305,7 +305,7 @@ h2 {
   text-align: center;
 }
 
-.esittely img {
+.info img {
   border-radius: 50%;
 }
 
