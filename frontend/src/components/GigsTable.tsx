@@ -1,5 +1,6 @@
 import type { Key } from 'react';
-import useFetch from '../hooks/useFetch.ts';
+// import useFetch from '../hooks/useFetch.ts';
+import data from '../gigs.json';
 
 interface Gig {
   date: string;
@@ -14,7 +15,7 @@ interface GigsTable {
 }
 
 const GigsTable: React.FC<GigsTable> = () => {
-  const { data, loading, error } = useFetch(
+  /*  const { data, loading, error } = useFetch(
     'https://artificial-duck-jpx-589d39ef.koyeb.app/api/gigs',
     {
       withCredentials: true,
@@ -22,7 +23,7 @@ const GigsTable: React.FC<GigsTable> = () => {
   );
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>Error: {error}</p>; */
 
   return (
     <div>
