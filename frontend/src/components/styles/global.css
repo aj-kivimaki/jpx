@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Fascinate+Inline&family=Satisfy&display=swap');
+
+:root {
+  --color-bg: #fff;
+  --color-text: #333;
+  --header-height: 118px; /* desktop header height */
+}
+
+html {
+  scroll-padding-top: var(--header-height);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+button {
+  cursor: pointer;
+}
