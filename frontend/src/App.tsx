@@ -1,5 +1,5 @@
 import SocialSidebar from './components/SocialSidebar';
-import Header from './components/Header';
+import Header from './components/HeaderComponent';
 import Banner from './components/Banner';
 import Gigs from './components/Gigs';
 import Info from './components/Info';
