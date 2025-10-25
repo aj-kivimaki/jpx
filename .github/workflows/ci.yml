@@ -3,15 +3,17 @@ name: CI
 on:
   push:
     paths:
-      - 'frontend/**'
+      - "frontend/**"
   pull_request:
-    # Only run the workflow when files under the frontend/ folder are changed
     paths:
-      - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   frontend-test:
     runs-on: ubuntu-latest
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     strategy:
       matrix:
@@ -24,7 +26,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies (frontend)
@@ -41,3 +43,16 @@ jobs:
         with:
           name: vitest-failure-logs
           path: frontend/vitest-report
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: frontend/dist # Default Vite output
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
