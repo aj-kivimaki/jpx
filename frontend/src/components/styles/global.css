@@ -23,10 +23,9 @@ button {
 h2 {
   font-size: 2rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  padding-bottom: 1.5rem;
 }
 
 .section {
-  padding: 2rem 3.5rem 2rem 2rem;
-  min-height: calc(100vh - var(--header-height));
+  padding: 2rem;
+  /* min-height: calc(100vh - var(--header-height)); */
 }
