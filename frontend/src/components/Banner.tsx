@@ -1,10 +1,12 @@
+import styles from './Banner.module.css';
+
 const Banner = () => {
   return (
-    <div id="top" className="banner">
+    <div id="top" className={styles.banner}>
       <img
         src="/images/j-partynen-band-small.jpg"
         alt="Banner"
-        className="banner-img"
+        className={styles.bannerImg}
       />
     </div>
   );

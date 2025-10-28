@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './HeaderComponent.module.css';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +18,10 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
+    <header className={styles.header}>
       <div>
         <h1
-          className="title"
+          className={styles.title}
           style={{ cursor: 'pointer' }}
           onClick={() => scrollToSection('top')}
         >
@@ -29,20 +30,20 @@ const Header = () => {
       </div>
 
       {/* Desktop Menu */}
-      <nav className="desktop-menu">
+      <nav className={styles.desktopMenu}>
         <button onClick={() => scrollToSection('gigs')}>Keikat</button>
         <button onClick={() => scrollToSection('info')}>Info</button>
         <button onClick={() => scrollToSection('contact')}>Yhteys</button>
       </nav>
 
       {/* Mobile Menu Button */}
-      <div className="mobile-menu-button" onClick={toggleMenu}>
+      <div className={styles.mobileMenuButton} onClick={toggleMenu}>
         {isOpen ? '✖' : '☰'}
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <nav className="mobile-menu">
+        <nav className={styles.mobileMenu}>
           <button onClick={() => scrollToSection('gigs')}>Keikat</button>
           <button onClick={() => scrollToSection('info')}>Info</button>
           <button onClick={() => scrollToSection('contact')}>Yhteys</button>

@@ -1,0 +1,9 @@
+.banner {
+  margin-top: var(--header-height);
+}
+
+.bannerImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}

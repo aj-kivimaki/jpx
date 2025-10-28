@@ -1,0 +1,37 @@
+.gigsTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.gigsTable td {
+  padding: 0.75rem 1rem;
+  font-family: monospace;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 868px) {
+  .gigsTable,
+  .gigsTable tbody,
+  .gigsTable tr,
+  .gigsTable td {
+    display: block;
+    width: 100%;
+  }
+
+  .gigsTable tr {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 0.75rem;
+    background-color: #fffdf8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .gigsTable td {
+    padding: 0.5rem 0;
+    text-align: left;
+    position: relative;
+    border-bottom: none;
+  }
+}

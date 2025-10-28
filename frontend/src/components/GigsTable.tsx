@@ -1,6 +1,7 @@
 import type { Key } from 'react';
 // import useFetch from '../hooks/useFetch.ts';
 import data from '../gigs.json';
+import styles from './GigsTable.module.css';
 
 interface Gig {
   date: string;
@@ -27,7 +28,7 @@ const GigsTable: React.FC<GigsTable> = () => {
 
   return (
     <div>
-      <table className="gigs-table">
+      <table className={styles.gigsTable}>
         <tbody>
           {data &&
             data.map((gig: Gig, index: Key | null | undefined) => (

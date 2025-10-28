@@ -1,6 +1,8 @@
+import styles from './Footer.module.css';
+
 const Footer = () => {
   return (
-    <div id="contact" className="footer">
+    <div id="contact" className={styles.footer}>
       <div>
         <p>Keikkamyynti:</p>
         <p>Juuso Eloranta</p>

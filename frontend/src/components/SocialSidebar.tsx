@@ -5,10 +5,11 @@ import {
   FaSpotify,
   FaShopify,
 } from 'react-icons/fa';
+import styles from './SocialSidebar.module.css';
 
 const SocialSidebar = () => {
   return (
-    <div className="social-sidebar">
+    <div className={styles.socialSidebar}>
       <a
         href="https://www.instagram.com/j.partynen"
         target="_blank"
