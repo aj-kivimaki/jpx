@@ -2,7 +2,7 @@ import styles from './Info.module.css';
 
 const Info = () => {
   return (
-    <div id="info" className={`section ${styles.info}`}>
+    <div id="info" className={styles.info}>
       <div>
         <h2>BÄNDI</h2>
         <p>Visa Ruokolainen, basso</p>
