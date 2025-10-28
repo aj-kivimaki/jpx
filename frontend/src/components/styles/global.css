@@ -3,7 +3,7 @@
 :root {
   --color-bg: #fff;
   --color-text: #333;
-  --header-height: 118px; /* desktop header height */
+  --header-height: 95px; /* desktop header height */
 }
 
 html {

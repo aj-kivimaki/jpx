@@ -19,36 +19,21 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div>
-        <h1
-          className={styles.title}
-          style={{ cursor: 'pointer' }}
-          onClick={() => scrollToSection('top')}
-        >
+      <div className={styles.container}>
+        <h1 className={styles.title} onClick={() => scrollToSection('top')}>
           J. Partynen
         </h1>
-      </div>
-
-      {/* Desktop Menu */}
-      <nav className={styles.desktopMenu}>
-        <button onClick={() => scrollToSection('gigs')}>Keikat</button>
-        <button onClick={() => scrollToSection('info')}>Info</button>
-        <button onClick={() => scrollToSection('contact')}>Yhteys</button>
-      </nav>
-
-      {/* Mobile Menu Button */}
-      <div className={styles.mobileMenuButton} onClick={toggleMenu}>
-        {isOpen ? '✖' : '☰'}
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <nav className={styles.mobileMenu}>
+        {/* Mobile Menu Button */}
+        <div className={styles.mobileMenuButton} onClick={toggleMenu}>
+          {isOpen ? '✖' : '☰'}
+        </div>
+        {/* Mobile / Desktop Menu */}
+        <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
           <button onClick={() => scrollToSection('gigs')}>Keikat</button>
           <button onClick={() => scrollToSection('info')}>Info</button>
           <button onClick={() => scrollToSection('contact')}>Yhteys</button>
         </nav>
-      )}
+      </div>
     </header>
   );
 };
