@@ -38,11 +38,7 @@ const SocialSidebar = () => {
       >
         <FaSpotify />
       </a>
-      <a
-        href="https://www.temu.com/fi"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href="#shop" target="_blank" rel="noopener noreferrer">
         <FaShopify />
       </a>
     </div>
