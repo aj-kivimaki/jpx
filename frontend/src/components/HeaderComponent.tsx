@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styles from './HeaderComponent.module.css';
+import useIsScrolling from '../hooks/useIsScrolling';
 
 const Header = () => {
+  const isScrolling = useIsScrolling(100);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -18,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isScrolling && styles.scrolled}`}>
       <div className={styles.container}>
         <h1 className={styles.title} onClick={() => scrollToSection('top')}>
           J. Partynen

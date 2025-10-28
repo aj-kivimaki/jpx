@@ -2,11 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
-  background: linear-gradient(
-    to bottom right,
-    rgb(240, 156, 0) 50%,
-    white 100%
-  );
+  /* background: rgb(240, 156, 0); */
+  background: rgb(211, 153, 55);
   color: white;
   position: fixed;
   height: var(--header-height);
@@ -14,6 +11,14 @@
   left: 0;
   width: 100%;
   z-index: 1000;
+}
+
+.scrolled {
+  background: rgba(211, 153, 55, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .container {
@@ -41,7 +46,7 @@
 }
 
 .mobileMenuButton {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
 }
 
