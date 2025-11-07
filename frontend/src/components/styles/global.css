@@ -14,6 +14,7 @@ html {
 body {
   background: var(--color-bg);
   color: var(--color-text);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 button {
@@ -22,7 +23,6 @@ button {
 
 h2 {
   font-size: 2rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .section {

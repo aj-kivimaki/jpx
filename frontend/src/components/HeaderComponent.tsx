@@ -22,9 +22,12 @@ const Header = () => {
   return (
     <header className={`${styles.header} ${isScrolling && styles.scrolled}`}>
       <div className={styles.container}>
-        <h1 className={styles.title} onClick={() => scrollToSection('top')}>
-          J. Partynen
-        </h1>
+        <div className={styles.title} onClick={() => scrollToSection('top')}>
+          <div className={styles.logo}>
+            <img src="/images/logo.png" width={'50px'} alt="Logo" />
+          </div>
+          <h1 className={styles.title}>J. Partynen</h1>
+        </div>
         {/* Mobile Menu Button */}
         <div className={styles.mobileMenuButton} onClick={toggleMenu}>
           {isOpen ? '✖' : '☰'}

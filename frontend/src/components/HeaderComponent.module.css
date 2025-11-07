@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: 1rem;
   /* background: rgb(240, 156, 0); */
   background: rgb(211, 153, 55);
   color: white;
@@ -11,6 +11,20 @@
   left: 0;
   width: 100%;
   z-index: 1000;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  display: flex;
+  background: hsl(38, 64%, 75%);
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+  border-radius: 50%;
 }
 
 .scrolled {

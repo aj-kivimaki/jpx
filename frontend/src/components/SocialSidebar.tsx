@@ -1,10 +1,5 @@
-import {
-  FaInstagram,
-  FaFacebook,
-  FaYoutube,
-  FaSpotify,
-  FaShopify,
-} from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
+import { FaCartShopping } from 'react-icons/fa6';
 import styles from './SocialSidebar.module.css';
 
 const SocialSidebar = () => {
@@ -39,7 +34,7 @@ const SocialSidebar = () => {
         <FaSpotify />
       </a>
       <a href="#shop" target="_blank" rel="noopener noreferrer">
-        <FaShopify />
+        <FaCartShopping />
       </a>
     </div>
   );

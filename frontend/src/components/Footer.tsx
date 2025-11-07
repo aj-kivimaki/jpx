@@ -4,10 +4,13 @@ const Footer = () => {
   return (
     <div id="contact" className={styles.footer}>
       <div>
-        <p>Keikkamyynti:</p>
+        <h4>KEIKKAMYYNTI:</h4>
         <p>Juuso Eloranta</p>
         <p>0400-550463</p>
         <p>stagent@stagent.fi</p>
+      </div>
+      <div className={styles.stagentLogo}>
+        <img src="./images/stagent-logo.jpg" alt="stagent-logo" />
       </div>
     </div>
   );

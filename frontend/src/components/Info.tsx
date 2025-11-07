@@ -13,7 +13,7 @@ const Info = () => {
       </div>
       <div>
         <img
-          src="/images/j-partynen-bandikuva.jpg"
+          src="/images/j-partynen-bandikuva.webp"
           width={450}
           height={450}
           alt="Banner"
