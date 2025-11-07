@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   /* background: rgb(240, 156, 0); */
   background: rgb(211, 153, 55);
   color: white;
@@ -17,7 +17,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
+}
+
+.title h1 {
+  font-size: 2.5rem;
 }
 
 .logo {
