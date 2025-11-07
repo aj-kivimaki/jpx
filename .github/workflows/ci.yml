@@ -1,43 +1,50 @@
-name: CI
+name: Frontend CI/CD
 
 on:
   push:
-    paths:
-      - 'frontend/**'
+    branches:
+      - main
   pull_request:
-    # Only run the workflow when files under the frontend/ folder are changed
-    paths:
-      - 'frontend/**'
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  frontend-test:
+  frontend:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: 18
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies (frontend)
+      - name: Install dependencies
         working-directory: frontend
         run: npm ci
 
-      - name: Run tests (frontend)
+      - name: Run tests
         working-directory: frontend
         run: npm test --silent
 
-      - name: Upload vitest snapshot (if present)
-        if: failure()
-        uses: actions/upload-artifact@v4
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Deploy to Netlify
+        if: success()
+        uses: nwtgck/actions-netlify@v1.2
         with:
-          name: vitest-failure-logs
-          path: frontend/vitest-report
+          publish-dir: frontend/dist
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
