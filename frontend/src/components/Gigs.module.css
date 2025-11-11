@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 5rem 2rem;
 }
 
 .gigsCard {
@@ -14,16 +15,10 @@
 }
 
 .gigsTitle {
-  padding: 1rem;
-  border-radius: 0.8rem;
   margin-bottom: 2rem;
-  width: 100%;
-  max-width: 1400px;
-
-  font-size: 2.5rem;
-  text-align: center;
-  color: white;
-  background-color: hsl(0, 0%, 50%);
+  font-weight: bold;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  /* text-align: center; */
 }
 
 .gigsCard .gigsTable tr {
@@ -44,5 +39,9 @@
     border: none;
     box-shadow: none;
     padding: 0;
+  }
+
+  .gigs {
+    padding: 2rem 1rem;
   }
 }

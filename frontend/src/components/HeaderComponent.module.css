@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   padding: 1rem 1.25rem;
-  /* background: rgb(240, 156, 0); */
   background: rgb(211, 153, 55);
   color: white;
   position: fixed;
@@ -21,7 +20,7 @@
 }
 
 .title h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
 }
 
 .logo {

@@ -1,20 +1,42 @@
 .info {
   display: flex;
   justify-content: space-around;
-  text-align: center;
-  padding: 3rem;
-  font-size: 1.25rem;
+  padding: 5rem 2rem;
 }
 
-.info img {
-  border-radius: 50%;
-  padding-top: 1rem;
+.text {
+  flex: 1;
+  padding: 1.5rem 1rem;
 }
 
-@media (max-width: 868px) {
+.title {
+  font-weight: bold;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.member {
+  font-weight: bold;
+}
+
+.instrument {
+  font-style: italic;
+}
+
+.image {
+  flex: 2;
+}
+
+.image img {
+  border-radius: 5px;
+}
+
+@media (max-width: 1060px) {
   .info {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1rem;
   }
 }

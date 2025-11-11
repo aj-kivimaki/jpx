@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div id="top" className={styles.banner}>
       <img
-        src="/images/j-partynen-band-small.webp"
+        src="/images/soolokuva.webp"
         alt="Banner"
         className={styles.bannerImg}
       />

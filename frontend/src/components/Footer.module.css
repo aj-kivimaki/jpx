@@ -1,12 +1,18 @@
 .footer {
   display: flex;
-  gap: 4rem;
+  gap: 1rem;
   background-color: #333;
   color: white;
-  padding: 1.5rem 3rem;
+  padding: 2rem;
   font-size: 0.85rem;
 }
 
 .stagentLogo {
   width: 80px;
+}
+
+@media (max-width: 1060px) {
+  .footer {
+    padding: 2rem 1rem;
+  }
 }

@@ -3,22 +3,31 @@ import styles from './Info.module.css';
 const Info = () => {
   return (
     <div id="info" className={styles.info}>
-      <div>
-        <h2>BÄNDI</h2>
-        <p>Visa Ruokolainen, basso</p>
-        <p>Olli Tanttu, kitara</p>
-        <p>Jani Partinen, laulu & kitara</p>
-        <p>Touko Ruokolainen, rummut</p>
-        <p>Atte Kivimäki, koskettimet</p>
+      <div className={styles.text}>
+        <h2 className={styles.title}>BÄNDI</h2>
+        <p>
+          <span className={styles.member}>Olli Tanttu</span>,{' '}
+          <span className={styles.instrument}>kitara</span>
+        </p>
+        <p>
+          <span className={styles.member}>Atte Kivimäki</span>,{' '}
+          <span className={styles.instrument}>koskettimet</span>
+        </p>
+        <p>
+          <span className={styles.member}>Jani Partinen</span>,{' '}
+          <span className={styles.instrument}>laulu & kitara</span>
+        </p>
+        <p>
+          <span className={styles.member}>Touko Ruokolainen</span>,{' '}
+          <span className={styles.instrument}>rummut</span>
+        </p>
+        <p>
+          <span className={styles.member}>Visa Ruokolainen</span>,{' '}
+          <span className={styles.instrument}>basso</span>
+        </p>
       </div>
-      <div>
-        <img
-          src="/images/j-partynen-bandikuva.webp"
-          width={450}
-          height={450}
-          alt="Banner"
-          className="bändikuva"
-        />
+      <div className={styles.image}>
+        <img src="/images/j-partynen-band-small.webp" alt="bändikuva" />
       </div>
     </div>
   );
