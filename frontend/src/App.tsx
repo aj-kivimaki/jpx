@@ -6,7 +6,6 @@ import Info from './components/Info';
 import Footer from './components/Footer';
 import './components/styles/reset.css';
 import './components/styles/global.css';
-// import './components/styles/App.css';
 
 const App = () => {
   return (

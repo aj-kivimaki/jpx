@@ -1,12 +1,36 @@
 .info {
-  display: flex;
-  justify-content: space-around;
-  padding: 5rem 2rem;
+  position: relative;
 }
 
-.text {
+.info img {
+  display: block;
+  width: 100%;
+}
+
+/* Text overlay container defaults */
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  position: relative; /* default for small screens */
+}
+
+.members {
+  padding: 1rem;
   flex: 1;
-  padding: 1.5rem 1rem;
+}
+
+.descriptionContainer {
+  flex: 2;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-style: italic;
+  color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin-right: 2rem;
 }
 
 .title {
@@ -23,20 +47,52 @@
   font-style: italic;
 }
 
-.image {
-  flex: 2;
-}
-
-.image img {
-  border-radius: 5px;
-}
-
+/* Small screens: stacked */
 @media (max-width: 1060px) {
-  .info {
+  .textContainer {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     text-align: center;
     padding: 2rem 1rem;
+  }
+
+  .descriptionContainer {
+    margin-right: 0;
+    background-color: white;
+    color: black;
+  }
+
+  .info img {
+    border-radius: 0;
+  }
+}
+
+/* Large screens: overlay bottom 30% of image */
+@media (min-width: 1061px) {
+  .textContainer {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    padding: 2rem 4rem;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: flex-start; /* aligns content nicely */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .descriptionContainer {
+    flex: 2;
+    margin: 0; /* remove margin to fit overlay */
+    box-shadow: none; /* optional: remove shadow in overlay */
+  }
+
+  .members {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 5px;
+    color: white;
   }
 }

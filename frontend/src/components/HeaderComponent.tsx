@@ -34,9 +34,9 @@ const Header = () => {
         </div>
         {/* Mobile / Desktop Menu */}
         <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
-          <button onClick={() => scrollToSection('gigs')}>Keikat</button>
-          <button onClick={() => scrollToSection('info')}>Info</button>
-          <button onClick={() => scrollToSection('contact')}>Yhteys</button>
+          <button onClick={() => scrollToSection('gigs')}>KEIKAT</button>
+          <button onClick={() => scrollToSection('info')}>INFO</button>
+          <button onClick={() => scrollToSection('contact')}>YHTEYS</button>
         </nav>
       </div>
     </header>

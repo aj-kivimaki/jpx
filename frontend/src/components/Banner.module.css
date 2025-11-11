@@ -1,9 +1,33 @@
 .banner {
   margin-top: var(--header-height);
+  position: relative;
+  width: 100%;
 }
 
 .bannerImg {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50%; /* 30% of the image’s height */
+  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent black */
+  color: white;
+  text-align: right;
+  font-family: 'Satisfy', system-ui;
+}
+
+.adjectives {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  font-size: clamp(1.5rem, 4.25vw, 20rem);
+  letter-spacing: 0.04em;
+  width: 90%;
 }

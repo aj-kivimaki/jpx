@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fascinate+Inline&family=Satisfy&display=swap');
 
 :root {
-  --color-bg: #fff;
+  --color-bg: #f4f4f4;
   --color-text: #333;
   --header-height: 95px; /* desktop header height */
 }

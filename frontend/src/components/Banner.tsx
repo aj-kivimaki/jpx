@@ -8,6 +8,13 @@ const Banner = () => {
         alt="Banner"
         className={styles.bannerImg}
       />
+      <div className={styles.overlay}>
+        <div className={styles.adjectives}>
+          <div>Artisti</div>
+          <div>Tulkitsija</div>
+          <div>Musiikintekijä</div>
+        </div>
+      </div>
     </div>
   );
 };

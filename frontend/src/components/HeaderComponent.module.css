@@ -53,7 +53,7 @@
 .desktopMenu {
   display: none;
   gap: 1.5rem;
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .desktopMenu a {
@@ -81,7 +81,7 @@
 
 .mobileMenu a {
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 768px) {
