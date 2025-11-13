@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  padding: 1rem 1.25rem;
+  padding: 0.65rem 1.125rem;
   background: rgb(211, 153, 55);
   color: white;
   position: fixed;
@@ -65,6 +65,7 @@
 .mobileMenuButton {
   font-size: 1.8rem;
   cursor: pointer;
+  padding-bottom: 0.4rem;
 }
 
 .mobileMenu {

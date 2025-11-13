@@ -24,7 +24,7 @@ const Header = () => {
       <div className={styles.container}>
         <div className={styles.title} onClick={() => scrollToSection('top')}>
           <div className={styles.logo}>
-            <img src="/images/logo.png" width={'50px'} alt="Logo" />
+            <img src="/images/logo.webp" width={'45px'} alt="Logo" />
           </div>
           <h1 className={styles.title}>J. Partynen</h1>
         </div>

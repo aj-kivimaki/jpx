@@ -3,8 +3,8 @@
 }
 
 .info img {
-  display: block;
-  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover; /* ensures image covers container without distortion */
 }
 
 /* Text overlay container defaults */
