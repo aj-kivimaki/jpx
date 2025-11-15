@@ -55,7 +55,12 @@ jobs:
       # ===========================
       - name: Run tests with coverage
         run: npm run test --prefix frontend
-        # Make sure your package.json has "test": "vitest run --coverage --run --config vitest.config.ts"
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: frontend/coverage
 
       # ===========================
       # Build Frontend
