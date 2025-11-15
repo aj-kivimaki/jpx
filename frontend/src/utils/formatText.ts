@@ -7,7 +7,7 @@
 const formatText = (text: unknown): string => {
   if (text === null || text === undefined) return '';
 
-  const s = String(text);
+  const s = text.toString();
   return s.trim().replaceAll(/\s+/g, ' ');
 };
 

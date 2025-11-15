@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import fs from "node:fs/promises";
 
 const jsonString = await fs.readFile("./gigs.json", "utf8");
 const gigs = JSON.parse(jsonString);

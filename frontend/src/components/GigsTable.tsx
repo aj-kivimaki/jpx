@@ -1,9 +1,8 @@
-import type { Key } from 'react';
-// import useFetch from '../hooks/useFetch.ts';
 import data from '../gigs.json';
 import styles from './GigsTable.module.css';
 
 interface Gig {
+  id: string;
   date: string;
   lineup: string;
   venue: string;
@@ -31,22 +30,20 @@ const GigsTable: React.FC<GigsTable> = () => {
     <div>
       <table className={styles.gigsTable}>
         <tbody>
-          {data &&
-            data.map((gig: Gig, index: Key | null | undefined) => (
-              <tr key={index}>
-                <td className={styles.gigsDateCell}>
-                  {gig.date}{' '}
-                  {gig.time && <span>{gig.time}</span>}
-                </td>
+          {data?.map((gig: Gig) => (
+            <tr key={gig.id}>
+              <td className={styles.gigsDateCell}>
+                {gig.date} {gig.time && <span>{gig.time}</span>}
+              </td>
 
-                <td className={styles.gigsLineupCell}>{gig.lineup}</td>
-                <td>{gig.venue}</td>
-                {gig.city ? (
-                  <td className={styles.gigsCityCell}>{gig.city}</td>
-                ) : null}
-                {gig.description ? <td>{gig.description}</td> : null}
-              </tr>
-            ))}
+              <td className={styles.gigsLineupCell}>{gig.lineup}</td>
+              <td>{gig.venue}</td>
+              {gig.city ? (
+                <td className={styles.gigsCityCell}>{gig.city}</td>
+              ) : null}
+              {gig.description ? <td>{gig.description}</td> : null}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

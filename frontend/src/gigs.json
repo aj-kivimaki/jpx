@@ -1,5 +1,6 @@
 [
   {
+    "id": "02f17525-9e4e-4aab-b326-86bf9670b9e9",
     "date": "21.11.2025",
     "lineup": "Bändi",
     "venue": "Storyville",
@@ -8,6 +9,7 @@
     "time": "23:30"
   },
   {
+    "id": "bfb1f1fc-fda2-4cad-872d-d84f0cdfb144",
     "date": "22.11.2025",
     "lineup": "Bändi",
     "venue": "Tapahtumatalo Metsopirtti",
@@ -16,6 +18,7 @@
     "time": ""
   },
   {
+    "id": "5df8df21-b5c1-46c9-b847-ae8a07cc2c19",
     "date": "29.11.2025",
     "lineup": "Soolo",
     "venue": "Yksityistilaisuus",
@@ -24,6 +27,7 @@
     "time": ""
   },
   {
+    "id": "7c4f3f4e-1f4e-4d2e-8f4a-2b6e5f9c3a1b",
     "date": "19.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
@@ -32,6 +36,7 @@
     "time": ""
   },
   {
+    "id": "8a6e5f9c-3b1b-4c4e-9f4a-7c4f3f4e1f4e",
     "date": "20.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
@@ -40,6 +45,7 @@
     "time": ""
   },
   {
+    "id": "9b7e6f5d-2c3b-4d4e-8f4a-1f4e7c4f3f4e",
     "date": "13.03.2026",
     "lineup": "Bändi",
     "venue": "Yksityistilaisuus",
@@ -48,6 +54,7 @@
     "time": ""
   },
   {
+    "id": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
     "date": "26.03.2026",
     "lineup": "Trio",
     "venue": "Mesta",
@@ -56,6 +63,7 @@
     "time": ""
   },
   {
+    "id": "2b3c4d5e-6f7g-8h9i-0j1k-l2m3n4o5p6q7",
     "date": "27.03.2026",
     "lineup": "Trio",
     "venue": "Old Mates",
@@ -64,6 +72,7 @@
     "time": ""
   },
   {
+    "id": "3c4d5e6f-7g8h-9i0j-1k2l-m3n4o5p6q7r8",
     "date": "28.03.2026",
     "lineup": "Trio",
     "venue": "Old Mates",
