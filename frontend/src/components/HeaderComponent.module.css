@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
-  background: rgb(211, 153, 55);
-  color: white;
+  background: #976c20;
+  color: #ffffff;
   position: fixed;
   height: var(--header-height);
   top: 0;
