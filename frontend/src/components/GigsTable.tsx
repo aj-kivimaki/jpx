@@ -16,16 +16,6 @@ interface GigsTable {
 }
 
 const GigsTable: React.FC<GigsTable> = () => {
-  /*  const { data, loading, error } = useFetch(
-    'https://artificial-duck-jpx-589d39ef.koyeb.app/api/gigs',
-    {
-      withCredentials: true,
-    }
-  );
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>; */
-
   return (
     <div>
       <table className={styles.gigsTable}>
