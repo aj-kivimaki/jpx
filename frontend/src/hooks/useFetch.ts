@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios, { type AxiosRequestConfig, AxiosError } from 'axios';
 
-interface UseFetchOptions extends AxiosRequestConfig {}
-
 interface UseFetchResult<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
 }
 
-function useFetch<T = any>(
+function useFetch<T = unknown>(
   url: string,
-  options: UseFetchOptions = {},
+  options: AxiosRequestConfig = {},
   retries: number = 2
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
