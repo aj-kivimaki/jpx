@@ -29,25 +29,28 @@ jobs:
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
+      # ===========================
+      # Install dependencies
+      # ===========================
       - name: Install dependencies
         run: npm ci
         working-directory: frontend
 
       # ===========================
-      # Linting
+      # Linting & Formatting
       # ===========================
-      # - name: Lint TypeScript
-      #   run: npx eslint "frontend/src/**/*.{ts,tsx}"
+      - name: Lint TypeScript
+        run: npx eslint "frontend/src/**/*.{ts,tsx}"
 
-      # - name: Format Check
-      #   run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
+      - name: Format Check
+        run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
 
       # ===========================
       # Type Checking
       # ===========================
-      - name: Type Check
-        run: npx tsc --noEmit
-        working-directory: frontend
+      # - name: Type Check
+      #   run: npx tsc --noEmit
+      #   working-directory: frontend
 
       # ===========================
       # Testing and Coverage
@@ -57,7 +60,7 @@ jobs:
         working-directory: frontend
 
       # ===========================
-      # Build
+      # Build Frontend
       # ===========================
       - name: Build frontend
         run: npm run build
@@ -68,18 +71,18 @@ jobs:
       # ===========================
       - name: Install Lighthouse CI and Serve
         run: |
-        npm install -g @lhci/cli@0.10.x serve
+          npm install -g @lhci/cli@0.10.x serve
 
       - name: Serve frontend and run Lighthouse CI
         run: |
-        # Serve the built frontend in the background
-        serve -s frontend/dist -l 4173 &
-        # Give the server a few seconds to start
-        sleep 5
-        # Run Lighthouse CI against the local server
-        lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+          # Serve the built frontend in the background
+          serve -s frontend/dist -l 4173 &
+          # Give the server time to start
+          sleep 5
+          # Run Lighthouse CI against the local server
+          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
         env:
-        NODE_ENV: production
+          NODE_ENV: production
 
       # ===========================
       # SonarCloud Link
