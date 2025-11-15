@@ -45,7 +45,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          echo "View SonarCloud analysis for this PR: https://sonarcloud.io/project/branches?id=YOUR_PROJECT_KEY&pullRequest=${PR_NUMBER}"
+          echo "View SonarCloud analysis for this PR: https://sonarcloud.io/project/branches?id=aj-kivimaki_jpx&pullRequest=${PR_NUMBER}"
 
       - name: Deploy to Netlify
         if: success()
