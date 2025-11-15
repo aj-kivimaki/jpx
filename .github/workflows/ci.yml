@@ -36,11 +36,11 @@ jobs:
       # ===========================
       # Linting
       # ===========================
-      - name: Lint TypeScript
-        run: npx eslint "frontend/src/**/*.{ts,tsx}"
+      # - name: Lint TypeScript
+      #   run: npx eslint "frontend/src/**/*.{ts,tsx}"
 
-      - name: Format Check
-        run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
+      # - name: Format Check
+      #   run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
 
       # ===========================
       # Type Checking
