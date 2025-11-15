@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for PR analysis
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,19 +37,15 @@ jobs:
         working-directory: frontend
         run: npx vitest run --coverage
 
-      # ------------------------------
-      # SonarCloud static code analysis
-      # ------------------------------
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        continue-on-error: true
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build frontend
         working-directory: frontend
         run: npm run build
+
+      - name: SonarCloud PR Link
+        if: github.event_name == 'pull_request'
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          echo "View SonarCloud analysis for this PR: https://sonarcloud.io/project/branches?id=YOUR_PROJECT_KEY&pullRequest=${PR_NUMBER}"
 
       - name: Deploy to Netlify
         if: success()
