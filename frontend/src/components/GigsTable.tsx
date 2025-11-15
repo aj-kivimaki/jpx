@@ -9,6 +9,7 @@ interface Gig {
   venue: string;
   city?: string;
   description?: string;
+  time?: string;
 }
 
 interface GigsTable {
@@ -33,10 +34,16 @@ const GigsTable: React.FC<GigsTable> = () => {
           {data &&
             data.map((gig: Gig, index: Key | null | undefined) => (
               <tr key={index}>
-                <td className={styles.gigsDateCell}>{gig.date}</td>
+                <td className={styles.gigsDateCell}>
+                  {gig.date}{' '}
+                  {gig.time && <span>{gig.time}</span>}
+                </td>
+
                 <td className={styles.gigsLineupCell}>{gig.lineup}</td>
                 <td>{gig.venue}</td>
-                {gig.city ? <td className={styles.gigsCityCell}>{gig.city}</td> : null}
+                {gig.city ? (
+                  <td className={styles.gigsCityCell}>{gig.city}</td>
+                ) : null}
                 {gig.description ? <td>{gig.description}</td> : null}
               </tr>
             ))}

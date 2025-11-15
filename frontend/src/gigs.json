@@ -1,72 +1,74 @@
 [
   {
-    "date": "14.11.2025",
-    "lineup": "Bändi",
-    "venue": "Yksityistilaisuus",
-    "city": "",
-    "description": ""
-  },
-  {
     "date": "21.11.2025",
     "lineup": "Bändi",
     "venue": "Storyville",
     "city": "Helsinki",
-    "description": ""
+    "description": "",
+    "time": "23:30"
   },
   {
     "date": "22.11.2025",
     "lineup": "Bändi",
     "venue": "Tapahtumatalo Metsopirtti",
     "city": "Hartola",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "29.11.2025",
     "lineup": "Soolo",
     "venue": "Yksityistilaisuus",
     "city": "",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "19.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "20.12.2025",
     "lineup": "Duo",
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "13.03.2026",
     "lineup": "Bändi",
     "venue": "Yksityistilaisuus",
     "city": "",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "26.03.2026",
     "lineup": "Trio",
     "venue": "Mesta",
     "city": "Pyhä",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "27.03.2026",
     "lineup": "Trio",
     "venue": "Old Mates",
     "city": "Levi",
-    "description": ""
+    "description": "",
+    "time": ""
   },
   {
     "date": "28.03.2026",
     "lineup": "Trio",
     "venue": "Old Mates",
     "city": "Levi",
-    "description": ""
+    "description": "",
+    "time": ""
   }
 ]

@@ -26,7 +26,7 @@ const Header = () => {
           <div className={styles.logo}>
             <img src="/images/logo.webp" width={'45px'} alt="Logo" />
           </div>
-          <h1 className={styles.title}>J. Partynen</h1>
+          <h1 className={styles.nametitle}>J. Partynen</h1>
         </div>
         {/* Mobile Menu Button */}
         <div className={styles.mobileMenuButton} onClick={toggleMenu}>
