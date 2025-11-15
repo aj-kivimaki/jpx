@@ -10,12 +10,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  frontend:
+  # ===========================
+  # Setup shared job to install dependencies
+  # ===========================
+  setup:
     runs-on: ubuntu-latest
-    env:
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
+    outputs:
+      node-modules-cache: ${{ steps.cache-node-modules.outputs.cache-hit }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -26,45 +27,135 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
 
-      # ===========================
-      # Install dependencies
-      # ===========================
+      - name: Cache Node modules
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            frontend-node-modules-
+
       - name: Install dependencies
         run: npm ci --prefix frontend
 
-      # ===========================
-      # Linting & Formatting
-      # ===========================
+      - name: Cache Vite build
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules/.vite
+          key: vite-cache-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            vite-cache-
+
+  # ===========================
+  # Lint job
+  # ===========================
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Restore Node modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+
       - name: Lint TypeScript
-        run: npm run lint --prefix frontend
+        run: npm run lint --prefix frontend -- --max-warnings=0
 
       - name: Format Check
         run: npm run format:check --prefix frontend
 
-      # ===========================
-      # Type Checking
-      # ===========================
+  # ===========================
+  # Type-check job
+  # ===========================
+  typecheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Restore Node modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+
       - name: Type Check
         run: npm run typecheck --prefix frontend
 
-      # ===========================
-      # Testing and Coverage
-      # ===========================
+  # ===========================
+  # Test job with coverage
+  # ===========================
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Restore Node modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+
       - name: Run tests with coverage
         run: npm run test --prefix frontend
 
-      # ===========================
-      # Build Frontend
-      # ===========================
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: frontend/coverage
+
+  # ===========================
+  # Build + Lighthouse + Deploy job
+  # Runs after lint, typecheck, test succeed
+  # ===========================
+  build-deploy:
+    needs: [lint, typecheck, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Restore Node modules
+        uses: actions/cache@v3
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+
+      # Build frontend
       - name: Build frontend
         run: npm run build --prefix frontend
 
-      # ===========================
       # Lighthouse CI
-      # ===========================
       - name: Install Lighthouse CI and Serve
         run: |
           npm install -g @lhci/cli@0.10.x serve
@@ -77,9 +168,7 @@ jobs:
         env:
           NODE_ENV: production
 
-      # ===========================
-      # SonarCloud Link
-      # ===========================
+      # SonarCloud link
       - name: SonarCloud Link
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -89,11 +178,9 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # ===========================
-      # Deploy to Netlify
-      # ===========================
+      # Deploy to Netlify (only on main branch)
       - name: Deploy to Netlify
-        if: success()
+        if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: frontend/dist
