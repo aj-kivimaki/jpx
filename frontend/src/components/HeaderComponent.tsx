@@ -3,7 +3,7 @@ import styles from './HeaderComponent.module.css';
 import useIsScrolling from '../hooks/useIsScrolling';
 
 const Header = () => {
-  const isScrolling = useIsScrolling(100);
+  const isScrolling = useIsScrolling();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {

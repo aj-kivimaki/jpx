@@ -7,11 +7,12 @@
 }
 
 .gigsCard {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(43, 43, 43);
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 1400px;
+  padding: 2rem;
 }
 
 .gigsTitle {

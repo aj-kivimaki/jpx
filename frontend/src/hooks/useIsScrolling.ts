@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
  * @param offset - Number of pixels to scroll before returning true (default: 10)
  * @returns boolean - True if scrolled past the offset
  */
-export default function useIsScrolling(offset: number = 10): boolean {
+export default function useIsScrolling(offset: number = 1): boolean {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
   useEffect(() => {

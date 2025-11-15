@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
-  background: #976c20;
+  background: rgb(151, 108, 32);
   color: #ffffff;
   position: fixed;
   height: var(--header-height);
@@ -36,7 +36,7 @@
 }
 
 .scrolled {
-  background: rgba(211, 153, 55, 0.9);
+  background: rgba(151, 108, 32, 0.95);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition:
     background-color 0.3s,

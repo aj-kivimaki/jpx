@@ -1,6 +1,6 @@
 :root {
-  --color-bg: #f4f4f4;
-  --color-text: #333;
+  --color-bg: rgb(34, 34, 34);
+  --color-text: #fff;
   --header-height: 53px; /* desktop header height */
 }
 
