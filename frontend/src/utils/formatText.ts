@@ -9,7 +9,7 @@ const formatText = (text: unknown): string => {
 
   const s = String(text);
 
-  return s.trim().replace(/\s+/g, ' ');
+  return s.trim().replaceAll(/\s+/g, ' ');
 };
 
 export default formatText;
