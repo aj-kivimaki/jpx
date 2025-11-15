@@ -33,40 +33,34 @@ jobs:
       # Install dependencies
       # ===========================
       - name: Install dependencies
-        run: npm ci
-        working-directory: frontend
+        run: npm ci --prefix frontend
 
       # ===========================
       # Linting & Formatting
       # ===========================
       - name: Lint TypeScript
         run: npx eslint "frontend/src/**/*.{ts,tsx}"
-        working-directory: frontend
 
       - name: Format Check
         run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
-        working-directory: frontend
 
       # ===========================
       # Type Checking
       # ===========================
       - name: Type Check
-        run: npx tsc --noEmit
-        working-directory: frontend
+        run: npx tsc --noEmit --project frontend/tsconfig.json
 
       # ===========================
       # Testing and Coverage
       # ===========================
       - name: Run tests with coverage
-        run: npx vitest run --coverage --run
-        working-directory: frontend
+        run: npx vitest run --coverage --run --config frontend/vitest.config.ts
 
       # ===========================
       # Build Frontend
       # ===========================
       - name: Build frontend
-        run: npm run build
-        working-directory: frontend
+        run: npm run build --prefix frontend
 
       # ===========================
       # Lighthouse CI
@@ -77,11 +71,8 @@ jobs:
 
       - name: Serve frontend and run Lighthouse CI
         run: |
-          # Serve the built frontend in the background
           serve -s frontend/dist -l 4173 &
-          # Give the server a few seconds to start
           sleep 5
-          # Run Lighthouse CI against the local server
           lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
         env:
           NODE_ENV: production
