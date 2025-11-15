@@ -33,14 +33,51 @@ jobs:
         run: npm ci
         working-directory: frontend
 
+      # ===========================
+      # Linting
+      # ===========================
+      - name: Lint TypeScript
+        run: npx eslint "frontend/src/**/*.{ts,tsx}"
+
+      - name: Format Check
+        run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
+
+      # ===========================
+      # Type Checking
+      # ===========================
+      - name: Type Check
+        run: npx tsc --noEmit
+        working-directory: frontend
+
+      # ===========================
+      # Testing and Coverage
+      # ===========================
       - name: Run tests with coverage
         run: npx vitest run --coverage --run
         working-directory: frontend
 
+      # ===========================
+      # Build
+      # ===========================
       - name: Build frontend
         run: npm run build
         working-directory: frontend
 
+      # ===========================
+      # Lighthouse CI
+      # ===========================
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.10.x
+
+      - name: Run Lighthouse CI
+        run: lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+        working-directory: frontend
+        env:
+          NODE_ENV: production
+
+      # ===========================
+      # SonarCloud Link
+      # ===========================
       - name: SonarCloud Link
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -50,6 +87,9 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
+      # ===========================
+      # Deploy to Netlify
+      # ===========================
       - name: Deploy to Netlify
         if: success()
         uses: nwtgck/actions-netlify@v1.2
