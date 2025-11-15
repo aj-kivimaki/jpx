@@ -22,24 +22,39 @@ const Header = () => {
   return (
     <header className={`${styles.header} ${isScrolling && styles.scrolled}`}>
       <div className={styles.container}>
-        <div className={styles.title} onClick={() => scrollToSection('top')}>
+        <button className={styles.title} onClick={() => scrollToSection('top')}>
           <div className={styles.logo}>
             <img src="/images/logo.webp" width={'45px'} alt="Logo" />
           </div>
           <h1 className={styles.nametitle}>J. Partynen</h1>
-        </div>
+        </button>
         {/* Mobile Menu Button */}
-        <div
+        <button
           className={`${styles.mobileMenuButton} ${isOpen ? styles.paddingTop : ''}`}
           onClick={toggleMenu}
         >
           {isOpen ? '✖' : '☰'}
-        </div>
+        </button>
         {/* Mobile / Desktop Menu */}
         <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
-          <button onClick={() => scrollToSection('gigs')}>KEIKAT</button>
-          <button onClick={() => scrollToSection('info')}>INFO</button>
-          <button onClick={() => scrollToSection('contact')}>YHTEYS</button>
+          <button
+            onClick={() => scrollToSection('gigs')}
+            onKeyDown={() => scrollToSection('gigs')}
+          >
+            KEIKAT
+          </button>
+          <button
+            onClick={() => scrollToSection('info')}
+            onKeyDown={() => scrollToSection('info')}
+          >
+            INFO
+          </button>
+          <button
+            onClick={() => scrollToSection('contact')}
+            onKeyDown={() => scrollToSection('contact')}
+          >
+            YHTEYS
+          </button>
         </nav>
       </div>
     </header>

@@ -10,7 +10,6 @@ import './components/styles/global.css';
 const App = () => {
   return (
     <div>
-      <title>J. Partynen</title>
       <SocialSidebar />
       <Header />
       <Banner />

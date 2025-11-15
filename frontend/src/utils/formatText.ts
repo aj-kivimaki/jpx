@@ -8,7 +8,7 @@ const formatText = (text: unknown): string => {
   if (text === null || text === undefined) return '';
 
   const s = String(text);
-  return s.trim().replace(/\s+/g, ' ');
+  return s.trim().replaceAll(/\s+/g, ' ');
 };
 
 export default formatText;

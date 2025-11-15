@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for SonarCloud PR analysis
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,9 +33,18 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Run tests
+      - name: Run tests with coverage
         working-directory: frontend
-        run: npm test --silent
+        run: npm test --silent -- --coverage
+
+      # ------------------------------
+      # SonarCloud static code analysis
+      # ------------------------------
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build frontend
         working-directory: frontend
