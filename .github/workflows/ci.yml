@@ -30,22 +30,22 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        working-directory: frontend
         run: npm ci
+        working-directory: frontend
 
       - name: Run tests with coverage
+        run: npx vitest run --coverage --run
+        # --run ensures CI mode
         working-directory: frontend
-        run: npx vitest run --coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
-        working-directory: frontend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build frontend
-        working-directory: frontend
         run: npm run build
+        working-directory: frontend
 
       - name: SonarCloud Link
         run: |
