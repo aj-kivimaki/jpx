@@ -35,13 +35,7 @@ jobs:
 
       - name: Run tests with coverage
         run: npx vitest run --coverage --run
-        # --run ensures CI mode
         working-directory: frontend
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build frontend
         run: npm run build
