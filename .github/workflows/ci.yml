@@ -39,22 +39,23 @@ jobs:
       # Linting & Formatting
       # ===========================
       - name: Lint TypeScript
-        run: npx eslint "frontend/src/**/*.{ts,tsx}"
+        run: npm run lint --prefix frontend
 
       - name: Format Check
-        run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
+        run: npm run format:check --prefix frontend
 
       # ===========================
       # Type Checking
       # ===========================
       - name: Type Check
-        run: npx tsc --noEmit --project frontend/tsconfig.json
+        run: npm run typecheck --prefix frontend
 
       # ===========================
       # Testing and Coverage
       # ===========================
       - name: Run tests with coverage
-        run: npx vitest run --coverage --run --config frontend/vitest.config.ts
+        run: npm run test --prefix frontend
+        # Make sure your package.json has "test": "vitest run --coverage --run --config vitest.config.ts"
 
       # ===========================
       # Build Frontend
