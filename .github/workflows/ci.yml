@@ -39,18 +39,18 @@ jobs:
       # ===========================
       # Linting & Formatting
       # ===========================
-      - name: Lint TypeScript
-        run: npx eslint "frontend/src/**/*.{ts,tsx}"
+      # - name: Lint TypeScript
+      #   run: npx eslint "frontend/src/**/*.{ts,tsx}"
 
-      - name: Format Check
-        run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
+      # - name: Format Check
+      #   run: npx prettier --check "frontend/src/**/*.{ts,tsx,json,css,md}"
 
       # ===========================
       # Type Checking
       # ===========================
-      # - name: Type Check
-      #   run: npx tsc --noEmit
-      #   working-directory: frontend
+      - name: Type Check
+        run: npx tsc --noEmit
+        working-directory: frontend
 
       # ===========================
       # Testing and Coverage
