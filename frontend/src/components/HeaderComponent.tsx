@@ -29,7 +29,10 @@ const Header = () => {
           <h1 className={styles.nametitle}>J. Partynen</h1>
         </div>
         {/* Mobile Menu Button */}
-        <div className={styles.mobileMenuButton} onClick={toggleMenu}>
+        <div
+          className={`${styles.mobileMenuButton} ${isOpen ? styles.paddingTop : ''}`}
+          onClick={toggleMenu}
+        >
           {isOpen ? '✖' : '☰'}
         </div>
         {/* Mobile / Desktop Menu */}
