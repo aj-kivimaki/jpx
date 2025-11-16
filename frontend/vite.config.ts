@@ -9,31 +9,4 @@ export default defineConfig({
       },
     }),
   ],
-
-  // Keep default outDir = "dist" for the main app
-  build: {
-    outDir: 'dist',
-
-    rollupOptions: {
-      input: {
-        main: 'index.html', // normal app
-        admin: 'src/admin.js', // netlify cms
-      },
-      output: {
-        // Put CMS build assets where Netlify expects admin files
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'admin.js') {
-            return 'admin/[name].js';
-          }
-          return 'assets/[name]-[hash][extname]';
-        },
-        entryFileNames: (chunk) => {
-          if (chunk.name === 'admin') {
-            return 'admin/admin.js';
-          }
-          return 'assets/[name]-[hash].js';
-        },
-      },
-    },
-  },
 });
