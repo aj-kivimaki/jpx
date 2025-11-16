@@ -12,8 +12,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'static-admin', // your folder outside public
-          dest: '.', // copies into dist/static-admin
+          src: 'admin', // your folder outside public
+          dest: '.', // copies into dist/admin
         },
       ],
     }),
