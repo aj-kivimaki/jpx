@@ -7,22 +7,20 @@
   <body>
     <h1>Loading CMS…</h1>
 
+    <!-- 1️⃣ Prevent automatic initialization -->
     <script>
-      // Prevent CMS auto-init
       window.CMS_MANUAL_INIT = true;
     </script>
 
-    <script>
-      // Load Decap CMS via CDN and initialize only after it loads
-      const cmsScript = document.createElement('script');
-      cmsScript.src = 'https://unpkg.com/decap-cms@latest/dist/decap-cms.js';
-      cmsScript.onload = () => {
-        CMS.init({
-          config: '/admin/config.yml',
-          identity_url: 'https://jpartynen.netlify.app/.netlify/identity',
-        });
-      };
-      document.body.appendChild(cmsScript);
+    <!-- 2️⃣ Load Decap CMS (ESM) -->
+    <script type="module">
+      import CMS from 'https://unpkg.com/decap-cms-app@3.9.0/dist/esm/index.js';
+
+      // 3️⃣ Initialize CMS manually
+      CMS.init({
+        config: '/admin/config.yml', // Path to your config file
+        identity_url: 'https://jpartynen.netlify.app/.netlify/identity', // Netlify Identity endpoint
+      });
     </script>
   </body>
 </html>

@@ -6,11 +6,6 @@ backend:
 media_folder: 'public/images' # Folder in your repo for uploaded media
 public_folder: '/images' # Public path used in HTML
 
-media_library:
-  name: uploadcare
-  config:
-    publicKey: 'demopublickey' # For testing, you can replace with your own service later
-
 collections:
   - name: 'gigs'
     label: 'Gigs'
