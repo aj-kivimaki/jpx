@@ -1,41 +1,100 @@
-.gigsTable {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;
+.card {
+  display: flex;
+  border-radius: 5px;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  background-color: rgb(63, 63, 63);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  gap: 1.5rem;
 }
 
-.gigsTable td {
-  padding: 1rem 2rem;
-  font-family: monospace;
-  font-size: 1.125rem;
+.leftColumn {
+  border-right: solid 1px #888;
+  padding-right: 3rem;
 }
 
-@media (max-width: 868px) {
-  .gigsTable,
-  .gigsTable tbody,
-  .gigsTable tr,
-  .gigsTable td {
-    display: block;
-    width: 100%;
+.date,
+.time {
+  display: flex;
+}
+
+.date {
+  font-size: 1.8rem;
+  padding-bottom: 0.5rem;
+}
+
+.dateIcon {
+  margin-right: 1.5rem;
+}
+
+.time {
+  font-size: 0.85rem;
+  color: #c2c2c2;
+  padding: 0.5rem 0 0 4.5rem;
+}
+
+.venueIcon,
+.lineupIcon,
+.descriptionIcon {
+  margin-right: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.cityIcon {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lineup,
+.venue,
+.city,
+.description {
+  display: flex;
+}
+
+.venue,
+.lineup {
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.descriptionIcon {
+  margin-right: 1.5rem;
+  color: #f39c12;
+}
+
+.city {
+  font-size: 0.9rem;
+  color: #c2c2c2;
+  margin-left: 3rem;
+}
+
+.description {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .card {
+    flex-direction: column;
   }
 
-  .gigsTable tr {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border-radius: 5px;
-    background-color: rgb(43, 43, 43);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  .leftColumn {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: solid 1px #888;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
   }
 
-  .gigsTable td {
-    padding: 0.5rem 0;
-    text-align: left;
-    position: relative;
-    border-bottom: none;
-  }
-
-  .gigsDateCell {
-    font-weight: bold;
-    margin-bottom: 0.75rem;
+  .time {
+    margin: 0;
+    padding: 0;
   }
 }

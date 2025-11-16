@@ -5,7 +5,7 @@ const Gigs = () => {
   return (
     <div id="gigs" className={styles.gigs}>
       <h2 className={styles.gigsTitle}>KEIKAT</h2>
-      <div className={styles.gigsCard}>
+      <div className={styles.gigsCardContainer}>
         <GigsTable data={null} />
       </div>
     </div>

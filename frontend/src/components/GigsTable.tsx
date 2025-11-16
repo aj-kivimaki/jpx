@@ -1,11 +1,16 @@
 import data from '../gigs.json';
 import styles from './GigsTable.module.css';
+import { IoIosPin } from 'react-icons/io';
+import { GiMicrophone } from 'react-icons/gi';
+import { CiCalendar } from 'react-icons/ci';
+import { FaBuildingColumns } from 'react-icons/fa6';
+import { FaExclamation } from 'react-icons/fa';
 
 interface Gig {
   id: string;
   date: string;
   lineup: string;
-  venue: string;
+  venue?: string;
   city?: string;
   description?: string;
   time?: string;
@@ -17,26 +22,64 @@ interface GigsTable {
 
 const GigsTable: React.FC<GigsTable> = () => {
   return (
-    <div>
-      <table className={styles.gigsTable}>
-        <tbody>
-          {data?.map((gig: Gig) => (
-            <tr key={gig.id}>
-              <td className={styles.gigsDateCell}>
-                {gig.date} {gig.time && <span>{gig.time}</span>}
-              </td>
+    <>
+      {data?.map((gig: Gig) => (
+        <div key={gig.id} className={styles.card}>
+          <div className={styles.leftColumn}>
+            <div className={styles.date}>
+              <div className={styles.dateIcon}>
+                <CiCalendar />
+              </div>
+              <div>{gig.date}</div>
+            </div>
+            {gig.time && (
+              <div className={styles.time}>
+                <div className={styles.gigsTime}>{gig.time}</div>
+              </div>
+            )}
+          </div>
+          <div className={styles.rightColumn}>
+            {gig.venue && (
+              <div className={styles.venue}>
+                <>
+                  <div className={styles.venueIcon}>
+                    <FaBuildingColumns />
+                  </div>
+                  <div>{gig.venue}</div>
+                </>
+              </div>
+            )}
 
-              <td className={styles.gigsLineupCell}>{gig.lineup}</td>
-              <td>{gig.venue}</td>
-              {gig.city ? (
-                <td className={styles.gigsCityCell}>{gig.city}</td>
-              ) : null}
-              {gig.description ? <td>{gig.description}</td> : null}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            {gig?.city && (
+              <div className={styles.city}>
+                <>
+                  <div className={styles.cityIcon}>
+                    <IoIosPin />
+                  </div>
+                  <div>{gig.city}</div>
+                </>
+              </div>
+            )}
+            <div className={styles.lineup}>
+              <div className={styles.lineupIcon}>
+                <GiMicrophone />
+              </div>
+              <div>{gig.lineup}</div>
+            </div>
+            {gig?.description && (
+              <div className={styles.description}>
+                <>
+                  <div className={styles.descriptionIcon}>
+                    <FaExclamation />
+                  </div>
+                  <div>{gig?.description}</div>
+                </>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </>
   );
 };
 
