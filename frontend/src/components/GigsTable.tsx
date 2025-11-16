@@ -39,6 +39,12 @@ const GigsTable: React.FC<GigsTable> = () => {
             )}
           </div>
           <div className={styles.rightColumn}>
+            <div className={styles.lineup}>
+              <div className={styles.lineupIcon}>
+                <GiMicrophone />
+              </div>
+              <div>{gig.lineup}</div>
+            </div>
             {gig.venue && (
               <div className={styles.venue}>
                 <>
@@ -60,12 +66,6 @@ const GigsTable: React.FC<GigsTable> = () => {
                 </>
               </div>
             )}
-            <div className={styles.lineup}>
-              <div className={styles.lineupIcon}>
-                <GiMicrophone />
-              </div>
-              <div>{gig.lineup}</div>
-            </div>
             {gig?.description && (
               <div className={styles.description}>
                 <>

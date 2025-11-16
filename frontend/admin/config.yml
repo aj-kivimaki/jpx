@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
   branch: main # Git branch to commit to
+  identity_url: 'https://jpartynen.netlify.app/.netlify/identity'
 
 media_folder: 'public/images' # Folder in your repo for uploaded media
 public_folder: '/images' # Public path used in HTML
