@@ -1,12 +1,14 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Admin</title>
-  </head>
-  <body>
-    <h1>Loading CMS…</h1>
+<script>
+  // Prevent CMS from auto-initializing before we set the backend URL
+  window.CMS_MANUAL_INIT = true;
+</script>
 
-    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
-  </body>
-</html>
+<script src="https://unpkg.com/decap-cms-app@3.9.0/dist/decap-cms.js"></script>
+
+<script>
+  // Initialize CMS manually, set identity URL if needed
+  CMS.init({
+    config: '/admin/config.yml',
+    identity_url: 'https://jpartynen.netlify.app/.netlify/identity',
+  });
+</script>
