@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: aj-kivimaki/jpx
+  branch: main
+  auth_type: implicit
+
+media_folder: 'public/images'
+public_folder: '/images'
+
+collections:
+  - name: 'gigs'
+    label: 'Gigs'
+    folder: 'content/gigs'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    format: json
+    fields:
+      - { label: 'ID', name: 'id', widget: 'uuid', default: 'uuidv4' }
+      - { label: 'Date', name: 'date', widget: 'datetime' }
+      - { label: 'Lineup', name: 'lineup', widget: 'string' }
+      - { label: 'Venue', name: 'venue', widget: 'string' }
+      - { label: 'City', name: 'city', widget: 'string' }
+      - {
+          label: 'Description',
+          name: 'description',
+          widget: 'text',
+          required: false,
+        }
+      - { label: 'Time', name: 'time', widget: 'string', required: false }
