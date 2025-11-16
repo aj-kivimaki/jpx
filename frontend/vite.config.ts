@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
@@ -10,13 +9,30 @@ export default defineConfig({
       },
     }),
   ],
+
+  // Keep default outDir = "dist" for the main app
   build: {
+    outDir: 'dist',
+
     rollupOptions: {
       input: {
-        admin: 'src/admin.js',
+        main: 'index.html', // normal app
+        admin: 'src/admin.js', // netlify cms
       },
       output: {
-        dir: 'frontend/public/admin',
+        // Put CMS build assets where Netlify expects admin files
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'admin.js') {
+            return 'admin/[name].js';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
+        entryFileNames: (chunk) => {
+          if (chunk.name === 'admin') {
+            return 'admin/admin.js';
+          }
+          return 'assets/[name]-[hash].js';
+        },
       },
     },
   },
