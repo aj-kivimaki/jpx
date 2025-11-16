@@ -7,15 +7,22 @@
   <body>
     <h1>Loading CMS…</h1>
 
-    <script type="module">
+    <script>
+      // Prevent CMS auto-init
       window.CMS_MANUAL_INIT = true;
-      const { default: CMS } = await import(
-        'https://unpkg.com/decap-cms-app@3.9.0/dist/decap-cms.js'
-      );
-      CMS.init({
-        config: '/admin/config.yml',
-        identity_url: 'https://jpartynen.netlify.app/.netlify/identity',
-      });
+    </script>
+
+    <script>
+      // Load Decap CMS via CDN and initialize only after it loads
+      const cmsScript = document.createElement('script');
+      cmsScript.src = 'https://unpkg.com/decap-cms-app@3.9.0/dist/decap-cms.js';
+      cmsScript.onload = () => {
+        CMS.init({
+          config: '/admin/config.yml',
+          identity_url: 'https://jpartynen.netlify.app/.netlify/identity',
+        });
+      };
+      document.body.appendChild(cmsScript);
     </script>
   </body>
 </html>
