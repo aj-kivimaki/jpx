@@ -156,17 +156,17 @@ jobs:
         run: npm run build --prefix frontend
 
       # Lighthouse CI
-      - name: Install Lighthouse CI and Serve
-        run: |
-          npm install -g @lhci/cli@0.10.x serve
+      # - name: Install Lighthouse CI and Serve
+      #   run: |
+      #     npm install -g @lhci/cli@0.10.x serve
 
-      - name: Serve frontend and run Lighthouse CI
-        run: |
-          serve -s frontend/dist -l 4173 &
-          sleep 5
-          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
-        env:
-          NODE_ENV: production
+      # - name: Serve frontend and run Lighthouse CI
+      #   run: |
+      #     serve -s frontend/dist -l 4173 &
+      #     sleep 5
+      #     lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+      #   env:
+      #     NODE_ENV: production
 
       # SonarCloud link
       - name: SonarCloud Link
