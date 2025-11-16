@@ -7,18 +7,13 @@
   <body>
     <h1>Loading CMS…</h1>
 
-    <!-- 1️⃣ Prevent automatic initialization -->
+    <!-- Load Netlify CMS 2.x via CDN -->
+    <script src="https://unpkg.com/netlify-cms-app@2.15.72/dist/netlify-cms.js"></script>
+
     <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
-
-    <!-- 2️⃣ Load Decap CMS (ESM) -->
-    <script type="module">
-      import CMS from 'https://unpkg.com/decap-cms-app@3.9.0/dist/esm/index.js';
-
-      // 3️⃣ Initialize CMS manually
+      // Optional: manual init (can skip if config.yml is in /admin/)
       CMS.init({
-        config: '/admin/config.yml', // Path to your config file
+        config: '/admin/config.yml', // path to your CMS config
         identity_url: 'https://jpartynen.netlify.app/.netlify/identity', // Netlify Identity endpoint
       });
     </script>
