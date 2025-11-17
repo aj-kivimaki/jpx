@@ -47,33 +47,27 @@ const GigsTable: React.FC<GigsTable> = () => {
             </div>
             {gig.venue && (
               <div className={styles.venue}>
-                <>
-                  <div className={styles.venueIcon}>
-                    <FaBuildingColumns />
-                  </div>
-                  <div>{gig.venue}</div>
-                </>
+                <div className={styles.venueIcon}>
+                  <FaBuildingColumns />
+                </div>
+                <div>{gig.venue}</div>
               </div>
             )}
 
             {gig?.city && (
               <div className={styles.city}>
-                <>
-                  <div className={styles.cityIcon}>
-                    <IoIosPin />
-                  </div>
-                  <div>{gig.city}</div>
-                </>
+                <div className={styles.cityIcon}>
+                  <IoIosPin />
+                </div>
+                <div>{gig.city}</div>
               </div>
             )}
             {gig?.description && (
               <div className={styles.description}>
-                <>
-                  <div className={styles.descriptionIcon}>
-                    <FaExclamation />
-                  </div>
-                  <div>{gig?.description}</div>
-                </>
+                <div className={styles.descriptionIcon}>
+                  <FaExclamation />
+                </div>
+                <div>{gig?.description}</div>
               </div>
             )}
           </div>
