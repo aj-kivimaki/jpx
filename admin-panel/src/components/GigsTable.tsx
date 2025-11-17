@@ -1,11 +1,10 @@
 import data from '../gigs.json';
 import styles from './GigsTable.module.css';
-import { IoLocationOutline } from 'react-icons/io5';
+import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import { IoTimeOutline } from 'react-icons/io5';
 
 interface Gig {
   id: string;
