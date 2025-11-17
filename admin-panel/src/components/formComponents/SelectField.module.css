@@ -16,7 +16,6 @@
   border: 1px solid #aaa;
   border-radius: 4px;
   font-size: 1rem;
-  color: #111; /* Dark text */
-  background-color: #fff; /* White background */
+  color: #111;
+  background-color: #fff;
 }
-
