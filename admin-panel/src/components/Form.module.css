@@ -1,0 +1,5 @@
+.form {
+  margin-top: var(--header-height);
+  position: relative;
+  width: 100%;
+}
