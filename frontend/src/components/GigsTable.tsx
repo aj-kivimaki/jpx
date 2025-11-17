@@ -5,6 +5,7 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
+import { IoTimeOutline } from 'react-icons/io5';
 
 interface Gig {
   id: string;
@@ -34,7 +35,10 @@ const GigsTable: React.FC<GigsTable> = () => {
             </div>
             {gig.time && (
               <div className={styles.time}>
-                <div className={styles.gigsTime}>{gig.time}</div>
+                <div className={styles.timeIcon}>
+                  <IoTimeOutline />
+                </div>
+                <div>{gig.time}</div>
               </div>
             )}
           </div>
@@ -59,7 +63,7 @@ const GigsTable: React.FC<GigsTable> = () => {
                 <div className={styles.cityIcon}>
                   <IoIosPin />
                 </div>
-                <div>{gig.city}</div>
+                <div className={styles.cityText}>{gig.city}</div>
               </div>
             )}
             {gig?.description && (

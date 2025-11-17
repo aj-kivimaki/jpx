@@ -1,7 +1,7 @@
 .card {
   display: flex;
   border-radius: 5px;
-  padding: 2rem;
+  padding: 1.75rem;
   margin-bottom: 1rem;
   background-color: rgb(63, 63, 63);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -10,39 +10,35 @@
 
 .leftColumn {
   border-right: solid 1px #888;
-  padding-right: 3rem;
-}
-
-.date,
-.time {
-  display: flex;
-}
-
-.date {
-  font-size: 1.8rem;
-  padding-bottom: 0.5rem;
+  padding-right: 4rem;
 }
 
 .dateIcon {
   margin-right: 1.5rem;
 }
 
+.date {
+  display: flex;
+  font-size: 1.8rem;
+  padding-bottom: 0.5rem;
+}
+
 .time {
-  font-size: 0.85rem;
-  color: #c2c2c2;
-  padding: 0.5rem 0 0 4.5rem;
+  display: flex;
+  color: #cdcdcd;
+  padding-left: 3.5rem;
+}
+
+.timeIcon {
+  margin-right: 0.35rem;
 }
 
 .venueIcon,
 .lineupIcon,
-.descriptionIcon {
+.descriptionIcon,
+.cityIcon {
   margin-right: 1.5rem;
   font-size: 1.25rem;
-}
-
-.cityIcon {
-  margin-right: 0.5rem;
-  font-size: 1rem;
 }
 
 .rightColumn {
@@ -68,14 +64,10 @@
   color: #f39c12;
 }
 
-.city {
-  font-size: 0.9rem;
-  color: #c2c2c2;
-  margin-left: 3rem;
-}
-
+.cityText,
 .description {
   font-size: 0.85rem;
+  color: #cdcdcd;
 }
 
 @media (max-width: 560px) {
