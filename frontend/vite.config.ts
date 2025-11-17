@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
   plugins: [
@@ -8,14 +7,6 @@ export default defineConfig({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
       },
-    }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'admin', // your folder outside public
-          dest: '.', // copies into dist/admin
-        },
-      ],
     }),
   ],
 });
