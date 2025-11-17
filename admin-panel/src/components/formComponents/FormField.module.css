@@ -1,0 +1,22 @@
+.field {
+  margin-bottom: 1rem;
+  color: #111; /* Dark text for labels */
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #111; /* Dark label text */
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #111;       /* Dark input text */
+  background-color: #fff; /* White background */
+}

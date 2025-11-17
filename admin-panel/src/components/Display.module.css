@@ -1,0 +1,13 @@
+.display {
+  width: 100%;
+  border-radius: 8px;
+  color: #111;
+}
+
+.header {
+  font-size: 2rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px 5px 0 0;
+  background-color: rgb(43, 43, 43);
+}

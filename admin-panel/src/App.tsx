@@ -1,14 +1,17 @@
-import Header from './components/HeaderComponent';
-import './components/styles/reset.css';
-import './components/styles/global.css';
 import Form from './components/Form';
+import styles from './App.module.css';
+import Display from './components/Display';
 
 function App() {
   return (
-    <>
-      <Header />
-      <Form />
-    </>
+    <div className={styles.app}>
+      <div className={styles.left}>
+        <Form />
+      </div>
+      <div className={styles.right}>
+        <Display />
+      </div>
+    </div>
   );
 }
 

@@ -1,0 +1,90 @@
+.card {
+  display: flex;
+  border-radius: 5px;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  background-color: rgb(195, 195, 195);
+  gap: 1.5rem;
+}
+
+.leftColumn {
+  border-right: solid 1px #888;
+  padding-right: 3rem;
+}
+
+.dateIcon {
+  margin-right: 1.5rem;
+}
+
+.date {
+  display: flex;
+  font-size: 1.8rem;
+  padding-bottom: 0.5rem;
+}
+
+.time {
+  display: flex;
+  color: #303030;
+  padding-left: 3.5rem;
+}
+
+.timeIcon {
+  margin-right: 0.35rem;
+}
+
+.venueIcon,
+.lineupIcon,
+.descriptionIcon,
+.cityIcon {
+  margin-right: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lineup,
+.venue,
+.city,
+.description {
+  display: flex;
+}
+
+.lineup {
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.descriptionIcon {
+  margin-right: 1.5rem;
+  color: #f39c12;
+}
+
+.cityText,
+.description {
+  font-size: 0.85rem;
+  color: #303030;
+}
+
+@media (min-width: 769px) and (max-width: 900px), (max-width: 500px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .leftColumn {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: solid 1px #888;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .time {
+    margin: 0;
+    padding: 0;
+  }
+}
