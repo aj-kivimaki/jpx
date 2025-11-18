@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import FormField from './formComponents/FormField';
-import SelectField from './formComponents/SelectField';
+import { useState } from 'react';
+import FormField from './FormInput';
+import SelectField from './FormSelect';
 import styles from './Form.module.css';
 
 const Form: React.FC = () => {

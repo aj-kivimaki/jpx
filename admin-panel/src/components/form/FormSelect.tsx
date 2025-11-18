@@ -1,7 +1,6 @@
-import React from 'react';
-import styles from './SelectField.module.css';
+import styles from './FormSelect.module.css';
 
-interface SelectFieldProps {
+interface FormSelectProps {
   label: string;
   name: string;
   value: string;
@@ -10,7 +9,7 @@ interface SelectFieldProps {
   required: boolean;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({
+const FormSelect: React.FC<FormSelectProps> = ({
   label,
   name,
   value,
@@ -21,6 +20,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   if (required) {
     label = label + ' *';
   }
+
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={name}>
@@ -43,4 +43,4 @@ const SelectField: React.FC<SelectFieldProps> = ({
   );
 };
 
-export default SelectField;
+export default FormSelect;

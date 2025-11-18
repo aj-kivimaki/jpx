@@ -1,17 +1,19 @@
-import Form from './components/Form';
+import Form from './components/form/Form';
 import styles from './App.module.css';
-import Display from './components/Display';
+import GigsDisplay from './components/display/GigsDisplay';
+import './styles/reset.css';
+import './styles/global.css';
 
 function App() {
   return (
-    <div className={styles.app}>
-      <div className={styles.left}>
+    <main className={styles.app}>
+      <section className={styles.left}>
         <Form />
-      </div>
-      <div className={styles.right}>
-        <Display />
-      </div>
-    </div>
+      </section>
+      <section className={styles.right}>
+        <GigsDisplay />
+      </section>
+    </main>
   );
 }
 

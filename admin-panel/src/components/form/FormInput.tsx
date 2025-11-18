@@ -1,7 +1,6 @@
-import React from 'react';
-import styles from './FormField.module.css';
+import styles from './FormInput.module.css';
 
-interface FormFieldProps {
+interface FormInputProps {
   label: string;
   name: string;
   value: string;
@@ -14,7 +13,7 @@ interface FormFieldProps {
   required: boolean;
 }
 
-const FormField: React.FC<FormFieldProps> = ({
+const FormInput: React.FC<FormInputProps> = ({
   label,
   name,
   value,
@@ -57,4 +56,4 @@ const FormField: React.FC<FormFieldProps> = ({
   );
 };
 
-export default FormField;
+export default FormInput;

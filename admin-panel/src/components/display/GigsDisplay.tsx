@@ -1,8 +1,8 @@
 import styles from './Display.module.css';
-import data from '../gigs.json';
+import data from '../../gigs.json';
 import GigsTable from './GigsTable';
 
-const Display = () => {
+const GigsDisplay = () => {
   return (
     <div className={styles.display}>
       <div className={styles.gigs}>
@@ -12,4 +12,4 @@ const Display = () => {
   );
 };
 
-export default Display;
+export default GigsDisplay;

@@ -1,4 +1,4 @@
-import data from '../gigs.json';
+import data from '../../gigs.json';
 import styles from './GigsTable.module.css';
 import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
 import { GiMicrophone } from 'react-icons/gi';
