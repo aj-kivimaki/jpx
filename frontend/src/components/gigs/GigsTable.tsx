@@ -1,4 +1,4 @@
-import data from '../gigs.json';
+import data from '../../gigs.json';
 import styles from './GigsTable.module.css';
 import { IoIosPin } from 'react-icons/io';
 import { GiMicrophone } from 'react-icons/gi';
