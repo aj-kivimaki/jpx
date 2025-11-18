@@ -1,4 +1,4 @@
-import styles from './Display.module.css';
+import styles from './GigsDisplay.module.css';
 import data from '../../gigs.json';
 import GigsTable from './GigsTable';
 
