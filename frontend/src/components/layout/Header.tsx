@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styles from './HeaderComponent.module.css';
-import useIsScrolling from '../hooks/useIsScrolling';
+import styles from './Header.module.css';
+import useIsScrolling from '../../hooks/useScrolling';
 
 const Header = () => {
   const isScrolling = useIsScrolling();
