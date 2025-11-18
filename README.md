@@ -82,24 +82,7 @@ The site was built specifically to meet the need for a single, easy-to-update on
 - Supabase with Authentication
 - Add, edit, delete gigs
 
-## 🔧 Installation UPDATE THIS FROM THE CHAT TOMORROW
-
-```bash
-git clone https://github.com/aj-kivimaki/jpx.git
-cd jpx
-npm install
-```
-
-Create a `.env.local` file:
-
-    VITE_SUPABASE_URL=your_supabase_url
-    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-Start the development server:
-
-```bash
-npm run dev
-```
+## 🔧 Installation
 
 ## ⚙️ Testing
 
