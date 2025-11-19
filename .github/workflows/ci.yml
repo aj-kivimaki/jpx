@@ -37,37 +37,37 @@ jobs:
         run: npm ci # installs all workspaces at root
 
   # ===========================
-# Lint job
-# ===========================
-lint:
-  needs: setup
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Restore Node modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: node-modules-${{ hashFiles('package-lock.json') }}
+  # Lint job
+  # ===========================
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Restore Node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
-    # Lint Frontend using existing config
-    - name: Lint Frontend
-      run: npx --workspace packages/frontend eslint --config packages/frontend/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+      # Lint Frontend using existing config
+      - name: Lint Frontend
+        run: npx --workspace packages/frontend eslint --config packages/frontend/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
-    # Lint Admin Panel using existing config
-    - name: Lint Admin Panel
-      run: npx --workspace packages/admin-panel eslint --config packages/admin-panel/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+      # Lint Admin Panel using existing config
+      - name: Lint Admin Panel
+        run: npx --workspace packages/admin-panel eslint --config packages/admin-panel/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
-    # Format Check Frontend
-    - name: Format Check Frontend
-      run: npm run format:check --workspace=packages/frontend
+      # Format Check Frontend
+      - name: Format Check Frontend
+        run: npm run format:check --workspace=packages/frontend
 
-    # Format Check Admin Panel
-    - name: Format Check Admin Panel
-      run: npm run format:check --workspace=packages/admin-panel
+      # Format Check Admin Panel
+      - name: Format Check Admin Panel
+        run: npm run format:check --workspace=packages/admin-panel
 
   # ===========================
   # Type-check job
