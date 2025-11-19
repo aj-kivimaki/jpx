@@ -1,4 +1,4 @@
-export type Gig = {
+export interface Gig {
   id: string;
   date: string;
   time?: string;
@@ -6,4 +6,4 @@ export type Gig = {
   venue?: string;
   city?: string;
   notes?: string;
-};
+}

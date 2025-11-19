@@ -4,8 +4,8 @@ import Banner from './components/layout/Banner';
 import Gigs from './components/gigs/Gigs';
 import Info from './components/info/Info';
 import Footer from './components/layout/Footer';
-import './styles/reset.css';
-import './styles/global.css';
+import 'shared/styles/reset.css';
+import 'shared/styles/global.css';
 
 const App = () => {
   return (

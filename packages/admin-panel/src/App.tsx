@@ -1,8 +1,8 @@
 import Form from './components/form/Form';
 import styles from './App.module.css';
 import Gigs from './components/gigs/Gigs';
-import './styles/reset.css';
-import './styles/global.css';
+import 'shared/src/styles/reset.css';
+import 'shared/src/styles/global.css';
 
 function App() {
   return (

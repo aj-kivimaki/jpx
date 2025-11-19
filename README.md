@@ -11,14 +11,15 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 
 ## 🛠 Tech Stack
 
-| Layer                  | Technology                                                                                    |
-| ---------------------- | --------------------------------------------------------------------------------------------- |
-| Frontend               | Vite • React • TypeScript • CSS Modules                                                       |
-| Backend                | Supabase (Auth + Database with Row-Level Security)                                            |
-| Database               | PostgreSQL (via Supabase)                                                                     |
-| Deployment             | Netlify                                                                                       |
-| Testing & Code Quality | Vitest • React Testing Library • Playwright/Cypress • ESLint • Prettier • Husky + lint-staged |
-| CI/CD                  | GitHub Actions                                                                                |
+| Layer        | Technology                                          |
+| ------------ | --------------------------------------------------- |
+| Frontend     | Vite • React • TypeScript • CSS Modules             |
+| Backend      | Supabase (Auth + Database with Row-Level Security)  |
+| Database     | PostgreSQL (via Supabase)                           |
+| Deployment   | Netlify                                             |
+| Testing      | Vitest • React Testing Library • Playwright/Cypress |
+| Code Quality | ESLint • Prettier • Husky + lint-staged             |
+| CI/CD        | GitHub Actions                                      |
 
 ## 📂 Project Structure
 
@@ -26,6 +27,8 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 <summary>File Tree</summary>
 
 ```text
+Monorepo
+
   /.github
     /workflows        # Separate workflows for admin-panel and frontend
 
@@ -35,8 +38,6 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
         /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
         /form         # Form components for adding gigs (e.g., Form.tsx, FormInput.tsx, FormSelect.tsx)
       /config         # Database client configuration
-      /styles         # Global styles: reset.css & global.css
-      /types          # Custom TypeScript types (e.g., Gig.ts)
 
   /frontend
     /src
@@ -46,8 +47,12 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
         /info         # Band info section (e.g., Info.tsx)
         /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
       /hooks          # Custom React hooks (e.g., useFetch.ts, useScroll.ts)
-      /styles         # Global styles: reset.css & global.css
       /utils          # Helper functions and utilities (e.g., formatText.ts)
+
+  /shared
+    /src
+      /styles         # Global styles: reset.css & global.css
+      /types          # Custom TypeScript types (e.g., Gig.ts)
 ```
 
 </details>
@@ -70,7 +75,6 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 ## 🗄️ Backend / Supabase
 
 - **Database:** PostgreSQL (via Supabase)
-
   - Table: `gigs`
 
 - **Authentication:** Supabase Magic Links (passwordless)
@@ -94,14 +98,13 @@ For setup instructions, see [INSTALL.md](./INSTALL.md)
 > Ensure dev servers are running if tests depend on live APIs
 
 - **CI/CD Pipeline:** GitHub Actions runs on every PR or push to `main`
-
-- Linting & formatting (ESLint + Prettier)
-- Type checking
-- Unit & E2E tests
-- Build
-- Performance checks (Lighthouse)
-- Code quality analysis (SonarCloud)
-- Deploy to Netlify
+  - Linting & formatting (ESLint + Prettier)
+  - Type checking
+  - Unit & E2E tests
+  - Build
+  - Performance checks (Lighthouse)
+  - Code quality analysis (SonarCloud)
+  - Deploy to Netlify
 
 - **Pre-Commit Hooks (Husky + lint-staged):**
   - Lint staged files

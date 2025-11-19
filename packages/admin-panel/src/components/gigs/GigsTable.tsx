@@ -1,21 +1,11 @@
 import data from '../../gigs.json';
 import styles from './GigsTable.module.css';
-import { IoIosPin } from 'react-icons/io';
+import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import { IoTimeOutline } from 'react-icons/io5';
-
-interface Gig {
-  id: string;
-  date: string;
-  lineup: string;
-  venue?: string;
-  city?: string;
-  description?: string;
-  time?: string;
-}
+import type { Gig } from 'shared';
 
 interface GigsTable {
   data: Gig[] | null;
@@ -61,17 +51,17 @@ const GigsTable: React.FC<GigsTable> = () => {
             {gig?.city && (
               <div className={styles.city}>
                 <div className={styles.cityIcon}>
-                  <IoIosPin />
+                  <IoLocationOutline />
                 </div>
                 <div className={styles.cityText}>{gig.city}</div>
               </div>
             )}
-            {gig?.description && (
-              <div className={styles.description}>
-                <div className={styles.descriptionIcon}>
+            {gig?.notes && (
+              <div className={styles.notes}>
+                <div className={styles.notesIcon}>
                   <FaExclamation />
                 </div>
-                <div>{gig?.description}</div>
+                <div>{gig?.notes}</div>
               </div>
             )}
           </div>

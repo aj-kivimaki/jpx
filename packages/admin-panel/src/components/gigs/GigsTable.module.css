@@ -34,7 +34,7 @@
 
 .venueIcon,
 .lineupIcon,
-.descriptionIcon,
+.notesIcon,
 .cityIcon {
   margin-right: 1.5rem;
   font-size: 1.25rem;
@@ -49,7 +49,7 @@
 .lineup,
 .venue,
 .city,
-.description {
+.notes {
   display: flex;
 }
 
@@ -58,13 +58,13 @@
   font-weight: bold;
 }
 
-.descriptionIcon {
+.notesIcon {
   margin-right: 1.5rem;
   color: #f39c12;
 }
 
 .cityText,
-.description {
+.notes {
   font-size: 0.85rem;
   color: #303030;
 }
