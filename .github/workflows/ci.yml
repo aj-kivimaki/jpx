@@ -1,4 +1,4 @@
-name: CI/CD
+name: Monorepo CI/CD
 
 on:
   push:
@@ -24,17 +24,16 @@ jobs:
         with:
           node-version: 18
 
-      - name: Cache Node modules
-        id: cache-node-modules
+      # Cache root node_modules
+      - name: Cache Root Node modules
+        id: cache-root
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-
+          key: root-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        run: npm ci # install all workspaces at root
+        run: npm ci
 
   # ===========================
   # Lint job
@@ -47,14 +46,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Restore Node modules
+
+      # Cache per workspace node_modules
+      - name: Restore Frontend Node Modules
         uses: actions/cache@v3
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          path: packages/frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
+
+      - name: Restore Admin Panel Node Modules
+        uses: actions/cache@v3
+        with:
+          path: packages/admin-panel/node_modules
+          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+
+      - name: Lint Frontend
+        run: npm run lint --workspace=packages/frontend -- --max-warnings=0
 
       - name: Lint Admin Panel
         run: npm run lint --workspace=packages/admin-panel -- --max-warnings=0
+
+      - name: Format Check Frontend
+        run: npm run format:check --workspace=packages/frontend
 
       - name: Format Check Admin Panel
         run: npm run format:check --workspace=packages/admin-panel
@@ -70,44 +83,113 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Restore Node modules
+
+      - name: Restore Frontend Node Modules
         uses: actions/cache@v3
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          path: packages/frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
+
+      - name: Restore Admin Panel Node Modules
+        uses: actions/cache@v3
+        with:
+          path: packages/admin-panel/node_modules
+          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+
+      - name: Type Check Frontend
+        run: npm run typecheck --workspace=packages/frontend
 
       - name: Type Check Admin Panel
         run: npm run typecheck --workspace=packages/admin-panel
 
   # ===========================
-  # Build + Deploy job
+  # Test job with coverage
   # ===========================
-  build-deploy:
-    needs: [lint, typecheck]
+  test:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Restore Node modules
+
+      - name: Restore Frontend Node Modules
         uses: actions/cache@v3
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          path: packages/frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
 
-      # Build admin panel
+      - name: Restore Admin Panel Node Modules
+        uses: actions/cache@v3
+        with:
+          path: packages/admin-panel/node_modules
+          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+
+      - name: Run tests Frontend
+        run: npm run test --workspace=packages/frontend
+
+      - name: Run tests Admin Panel
+        run: npm run test --workspace=packages/admin-panel
+
+      - name: Upload coverage report
+        run: |
+          mkdir -p coverage
+          cp -r packages/frontend/coverage packages/admin-panel/coverage coverage/
+
+  # ===========================
+  # Build + Deploy job
+  # ===========================
+  build-deploy:
+    needs: [lint, typecheck, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Restore per workspace node_modules
+      - name: Restore Frontend Node Modules
+        uses: actions/cache@v3
+        with:
+          path: packages/frontend/node_modules
+          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
+
+      - name: Restore Admin Panel Node Modules
+        uses: actions/cache@v3
+        with:
+          path: packages/admin-panel/node_modules
+          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+
+      # Cache Vite build artifacts for faster rebuilds
+      - name: Cache Frontend Vite Build
+        uses: actions/cache@v3
+        with:
+          path: packages/frontend/node_modules/.vite
+          key: frontend-vite-${{ hashFiles('packages/frontend/package-lock.json') }}
+
+      - name: Cache Admin Panel Vite Build
+        uses: actions/cache@v3
+        with:
+          path: packages/admin-panel/node_modules/.vite
+          key: admin-vite-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+
+      # Build Frontend
+      - name: Build Frontend
+        run: npm run build --workspace=packages/frontend
+
+      # Build Admin Panel
       - name: Build Admin Panel
         run: npm run build --workspace=packages/admin-panel
 
-      # Lighthouse CI
+      # Serve frontend and run Lighthouse CI
       - name: Install Lighthouse CI and Serve
         run: |
           npm install -g @lhci/cli@0.10.x serve
-
-      - name: Serve admin panel and run Lighthouse CI
+      - name: Serve Frontend and Run Lighthouse
         run: |
-          serve -s packages/admin-panel/dist -l 4173 &
+          serve -s packages/frontend/dist -l 4173 &
           sleep 5
           lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
         env:
@@ -123,8 +205,19 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # Deploy to Netlify (only on main branch)
-      - name: Deploy to Netlify
+      # Deploy Frontend to Netlify
+      - name: Deploy Frontend to Netlify
+        if: github.ref == 'refs/heads/main'
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        with:
+          publish-dir: packages/frontend/dist
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      # Deploy Admin Panel to Netlify
+      - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
