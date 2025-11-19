@@ -1,4 +1,4 @@
-name: Admin Panel CI/CD
+name: CI/CD
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
             node-modules-
 
       - name: Install dependencies
-        run: npm ci   # install all workspaces at root
+        run: npm ci # install all workspaces at root
 
   # ===========================
   # Lint job
