@@ -37,7 +37,7 @@ jobs:
         run: npm ci # installs all workspaces at root
 
   # ===========================
-  # Lint job
+  # Lint + Format job
   # ===========================
   lint:
     needs: setup
@@ -47,23 +47,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Lint Frontend using its .eslintrc.js explicitly
       - name: Lint Frontend
-        run: npx eslint --config packages/frontend/.eslintrc.js "packages/frontend/src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx eslint "packages/frontend/src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Lint Admin Panel using its .eslintrc.js explicitly
       - name: Lint Admin Panel
-        run: npx eslint --config packages/admin-panel/.eslintrc.js "packages/admin-panel/src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx eslint "packages/admin-panel/src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Format check for both apps
       - name: Format Check Frontend
         run: npx prettier --check "packages/frontend/src/**/*.{ts,tsx,json,css,md}"
+
       - name: Format Check Admin Panel
         run: npx prettier --check "packages/admin-panel/src/**/*.{ts,tsx,json,css,md}"
 
@@ -78,6 +77,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
@@ -101,6 +101,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
@@ -116,7 +117,7 @@ jobs:
           cp -r packages/frontend/coverage coverage/
 
   # ===========================
-  # Build + Lighthouse + Deploy job
+  # Build + Lighthouse + Sonar + Deploy
   # ===========================
   build-deploy:
     needs: [lint, typecheck, test]
@@ -126,17 +127,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Build frontend
+      # Build Frontend
       - name: Build Frontend
         run: npm run build --workspace=packages/frontend
 
-      # Build admin panel
+      # Build Admin Panel
       - name: Build Admin Panel
         run: npm run build --workspace=packages/admin-panel
 
@@ -162,7 +164,7 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # Deploy frontend to Netlify (main branch)
+      # Deploy Frontend to Netlify
       - name: Deploy Frontend to Netlify
         if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v4
@@ -173,7 +175,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel to Netlify (main branch)
+      # Deploy Admin Panel to Netlify
       - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v4
