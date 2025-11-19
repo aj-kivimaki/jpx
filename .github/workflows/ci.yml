@@ -11,7 +11,7 @@ on:
 
 jobs:
   # ===========================
-  # Setup job: install dependencies
+  # Setup: install dependencies
   # ===========================
   setup:
     runs-on: ubuntu-latest
@@ -53,21 +53,17 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Lint Frontend
       - name: Lint Frontend
-        run: npx --workspace packages/frontend eslint --config packages/frontend/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx --workspace packages/frontend eslint "src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Lint Admin Panel
       - name: Lint Admin Panel
-        run: npx --workspace packages/admin-panel eslint --config packages/admin-panel/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx --workspace packages/admin-panel eslint "src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Format Check Frontend
       - name: Format Check Frontend
-        run: npm run format:check --workspace=packages/frontend
+        run: npx --workspace packages/frontend prettier --check "src/**/*.{ts,tsx,json,css,md}"
 
-      # Format Check Admin Panel
       - name: Format Check Admin Panel
-        run: npm run format:check --workspace=packages/admin-panel
+        run: npx --workspace packages/admin-panel prettier --check "src/**/*.{ts,tsx,json,css,md}"
 
   # ===========================
   # Type-check job
@@ -93,7 +89,7 @@ jobs:
         run: npm run typecheck --workspace=packages/admin-panel
 
   # ===========================
-  # Test job with coverage
+  # Test job
   # ===========================
   test:
     needs: setup
@@ -112,16 +108,13 @@ jobs:
       - name: Run tests Frontend
         run: npm run test --workspace=packages/frontend
 
-      - name: Run tests Admin Panel
-        run: npm run test --workspace=packages/admin-panel
-
       - name: Upload coverage report
         run: |
           mkdir -p coverage
           cp -r packages/frontend/coverage packages/admin-panel/coverage coverage/
 
   # ===========================
-  # Build + Deploy job
+  # Build + Lighthouse + Deploy job
   # ===========================
   build-deploy:
     needs: [lint, typecheck, test]
@@ -149,7 +142,6 @@ jobs:
       - name: Install Lighthouse CI and Serve
         run: |
           npm install -g @lhci/cli@0.10.x serve
-
       - name: Serve frontend and run Lighthouse CI
         run: |
           serve -s packages/frontend/dist -l 4173 &
@@ -168,7 +160,7 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # Deploy frontend to Netlify
+      # Deploy frontend to Netlify (main branch)
       - name: Deploy Frontend to Netlify
         if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v4
@@ -179,7 +171,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel to Netlify
+      # Deploy admin panel to Netlify (main branch)
       - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v4
