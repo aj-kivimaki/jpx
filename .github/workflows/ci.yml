@@ -53,17 +53,19 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
+      # Lint Frontend using its .eslintrc.js explicitly
       - name: Lint Frontend
-        run: npx --workspace packages/frontend eslint "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx eslint --config packages/frontend/.eslintrc.js "packages/frontend/src/**/*.{ts,tsx}" --max-warnings=0
 
+      # Lint Admin Panel using its .eslintrc.js explicitly
       - name: Lint Admin Panel
-        run: npx --workspace packages/admin-panel eslint "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx eslint --config packages/admin-panel/.eslintrc.js "packages/admin-panel/src/**/*.{ts,tsx}" --max-warnings=0
 
+      # Format check for both apps
       - name: Format Check Frontend
-        run: npx --workspace packages/frontend prettier --check "src/**/*.{ts,tsx,json,css,md}"
-
+        run: npx prettier --check "packages/frontend/src/**/*.{ts,tsx,json,css,md}"
       - name: Format Check Admin Panel
-        run: npx --workspace packages/admin-panel prettier --check "src/**/*.{ts,tsx,json,css,md}"
+        run: npx prettier --check "packages/admin-panel/src/**/*.{ts,tsx,json,css,md}"
 
   # ===========================
   # Type-check job
@@ -111,7 +113,7 @@ jobs:
       - name: Upload coverage report
         run: |
           mkdir -p coverage
-          cp -r packages/frontend/coverage packages/admin-panel/coverage coverage/
+          cp -r packages/frontend/coverage coverage/
 
   # ===========================
   # Build + Lighthouse + Deploy job
