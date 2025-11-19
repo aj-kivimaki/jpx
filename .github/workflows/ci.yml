@@ -47,25 +47,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Lint Frontend
       - name: Lint Frontend
-        run: npx --workspace packages/frontend eslint --config packages/frontend/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx --workspace packages/frontend eslint --config .eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Lint Admin Panel
       - name: Lint Admin Panel
-        run: npx --workspace packages/admin-panel eslint --config packages/admin-panel/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
+        run: npx --workspace packages/admin-panel eslint --config .eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Format Check Frontend
       - name: Format Check Frontend
         run: npm run format:check --workspace=packages/frontend
 
-      # Format Check Admin Panel
       - name: Format Check Admin Panel
         run: npm run format:check --workspace=packages/admin-panel
 
@@ -80,6 +77,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
@@ -93,7 +91,7 @@ jobs:
         run: npm run typecheck --workspace=packages/admin-panel
 
   # ===========================
-  # Test job with coverage
+  # Test job
   # ===========================
   test:
     needs: setup
@@ -103,6 +101,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
@@ -131,6 +130,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - name: Restore Node modules
         uses: actions/cache@v3
         with:
@@ -168,10 +168,10 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # Deploy frontend to Netlify
+      # Deploy frontend to Netlify (main branch only)
       - name: Deploy Frontend to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@v4
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -179,10 +179,10 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel to Netlify
+      # Deploy admin panel to Netlify (main branch only)
       - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@v4
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
