@@ -24,16 +24,17 @@ jobs:
         with:
           node-version: 18
 
-      # Cache root node_modules
-      - name: Cache Root Node modules
-        id: cache-root
+      - name: Cache Node modules
+        id: cache-node-modules
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: root-node-modules-${{ hashFiles('package-lock.json') }}
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node-modules-
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # installs all workspaces at root
 
   # ===========================
   # Lint job
@@ -46,31 +47,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      # Cache per workspace node_modules
-      - name: Restore Frontend Node Modules
+      - name: Restore Node modules
         uses: actions/cache@v3
         with:
-          path: packages/frontend/node_modules
-          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
-
-      - name: Restore Admin Panel Node Modules
-        uses: actions/cache@v3
-        with:
-          path: packages/admin-panel/node_modules
-          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Lint Frontend
-        run: npm run lint --workspace=packages/frontend -- --max-warnings=0
-
+        run: npx --workspace packages/frontend eslint "src/**/*.{ts,tsx}" --max-warnings=0
       - name: Lint Admin Panel
-        run: npm run lint --workspace=packages/admin-panel -- --max-warnings=0
-
+        run: npx --workspace packages/admin-panel eslint "src/**/*.{ts,tsx}" --max-warnings=0
       - name: Format Check Frontend
-        run: npm run format:check --workspace=packages/frontend
-
+        run: npx --workspace packages/frontend prettier --check "src/**/*.{ts,tsx,json,css,md}"
       - name: Format Check Admin Panel
-        run: npm run format:check --workspace=packages/admin-panel
+        run: npx --workspace packages/admin-panel prettier --check "src/**/*.{ts,tsx,json,css,md}"
 
   # ===========================
   # Type-check job
@@ -83,27 +73,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      - name: Restore Frontend Node Modules
+      - name: Restore Node modules
         uses: actions/cache@v3
         with:
-          path: packages/frontend/node_modules
-          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
-
-      - name: Restore Admin Panel Node Modules
-        uses: actions/cache@v3
-        with:
-          path: packages/admin-panel/node_modules
-          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Type Check Frontend
-        run: npm run typecheck --workspace=packages/frontend
-
+        run: npx --workspace packages/frontend tsc --noEmit
       - name: Type Check Admin Panel
-        run: npm run typecheck --workspace=packages/admin-panel
+        run: npx --workspace packages/admin-panel tsc --noEmit
 
   # ===========================
-  # Test job with coverage
+  # Test job
   # ===========================
   test:
     needs: setup
@@ -113,24 +95,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      - name: Restore Frontend Node Modules
+      - name: Restore Node modules
         uses: actions/cache@v3
         with:
-          path: packages/frontend/node_modules
-          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
-
-      - name: Restore Admin Panel Node Modules
-        uses: actions/cache@v3
-        with:
-          path: packages/admin-panel/node_modules
-          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Run tests Frontend
-        run: npm run test --workspace=packages/frontend
-
+        run: npx --workspace packages/frontend vitest run --coverage --config vitest.config.ts
       - name: Run tests Admin Panel
-        run: npm run test --workspace=packages/admin-panel
+        run: npx --workspace packages/admin-panel vitest run --coverage --config vitest.config.ts
 
       - name: Upload coverage report
         run: |
@@ -138,7 +112,7 @@ jobs:
           cp -r packages/frontend/coverage packages/admin-panel/coverage coverage/
 
   # ===========================
-  # Build + Deploy job
+  # Build + Lighthouse + Sonar + Deploy job
   # ===========================
   build-deploy:
     needs: [lint, typecheck, test]
@@ -148,46 +122,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      # Restore per workspace node_modules
-      - name: Restore Frontend Node Modules
+      - name: Restore Node modules
         uses: actions/cache@v3
         with:
-          path: packages/frontend/node_modules
-          key: frontend-node-modules-${{ hashFiles('packages/frontend/package-lock.json') }}
-
-      - name: Restore Admin Panel Node Modules
-        uses: actions/cache@v3
-        with:
-          path: packages/admin-panel/node_modules
-          key: admin-node-modules-${{ hashFiles('packages/admin-panel/package-lock.json') }}
-
-      # Cache Vite build artifacts for faster rebuilds
-      - name: Cache Frontend Vite Build
-        uses: actions/cache@v3
-        with:
-          path: packages/frontend/node_modules/.vite
-          key: frontend-vite-${{ hashFiles('packages/frontend/package-lock.json') }}
-
-      - name: Cache Admin Panel Vite Build
-        uses: actions/cache@v3
-        with:
-          path: packages/admin-panel/node_modules/.vite
-          key: admin-vite-${{ hashFiles('packages/admin-panel/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       # Build Frontend
       - name: Build Frontend
-        run: npm run build --workspace=packages/frontend
+        run: npx --workspace packages/frontend vite build
 
       # Build Admin Panel
       - name: Build Admin Panel
-        run: npm run build --workspace=packages/admin-panel
+        run: npx --workspace packages/admin-panel vite build
 
       # Serve frontend and run Lighthouse CI
       - name: Install Lighthouse CI and Serve
         run: |
           npm install -g @lhci/cli@0.10.x serve
-      - name: Serve Frontend and Run Lighthouse
+      - name: Serve frontend and run Lighthouse CI
         run: |
           serve -s packages/frontend/dist -l 4173 &
           sleep 5
