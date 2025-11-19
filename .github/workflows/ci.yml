@@ -54,6 +54,13 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
+      - name: Debug ESLint config detection
+        run: |
+          echo "eslint.config.mjs found?"
+          ls -al
+          ls -al packages/frontend
+          npx eslint --print-config packages/frontend/src/main.tsx
+
       - name: Lint Frontend
         run: npx eslint "packages/frontend/src/**/*.{ts,tsx}" --max-warnings=0
 
