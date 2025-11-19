@@ -1,6 +1,6 @@
 import Form from './components/form/Form';
 import styles from './App.module.css';
-import GigsDisplay from './components/display/GigsDisplay';
+import Gigs from './components/gigs/Gigs';
 import './styles/reset.css';
 import './styles/global.css';
 
@@ -11,7 +11,7 @@ function App() {
         <Form />
       </section>
       <section className={styles.right}>
-        <GigsDisplay />
+        <Gigs />
       </section>
     </main>
   );

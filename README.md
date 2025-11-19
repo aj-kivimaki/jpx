@@ -1,36 +1,29 @@
-# 🎤 J. Partynen | Artist Homepage
+# 🎤 J. Partynen - Artist Homepage
 
-The site makes it easy to showcase gigs, band info, and promo materials while giving the artist a simple CMS (admin panel) to manage content without touching code.
+A clean, fast **React + Supabase** site built for a real artist.  
+Manages gigs, promo materials, and band info via a custom CMS — no coding required.
 
-🚀 LIVE SITE: https://jpartynen.com
+🚀 **LIVE SITE:** https://jpartynen.com
 
-🔐 ADMIN PANEL: https://admin.jpartynen.com
+🔐 **ADMIN PANEL:** https://admin.jpartynen.com
 
-<img src="assets/banner.webp" alt="J. Partynen banner screenshot" width="400" />
-
-## ⭐ Why I Built This Project
-
-The site was built specifically to meet the need for a single, easy-to-update online home for all artist-related content. It includes:
-
-- **Upcoming gigs**
-- **Social links**
-- **Basic band info**
-- **Contact info** for booking gigs
-- **Downloadable promo materials**
-- A **small CMS/admin panel** that allows the artist to update gigs easily without touching code
+<img src="assets/banner.webp" alt="J. Partynen banner screenshot" width="600" />
 
 ## 🛠 Tech Stack
 
-| Layer        | Technology                                                         |
-| ------------ | ------------------------------------------------------------------ |
-| Frontend     | Vite, React, TypeScript, CSS Modules                               |
-| Backend      | Supabase (Auth)                                                    |
-| Deployment   | Netlify                                                            |
-| CI/CD        | GitHub Actions (Lint, Test, Build, Deploy, Lighthouse, SonarCloud) |
-| Code Quality | ESLint, Prettier, Husky + lint-staged                              |
-| Testing      | Vitest, React Testing Library, Playwright/Cypress                  |
+| Layer                  | Technology                                                                                    |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| Frontend               | Vite • React • TypeScript • CSS Modules                                                       |
+| Backend                | Supabase (Auth + Database with Row-Level Security)                                            |
+| Database               | PostgreSQL (via Supabase)                                                                     |
+| Deployment             | Netlify                                                                                       |
+| Testing & Code Quality | Vitest • React Testing Library • Playwright/Cypress • ESLint • Prettier • Husky + lint-staged |
+| CI/CD                  | GitHub Actions                                                                                |
 
 ## 📂 Project Structure
+
+<details>
+<summary>File Tree</summary>
 
 ```text
   /.github
@@ -39,7 +32,7 @@ The site was built specifically to meet the need for a single, easy-to-update on
   /admin-panel
     /src
       /components
-        /display      # Components for showing gigs (e.g., GigsDisplay.tsx, GigsTable.tsx)
+        /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
         /form         # Form components for adding gigs (e.g., Form.tsx, FormInput.tsx, FormSelect.tsx)
       /config         # Database client configuration
       /styles         # Global styles: reset.css & global.css
@@ -55,19 +48,13 @@ The site was built specifically to meet the need for a single, easy-to-update on
       /hooks          # Custom React hooks (e.g., useFetch.ts, useScroll.ts)
       /styles         # Global styles: reset.css & global.css
       /utils          # Helper functions and utilities (e.g., formatText.ts)
-    etc.
 ```
 
-**Backend (Supabase):**
-
-- Tables: `gigs`
-- Row-Level Security (RLS)
+</details>
 
 ## 🧩 Features
 
-### Public Site
-
-**https://jpartynen.com**
+### [Public Site](https://jpartynen.com)
 
 - List of upcoming gigs
 - Social media links
@@ -75,79 +62,89 @@ The site was built specifically to meet the need for a single, easy-to-update on
 - Contact info for booking inquiries
 - Downloadable promo materials
 
-### Admin CMS
-
-**https://admin.jpartynen.com**
+### [Admin Panel (CMS) ](https://admin.jpartynen.com)
 
 - Supabase with Authentication
 - Add, edit, delete gigs
 
+## 🗄️ Backend / Supabase
+
+- **Database:** PostgreSQL (via Supabase)
+
+  - Table: `gigs`
+
+- **Authentication:** Supabase Magic Links (passwordless)
+  - Only the artist has an account; signups are disabled
+  - Login flow:
+    1. Enter email on `/login`
+    2. Click the magic link sent via email
+    3. Access the admin panel (protected routes)
+
+This setup keeps the admin panel **simple, secure, and low-maintenance**.
+
 ## 🔧 Installation
 
-## ⚙️ Testing
+For setup instructions, see [INSTALL.md](./INSTALL.md)
 
-### Unit & Component Tests
+## ⚙️ Quality & CI/CD
 
-```bash
-npm run test
-```
+- **Unit & Component Tests:** `npm run test`
+- **End-to-End Tests:** `npm run e2e`
 
-### End-to-End Tests
+> Ensure dev servers are running if tests depend on live APIs
 
-```bash
-npm run e2e
-```
+- **CI/CD Pipeline:** GitHub Actions runs on every PR or push to `main`
 
-## 🔄 CI/CD & Pre-Commit Hooks
-
-### GitHub Actions Pipeline
-
-The project uses GitHub Actions for CI/CD, running linting, tests, builds, and deployments, while also integrating Lighthouse for performance checks and SonarCloud for code quality analysis.
-
-Runs on every pull request or merge/push to `main`.
-
-- ESLint
-- Prettier formatting
+- Linting & formatting (ESLint + Prettier)
+- Type checking
 - Unit & E2E tests
 - Build
-- Sonarcloud
-- Lighthouse (for frontend only)
-- Deploy preview to Netlify
+- Performance checks (Lighthouse)
+- Code quality analysis (SonarCloud)
+- Deploy to Netlify
 
-### Husky Pre-Commit Hooks
+- **Pre-Commit Hooks (Husky + lint-staged):**
+  - Lint staged files
+  - Prettier formatting
+  - Run tests
 
-- Lint staged files
-- Prettier formatting
-- Run tests
-
-These ensure clean, consistent, high-quality commits.
+This ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
 ## 📝 Screenshots
 
-**PUBLIC Gigs Page**\
+**PUBLIC Gigs Section**
+
 <img src="assets/gigs.webp" alt="Gigs screenshot" width="400" />
 
-**ADMIN CMS**\
+**ADMIN CMS**
+
 <img src="assets/admin-panel.webp" alt="Admin panel screenshot" width="400" />
 
 ## 📊 Future Improvements
+
+Ideas for next iterations and enhancements:
+
+<details>
+<summary>New Features</summary>
 
 - Analytics for gig views & downloads
 - More ways to manage content
   - update promo materials (link)
   - update text content
 
-## Licenses
+</details>
 
-- **Code (HTML/CSS/JS):** MIT License — https://opensource.org/licenses/MIT
-- **Website Content (images, text, audio):** CC BY-ND 4.0 — https://creativecommons.org/licenses/by-nd/4.0/
-  - (share as-is, credit required; changes only with separate permission)
-- **Promo Materials (images, audio, videos):** CC BY-ND 4.0 — https://creativecommons.org/licenses/by-nd/4.0/
-  - (share as-is, credit required; changes only with separate permission)
+## 📜 Licenses
 
-## 🔗 Key Takeaways for Employers
+- **Code:** MIT — see [LICENSE](./LICENSE)
+- **Website Content (images, text, audio) & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT.md](./LICENSE-CONTENT.md)
 
-This project is a full-stack **React + Supabase** app with a clean **TypeScript + CSS Modules** codebase, secure backend using **RLS**, and a professional CI/CD pipeline with automated **tests, linting, deployments**, **Lighthouse**, and **SonarCloud**. **Husky pre-commit hooks** enforce best practices, and the app solves a **real-world, user-focused problem**.
+> The MIT license applies to all code (HTML, CSS, JS, TS).  
+> Creative Commons BY-ND 4.0 applies to all content and promo materials — share as-is with attribution; no derivative works allowed.
+
+## 🔗 Key Takeaways
+
+Full-stack **React + Supabase** app with **TypeScript + CSS Modules**, secure RLS backend, Postgres database, and automated **tests, linting, and deployments**. Includes **Lighthouse**, **SonarCloud**, and **Husky pre-commit hooks**. Solves a **real-world, user-focused problem**.
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=alert_status)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
