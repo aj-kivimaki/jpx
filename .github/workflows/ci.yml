@@ -171,7 +171,7 @@ jobs:
       # Deploy frontend to Netlify (main branch)
       - name: Deploy Frontend to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@v3
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -182,7 +182,7 @@ jobs:
       # Deploy admin panel to Netlify (main branch)
       - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@v3
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
