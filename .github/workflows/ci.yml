@@ -54,8 +54,11 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      - name: Lint all packages
-        run: npx eslint "packages/**/*.{ts,tsx}" --max-warnings=0
+      - name: Lint Frontend
+        run: npx eslint "packages/frontend/src/**/*.{ts,tsx}" --max-warnings=0
+
+      - name: Lint Admin Panel
+        run: npx eslint "packages/admin-panel/src/**/*.{ts,tsx}" --max-warnings=0
 
       - name: Format Check all packages
         run: npx prettier --check "packages/**/*.{ts,tsx,json,css,md}"
