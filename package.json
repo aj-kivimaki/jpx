@@ -7,9 +7,15 @@
   "scripts": {
     "dev:front": "npm --workspace packages/frontend run dev",
     "dev:admin": "npm --workspace packages/admin-panel run dev",
-    "build": "npm run build --workspaces",
-    "test": "npm run test --workspaces",
-    "lint": "eslint \"packages/**/*.{ts,tsx}\" --max-warnings=0",
+    "build": "npm run build:frontend && npm run build:admin",
+    "build:front": "npm --workspace packages/frontend run build",
+    "build:admin": "npm --workspace packages/admin-panel run build",
+    "test": "npm run test:frontend && npm run test:admin",
+    "test:front": "npm --workspace packages/frontend run test",
+    "test:admin": "npm --workspace packages/admin-panel run test",
+    "lint": "npm run lint:frontend && npm run lint:admin",
+    "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx}\" --max-warnings=0",
+    "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx}\" --max-warnings=0",
     "typecheck": "tsc --build",
     "format:check": "prettier --check \"packages/**/*.{ts,tsx,json,css,md}\"",
     "format": "prettier --write \"packages/**/*.{ts,tsx,json,css,md}\""
@@ -32,5 +38,16 @@
     "typescript": "^5.9.3",
     "vite": "^7.2.2",
     "vitest": "^3.2.4"
+  },
+  "paths": {
+    "@frontend/*": [
+      "packages/frontend/src/*"
+    ],
+    "@admin/*": [
+      "packages/admin-panel/src/*"
+    ],
+    "@shared/*": [
+      "packages/shared/src/*"
+    ]
   }
 }
