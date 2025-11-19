@@ -53,11 +53,11 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Lint Frontend using existing config
+      # Lint Frontend
       - name: Lint Frontend
         run: npx --workspace packages/frontend eslint --config packages/frontend/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
-      # Lint Admin Panel using existing config
+      # Lint Admin Panel
       - name: Lint Admin Panel
         run: npx --workspace packages/admin-panel eslint --config packages/admin-panel/.eslintrc.js "src/**/*.{ts,tsx}" --max-warnings=0
 
@@ -87,12 +87,13 @@ jobs:
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Type Check Frontend
-        run: npx --workspace packages/frontend tsc --noEmit
+        run: npm run typecheck --workspace=packages/frontend
+
       - name: Type Check Admin Panel
-        run: npx --workspace packages/admin-panel tsc --noEmit
+        run: npm run typecheck --workspace=packages/admin-panel
 
   # ===========================
-  # Test job
+  # Test job with coverage
   # ===========================
   test:
     needs: setup
@@ -109,9 +110,10 @@ jobs:
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Run tests Frontend
-        run: npx --workspace packages/frontend vitest run --coverage --config vitest.config.ts
+        run: npm run test --workspace=packages/frontend
+
       - name: Run tests Admin Panel
-        run: npx --workspace packages/admin-panel vitest run --coverage --config vitest.config.ts
+        run: npm run test --workspace=packages/admin-panel
 
       - name: Upload coverage report
         run: |
@@ -119,7 +121,7 @@ jobs:
           cp -r packages/frontend/coverage packages/admin-panel/coverage coverage/
 
   # ===========================
-  # Build + Lighthouse + Sonar + Deploy job
+  # Build + Deploy job
   # ===========================
   build-deploy:
     needs: [lint, typecheck, test]
@@ -135,18 +137,19 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Build Frontend
+      # Build frontend
       - name: Build Frontend
-        run: npx --workspace packages/frontend vite build
+        run: npm run build --workspace=packages/frontend
 
-      # Build Admin Panel
+      # Build admin panel
       - name: Build Admin Panel
-        run: npx --workspace packages/admin-panel vite build
+        run: npm run build --workspace=packages/admin-panel
 
       # Serve frontend and run Lighthouse CI
       - name: Install Lighthouse CI and Serve
         run: |
           npm install -g @lhci/cli@0.10.x serve
+
       - name: Serve frontend and run Lighthouse CI
         run: |
           serve -s packages/frontend/dist -l 4173 &
@@ -165,10 +168,10 @@ jobs:
             echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
           fi
 
-      # Deploy Frontend to Netlify
+      # Deploy frontend to Netlify
       - name: Deploy Frontend to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -176,10 +179,10 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy Admin Panel to Netlify
+      # Deploy admin panel to Netlify
       - name: Deploy Admin Panel to Netlify
         if: github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
