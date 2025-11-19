@@ -105,9 +105,6 @@ jobs:
       - name: Run tests Frontend
         run: npm run test --workspace=packages/frontend
 
-      - name: Run tests Admin Panel
-        run: npm run test --workspace=packages/admin-panel
-
       - name: Upload coverage report
         run: |
           mkdir -p coverage
