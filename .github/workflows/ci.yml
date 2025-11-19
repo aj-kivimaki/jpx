@@ -100,6 +100,29 @@ jobs:
       - name: Build Admin Panel
         run: npm run build --workspace=packages/admin-panel
 
+      # Lighthouse CI
+      - name: Install Lighthouse CI and Serve
+        run: |
+          npm install -g @lhci/cli@0.10.x serve
+
+      - name: Serve admin panel and run Lighthouse CI
+        run: |
+          serve -s packages/admin-panel/dist -l 4173 &
+          sleep 5
+          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+        env:
+          NODE_ENV: production
+
+      # SonarCloud link
+      - name: SonarCloud Link
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            PR_NUMBER=${{ github.event.pull_request.number }}
+            echo "View SonarCloud analysis for this PR: https://sonarcloud.io/project/branches?id=aj-kivimaki_jpx&pullRequest=${PR_NUMBER}"
+          else
+            echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
+          fi
+
       # Deploy to Netlify (only on main branch)
       - name: Deploy to Netlify
         if: github.ref == 'refs/heads/main'
