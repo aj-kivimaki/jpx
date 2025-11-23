@@ -11,92 +11,24 @@ on:
 
 jobs:
   # ===========================
-  # Setup: install dependencies
+  # Lint, typecheck, format, test (all branches)
   # ===========================
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-node-modules.outputs.key }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Cache Node modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-
-
-      - name: Install dependencies
-        run: npm ci
-
-  # ===========================
-  # Lint job
-  # ===========================
-  lint:
-    needs: setup
+  checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node + Cache
+        uses: ./.github/actions/setup-node-cache
         with:
           node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Lint all packages
         run: npm run lint
 
-      - name: Format check all packages
+      - name: Format check
         run: npm run format:check
-
-  # ===========================
-  # Type-check job
-  # ===========================
-  typecheck:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Type-check all packages
         run: npm run typecheck
-
-  # ===========================
-  # Test job (frontend only)
-  # ===========================
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Run frontend tests
         run: npm run test:front
@@ -107,35 +39,29 @@ jobs:
           cp -r packages/frontend/coverage coverage/
 
   # ===========================
-  # Build + Deploy job (main only)
+  # Build + Deploy (main only)
   # ===========================
   build-deploy:
-    needs: [lint, typecheck, test]
+    needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
       deploy-url: ${{ steps.frontend-deploy.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node + Cache
+        uses: ./.github/actions/setup-node-cache
         with:
           node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Build workspaces
       - name: Build frontend
         run: npm run build:front
+
       - name: Build admin panel
         run: npm run build:admin
 
-      # Deploy frontend and capture URL dynamically
       - name: Deploy Frontend
         id: frontend-deploy
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -143,9 +69,8 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel
       - name: Deploy Admin Panel
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
@@ -154,14 +79,15 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
 
   # ===========================
-  # Lighthouse CI (main only, using deployed frontend URL)
+  # Lighthouse CI (main only)
   # ===========================
   lighthouse:
     needs: build-deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
