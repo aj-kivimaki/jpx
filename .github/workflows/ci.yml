@@ -1,30 +1,20 @@
+# nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+
 name: Monorepo CI/CD
 
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
     branches:
       - '**'
-  workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
-  # ===========================
-  # Lint, typecheck, test (matrix: frontend + admin)
-  # ===========================
   checks:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [frontend, admin]
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
-      # Checkout repo first
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -34,126 +24,59 @@ jobs:
         with:
           node-version: 18
 
-      # Cache node_modules per package
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.package == 'frontend' && 'packages/frontend/node_modules' || 'packages/admin-panel/node_modules' }}
-          key: node-modules-${{ matrix.package }}-${{ hashFiles(matrix.package == 'frontend' && 'packages/frontend/package-lock.json' || 'packages/admin-panel/package-lock.json') }}
-          restore-keys: node-modules-${{ matrix.package }}-
-
-      # Install dependencies safely
+      # Install dependencies
       - name: Install dependencies
-        run: |
-          PACKAGE_DIR=$([[ "${{ matrix.package }}" == "frontend" ]] && echo "packages/frontend" || echo "packages/admin-panel")
-          if [ -f "$PACKAGE_DIR/package-lock.json" ]; then
-            npm ci --prefix $PACKAGE_DIR
-          else
-            npm install --prefix $PACKAGE_DIR
-          fi
-
-      # Determine package paths
-      - name: Determine package paths
-        run: |
-          if [ "${{ matrix.package }}" == "frontend" ]; then
-            echo "PACKAGE_PATH=packages/frontend" >> $GITHUB_ENV
-            echo "PACKAGE_COMMON=packages/common" >> $GITHUB_ENV
-          else
-            echo "PACKAGE_PATH=packages/admin-panel" >> $GITHUB_ENV
-            echo "PACKAGE_COMMON=packages/common" >> $GITHUB_ENV
-
-      # Check if files changed
-      - name: Check if files changed
-        id: changed
-        run: |
-          git fetch origin main
-          FILES_CHANGED=$(git diff --name-only origin/main)
-          echo "FILES_CHANGED=$FILES_CHANGED" >> $GITHUB_ENV
-          if ! echo "$FILES_CHANGED" | grep -qE "($PACKAGE_PATH|$PACKAGE_COMMON|\.github/)"; then
-            echo "No relevant changes for ${{ matrix.package }}, skipping."
-            echo "SKIP=true" >> $GITHUB_ENV
-
-      # Skip job if no relevant changes
-      - name: Skip if no relevant changes
-        if: env.SKIP == 'true'
-        run: exit 0
+        run: npm install
 
       # Lint
       - name: Lint
-        run: |
-          if [ "${{ matrix.package }}" == "frontend" ]; then
-            npm run lint:frontend
-          else
-            npm run lint:admin
-          fi
+        run: npm run lint
 
-      # Typecheck
+      # Format check
+      - name: Format Check
+        run: npm run format:check
+
+      # Type-check
       - name: Typecheck
-        run: |
-          if [ "${{ matrix.package }}" == "frontend" ]; then
-            npm run typecheck:frontend
-          else
-            npm run typecheck:admin
-          fi
+        run: npm run typecheck
 
       # Test
-      - name: Test
-        run: |
-          if [ "${{ matrix.package }}" == "frontend" ]; then
-            npm run test:front
-          else
-            npm run test:admin
-          fi
+      - name: Run Tests
+        run: npm run test
 
-      # Upload coverage (frontend only)
-      - name: Upload coverage
-        if: matrix.package == 'frontend'
-        run: |
-          mkdir -p coverage
-          cp -r packages/frontend/coverage coverage/
-
-  # ===========================
-  # Build + Deploy (main only)
-  # ===========================
   build-deploy:
     needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
-      deploy-url: ${{ steps.frontend-deploy.outputs.url }}
+      frontend-url: ${{ steps.deploy-frontend.outputs.url }}
     steps:
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Cache root node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-root-${{ hashFiles('package-lock.json') }}
-          restore-keys: node-modules-root-
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install root dependencies
-        run: |
-          if [ -f "package-lock.json" ]; then
-            npm ci
-          else
-            npm install
-          fi
-
-      - name: Build frontend
+      # Build frontend
+      - name: Build Frontend
         run: npm run build:front
 
-      - name: Build admin panel
+      # Build admin panel
+      - name: Build Admin Panel
         run: npm run build:admin
 
+      # Deploy Frontend
       - name: Deploy Frontend
-        id: frontend-deploy
-        uses: nwtgck/actions-netlify@v4
+        id: deploy-frontend
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -161,8 +84,9 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
+      # Deploy Admin Panel
       - name: Deploy Admin Panel
-        uses: nwtgck/actions-netlify@v4
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
@@ -170,23 +94,23 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
 
-  # ===========================
-  # Lighthouse CI (main only)
-  # ===========================
   lighthouse:
     needs: build-deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node
+      # Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # Install Lighthouse CI
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli@0.10.x
 
+      # Run Lighthouse CI on deployed frontend
       - name: Run Lighthouse CI
-        run: lhci autorun
+        run: lhci autorun --collect.url=${{ needs.build-deploy.outputs.frontend-url }} --upload.target=temporary-public-storage
         env:
           NODE_ENV: production
