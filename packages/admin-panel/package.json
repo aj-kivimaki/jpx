@@ -15,6 +15,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.81.1",
     "react-icons": "^5.5.0",
-    "shared": "*"
+    "shared": "*",
+    "react-router-dom": "^7.9.6"
   }
 }
