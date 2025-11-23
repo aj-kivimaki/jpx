@@ -138,7 +138,7 @@ Ideas for next iterations and enhancements:
 
 ## 📜 Licenses
 
-- **Code:** MIT — see [LICENSE](./LICENSE)
+- **Code:** MIT — see [LICENSE](./LICENSE.md)
 - **Website Content (images, text, audio) & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT](./LICENSE-CONTENT.md)
 
 > The MIT license applies to all code (HTML, CSS, JS, TS).  

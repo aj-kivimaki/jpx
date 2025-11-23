@@ -3,10 +3,10 @@ name: Monorepo CI/CD
 on:
   push:
     branches:
-      - main
+      - '**' # Run CI on all branches
   pull_request:
     branches:
-      - main
+      - main # Run CI on PRs targeting main
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,8 @@ jobs:
   # ===========================
   setup:
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-node-modules.outputs.key }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -105,11 +107,14 @@ jobs:
           cp -r packages/frontend/coverage coverage/
 
   # ===========================
-  # Build + Lighthouse + Deploy job
+  # Build + Deploy job (main only)
   # ===========================
   build-deploy:
     needs: [lint, typecheck, test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
+    outputs:
+      deploy-url: http://your-site-url.com # Optional if you want to pass to Lighthouse
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -121,37 +126,14 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Build both workspaces
+      # Build workspaces
       - name: Build frontend
         run: npm run build:front
       - name: Build admin panel
         run: npm run build:admin
 
-      # Serve frontend and run Lighthouse CI
-      - name: Install Lighthouse CI and Serve
-        run: |
-          npm install -g @lhci/cli@0.10.x serve
-      - name: Serve frontend and run Lighthouse CI
-        run: |
-          serve -s packages/frontend/dist -l 4173 &
-          sleep 5
-          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
-        env:
-          NODE_ENV: production
-
-      # SonarCloud link
-      - name: SonarCloud Link
-        run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            PR_NUMBER=${{ github.event.pull_request.number }}
-            echo "View SonarCloud analysis for this PR: https://sonarcloud.io/project/branches?id=aj-kivimaki_jpx&pullRequest=${PR_NUMBER}"
-          else
-            echo "View SonarCloud analysis for main branch: https://sonarcloud.io/project/overview?id=aj-kivimaki_jpx"
-          fi
-
-      # Deploy frontend to Netlify
+      # Deploy frontend
       - name: Deploy Frontend
-        if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
@@ -160,9 +142,8 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel to Netlify
+      # Deploy admin panel
       - name: Deploy Admin Panel
-        if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/admin-panel/dist
@@ -170,3 +151,27 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
+
+  # ===========================
+  # Lighthouse CI (main only)
+  # ===========================
+  lighthouse:
+    needs: build-deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Lighthouse CI and Serve
+        run: |
+          npm install -g @lhci/cli@0.10.x serve
+
+      - name: Serve frontend and run Lighthouse CI
+        run: |
+          serve -s packages/frontend/dist -l 4173 &
+          sleep 5
+          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+        env:
+          NODE_ENV: production
