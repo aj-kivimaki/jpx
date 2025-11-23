@@ -27,32 +27,31 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 <summary>File Tree</summary>
 
 ```text
-Monorepo
-
   /.github
-    /workflows        # Separate workflows for admin-panel and frontend
+    /workflows          # Separate workflows for admin-panel and frontend
 
-  /admin-panel
-    /src
-      /components
-        /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
-        /form         # Form components for adding gigs (e.g., Form.tsx, FormInput.tsx, FormSelect.tsx)
-      /config         # Database client configuration
+  /packages
+    /admin-panel
+      /src
+        /components
+          /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
+          /form         # Form components for adding gigs (e.g., Form.tsx, FormInput.tsx, FormSelect.tsx)
+        /config         # Database client configuration
 
-  /frontend
-    /src
-      /components
-        /layout       # Overall page structure (e.g., Header.tsx, Banner.tsx, Footer.tsx)
-        /sidebar      # Sidebar components (e.g., SocialSidebar.tsx)
-        /info         # Band info section (e.g., Info.tsx)
-        /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
-      /hooks          # Custom React hooks (e.g., useFetch.ts, useScroll.ts)
-      /utils          # Helper functions and utilities (e.g., formatText.ts)
+    /frontend
+      /src
+        /components
+          /layout       # Overall page structure (e.g., Header.tsx, Banner.tsx, Footer.tsx)
+          /sidebar      # Sidebar components (e.g., SocialSidebar.tsx)
+          /info         # Band info section (e.g., Info.tsx)
+          /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
+        /hooks          # Custom React hooks (e.g., useFetch.ts, useScroll.ts)
+        /utils          # Helper functions and utilities (e.g., formatText.ts)
 
-  /shared
-    /src
-      /styles         # Global styles: reset.css & global.css
-      /types          # Custom TypeScript types (e.g., Gig.ts)
+    /shared
+      /src
+        /styles         # Global styles: reset.css & global.css
+        /types          # Custom TypeScript types (e.g., Gig.ts)
 ```
 
 </details>
@@ -140,7 +139,7 @@ Ideas for next iterations and enhancements:
 ## 📜 Licenses
 
 - **Code:** MIT — see [LICENSE](./LICENSE)
-- **Website Content (images, text, audio) & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT.md](./LICENSE-CONTENT.md)
+- **Website Content (images, text, audio) & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT](./LICENSE-CONTENT.md)
 
 > The MIT license applies to all code (HTML, CSS, JS, TS).  
 > Creative Commons BY-ND 4.0 applies to all content and promo materials — share as-is with attribution; no derivative works allowed.

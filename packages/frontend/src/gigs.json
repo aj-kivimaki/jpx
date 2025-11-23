@@ -1,23 +1,5 @@
 [
   {
-    "id": "02f17525-9e4e-4aab-b326-86bf9670b9e9",
-    "date": "21.11.",
-    "lineup": "BÄNDI",
-    "venue": "Storyville",
-    "city": "Helsinki",
-    "description": "",
-    "time": "23:30"
-  },
-  {
-    "id": "bfb1f1fc-fda2-4cad-872d-d84f0cdfb144",
-    "date": "22.11.",
-    "lineup": "BÄNDI",
-    "venue": "Tapahtumatalo Metsopirtti",
-    "city": "Hartola",
-    "description": "",
-    "time": ""
-  },
-  {
     "id": "5df8df21-b5c1-46c9-b847-ae8a07cc2c19",
     "date": "29.11.",
     "lineup": "SOOLO",

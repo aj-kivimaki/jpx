@@ -1,23 +1,22 @@
 .banner {
   margin-top: var(--header-height);
   position: relative;
-  width: 100%;
 }
 
 .bannerImg {
+  width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover; /* ensures image covers container without distortion */
+  object-fit: cover;
 }
 
 .overlay {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 50%;
-  height: 50%; /* 30% of the image’s height */
-  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent black */
+  height: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  text-align: right;
   font-family: 'Satisfy', system-ui;
 }
 
@@ -26,7 +25,7 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  font-size: clamp(1.5rem, 4.25vw, 20rem);
-  letter-spacing: 0.04em;
+  font-size: clamp(1rem, 4.25vw, 3rem);
   width: 90%;
+  padding-left: clamp(1rem, 4.25vw, 3rem);
 }
