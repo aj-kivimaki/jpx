@@ -6,34 +6,68 @@ on:
       - '**'
   pull_request:
     branches:
-      - main
+      - '**'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # ===========================
-  # Lint, typecheck, format, test (all branches)
+  # Lint, typecheck, test (matrix: frontend + admin)
   # ===========================
   checks:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [frontend, admin]
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
+      # ===========================
+      # Setup Node + Cache (per package)
+      # ===========================
       - name: Setup Node + Cache
         uses: ./.github/actions/setup-node-cache
         with:
           node-version: 18
+          package-dir: ${{ matrix.package == 'frontend' && 'packages/frontend' || 'packages/admin-panel' }}
 
-      - name: Lint all packages
-        run: npm run lint
+      - name: Determine package paths
+        run: |
+          if [ "${{ matrix.package }}" == "frontend" ]; then
+            echo "PACKAGE_PATH=packages/frontend" >> $GITHUB_ENV
+            echo "PACKAGE_COMMON=packages/common" >> $GITHUB_ENV
+          else
+            echo "PACKAGE_PATH=packages/admin-panel" >> $GITHUB_ENV
+            echo "PACKAGE_COMMON=packages/common" >> $GITHUB_ENV
+          fi
 
-      - name: Format check
-        run: npm run format:check
+      - name: Check if files changed
+        id: changed
+        run: |
+          git fetch origin main
+          FILES_CHANGED=$(git diff --name-only origin/main)
+          echo "FILES_CHANGED=$FILES_CHANGED" >> $GITHUB_ENV
+          if ! echo "$FILES_CHANGED" | grep -qE "($PACKAGE_PATH|$PACKAGE_COMMON|\.github/)"; then
+            echo "No relevant changes for ${{ matrix.package }}, skipping."
+            echo "SKIP=true" >> $GITHUB_ENV
 
-      - name: Type-check all packages
-        run: npm run typecheck
+      - name: Skip if no relevant changes
+        if: env.SKIP == 'true'
+        run: exit 0
 
-      - name: Run frontend tests
-        run: npm run test:front
+      - name: Lint
+        run: npm run lint:${{ matrix.package }}
 
-      - name: Upload frontend coverage
+      - name: Typecheck
+        run: npm run typecheck:${{ matrix.package }}
+
+      - name: Test
+        run: npm run test:${{ matrix.package }}
+
+      - name: Upload coverage
+        if: matrix.package == 'frontend'
         run: |
           mkdir -p coverage
           cp -r packages/frontend/coverage coverage/
@@ -52,6 +86,7 @@ jobs:
         uses: ./.github/actions/setup-node-cache
         with:
           node-version: 18
+          package-dir: '.' # Install root dependencies if needed
 
       - name: Build frontend
         run: npm run build:front
@@ -61,7 +96,7 @@ jobs:
 
       - name: Deploy Frontend
         id: frontend-deploy
-        uses: nwtgck/actions-netlify@v4
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -70,7 +105,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Deploy Admin Panel
-        uses: nwtgck/actions-netlify@v4
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
