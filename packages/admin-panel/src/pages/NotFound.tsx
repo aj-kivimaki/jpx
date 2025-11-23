@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isLoggedIn } from '../utils/isLoggedIn';
 import styles from './NotFound.module.css';
 
 const NotFound = () => {
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(localStorage.getItem('token'));
+  const loggedIn = isLoggedIn();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (isLoggedIn) {
+      if (loggedIn) {
         navigate('/', { replace: true });
       } else {
         navigate('/login', { replace: true });
@@ -16,7 +17,7 @@ const NotFound = () => {
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [isLoggedIn, navigate]);
+  }, [loggedIn, navigate]);
 
   return (
     <div className={styles.notFound}>

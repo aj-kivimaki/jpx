@@ -7,7 +7,8 @@ interface PrivateRouteProps {
 }
 
 const PublicRoute = ({ children }: PrivateRouteProps) => {
-  if (isLoggedIn()) return <Navigate to="/" replace />;
+  const loggedIn = isLoggedIn();
+  if (loggedIn) return <Navigate to="/" replace />;
   return children;
 };
 
