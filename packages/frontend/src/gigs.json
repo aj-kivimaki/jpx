@@ -5,7 +5,7 @@
     "lineup": "SOOLO",
     "venue": "",
     "city": "",
-    "description": "Yksityistilaisuus",
+    "notes": "Yksityistilaisuus",
     "time": ""
   },
   {
@@ -14,7 +14,7 @@
     "lineup": "DUO",
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "description": "",
+    "notes": "",
     "time": ""
   },
   {
@@ -23,7 +23,7 @@
     "lineup": "DUO",
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "description": "",
+    "notes": "",
     "time": ""
   },
   {
@@ -32,7 +32,7 @@
     "lineup": "BÄNDI",
     "venue": "",
     "city": "",
-    "description": "Yksityistilaisuus",
+    "notes": "Yksityistilaisuus",
     "time": ""
   },
   {
@@ -41,7 +41,7 @@
     "lineup": "TRIO",
     "venue": "Mesta",
     "city": "Pyhä",
-    "description": "",
+    "notes": "",
     "time": ""
   },
   {
@@ -50,7 +50,7 @@
     "lineup": "TRIO",
     "venue": "Old Mates",
     "city": "Levi",
-    "description": "",
+    "notes": "",
     "time": ""
   },
   {
@@ -59,7 +59,7 @@
     "lineup": "TRIO",
     "venue": "Old Mates",
     "city": "Levi",
-    "description": "",
+    "notes": "",
     "time": ""
   }
 ]
