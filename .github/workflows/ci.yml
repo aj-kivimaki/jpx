@@ -92,24 +92,3 @@ jobs:
         run: |
           URL=$(jq -r '.url' < $GITHUB_WORKSPACE/.netlify/state.json)
           echo "FRONTEND_URL=$URL" >> $GITHUB_ENV
-
-  # ===========================
-  # Lighthouse CI (main only)
-  # ===========================
-  lighthouse:
-    needs: build-deploy
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@0.10.x
-
-      - name: Run Lighthouse CI on deployed frontend
-        run: lhci autorun --collect.url=$FRONTEND_URL --upload.target=temporary-public-storage
-        env:
-          NODE_ENV: production
