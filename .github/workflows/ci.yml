@@ -3,10 +3,10 @@ name: Monorepo CI/CD
 on:
   push:
     branches:
-      - '**' # Run CI on all branches
+      - '**'
   pull_request:
     branches:
-      - main # Run CI on PRs targeting main
+      - main
   workflow_dispatch:
 
 jobs:
@@ -114,7 +114,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
-      deploy-url: http://your-site-url.com # Optional if you want to pass to Lighthouse
+      deploy-url: ${{ steps.frontend-deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -132,8 +132,9 @@ jobs:
       - name: Build admin panel
         run: npm run build:admin
 
-      # Deploy frontend
+      # Deploy frontend and capture URL dynamically
       - name: Deploy Frontend
+        id: frontend-deploy
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
@@ -153,7 +154,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
 
   # ===========================
-  # Lighthouse CI (main only)
+  # Lighthouse CI (main only, using deployed frontend URL)
   # ===========================
   lighthouse:
     needs: build-deploy
@@ -164,14 +165,11 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Lighthouse CI and Serve
-        run: |
-          npm install -g @lhci/cli@0.10.x serve
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.10.x
 
-      - name: Serve frontend and run Lighthouse CI
+      - name: Run Lighthouse CI on deployed frontend
         run: |
-          serve -s packages/frontend/dist -l 4173 &
-          sleep 5
-          lhci autorun --collect.url=http://localhost:4173 --upload.target=temporary-public-storage
+          lhci autorun --collect.url=${{ needs.build-deploy.outputs.deploy-url }} --upload.target=temporary-public-storage
         env:
           NODE_ENV: production
