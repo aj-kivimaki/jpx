@@ -170,6 +170,7 @@ jobs:
 
       - name: Run Lighthouse CI on deployed frontend
         run: |
-          lhci autorun --collect.url=${{ needs.build-deploy.outputs.deploy-url }} --upload.target=temporary-public-storage
+          lhci collect --url=${{ needs.build-deploy.outputs.deploy-url }} --numberOfRuns=3
+          lhci upload --target=temporary-public-storage
         env:
           NODE_ENV: production
