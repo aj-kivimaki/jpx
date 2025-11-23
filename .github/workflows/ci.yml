@@ -24,16 +24,32 @@ jobs:
         package: [frontend, admin]
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
-      # Checkout repository first
+      # Checkout repo first
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Setup Node + Cache (per package)
-      - name: Setup Node + Cache
-        uses: ./.github/actions/setup-node
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          package-dir: ${{ matrix.package == 'frontend' && 'packages/frontend' || 'packages/admin-panel' }}
+
+      # Cache node_modules per package
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.package == 'frontend' && 'packages/frontend/node_modules' || 'packages/admin-panel/node_modules' }}
+          key: node-modules-${{ matrix.package }}-${{ hashFiles(matrix.package == 'frontend' && 'packages/frontend/package-lock.json' || 'packages/admin-panel/package-lock.json') }}
+          restore-keys: node-modules-${{ matrix.package }}-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          if [ "${{ matrix.package }}" == "frontend" ]; then
+            npm ci --prefix packages/frontend
+          else
+            npm ci --prefix packages/admin-panel
+          fi
 
       # Determine package paths
       - name: Determine package paths
@@ -61,15 +77,34 @@ jobs:
         if: env.SKIP == 'true'
         run: exit 0
 
+      # Lint
       - name: Lint
-        run: npm run lint:${{ matrix.package }}
+        run: |
+          if [ "${{ matrix.package }}" == "frontend" ]; then
+            npm run lint:frontend
+          else
+            npm run lint:admin
+          fi
 
+      # Typecheck
       - name: Typecheck
-        run: npm run typecheck:${{ matrix.package }}
+        run: |
+          if [ "${{ matrix.package }}" == "frontend" ]; then
+            npm run typecheck:frontend
+          else
+            npm run typecheck:admin
+          fi
 
+      # Test
       - name: Test
-        run: npm run test:${{ matrix.package }}
+        run: |
+          if [ "${{ matrix.package }}" == "frontend" ]; then
+            npm run test:front
+          else
+            npm run test:admin
+          fi
 
+      # Upload coverage (frontend only)
       - name: Upload coverage
         if: matrix.package == 'frontend'
         run: |
@@ -89,11 +124,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node + Cache
-        uses: ./.github/actions/setup-node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          package-dir: '.' # root dependencies if needed
+
+      - name: Cache root node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-root-${{ hashFiles('package-lock.json') }}
+          restore-keys: node-modules-root-
+
+      - name: Install root dependencies
+        run: npm ci
 
       - name: Build frontend
         run: npm run build:front
@@ -103,7 +147,7 @@ jobs:
 
       - name: Deploy Frontend
         id: frontend-deploy
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/frontend/dist
           production-deploy: true
@@ -112,7 +156,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Deploy Admin Panel
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: packages/admin-panel/dist
           production-deploy: true
