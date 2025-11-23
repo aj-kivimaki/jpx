@@ -22,7 +22,7 @@ runs:
         restore-keys: node-modules-${{ inputs.package-dir }}-
 
     # ===========================
-    # Install dependencies
+    # Install dependencies in the package directory
     # ===========================
     - name: Install dependencies
       run: npm ci
@@ -30,7 +30,7 @@ runs:
 
 inputs:
   node-version:
-    description: 'Node.js version'
+    description: 'Node.js version to install'
     required: true
   package-dir:
     description: 'Path to the package directory to install and cache (e.g., packages/frontend)'
