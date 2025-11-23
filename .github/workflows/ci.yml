@@ -51,23 +51,31 @@ jobs:
     needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    outputs:
-      frontend-url: ${{ env.FRONTEND_URL }} # <-- updated to use env
     steps:
-      - name: Setup Node + Cache
-        uses: ./.github/actions/setup-node-cache
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          package-dir: '.' # Install root dependencies if needed
 
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build frontend
       - name: Build frontend
         run: npm run build:front
 
+      # Build admin panel
       - name: Build admin panel
         run: npm run build:admin
 
+      # Deploy Frontend
       - name: Deploy Frontend
-        id: frontend-deploy
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
@@ -76,6 +84,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
+      # Deploy Admin Panel
       - name: Deploy Admin Panel
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
