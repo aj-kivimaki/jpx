@@ -1,140 +1,81 @@
+# nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+
 name: Monorepo CI/CD
 
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
     branches:
-      - main
-  workflow_dispatch:
+      - '**'
 
 jobs:
-  # ===========================
-  # Setup: install dependencies
-  # ===========================
-  setup:
+  checks:
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-node-modules.outputs.key }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Cache Node modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-
-
+      # Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-  # ===========================
-  # Lint job
-  # ===========================
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Lint all packages
+      # Lint
+      - name: Lint
         run: npm run lint
 
-      - name: Format check all packages
+      # Format check
+      - name: Format Check
         run: npm run format:check
 
-  # ===========================
-  # Type-check job
-  # ===========================
-  typecheck:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Type-check all packages
+      # Type-check
+      - name: Typecheck
         run: npm run typecheck
 
-  # ===========================
-  # Test job (frontend only)
-  # ===========================
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+      # Test
+      - name: Run Tests
+        run: npm run test
 
-      - name: Run frontend tests
-        run: npm run test:front
-
-      - name: Upload frontend coverage
-        run: |
-          mkdir -p coverage
-          cp -r packages/frontend/coverage coverage/
-
-  # ===========================
-  # Build + Deploy job (main only)
-  # ===========================
   build-deploy:
-    needs: [lint, typecheck, test]
+    needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
-      deploy-url: ${{ steps.frontend-deploy.outputs.url }}
+      frontend-url: ${{ steps.deploy-frontend.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Restore Node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
 
-      # Build workspaces
-      - name: Build frontend
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build frontend
+      - name: Build Frontend
         run: npm run build:front
-      - name: Build admin panel
+
+      # Build admin panel
+      - name: Build Admin Panel
         run: npm run build:admin
 
-      # Deploy frontend and capture URL dynamically
+      # Deploy Frontend
       - name: Deploy Frontend
-        id: frontend-deploy
+        id: deploy-frontend
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: packages/frontend/dist
@@ -143,7 +84,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Deploy admin panel
+      # Deploy Admin Panel
       - name: Deploy Admin Panel
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
@@ -153,23 +94,23 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
 
-  # ===========================
-  # Lighthouse CI (main only, using deployed frontend URL)
-  # ===========================
   lighthouse:
     needs: build-deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      # Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # Install Lighthouse CI
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli@0.10.x
 
-      - name: Run Lighthouse CI on deployed frontend
-        run: |
-          lhci autorun --collect.url=${{ needs.build-deploy.outputs.deploy-url }} --upload.target=temporary-public-storage
+      # Run Lighthouse CI on deployed frontend
+      - name: Run Lighthouse CI
+        run: lhci autorun --collect.url=${{ needs.build-deploy.outputs.frontend-url }} --upload.target=temporary-public-storage
         env:
           NODE_ENV: production

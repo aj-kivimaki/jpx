@@ -1,0 +1,11 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "packages/frontend/dist",
+      "numberOfRuns": 3
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
