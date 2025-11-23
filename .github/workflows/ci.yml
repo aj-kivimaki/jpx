@@ -93,11 +93,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
-
-      # ---------------------------
-      # Capture deployed frontend URL
-      # ---------------------------
-      - name: Get deployed frontend URL
-        run: |
-          URL=$(jq -r '.url' < $GITHUB_WORKSPACE/.netlify/state.json)
-          echo "FRONTEND_URL=$URL" >> $GITHUB_ENV
