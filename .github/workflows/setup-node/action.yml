@@ -1,14 +1,8 @@
 name: 'Setup Node + Cache'
-description: 'Checkout repo, setup Node.js, and cache node_modules per package'
+description: 'Setup Node.js and cache node_modules per package'
 runs:
   using: 'composite'
   steps:
-    # ===========================
-    # Checkout code
-    # ===========================
-    - name: Checkout repo
-      uses: actions/checkout@v4
-
     # ===========================
     # Setup Node.js
     # ===========================

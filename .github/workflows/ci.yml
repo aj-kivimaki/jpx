@@ -14,9 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ===========================
-  # Lint, typecheck, test (matrix: frontend + admin)
-  # ===========================
   checks:
     runs-on: ubuntu-latest
     strategy:
@@ -24,6 +21,12 @@ jobs:
         package: [frontend, admin]
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
+      # ===========================
+      # Checkout repository first
+      # ===========================
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       # ===========================
       # Setup Node + Cache (per package)
       # ===========================
@@ -33,6 +36,9 @@ jobs:
           node-version: 18
           package-dir: ${{ matrix.package == 'frontend' && 'packages/frontend' || 'packages/admin-panel' }}
 
+      # ===========================
+      # Determine package paths
+      # ===========================
       - name: Determine package paths
         run: |
           if [ "${{ matrix.package }}" == "frontend" ]; then
@@ -41,8 +47,10 @@ jobs:
           else
             echo "PACKAGE_PATH=packages/admin-panel" >> $GITHUB_ENV
             echo "PACKAGE_COMMON=packages/common" >> $GITHUB_ENV
-          fi
 
+      # ===========================
+      # Check if files changed
+      # ===========================
       - name: Check if files changed
         id: changed
         run: |
@@ -72,9 +80,6 @@ jobs:
           mkdir -p coverage
           cp -r packages/frontend/coverage coverage/
 
-  # ===========================
-  # Build + Deploy (main only)
-  # ===========================
   build-deploy:
     needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -82,11 +87,14 @@ jobs:
     outputs:
       deploy-url: ${{ steps.frontend-deploy.outputs.url }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Setup Node + Cache
         uses: ./.github/actions/setup-node-cache
         with:
           node-version: 18
-          package-dir: '.' # Install root dependencies if needed
+          package-dir: '.' # root dependencies
 
       - name: Build frontend
         run: npm run build:front
@@ -113,9 +121,6 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
 
-  # ===========================
-  # Lighthouse CI (main only)
-  # ===========================
   lighthouse:
     needs: build-deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
