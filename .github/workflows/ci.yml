@@ -129,9 +129,7 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli@0.10.x
 
-      - name: Run Lighthouse CI on deployed frontend
-        run: |
-          lhci collect --url=${{ needs.build-deploy.outputs.deploy-url }} --numberOfRuns=3
-          lhci upload --target=temporary-public-storage
+      - name: Run Lighthouse CI
+        run: lhci autorun
         env:
           NODE_ENV: production
