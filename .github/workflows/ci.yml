@@ -42,13 +42,14 @@ jobs:
           key: node-modules-${{ matrix.package }}-${{ hashFiles(matrix.package == 'frontend' && 'packages/frontend/package-lock.json' || 'packages/admin-panel/package-lock.json') }}
           restore-keys: node-modules-${{ matrix.package }}-
 
-      # Install dependencies
+      # Install dependencies safely
       - name: Install dependencies
         run: |
-          if [ "${{ matrix.package }}" == "frontend" ]; then
-            npm ci --prefix packages/frontend
+          PACKAGE_DIR=$([[ "${{ matrix.package }}" == "frontend" ]] && echo "packages/frontend" || echo "packages/admin-panel")
+          if [ -f "$PACKAGE_DIR/package-lock.json" ]; then
+            npm ci --prefix $PACKAGE_DIR
           else
-            npm ci --prefix packages/admin-panel
+            npm install --prefix $PACKAGE_DIR
           fi
 
       # Determine package paths
@@ -137,7 +138,12 @@ jobs:
           restore-keys: node-modules-root-
 
       - name: Install root dependencies
-        run: npm ci
+        run: |
+          if [ -f "package-lock.json" ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Build frontend
         run: npm run build:front
