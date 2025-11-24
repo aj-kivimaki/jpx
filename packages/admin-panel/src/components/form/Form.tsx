@@ -2,6 +2,7 @@ import { useState } from 'react';
 import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
+import LogoutButton from '../auth/LogoutButton';
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,12 @@ const Form: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h1 className={styles.header}>J. Partynen</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>J. Partynen</h1>
+        <button className={styles.logout}>
+          <LogoutButton />
+        </button>
+      </div>
       <div className={styles.fields}>
         <FormField
           label="Päivänmäärä"

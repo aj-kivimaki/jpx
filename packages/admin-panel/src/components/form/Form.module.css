@@ -6,12 +6,17 @@
 }
 
 .header {
-  font-family: 'Satisfy', system-ui;
-  font-size: 2rem;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 5px 5px 0 0;
   background-color: rgb(151, 108, 32);
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: 'Satisfy', system-ui;
+  font-size: 2rem;
 }
 
 .fields {
@@ -19,7 +24,6 @@
 }
 
 .button {
-  margin-top: 1.5rem;
   padding: 0.6rem 1.2rem;
   background-color: rgb(151, 108, 32);
   color: white;

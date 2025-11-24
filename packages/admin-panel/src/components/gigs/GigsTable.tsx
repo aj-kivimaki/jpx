@@ -1,17 +1,16 @@
-import data from '../../gigs.json';
 import styles from './GigsTable.module.css';
 import { IoLocationOutline, IoTimeOutline } from 'react-icons/io5';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import type { Gig } from 'shared';
+import type { Gig } from 'shared/src/types/gig';
 
 interface GigsTable {
   data: Gig[] | null;
 }
 
-const GigsTable: React.FC<GigsTable> = () => {
+const GigsTable: React.FC<GigsTable> = ({ data }) => {
   return (
     <>
       {data?.map((gig: Gig) => (
