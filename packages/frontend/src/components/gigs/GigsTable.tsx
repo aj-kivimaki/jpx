@@ -5,7 +5,7 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
 import { IoTimeOutline } from 'react-icons/io5';
-import type { Gig } from 'shared/src/types/gig';
+import type { Gig } from 'shared/src/types/Gig';
 import data from 'shared/src/gigs.json';
 
 interface GigsTable {
