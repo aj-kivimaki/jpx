@@ -1,5 +1,5 @@
 import styles from './Gigs.module.css';
-import data from 'shared/src/gigs.json';
+import data from 'shared/gigs.json';
 import GigsTable from './GigsTable';
 
 const Gigs = () => {

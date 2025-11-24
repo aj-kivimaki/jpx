@@ -6,13 +6,12 @@ import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
 import { IoTimeOutline } from 'react-icons/io5';
 import type { Gig } from 'shared/src/types/Gig';
-import data from 'shared/src/gigs.json';
 
 interface GigsTable {
   data: Gig[] | null;
 }
 
-const GigsTable: React.FC<GigsTable> = () => {
+const GigsTable: React.FC<GigsTable> = ({ data }) => {
   return (
     <>
       {data?.map((gig: Gig) => (

@@ -4,8 +4,8 @@ import { supabase } from './config/supabaseClient';
 import Login from './pages/Login';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Home from './pages/Home';
-import 'shared/src/styles/reset.css';
-import 'shared/src/styles/global.css';
+import 'shared/styles/reset.css';
+import 'shared/styles/global.css';
 import NotFoundRedirect from './pages/NotFoundRedirect';
 
 export default function App() {

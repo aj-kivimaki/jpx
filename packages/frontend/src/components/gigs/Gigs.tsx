@@ -1,4 +1,5 @@
 import GigsTable from './GigsTable';
+import data from 'shared/gigs.json';
 import styles from './Gigs.module.css';
 
 const Gigs = () => {
@@ -6,7 +7,7 @@ const Gigs = () => {
     <div id="gigs" className={styles.gigs}>
       <h2 className={styles.gigsTitle}>KEIKAT</h2>
       <div className={styles.gigsCardContainer}>
-        <GigsTable data={null} />
+        <GigsTable data={data} />
       </div>
     </div>
   );
