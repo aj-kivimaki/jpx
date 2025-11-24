@@ -1,36 +1,43 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { useEffect } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import { supabase } from './config/supabaseClient';
 import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import PrivateRoute from './components/routing/PrivateRoute';
-import PublicRoute from './components/routing/PublicRoute';
+import PrivateRoute from './components/auth/PrivateRoute';
+import Home from './pages/Home';
 import 'shared/src/styles/reset.css';
 import 'shared/src/styles/global.css';
+import NotFoundRedirect from './pages/NotFoundRedirect';
 
-function App() {
+export default function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const { data: subscription } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        navigate('/', { replace: true });
+      }
+      if (event === 'SIGNED_OUT') {
+        navigate('/login', { replace: true });
+      }
+    });
+
+    return () => subscription?.subscription.unsubscribe();
+  }, [navigate]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+
+      <Route path="*" element={<NotFoundRedirect />} />
+    </Routes>
   );
 }
-
-export default App;

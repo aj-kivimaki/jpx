@@ -1,0 +1,83 @@
+.app {
+  margin: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: rgb(34, 34, 34);
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: sans-serif;
+  background: #434343;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  background-color: white;
+  font-size: 14px;
+  color: black;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  background: hsl(38, 65%, 46%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.button:hover {
+  background: hsl(38, 65%, 56%);
+}
+
+.errorContainer {
+  background-color: white;
+  color: rgb(199, 0, 0);
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.successContainer {
+  margin-top: 12px;
+}
+
+.success {
+  text-align: center;
+  color: #0a0;
+  font-size: 16px;
+}
+
+.success {
+  color: #1a7f37;
+  background: #e9f7ef;
+  padding: 10px;
+  border-radius: 6px;
+}
