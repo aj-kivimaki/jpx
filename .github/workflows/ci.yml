@@ -69,10 +69,16 @@ jobs:
       # Build frontend
       - name: Build frontend
         run: npm run build:front
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       # Build admin panel
       - name: Build admin panel
         run: npm run build:admin
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       # Deploy Frontend
       - name: Deploy Frontend
