@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "npm run dev:front & npm run dev:admin",
     "dev:front": "npm --workspace packages/frontend run dev",
     "dev:admin": "npm --workspace packages/admin-panel run dev",
     "build": "npm run build:front && npm run build:admin",
