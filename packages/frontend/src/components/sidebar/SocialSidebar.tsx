@@ -9,6 +9,7 @@ const SocialSidebar = () => {
         href="https://www.instagram.com/j.partynen"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Avaa J. Partysen Instagram"
       >
         <FaInstagram />
       </a>
@@ -16,6 +17,7 @@ const SocialSidebar = () => {
         href="https://www.facebook.com/jpartynen"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Avaa J. Partysen Facebook"
       >
         <FaFacebook />
       </a>
@@ -23,6 +25,7 @@ const SocialSidebar = () => {
         href="https://www.youtube.com/@jpartynen"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Avaa J. Partysen YouTube"
       >
         <FaYoutube />
       </a>
@@ -30,10 +33,16 @@ const SocialSidebar = () => {
         href="https://open.spotify.com/artist/5ZAj9VTFP2pdBWtWRLDNIL"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Avaa J. Partysen Spotify"
       >
         <FaSpotify />
       </a>
-      <a href="#shop" target="_blank" rel="noopener noreferrer">
+      <a
+        href="#shop"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Avaa J. Partysen kauppa"
+      >
         <FaCartShopping />
       </a>
     </div>
