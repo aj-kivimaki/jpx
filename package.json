@@ -5,21 +5,23 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev:front & npm run dev:admin",
+    "dev": "npm-run-all -p dev:front dev:admin",
     "dev:front": "npm --workspace packages/frontend run dev",
     "dev:admin": "npm --workspace packages/admin-panel run dev",
-    "build": "npm run build:front && npm run build:admin",
+    "build": "npm-run-all build:front build:admin",
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
-    "test": "npm run test:front && npm run test:admin",
+    "test": "npm-run-all -p test:front test:admin",
     "test:front": "npm --workspace packages/frontend run test",
     "test:admin": "npm --workspace packages/admin-panel run test",
-    "lint": "npm run lint:front && npm run lint:admin",
-    "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx}\" --max-warnings=0",
-    "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx}\" --max-warnings=0",
+    "lint": "npm-run-all -p lint:front lint:admin",
+    "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/frontend",
+    "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/admin-panel",
+    "lint:changed": "npx lint-staged",
     "typecheck": "tsc --build",
-    "format:check": "prettier --check \"packages/**/*.{ts,tsx,json,css,md}\"",
-    "format": "prettier --write \"packages/**/*.{ts,tsx,json,css,md}\""
+    "format:check": "prettier --check \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
@@ -33,6 +35,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -49,6 +54,15 @@
     ],
     "@shared/*": [
       "packages/shared/src/*"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
     ]
   }
 }
