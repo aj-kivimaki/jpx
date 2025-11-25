@@ -22,3 +22,10 @@ button {
 h2 {
   font-size: 2rem;
 }
+
+:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 4px #000000;
+}
