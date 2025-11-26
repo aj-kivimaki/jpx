@@ -3,7 +3,7 @@ import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
 import LogoutButton from '../auth/LogoutButton';
-import { lineupOptions } from 'shared/src/config/lineupOptions';
+import { lineupOptions } from 'shared/config/lineupOptions';
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState({
