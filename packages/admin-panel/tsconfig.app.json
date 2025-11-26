@@ -32,5 +32,5 @@
       "shared/*": ["../shared/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../shared/src/config/lineupOptions.ts"]
 }

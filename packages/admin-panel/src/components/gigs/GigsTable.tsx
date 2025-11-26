@@ -4,7 +4,7 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import type { Gig } from 'shared/src/types/Gig';
+import type { Gig } from 'shared/src/types/gig-type';
 
 interface GigsTable {
   data: Gig[] | null;

@@ -2,73 +2,63 @@ import styles from './GigsTable.module.css';
 import { IoIosPin } from 'react-icons/io';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
-import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
+import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
-import type { Gig } from 'shared/src/types/Gig';
+import type { Gig } from 'shared/src/types/gig-type';
 
-interface GigsTable {
-  data: Gig[] | null;
+interface GigsTableProps {
+  data?: Gig[] | null;
 }
 
-const GigsTable: React.FC<GigsTable> = ({ data }) => {
-  return (
-    <>
-      {data?.map((gig: Gig) => (
-        <div key={gig.id} className={styles.card}>
-          <div className={styles.leftColumn}>
+const GigsTable: React.FC<GigsTableProps> = ({ data }) => (
+  <>
+    {data?.map(({ id, date, time, lineup, venue, city, notes }) => (
+      <div key={id} className={styles.card}>
+        <div className={styles.leftColumn}>
+          {date && (
             <div className={styles.date}>
-              <div className={styles.dateIcon}>
-                <CiCalendar />
-              </div>
-              <div>{gig.date}</div>
+              <CiCalendar className={styles.dateIcon} />
+              <span>{date}</span>
             </div>
-            {gig.time && (
-              <div className={styles.time}>
-                <div className={styles.timeIcon}>
-                  <IoTimeOutline />
-                </div>
-                <div>{gig.time}</div>
-              </div>
-            )}
-          </div>
-          <div className={styles.rightColumn}>
-            <div className={styles.lineup}>
-              <div className={styles.lineupIcon}>
-                <GiMicrophone />
-              </div>
-              <div>{gig.lineup}</div>
+          )}
+          {time && (
+            <div className={styles.time}>
+              <IoTimeOutline className={styles.timeIcon} />
+              <span>{time}</span>
             </div>
-            {gig.venue && (
-              <div className={styles.venue}>
-                <div className={styles.venueIcon}>
-                  <FaBuildingColumns />
-                </div>
-                <div>{gig.venue}</div>
-              </div>
-            )}
-
-            {gig?.city && (
-              <div className={styles.city}>
-                <div className={styles.cityIcon}>
-                  <IoIosPin />
-                </div>
-                <div className={styles.cityText}>{gig.city}</div>
-              </div>
-            )}
-            {gig?.notes && (
-              <div className={styles.notes}>
-                <div className={styles.notesIcon}>
-                  <FaExclamation />
-                </div>
-                <div>{gig?.notes}</div>
-              </div>
-            )}
-          </div>
+          )}
         </div>
-      ))}
-    </>
-  );
-};
+
+        <div className={styles.rightColumn}>
+          {lineup && (
+            <div className={styles.lineup}>
+              <GiMicrophone className={styles.lineupIcon} />
+              <span>{lineup}</span>
+            </div>
+          )}
+          {venue && (
+            <div className={styles.venue}>
+              <FaBuildingColumns className={styles.venueIcon} />
+              <span>{venue}</span>
+            </div>
+          )}
+          {city && (
+            <div className={styles.city}>
+              <IoIosPin className={styles.cityIcon} />
+              <span className={styles.cityText}>{city}</span>
+            </div>
+          )}
+          {notes && (
+            <div className={styles.notes}>
+              <FaExclamation className={styles.notesIcon} />
+              <span>{notes}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </>
+);
 
 export default GigsTable;

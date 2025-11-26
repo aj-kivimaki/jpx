@@ -1,50 +1,26 @@
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import styles from './SocialSidebar.module.css';
+import social from 'shared/data/social.json';
 
 const SocialSidebar = () => {
   return (
     <div className={styles.socialSidebar}>
-      <a
-        href="https://www.instagram.com/j.partynen"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Avaa J. Partysen Instagram"
-      >
-        <FaInstagram />
-      </a>
-      <a
-        href="https://www.facebook.com/jpartynen"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Avaa J. Partysen Facebook"
-      >
-        <FaFacebook />
-      </a>
-      <a
-        href="https://www.youtube.com/@jpartynen"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Avaa J. Partysen YouTube"
-      >
-        <FaYoutube />
-      </a>
-      <a
-        href="https://open.spotify.com/artist/5ZAj9VTFP2pdBWtWRLDNIL"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Avaa J. Partysen Spotify"
-      >
-        <FaSpotify />
-      </a>
-      <a
-        href="#shop"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Avaa J. Partysen kauppa"
-      >
-        <FaCartShopping />
-      </a>
+      {social.links.map((link) => (
+        <a
+          key={link.key}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={link.aria}
+        >
+          {link.key === 'instagram' && <FaInstagram />}
+          {link.key === 'facebook' && <FaFacebook />}
+          {link.key === 'youtube' && <FaYoutube />}
+          {link.key === 'spotify' && <FaSpotify />}
+          {link.key === 'shop' && <FaCartShopping />}
+        </a>
+      ))}
     </div>
   );
 };

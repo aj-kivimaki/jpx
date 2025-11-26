@@ -3,12 +3,13 @@ import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
 import LogoutButton from '../auth/LogoutButton';
+import { lineupOptions } from 'shared/src/config/lineupOptions';
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    lineup: 'Valitse kokoonpano',
+    lineup: lineupOptions[0],
     venue: '',
     city: '',
     notes: '',
@@ -27,8 +28,6 @@ const Form: React.FC = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
   };
-
-  const lineupOptions = ['Valitse kokoonpano', 'SOOLO', 'DUO', 'TRIO', 'BÄNDI'];
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

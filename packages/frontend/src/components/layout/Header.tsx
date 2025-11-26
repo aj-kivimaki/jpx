@@ -1,60 +1,56 @@
 import { useState } from 'react';
 import styles from './Header.module.css';
 import useIsScrolling from '../../hooks/useScrolling';
+import nav from 'shared/data/nav.json';
+import { logos, layout } from 'shared/data/site.json';
+import ui from 'shared/data/ui.json';
+import { sectionIds } from 'shared/config/sectionIds';
 
 const Header = () => {
   const isScrolling = useIsScrolling();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // Scroll to a section by id and optionally close the mobile menu
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    setIsOpen(false); // close mobile menu after scroll
+    setIsOpen(false);
   };
 
   return (
     <header className={`${styles.header} ${isScrolling && styles.scrolled}`}>
       <div className={styles.container}>
-        <button className={styles.title} onClick={() => scrollToSection('top')}>
+        <button
+          className={styles.titleContainer}
+          onClick={() => scrollToSection(sectionIds.top)}
+        >
           <div className={styles.logo}>
-            <img src="/images/logo.webp" width={'45px'} alt="Logo" />
+            <img src={logos.jpx.src} alt={logos.jpx.alt} />
           </div>
-          <h1 className={styles.nametitle}>J. Partynen</h1>
+          <h1 className={styles.title}>{layout.header.title}</h1>
         </button>
         {/* Mobile Menu Button */}
         <button
-          className={`${styles.mobileMenuButton} ${isOpen ? styles.paddingTop : ''}`}
-          onClick={toggleMenu}
+          className={`${styles.mobileMenuButton} ${isOpen ? '' : styles.paddingBottom}`}
+          onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? '✖' : '☰'}
+          {isOpen ? ui.mobileMenuOpenIcon : ui.mobileMenuClosedIcon}
         </button>
         {/* Mobile / Desktop Menu */}
         <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
-          <button
-            onClick={() => scrollToSection('gigs')}
-            onKeyDown={() => scrollToSection('gigs')}
-          >
-            KEIKAT
-          </button>
-          <button
-            onClick={() => scrollToSection('info')}
-            onKeyDown={() => scrollToSection('info')}
-          >
-            INFO
-          </button>
-          <button
-            onClick={() => scrollToSection('contact')}
-            onKeyDown={() => scrollToSection('contact')}
-          >
-            YHTEYS
-          </button>
+          {nav.map(
+            (item) =>
+              item.label && (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  onKeyDown={() => scrollToSection(item.id)}
+                >
+                  {item.label}
+                </button>
+              )
+          )}
         </nav>
       </div>
     </header>

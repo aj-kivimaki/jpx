@@ -5,7 +5,7 @@ interface FormSelectProps {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
+  options: readonly string[];
   required: boolean;
 }
 
