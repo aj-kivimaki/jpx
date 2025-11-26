@@ -1,0 +1,25 @@
+{
+  "links": [
+    {
+      "key": "instagram",
+      "href": "https://www.instagram.com/j.partynen",
+      "aria": "Avaa J. Partysen Instagram"
+    },
+    {
+      "key": "facebook",
+      "href": "https://www.facebook.com/jpartynen",
+      "aria": "Avaa J. Partysen Facebook"
+    },
+    {
+      "key": "youtube",
+      "href": "https://www.youtube.com/@jpartynen",
+      "aria": "Avaa J. Partysen YouTube"
+    },
+    {
+      "key": "spotify",
+      "href": "https://open.spotify.com/artist/5ZAj9VTFP2pdBWtWRLDNIL",
+      "aria": "Avaa J. Partysen Spotify"
+    },
+    { "key": "shop", "href": "#shop", "aria": "Avaa J. Partysen kauppa" }
+  ]
+}

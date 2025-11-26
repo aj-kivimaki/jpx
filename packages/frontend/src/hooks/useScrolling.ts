@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { scrollConfig } from 'shared/src/config/scroll';
 
-export default function useScrolling(offset: number = 1): boolean {
+const { threshold, label } = scrollConfig;
+
+export default function useScrolling(offset: number = threshold): boolean {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
   useEffect(() => {
@@ -9,11 +12,11 @@ export default function useScrolling(offset: number = 1): boolean {
       setIsScrolling(scrollTop > offset);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener(label, handleScroll);
     handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener(label, handleScroll);
     };
   }, [offset]);
 

@@ -1,21 +1,19 @@
 import styles from './Footer.module.css';
+import contact from 'shared/data/contact.json';
+import { logos, layout } from 'shared/data/site.json';
+import { sectionIds } from 'shared/config/sectionIds';
 
 const Footer = () => {
   return (
-    <div id="contact" className={styles.footer}>
+    <div id={sectionIds.contact} className={styles.footer}>
       <div className={styles.stagentLogo}>
-        <img
-          src="./images/stagent-logo.webp"
-          height="160px"
-          width="154px"
-          alt="stagent-logo"
-        />
+        <img src={logos.stagent.src} alt={logos.stagent.alt} />
       </div>
       <div>
-        <p>KEIKKAMYYNTI:</p>
-        <p>Juuso Eloranta</p>
-        <p>0400-550463</p>
-        <p>stagent@stagent.fi</p>
+        <p>{layout.footer.title}:</p>
+        <p>{contact.booking.name}</p>
+        <p>{contact.booking.phone}</p>
+        <p>{contact.booking.email}</p>
       </div>
     </div>
   );

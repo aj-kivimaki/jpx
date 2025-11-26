@@ -1,0 +1,37 @@
+{
+  "description": "J. Partynen on kokenut esiintyjä. Keikoilla kuullaan J. Partysen omia kappaleita ja coverbiisejä vuosien varrelta. Olipa kyseessä intiimi soolokeikka tai energisempi bändispektaakkeli, aito läsnäolo tekee jokaisesta keikasta ainutlaatuisen!",
+  "sections": {
+    "banner": { "adjectives": ["Artisti", "Tulkitsija", "Musiikintekijä"] },
+    "gigs": { "title": "KEIKAT" },
+    "info": { "title": "INFO" },
+    "contact": { "title": "YHTEYS" }
+  },
+  "layout": {
+    "header": {
+      "title": "J. Partynen"
+    },
+    "footer": {
+      "title": "KEIKKAMYYNTI"
+    }
+  },
+  "logos": {
+    "jpx": {
+      "src": "/images/jpx-logo.webp",
+      "alt": "J. Partynen eXperience logo"
+    },
+    "stagent": {
+      "src": "/images/stagent-logo.webp",
+      "alt": "Stagent logo"
+    }
+  },
+  "images": {
+    "solo": {
+      "src": "/images/solo.webp",
+      "alt": "J. Partynen soolokuva"
+    },
+    "band": {
+      "src": "/images/jpx-band.webp",
+      "alt": "J. Partynen eXperience bändikuva"
+    }
+  }
+}
