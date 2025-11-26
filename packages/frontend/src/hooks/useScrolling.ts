@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { scrollConfig } from 'shared/src/config/scroll';
+import { scrollConfig } from 'shared/config/scroll';
 
 const { threshold, label } = scrollConfig;
 
