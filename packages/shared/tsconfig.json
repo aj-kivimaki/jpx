@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "strict": true,
     "composite": true,
+    "noImplicitAny": true,
     "declaration": true,
     "declarationMap": true,
     "outDir": "dist",
