@@ -10,5 +10,5 @@ export interface Gig {
   lineup: LocalizedText; // i18n
   venue?: string;
   city?: string;
-  notes: LocalizedText; // i18n
+  notes?: LocalizedText; // i18n
 }
