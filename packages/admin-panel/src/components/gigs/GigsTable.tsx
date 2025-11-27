@@ -63,7 +63,7 @@ const GigsTable: React.FC<GigsTable> = ({ data }) => {
                 <div className={styles.cityText}>{city}</div>
               </div>
             )}
-            {notes && (
+            {notes?.fi && (
               <div className={styles.notes}>
                 <div className={styles.notesIcon}>
                   <FaExclamation />
