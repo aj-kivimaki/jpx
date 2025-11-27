@@ -1,15 +1,29 @@
 # 🎤 J. Partynen - Artist Homepage
 
-A clean, fast **React + Supabase** site built for a real artist.  
-Manages gigs, promo materials, and band info via a custom CMS — no coding required.
+> A lightweight, cost-efficient artist website built with React and Supabase.  
+> Designed for a single admin and low traffic, it includes a fast public site  
+> for gigs and promo materials plus a simple, secure CMS for easy updates.
 
-🚀 **LIVE SITE:** https://jpartynen.com
+## This project has two applications:
 
+🚀 **LIVE SITE / FRONTEND:** https://jpartynen.com  
 🔐 **ADMIN PANEL:** https://admin.jpartynen.com
 
 <img src="assets/banner.webp" alt="J. Partynen banner screenshot" width="600" />
 
-## 🛠 Tech Stack
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Backend / Supabase](#backend--supabase)
+- [Quality & CI/CD](#quality--cicd)
+- [Screenshots](#screenshots)
+- [Future Improvements](#future-improvements)
+- [Licenses](#licenses)
+- [Quickstart & Contributing](#quickstart--contributing)
+
+## Tech Stack
 
 | Layer        | Technology                                          |
 | ------------ | --------------------------------------------------- |
@@ -21,44 +35,50 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 | Code Quality | ESLint • Prettier • Husky + lint-staged             |
 | CI/CD        | GitHub Actions                                      |
 
-## 📂 Project Structure
+## Project Structure
 
 <details>
 <summary>File Tree</summary>
 
 ```text
   /.github
-    /workflows          # Separate workflows for admin-panel and frontend
+    /workflows      # GitHub Actions pipelines for frontend and admin-panel
+
+  /.husky           # Git hooks for linting, formatting, and tests
 
   /packages
     /admin-panel
       /src
         /components
-          /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
-          /form         # Form components for adding gigs (e.g., Form.tsx, FormInput.tsx, FormSelect.tsx)
-        /config         # Database client configuration
+          /auth     # LogoutButton, PrivateRoute
+          /gigs     # Gig display and management components
+          /form     # Form components for adding/editing gigs
+        /config     # Supabase client & database configuration
+        /pages      # Home, Login
 
     /frontend
       /src
         /components
-          /layout       # Overall page structure (e.g., Header.tsx, Banner.tsx, Footer.tsx)
-          /sidebar      # Sidebar components (e.g., SocialSidebar.tsx)
-          /info         # Band info section (e.g., Info.tsx)
-          /gigs         # Components for showing gigs (e.g., Gigs.tsx, GigsTable.tsx)
-        /hooks          # Custom React hooks (e.g., useFetch.ts, useScroll.ts)
-        /utils          # Helper functions and utilities (e.g., formatText.ts)
+          /layout   # Header, Footer, Banner
+          /sidebar  # Social links
+          /info     # Band info section
+          /gigs     # Public gigs list/table
+        /hooks      # Custom React hooks (data fetching, scroll, etc.)
+        /utils      # Helper functions (formatting, text manipulation)
 
     /shared
       /src
-        /styles         # Global styles: reset.css & global.css
-        /types          # Custom TypeScript types (e.g., Gig.ts)
+        /config     # Shared constants and API configs
+        /data       # Static/shared data
+        /styles     # Global styles (reset, theme, etc.)
+        /types      # Shared TypeScript types/interfaces
 ```
 
 </details>
 
-## 🧩 Features
+## Features
 
-### [Public Site](https://jpartynen.com)
+### Public Site
 
 - List of upcoming gigs
 - Social media links
@@ -66,12 +86,12 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 - Contact info for booking inquiries
 - Downloadable promo materials
 
-### [Admin Panel (CMS) ](https://admin.jpartynen.com)
+### Admin Panel (CMS)
 
 - Supabase with Authentication
 - Add, edit, delete gigs
 
-## 🗄️ Backend / Supabase
+## Backend / Supabase
 
 - **Database:** PostgreSQL (via Supabase)
   - Table: `gigs`
@@ -85,16 +105,12 @@ Manages gigs, promo materials, and band info via a custom CMS — no coding requ
 
 This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
-## 🔧 Installation
-
-For setup instructions, see [INSTALL.md](./INSTALL.md)
-
-## ⚙️ Quality & CI/CD
+## Quality & CI/CD
 
 - **Unit & Component Tests:** `npm run test`
 - **End-to-End Tests:** `npm run e2e`
 
-> Ensure dev servers are running if tests depend on live APIs
+  > CI automatically runs all tests; manual testing is optional for large changes.
 
 - **CI/CD Pipeline:** GitHub Actions runs on every PR or push to `main`
   - Linting & formatting (ESLint + Prettier)
@@ -110,43 +126,47 @@ For setup instructions, see [INSTALL.md](./INSTALL.md)
   - Prettier formatting
   - Run tests
 
-This ensures a **consistent, high-quality codebase** with automated checks and deployments.
+> Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
-## 📝 Screenshots
+---
 
-**PUBLIC Gigs Section**
+## Screenshots
 
+**Public Site – Gigs Section**  
 <img src="assets/gigs.webp" alt="Gigs screenshot" width="400" />
 
-**ADMIN CMS**
-
+**Admin Panel – CMS Overview**  
 <img src="assets/admin-panel.webp" alt="Admin panel screenshot" width="400" />
 
-## 📊 Future Improvements
+---
 
-Ideas for next iterations and enhancements:
+## Future Improvements
 
 <details>
-<summary>New Features</summary>
+<summary>Planned Features & Enhancements</summary>
 
 - Analytics for gig views & downloads
-- More ways to manage content
-  - update promo materials (link)
-  - update text content
+- More ways to manage content:
+  - Update promo materials (link)
+  - Update text content
 
 </details>
 
-## 📜 Licenses
+---
+
+## Licenses
 
 - **Code:** MIT — see [LICENSE](./LICENSE.md)
-- **Website Content (images, text, audio) & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT](./LICENSE-CONTENT.md)
+- **Website Content & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT](./LICENSE-CONTENT.md)
 
-> The MIT license applies to all code (HTML, CSS, JS, TS).  
-> Creative Commons BY-ND 4.0 applies to all content and promo materials — share as-is with attribution; no derivative works allowed.
+> MIT applies to all code (HTML, CSS, JS, TS).  
+> CC BY-ND 4.0 applies to all content — share as-is with attribution; no derivative works allowed.
 
-## 🔗 Key Takeaways
+---
 
-Full-stack **React + Supabase** app with **TypeScript + CSS Modules**, secure RLS backend, Postgres database, and automated **tests, linting, and deployments**. Includes **Lighthouse**, **SonarCloud**, and **Husky pre-commit hooks**. Solves a **real-world, user-focused problem**.
+## Quickstart & Contributing
+
+> See [QUICKSTART.md](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=alert_status)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
