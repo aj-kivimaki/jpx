@@ -1,37 +1,95 @@
 {
-  "description": "J. Partynen on kokenut esiintyjä. Keikoilla kuullaan J. Partysen omia kappaleita ja coverbiisejä vuosien varrelta. Olipa kyseessä intiimi soolokeikka tai energisempi bändispektaakkeli, aito läsnäolo tekee jokaisesta keikasta ainutlaatuisen!",
-  "sections": {
-    "banner": { "adjectives": ["Artisti", "Tulkitsija", "Musiikintekijä"] },
-    "gigs": { "title": "KEIKAT" },
-    "info": { "title": "INFO" },
-    "contact": { "title": "YHTEYS" }
+  "description": {
+    "fi": "J. Partynen on kokenut esiintyjä. Keikoilla kuullaan J. Partysen omia kappaleita ja coverbiisejä vuosien varrelta. Olipa kyseessä intiimi soolokeikka tai energisempi bändispektaakkeli, aito läsnäolo tekee jokaisesta keikasta ainutlaatuisen!",
+    "en": "J. Partynen is an experienced performer. The shows feature both original songs and covers spanning many years. Whether performing an intimate solo set or a more energetic band spectacle, the genuine presence makes each show unique!"
   },
+  "sections": [
+    {
+      "id": "banner",
+      "adjectives": {
+        "fi": ["Artisti", "Tulkitsija", "Musiikintekijä"],
+        "en": ["Artist", "Interpreter", "Songwriter"]
+      },
+      "order": 1
+    },
+    {
+      "id": "gigs",
+      "title": {
+        "fi": "KEIKAT",
+        "en": "GIGS"
+      },
+      "items": [],
+      "order": 2
+    },
+    {
+      "id": "info",
+      "title": {
+        "fi": "INFO",
+        "en": "INFO"
+      },
+      "order": 3
+    },
+    {
+      "id": "contact",
+      "title": {
+        "fi": "YHTEYS",
+        "en": "CONTACT"
+      },
+      "order": 4
+    }
+  ],
   "layout": {
     "header": {
-      "title": "J. Partynen"
+      "title": {
+        "fi": "J. Partynen",
+        "en": "J. Partynen"
+      }
     },
     "footer": {
-      "title": "KEIKKAMYYNTI"
+      "title": {
+        "fi": "KEIKKAMYYNTI",
+        "en": "BOOKING"
+      }
     }
   },
-  "logos": {
-    "jpx": {
+  "logos": [
+    {
+      "id": "jpx",
       "src": "/images/jpx-logo.webp",
-      "alt": "J. Partynen eXperience logo"
+      "alt": {
+        "fi": "J. Partynen eXperience logo",
+        "en": "J. Partynen eXperience logo"
+      },
+      "link": "/"
     },
-    "stagent": {
+    {
+      "id": "stagent",
       "src": "/images/stagent-logo.webp",
-      "alt": "Stagent logo"
+      "alt": {
+        "fi": "Stagent logo",
+        "en": "Stagent logo"
+      },
+      "link": "https://www.stagent.fi"
     }
-  },
-  "images": {
-    "solo": {
+  ],
+  "images": [
+    {
+      "id": "solo",
       "src": "/images/solo.webp",
-      "alt": "J. Partynen soolokuva"
+      "alt": {
+        "fi": "J. Partynen soolokuva",
+        "en": "J. Partynen solo"
+      },
+      "order": 1
     },
-    "band": {
+    {
+      "id": "band",
       "src": "/images/jpx-band.webp",
-      "alt": "J. Partynen eXperience bändikuva"
+      "alt": {
+        "fi": "J. Partynen eXperience bändikuva",
+        "en": "J. Partynen eXperience band"
+      },
+      "order": 2
     }
-  }
+  ]
 }

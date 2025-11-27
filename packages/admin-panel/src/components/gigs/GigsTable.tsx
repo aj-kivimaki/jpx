@@ -5,29 +5,37 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
 import type { Gig } from 'shared/src/types/gig-type';
+import { useTranslation } from 'react-i18next';
 
 interface GigsTable {
   data: Gig[] | null;
 }
 
 const GigsTable: React.FC<GigsTable> = ({ data }) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language as 'fi' | 'en';
+
+  if (!data?.length) {
+    return <p>{lang === 'fi' ? 'Ei keikkoja tulossa' : 'No gigs scheduled'}</p>;
+  }
+
   return (
     <>
-      {data?.map((gig: Gig) => (
-        <div key={gig.id} className={styles.card}>
+      {data?.map(({ id, date, time, lineup, venue, city, notes }) => (
+        <div key={id} className={styles.card}>
           <div className={styles.leftColumn}>
             <div className={styles.date}>
               <div className={styles.dateIcon}>
                 <CiCalendar />
               </div>
-              <div>{gig.date}</div>
+              <div>{date}</div>
             </div>
-            {gig.time && (
+            {time && (
               <div className={styles.time}>
                 <div className={styles.timeIcon}>
                   <IoTimeOutline />
                 </div>
-                <div>{gig.time}</div>
+                <div>{time}</div>
               </div>
             )}
           </div>
@@ -36,31 +44,31 @@ const GigsTable: React.FC<GigsTable> = ({ data }) => {
               <div className={styles.lineupIcon}>
                 <GiMicrophone />
               </div>
-              <div>{gig.lineup}</div>
+              <div>{lineup[lang] ?? lineup?.fi}</div>
             </div>
-            {gig.venue && (
+            {venue && (
               <div className={styles.venue}>
                 <div className={styles.venueIcon}>
                   <FaBuildingColumns />
                 </div>
-                <div>{gig.venue}</div>
+                <div>{venue}</div>
               </div>
             )}
 
-            {gig?.city && (
+            {city && (
               <div className={styles.city}>
                 <div className={styles.cityIcon}>
                   <IoLocationOutline />
                 </div>
-                <div className={styles.cityText}>{gig.city}</div>
+                <div className={styles.cityText}>{city}</div>
               </div>
             )}
-            {gig?.notes && (
+            {notes && (
               <div className={styles.notes}>
                 <div className={styles.notesIcon}>
                   <FaExclamation />
                 </div>
-                <div>{gig?.notes}</div>
+                <div>{notes?.[lang] ?? notes?.fi}</div>
               </div>
             )}
           </div>

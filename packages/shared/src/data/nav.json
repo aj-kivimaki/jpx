@@ -1,6 +1,6 @@
 [
-  { "id": "top", "label": null },
-  { "id": "gigs", "label": "KEIKAT" },
-  { "id": "info", "label": "INFO" },
-  { "id": "contact", "label": "YHTEYS" }
+  { "id": "top", "label": { "fi": null, "en": null } },
+  { "id": "gigs", "label": { "fi": "KEIKAT", "en": "GIGS" } },
+  { "id": "info", "label": { "fi": "INFO", "en": "INFO" } },
+  { "id": "contact", "label": { "fi": "YHTEYS", "en": "CONTACT" } }
 ]

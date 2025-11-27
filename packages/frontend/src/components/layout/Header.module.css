@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 4px 8px;
   background: rgb(151, 108, 32);
   color: #ffffff;
@@ -52,9 +52,9 @@
     box-shadow 0.3s;
 }
 
-.container {
+.rightSection {
   display: flex;
-  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .desktopMenu {
@@ -71,6 +71,7 @@
 
 .mobileMenuButton {
   font-size: 1.8rem;
+  width: 30px;
   cursor: pointer;
 }
 
@@ -107,7 +108,7 @@
   }
 
   .container {
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 6rem;
   }
 }

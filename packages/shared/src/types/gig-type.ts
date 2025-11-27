@@ -1,9 +1,14 @@
+export interface LocalizedText {
+  fi: string;
+  en: string;
+}
+
 export interface Gig {
   id: string;
   date: string;
   time?: string;
-  lineup?: string;
+  lineup: LocalizedText; // i18n
   venue?: string;
   city?: string;
-  notes?: string;
+  notes: LocalizedText; // i18n
 }
