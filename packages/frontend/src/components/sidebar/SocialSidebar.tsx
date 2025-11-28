@@ -1,5 +1,4 @@
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
-import { FaCartShopping } from 'react-icons/fa6';
 import styles from './SocialSidebar.module.css';
 import { social } from 'shared/data';
 
@@ -18,7 +17,7 @@ const SocialSidebar = () => {
           {link.key === 'facebook' && <FaFacebook />}
           {link.key === 'youtube' && <FaYoutube />}
           {link.key === 'spotify' && <FaSpotify />}
-          {link.key === 'shop' && <FaCartShopping />}
+          {/* Shop link here - FaCartShopping from 'react-icons/fa6' */}
         </a>
       ))}
     </div>

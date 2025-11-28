@@ -2,7 +2,12 @@ import { useEffect, useState, type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../../config/supabaseClient';
 
-export default function PrivateRoute({ children }: { children: JSX.Element }) {
+interface PrivateRouteProps {
+  children: JSX.Element;
+}
+export default function PrivateRoute({
+  children,
+}: Readonly<PrivateRouteProps>) {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
 
