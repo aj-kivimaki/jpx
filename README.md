@@ -1,5 +1,11 @@
 # 🎤 J. Partynen - Artist Homepage
 
+![CI](https://github.com/aj-kivimaki/jpx/actions/workflows/ci.yml/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8034119b-2ace-4ccf-944e-99afa43133aa/deploy-status)](https://app.netlify.com/projects/jpartynen/deploys)
+![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=alert_status)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
+![Coverage](https://codecov.io/gh/aj-kivimaki/jpx/branch/main/graph/badge.svg)
+
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
 > for gigs and promo materials plus a simple, secure CMS for easy updates.
@@ -167,6 +173,3 @@ This setup keeps the admin panel **simple, secure, and low-maintenance**.
 ## Quickstart & Contributing
 
 > See [QUICKSTART.md](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=alert_status)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
