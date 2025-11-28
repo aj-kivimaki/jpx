@@ -25,8 +25,8 @@ const Banner: React.FC = () => {
       <img src={src} alt={alt} className={styles.bannerImg} />
       <div className={styles.overlay}>
         <div className={styles.adjectives}>
-          {adjectives.map((adj: string, index: number) => (
-            <div key={index} className={styles.adjective}>
+          {adjectives.map((adj: string) => (
+            <div key={adj} className={styles.adjective}>
               {adj}
             </div>
           ))}

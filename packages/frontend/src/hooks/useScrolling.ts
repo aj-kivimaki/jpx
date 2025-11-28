@@ -12,11 +12,11 @@ export default function useScrolling(offset: number = threshold): boolean {
       setIsScrolling(scrollTop > offset);
     };
 
-    window.addEventListener(label, handleScroll);
+    globalThis.addEventListener(label, handleScroll);
     handleScroll();
 
     return () => {
-      window.removeEventListener(label, handleScroll);
+      globalThis.removeEventListener(label, handleScroll);
     };
   }, [offset]);
 

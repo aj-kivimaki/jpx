@@ -12,7 +12,7 @@
 
 ## This project has two applications:
 
-🚀 **LIVE SITE / FRONTEND:** https://jpartynen.com  
+🚀 **ARTIST PAGE:** https://jpartynen.com  
 🔐 **ADMIN PANEL:** https://admin.jpartynen.com
 
 <img src="assets/banner.webp" alt="J. Partynen banner screenshot" width="600" />
@@ -57,27 +57,26 @@
       /src
         /components
           /auth     # LogoutButton, PrivateRoute
-          /gigs     # Gig display and management components
           /form     # Form components for adding/editing gigs
+          /gigs     # Gig display and management components
         /config     # Supabase client & database configuration
         /pages      # Home, Login
 
     /frontend
       /src
         /components
-          /layout   # Header, Footer, Banner
-          /sidebar  # Social links
-          /info     # Band info section
           /gigs     # Public gigs list/table
-        /hooks      # Custom React hooks (data fetching, scroll, etc.)
-        /utils      # Helper functions (formatting, text manipulation)
+          /info     # Band info section
+          /layout   # Header, Banner, Footer
+          /sidebar  # Social links
+        /hooks      # Custom React hooks (data fetching, scroll)
+        /utils      # Helper functions (text formatting)
 
     /shared
       /src
-        /config     # Shared constants and API configs
         /data       # Static/shared data
-        /styles     # Global styles (reset, theme, etc.)
-        /types      # Shared TypeScript types/interfaces
+        /schemas    # Zod validation and inferred types
+        /styles     # CSS styles (reset, global)
 ```
 
 </details>
@@ -87,10 +86,9 @@
 ### Public Site
 
 - List of upcoming gigs
-- Social media links
+- Social media links sidebar
 - Band info
 - Contact info for booking inquiries
-- Downloadable promo materials
 
 ### Admin Panel (CMS)
 
@@ -153,7 +151,8 @@ This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
 - Analytics for gig views & downloads
 - More ways to manage content:
-  - Update promo materials (link)
+  - Downloadable promo materials
+    - Update promo materials (link)
   - Update text content
 
 </details>
@@ -162,14 +161,14 @@ This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
 ## Licenses
 
-- **Code:** MIT — see [LICENSE](./LICENSE.md)
-- **Website Content & Promo Materials:** CC BY-ND 4.0 — see [LICENSE-CONTENT](./LICENSE-CONTENT.md)
+> MIT [LICENSE](./LICENSE.md) applies to all **Code:** (HTML, CSS, JS, TS)
 
-> MIT applies to all code (HTML, CSS, JS, TS).  
-> CC BY-ND 4.0 applies to all content — share as-is with attribution; no derivative works allowed.
+> CC BY-ND 4.0 [LICENSE-CONTENT](./LICENSE-CONTENT.md) applies to all **Website Content & Promo Materials:**
+
+- Share as-is with attribution; no derivative works allowed
 
 ---
 
 ## Quickstart & Contributing
 
-> See [QUICKSTART.md](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
+See [QUICKSTART.md](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
