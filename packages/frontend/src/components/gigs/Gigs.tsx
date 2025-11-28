@@ -1,12 +1,10 @@
-import GigsTable from './GigsTable';
-import { gigs } from 'shared/data';
-import styles from './Gigs.module.css';
-import { site } from 'shared/data/site';
-import { sectionIds } from 'shared/config';
 import { useTranslation } from 'react-i18next';
-import type { Language } from 'shared/types';
+import GigsTable from './GigsTable';
+import { gigs, site } from 'shared/data';
+import { sectionIds, type Language } from 'shared/schemas';
+import styles from './Gigs.module.css';
 
-const Gigs: React.FC = () => {
+const Gigs = () => {
   const { i18n } = useTranslation();
   const { sections } = site;
 

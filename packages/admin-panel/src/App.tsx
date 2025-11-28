@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import { supabase } from './config/supabaseClient';
 import Login from './pages/Login';
-import PrivateRoute from './components/auth/PrivateRoute';
 import Home from './pages/Home';
+import PrivateRoute from './components/auth/PrivateRoute';
+import NotFoundRedirect from './pages/NotFoundRedirect';
 import 'shared/styles/reset.css';
 import 'shared/styles/global.css';
-import NotFoundRedirect from './pages/NotFoundRedirect';
 
 export default function App() {
   const navigate = useNavigate();

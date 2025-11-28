@@ -1,12 +1,12 @@
-import styles from './GigsTable.module.css';
+import { useTranslation } from 'react-i18next';
 import { IoIosPin } from 'react-icons/io';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaExclamation } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
-import type { Gig } from 'shared/types';
-import { useTranslation } from 'react-i18next';
+import type { Gig } from 'shared/schemas';
+import styles from './GigsTable.module.css';
 
 interface GigsTableProps {
   gigs: Gig[];

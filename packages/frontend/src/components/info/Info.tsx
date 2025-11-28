@@ -1,9 +1,7 @@
-import styles from './Info.module.css';
-import { sectionIds } from 'shared/config/sectionIds';
-import { site } from 'shared/data';
-import { band } from 'shared/data/band';
 import { useTranslation } from 'react-i18next';
-import type { Language } from 'shared/types';
+import { sectionIds, type Language } from 'shared/schemas';
+import { site, band } from 'shared/data';
+import styles from './Info.module.css';
 
 const Info = () => {
   const { i18n } = useTranslation();

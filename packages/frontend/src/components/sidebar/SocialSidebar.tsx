@@ -1,12 +1,12 @@
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import styles from './SocialSidebar.module.css';
-import { socialLinks } from 'shared/data';
+import { social } from 'shared/data';
 
 const SocialSidebar = () => {
   return (
     <div className={styles.socialSidebar}>
-      {socialLinks.map((link) => (
+      {social.map((link) => (
         <a
           key={link.key}
           href={link.href}

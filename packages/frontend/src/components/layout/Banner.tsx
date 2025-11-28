@@ -1,10 +1,12 @@
-import React from 'react';
-import styles from './Banner.module.css';
-import { sectionIds } from 'shared/config/sectionIds';
-import { site } from 'shared/data';
-import type { SiteImage, SiteSection } from 'shared/types/site';
 import { useTranslation } from 'react-i18next';
-import type { Language } from 'shared/types';
+import {
+  sectionIds,
+  type SiteImage,
+  type SiteSection,
+  type Language,
+} from 'shared/schemas';
+import { site } from 'shared/data';
+import styles from './Banner.module.css';
 
 const Banner: React.FC = () => {
   const { i18n } = useTranslation();
