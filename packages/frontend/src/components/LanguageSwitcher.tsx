@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './LanguageSwitcher.module.css';
-import ui from 'shared/data/ui.json';
+import { ui } from 'shared/data';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
@@ -13,7 +13,7 @@ const LanguageSwitcher: React.FC = () => {
 
   // Show the language that will be switched to
   const buttonLabel =
-    i18n.language === 'fi' ? ui.englishLanguage : ui.finnisLanguage;
+    i18n.language === 'fi' ? ui.englishLanguage : ui.finnishLanguage;
 
   return (
     <div className={styles.languageSwitcher}>

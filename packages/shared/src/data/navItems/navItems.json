@@ -1,5 +1,5 @@
 [
-  { "id": "top", "label": { "fi": null, "en": null } },
+  { "id": "top", "label": { "fi": "", "en": null } },
   { "id": "gigs", "label": { "fi": "KEIKAT", "en": "GIGS" } },
   { "id": "info", "label": { "fi": "INFO", "en": "INFO" } },
   { "id": "contact", "label": { "fi": "YHTEYS", "en": "CONTACT" } }

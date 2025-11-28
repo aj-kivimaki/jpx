@@ -5,20 +5,20 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaExclamation } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
-import type { Gig } from 'shared/src/types/gig-type';
+import type { Gig } from 'shared/types';
 import { useTranslation } from 'react-i18next';
 
 interface GigsTableProps {
-  data?: Gig[] | null;
+  gigs: Gig[];
 }
 
-const GigsTable: React.FC<GigsTableProps> = ({ data }) => {
+const GigsTable = ({ gigs }: GigsTableProps) => {
   const { i18n } = useTranslation();
   const lang = i18n.language as 'fi' | 'en';
 
   return (
     <>
-      {data?.map(({ id, date, time, lineup, venue, city, notes }) => (
+      {gigs.map(({ id, date, time, lineup, venue, city, notes }) => (
         <div key={id} className={styles.card}>
           <div className={styles.leftColumn}>
             {date && (

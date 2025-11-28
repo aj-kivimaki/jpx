@@ -1,32 +1,20 @@
-import React, { useState } from 'react';
-import styles from './Header.module.css';
-import useIsScrolling from '../../hooks/useScrolling';
-import nav from 'shared/data/nav.json';
-import { logos, layout } from 'shared/data/site.json';
-import ui from 'shared/data/ui.json';
-import { sectionIds } from 'shared/config/sectionIds';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useIsScrolling from '../../hooks/useScrolling';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { navItems, site, ui } from 'shared/data';
+import { sectionIds } from 'shared/config/sectionIds';
+import type { Language } from 'shared/types';
+import styles from './Header.module.css';
 
-interface Logo {
-  id: string;
-  src: string;
-  alt: { [lang: string]: string };
-}
-
-interface Layout {
-  header: { title: { [lang: string]: string } };
-}
-
-interface NavItem {
-  id: string;
-  label?: { [lang: string]: string | null } | null;
-}
-
-const Header: React.FC = () => {
+const Header = () => {
   const isScrolling = useIsScrolling();
   const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
+
+  const lang = i18n.language as Language;
+
+  const { layout, logos } = site;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -36,13 +24,11 @@ const Header: React.FC = () => {
     setIsOpen(false);
   };
 
-  const jpxLogo = (logos as Logo[]).find((logo) => logo.id === 'jpx');
+  const jpxLogo = logos.find((logo) => logo.id === 'jpx');
   const logoSrc = jpxLogo?.src ?? '';
-  const logoAlt = jpxLogo?.alt?.[i18n.language] ?? jpxLogo?.alt?.['fi'] ?? '';
+  const logoAlt = jpxLogo?.alt?.[lang] ?? jpxLogo?.alt?.fi ?? '';
 
-  const headerTitle =
-    (layout as Layout).header.title[i18n.language] ??
-    (layout as Layout).header.title['fi'];
+  const headerTitle = layout.header.title[lang] ?? layout.header.title.fi;
 
   return (
     <header
@@ -60,7 +46,7 @@ const Header: React.FC = () => {
 
       {/* Mobile / Desktop Menu */}
       <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
-        {(nav as unknown as NavItem[]).map((item) => {
+        {navItems.map((item) => {
           const labelText =
             typeof item.label === 'string'
               ? item.label
