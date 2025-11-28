@@ -7,6 +7,7 @@ import type { Language } from 'shared/types';
 
 const Footer = () => {
   const { i18n } = useTranslation();
+  const { logos, layout } = site;
 
   const lang = i18n.language as Language;
   const { logos, layout } = site;
