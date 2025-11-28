@@ -3,13 +3,15 @@ import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
 import LogoutButton from '../auth/LogoutButton';
-import { lineupOptions } from 'shared/config/lineupOptions';
+import { lineupOptions } from 'shared/schemas';
+
+const lineupOptionsWithPlaceholder = ['Valitse kokoonpano', ...lineupOptions];
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    lineup: lineupOptions[0],
+    lineup: 'Valitse kokoonpano',
     venue: '',
     city: '',
     notes: '',
@@ -59,7 +61,7 @@ const Form: React.FC = () => {
           name="lineup"
           value={formData.lineup}
           onChange={handleChange}
-          options={lineupOptions}
+          options={lineupOptionsWithPlaceholder}
           required={true}
         />
         <FormField
