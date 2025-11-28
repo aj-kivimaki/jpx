@@ -3,10 +3,10 @@
     "id": "5df8df21-b5c1-46c9-b847-ae8a07cc2c19",
     "date": "29.11.",
     "lineup": { "fi": "SOOLO", "en": "SOLO" },
-    "venue": "",
-    "city": "",
+    "venue": null,
+    "city": null,
     "notes": { "fi": "Yksityistilaisuus", "en": "Private event" },
-    "time": ""
+    "time": null
   },
   {
     "id": "6e5f9c3a-1b4e-4d2e-8f4a-7c4f3f4e1f4e",
@@ -14,7 +14,7 @@
     "lineup": { "fi": "SOOLO", "en": "SOLO" },
     "venue": "Matkabaari",
     "city": "Sysmä",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": "18:00"
   },
   {
@@ -23,7 +23,7 @@
     "lineup": { "fi": "DUO", "en": "DUO" },
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -32,7 +32,7 @@
     "lineup": { "fi": "DUO", "en": "DUO" },
     "venue": "Kultainen Kulaus",
     "city": "Seinäjoki",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -41,7 +41,7 @@
     "lineup": { "fi": "BÄNDI", "en": "BAND" },
     "venue": "Storyville",
     "city": "Helsinki",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -50,7 +50,7 @@
     "lineup": { "fi": "BÄNDI", "en": "BAND" },
     "venue": "Tulisuudelma",
     "city": "Vantaa",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -59,7 +59,7 @@
     "lineup": { "fi": "TRIO", "en": "TRIO" },
     "venue": "Mesta",
     "city": "Pyhä",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -68,7 +68,7 @@
     "lineup": { "fi": "TRIO", "en": "TRIO" },
     "venue": "Old Mates",
     "city": "Levi",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   },
   {
@@ -77,7 +77,7 @@
     "lineup": { "fi": "TRIO", "en": "TRIO" },
     "venue": "Old Mates",
     "city": "Levi",
-    "notes": { "fi": null, "en": null },
+    "notes": { "fi": "", "en": null },
     "time": null
   }
 ]

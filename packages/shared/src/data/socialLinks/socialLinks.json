@@ -1,0 +1,23 @@
+[
+  {
+    "key": "instagram",
+    "href": "https://www.instagram.com/j.partynen",
+    "aria": "J. Partynen Instagram"
+  },
+  {
+    "key": "facebook",
+    "href": "https://www.facebook.com/jpartynen",
+    "aria": "J. Partynen Facebook"
+  },
+  {
+    "key": "youtube",
+    "href": "https://www.youtube.com/@jpartynen",
+    "aria": "J. Partynen YouTube"
+  },
+  {
+    "key": "spotify",
+    "href": "https://open.spotify.com/artist/5ZAj9VTFP2pdBWtWRLDNIL",
+    "aria": "J. Partynen Spotify"
+  },
+  { "key": "shop", "href": "#shop", "aria": "J. Partynen Shop" }
+]

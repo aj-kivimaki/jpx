@@ -1,0 +1,22 @@
+[
+  {
+    "name": { "fi": "Olli Tanttu", "en": "Olli Tanttu" },
+    "role": { "fi": "kitara", "en": "guitar" }
+  },
+  {
+    "name": { "fi": "Atte Kivimäki", "en": "Atte Kivimäki" },
+    "role": { "fi": "koskettimet", "en": "keyboard" }
+  },
+  {
+    "name": { "fi": "Jani Partinen", "en": "Jani Partinen" },
+    "role": { "fi": "laulu & kitara", "en": "vocals & guitar" }
+  },
+  {
+    "name": { "fi": "Touko Ruokolainen", "en": "Touko Ruokolainen" },
+    "role": { "fi": "rummut", "en": "drums" }
+  },
+  {
+    "name": { "fi": "Visa Ruokolainen", "en": "Visa Ruokolainen" },
+    "role": { "fi": "basso", "en": "bass" }
+  }
+]

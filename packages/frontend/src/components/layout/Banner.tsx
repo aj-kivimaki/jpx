@@ -1,37 +1,29 @@
 import React from 'react';
 import styles from './Banner.module.css';
 import { sectionIds } from 'shared/config/sectionIds';
-import { images, sections } from 'shared/data/site.json';
+import { site } from 'shared/data';
+import type { SiteImage, SiteSection } from 'shared/types/site';
 import { useTranslation } from 'react-i18next';
-
-interface Section {
-  id: string;
-  adjectives?: { [lang: string]: string[] };
-}
-
-interface Image {
-  id: string;
-  src: string;
-  alt: { [lang: string]: string };
-}
+import type { Language } from 'shared/types';
 
 const Banner: React.FC = () => {
   const { i18n } = useTranslation();
 
-  // sections and images are typed as arrays of Section/Image
-  const bannerSection = (sections as Section[]).find((s) => s.id === 'banner');
-  const adjectives = bannerSection?.adjectives?.[i18n.language] ?? [];
+  const lang = i18n.language as Language;
+  const { sections, images } = site;
 
-  const soloImage = (images as Image[]).find((img) => img.id === 'solo');
+  const bannerSection = sections.find((s: SiteSection) => s.id === 'banner');
+  const adjectives = bannerSection?.adjectives?.[lang] ?? [];
+  const soloImage = images.find((img: SiteImage) => img.id === 'solo');
   const src = soloImage?.src ?? '';
-  const alt = soloImage?.alt?.[i18n.language] ?? soloImage?.alt?.['fi'] ?? '';
+  const alt = soloImage?.alt?.[lang] ?? soloImage?.alt?.fi ?? '';
 
   return (
     <div id={sectionIds.top} className={styles.banner}>
       <img src={src} alt={alt} className={styles.bannerImg} />
       <div className={styles.overlay}>
         <div className={styles.adjectives}>
-          {adjectives.map((adj, index) => (
+          {adjectives.map((adj: string, index: number) => (
             <div key={index} className={styles.adjective}>
               {adj}
             </div>

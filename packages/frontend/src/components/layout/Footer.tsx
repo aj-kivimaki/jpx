@@ -1,47 +1,22 @@
-import React from 'react';
-import styles from './Footer.module.css';
-import contact from 'shared/data/contact.json';
-import { logos, layout } from 'shared/data/site.json';
-import { sectionIds } from 'shared/config/sectionIds';
 import { useTranslation } from 'react-i18next';
+import { contact, site } from 'shared/data';
+import { sectionIds } from 'shared/config';
+import type { SiteLogo } from 'shared/types/site';
+import styles from './Footer.module.css';
 
-interface Logo {
-  id: string;
-  src: string;
-  alt: { [lang: string]: string };
-}
-
-interface FooterLayout {
-  header: {
-    title: { [lang: string]: string };
-  };
-  footer: {
-    title: { [lang: string]: string };
-  };
-}
-
-interface ContactInfo {
-  booking: {
-    name: string;
-    phone: string;
-    email: string;
-  };
-}
-
-const Footer: React.FC = () => {
+const Footer = () => {
   const { i18n } = useTranslation();
+  const { logos, layout } = site;
 
-  // Get Stagent logo
-  const stagentLogo = (logos as Logo[]).find((logo) => logo.id === 'stagent');
+  const stagentLogo = logos.find((logo: SiteLogo) => logo.id === 'stagent');
   const logoSrc = stagentLogo?.src ?? '';
   const logoAlt =
     stagentLogo?.alt?.[i18n.language] ?? stagentLogo?.alt?.['fi'] ?? '';
 
   const footerTitle =
-    (layout as FooterLayout).footer.title[i18n.language] ??
-    (layout as FooterLayout).footer.title['fi'];
+    layout.footer.title[i18n.language] ?? layout.footer.title['fi'];
 
-  const booking: ContactInfo['booking'] = contact.booking;
+  const { name, phone, email } = contact;
 
   return (
     <div id={sectionIds.contact} className={styles.footer}>
@@ -50,9 +25,9 @@ const Footer: React.FC = () => {
       </div>
       <div>
         <p>{footerTitle}:</p>
-        <p>{booking.name}</p>
-        <p>{booking.phone}</p>
-        <p>{booking.email}</p>
+        <p>{name}</p>
+        <p>{phone}</p>
+        <p>{email}</p>
       </div>
     </div>
   );
