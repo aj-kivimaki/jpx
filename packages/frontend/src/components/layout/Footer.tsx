@@ -9,15 +9,15 @@ const Footer = () => {
   const { i18n } = useTranslation();
 
   const lang = i18n.language as Language;
-  const { logos, layout } = site;
+  const { logos: siteLogos, layout: siteLayout } = site;
+  const { name, phone, email } = contact;
 
-  const stagentLogo = logos.find((logo: SiteLogo) => logo.id === 'stagent');
+  const stagentLogo = siteLogos.find((logo: SiteLogo) => logo.id === 'stagent');
   const logoSrc = stagentLogo?.src ?? '';
   const logoAlt = stagentLogo?.alt?.[lang] ?? stagentLogo?.alt?.fi ?? '';
 
-  const footerTitle = layout.footer.title[lang] ?? layout.footer.title.fi;
-  const { name, phone, email } = contact;
-
+  const footerTitle =
+    siteLayout.footer.title[lang] ?? siteLayout.footer.title.fi;
   return (
     <div id={sectionIds.contact} className={styles.footer}>
       <div className={styles.stagentLogo}>
