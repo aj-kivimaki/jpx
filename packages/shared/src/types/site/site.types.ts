@@ -1,5 +1,5 @@
 // /shared/types/site/site.types.ts
-import { LocalizedText } from '../i18n';
+import type { LocalizedText } from '../i18n';
 
 export interface SectionAdjectives {
   fi: string[];
