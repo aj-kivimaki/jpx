@@ -50,7 +50,7 @@ const Header = () => {
           const labelText =
             typeof item.label === 'string'
               ? item.label
-              : (item.label?.[i18n.language] ?? item.label?.['fi'] ?? '');
+              : (item.label?.[lang] ?? item.label?.['fi'] ?? '');
 
           return (
             labelText && (

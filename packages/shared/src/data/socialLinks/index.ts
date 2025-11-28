@@ -1,5 +1,5 @@
 import socialJson from './socialLinks.json';
-import { SocialLink } from '../../types/socialLink';
+import type { SocialLink } from '../../types/socialLink';
 
 export const socialLinks: SocialLink[] = socialJson;
 export default socialLinks;

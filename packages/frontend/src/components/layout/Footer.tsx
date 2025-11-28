@@ -3,19 +3,20 @@ import { contact, site } from 'shared/data';
 import { sectionIds } from 'shared/config';
 import type { SiteLogo } from 'shared/types/site';
 import styles from './Footer.module.css';
+import type { Language } from 'shared/types';
 
 const Footer = () => {
   const { i18n } = useTranslation();
   const { logos, layout } = site;
 
+  const lang = i18n.language as Language;
+  const { logos, layout } = site;
+
   const stagentLogo = logos.find((logo: SiteLogo) => logo.id === 'stagent');
   const logoSrc = stagentLogo?.src ?? '';
-  const logoAlt =
-    stagentLogo?.alt?.[i18n.language] ?? stagentLogo?.alt?.['fi'] ?? '';
+  const logoAlt = stagentLogo?.alt?.[lang] ?? stagentLogo?.alt?.fi ?? '';
 
-  const footerTitle =
-    layout.footer.title[i18n.language] ?? layout.footer.title['fi'];
-
+  const footerTitle = layout.footer.title[lang] ?? layout.footer.title.fi;
   const { name, phone, email } = contact;
 
   return (

@@ -1,4 +1,4 @@
-import { LocalizedText } from '../i18n';
+import type { LocalizedText } from '../i18n';
 
 export interface Member {
   name: LocalizedText;
