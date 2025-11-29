@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { sectionIds, site } from 'shared';
-import { getLang } from 'shared';
+import { sectionIds, site, getLang } from 'shared';
 import styles from './Banner.module.css';
 
 const Banner: React.FC = () => {

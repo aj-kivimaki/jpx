@@ -28,14 +28,19 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
       className={styles.overlay}
       onClick={onClose}
       onKeyDown={onClose}
-      role=""
+      role="presentation"
     >
       <div
         className={styles.modal}
         onClick={stopPropagation}
         onKeyDown={stopPropagation}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-modal-title"
       >
-        <h2 className={styles.title}>{modalSection?.title[lang]}</h2>
+        <h2 className={styles.title} id="settings-modal-title">
+          {modalSection?.title[lang]}
+        </h2>
 
         <div className={styles.section}>
           <label className={styles.label}>
