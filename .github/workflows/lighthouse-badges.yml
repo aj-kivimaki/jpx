@@ -39,7 +39,37 @@ jobs:
 
           FILE="lhci-results/lhr-0.json"
 
-          echo "PERFORMANCE=$(jq '.categories.performance.score * 100' $FILE)" >> $GITHUB_ENV
-          echo "ACCESSIBILITY=$(jq '.categories.accessibility.score * 100' $FILE)" >> $GITHUB_ENV
-          echo "BESTPRACTICES=$(jq '.categories."best-practices".score * 100' $FILE)" >> $GITHUB_ENV
-          echo "SEO=$(jq '.categories.seo.score * 100' $FILE)" >> $GITHUB_ENV
+          echo "PERFORMANCE=$(jq '.categories.performance.score * 100 | round' $FILE)" >> $GITHUB_ENV
+          echo "ACCESSIBILITY=$(jq '.categories.accessibility.score * 100 | round' $FILE)" >> $GITHUB_ENV
+          echo "BESTPRACTICES=$(jq '.categories."best-practices".score * 100 | round' $FILE)" >> $GITHUB_ENV
+          echo "SEO=$(jq '.categories.seo.score * 100 | round' $FILE)" >> $GITHUB_ENV
+
+      - name: Update README badges with colors
+        run: |
+          get_color() {
+            if [ $1 -ge 90 ]; then
+              echo "brightgreen"
+            elif [ $1 -ge 70 ]; then
+              echo "yellow"
+            else
+              echo "red"
+            fi
+          }
+
+          PERF_COLOR=$(get_color $PERFORMANCE)
+          ACC_COLOR=$(get_color $ACCESSIBILITY)
+          BP_COLOR=$(get_color $BESTPRACTICES)
+          SEO_COLOR=$(get_color $SEO)
+
+          sed -i "s|!\[Performance\](.*)|![Performance](https://img.shields.io/badge/performance-$PERFORMANCE-$PERF_COLOR)|" README.md
+          sed -i "s|!\[Accessibility\](.*)|![Accessibility](https://img.shields.io/badge/accessibility-$ACCESSIBILITY-$ACC_COLOR)|" README.md
+          sed -i "s|!\[Best Practices\](.*)|![Best Practices](https://img.shields.io/badge/best--practices-$BESTPRACTICES-$BP_COLOR)|" README.md
+          sed -i "s|!\[SEO\](.*)|![SEO](https://img.shields.io/badge/seo-$SEO-$SEO_COLOR)|" README.md
+
+      - name: Commit updated README badges
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update Lighthouse badges" || echo "No changes to commit"
+          git push
