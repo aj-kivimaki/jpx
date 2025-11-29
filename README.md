@@ -8,10 +8,10 @@
 
 ## Lighthouse Scores
 
-![Performance](https://img.shields.io/badge/performance-100-brightgreen)
-![Accessibility](https://img.shields.io/badge/accessibility-100-brightgreen)
-![Best Practices](https://img.shields.io/badge/best--practices-100-brightgreen)
-![SEO](https://img.shields.io/badge/seo-100-brightgreen)
+![Performance](https://img.shields.io/badge/performance-0-lightgrey)
+![Accessibility](https://img.shields.io/badge/accessibility-0-lightgrey)
+![Best Practices](https://img.shields.io/badge/best--practices-0-lightgrey)
+![SEO](https://img.shields.io/badge/seo-0-lightgrey)
 
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
