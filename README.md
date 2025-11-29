@@ -1,14 +1,12 @@
-# 🎤 J. Partynen - Artist Homepage
+# J. Partynen ⭐ Artist Homepage
 
 ![CI](https://github.com/aj-kivimaki/jpx/actions/workflows/ci.yml/badge.svg)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8034119b-2ace-4ccf-944e-99afa43133aa/deploy-status)](https://app.netlify.com/projects/jpartynen/deploys)
 ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=alert_status)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
-![Coverage](https://codecov.io/gh/aj-kivimaki/jpx/branch/main/graph/badge.svg)
 
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
-> for gigs and promo materials plus a simple, secure CMS for easy updates.
+> for gigs and a simple, secure CMS for easy updates.
 
 ## This project has two applications:
 
@@ -23,7 +21,7 @@
 - [Project Structure](#project-structure)
 - [Features](#features)
 - [Backend / Supabase](#backend--supabase)
-- [Quality & CI/CD](#quality--cicd)
+- [Code Quality: Git Hooks and CI/CD](#code-quality-git-hooks-and-cicd)
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
 - [Licenses](#licenses)
@@ -37,7 +35,7 @@
 | Backend      | Supabase (Auth + Database with Row-Level Security)  |
 | Database     | PostgreSQL (via Supabase)                           |
 | Deployment   | Netlify                                             |
-| Testing      | Vitest • React Testing Library • Playwright/Cypress |
+| Testing      | Vitest • React Testing Library • Cypress/Playwright |
 | Code Quality | ESLint • Prettier • Husky + lint-staged             |
 | CI/CD        | GitHub Actions                                      |
 
@@ -50,7 +48,7 @@
   /.github
     /workflows      # GitHub Actions pipelines for frontend and admin-panel
 
-  /.husky           # Git hooks for linting, formatting, and tests
+  /.husky           # Git hooks for linting, formatting, typecheck, tests and build
 
   /packages
     /admin-panel
@@ -77,6 +75,7 @@
         /data       # Static/shared data
         /schemas    # Zod validation and inferred types
         /styles     # CSS styles (reset, global)
+        /utils      # Helper functions
 ```
 
 </details>
@@ -85,15 +84,24 @@
 
 ### Public Site
 
-- List of upcoming gigs
-- Social media links sidebar
-- Band info
-- Contact info for booking inquiries
+- Browse upcoming gigs with dates and locations.
+- Band info, and social media links in a reusable sidebar.
+- Contact info for booking inquiries.
 
 ### Admin Panel (CMS)
 
-- Supabase with Authentication
-- Add, edit, delete gigs
+- Secure Supabase authentication for administrators.
+- Add, edit, and delete gigs.
+
+> Shared `/shared` package ensures consistent types and utilities across the monorepo.
+
+### Developer & UX Enhancements
+
+- Light / Dark Mode with centralized theming.
+- Internationalization (i18n) for multi-language support.
+- Responsive Design and mobile-first layouts.
+- Form Validation & Error Handling with reusable components.
+- Accessibility (a11y) with semantic markup and ARIA labels.
 
 ## Backend / Supabase
 
@@ -107,28 +115,36 @@
     2. Click the magic link sent via email
     3. Access the admin panel (protected routes)
 
-This setup keeps the admin panel **simple, secure, and low-maintenance**.
+> This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
-## Quality & CI/CD
+## Code Quality: Git Hooks and CI/CD
 
-- **Unit & Component Tests:** `npm run test`
-- **End-to-End Tests:** `npm run e2e`
+### Pre-Commit – Fast checks before each commit:
 
-  > CI automatically runs all tests; manual testing is optional for large changes.
+- `eslint --fix` + `prettier --write` on staged files
+- `tsc --noEmit` on .ts / .tsx
 
-- **CI/CD Pipeline:** GitHub Actions runs on every PR or push to `main`
-  - Linting & formatting (ESLint + Prettier)
-  - Type checking
-  - Unit & E2E tests
-  - Build
-  - Performance checks (Lighthouse)
-  - Code quality analysis (SonarCloud)
-  - Deploy to Netlify
+> Formatting is handled pre-commit, so all pushed code is consistent.
 
-- **Pre-Commit Hooks (Husky + lint-staged):**
-  - Lint staged files
-  - Prettier formatting
-  - Run tests
+### Pre-Push – Thorough checks before pushing:
+
+- Full TypeScript type-check (`npm run typecheck`)
+- All tests (`npm test`)
+  - Unit & Component
+  - End-to-End
+  - Code coverage
+- Build verification (`npm run build`)
+
+> Pre-push is thorough, ensuring code is safe and production-ready.
+
+### CI/CD Pipeline: **GitHub Actions** runs on every PR or push to `main`
+
+- Linting & formatting (ESLint + Prettier)
+- Type checking
+- Unit tests
+- Build
+- Code quality analysis (SonarCloud)
+- Deploy to Netlify
 
 > Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
@@ -147,13 +163,19 @@ This setup keeps the admin panel **simple, secure, and low-maintenance**.
 ## Future Improvements
 
 <details>
-<summary>Planned Features & Enhancements</summary>
+<summary>Future Add-Ons:</summary>
 
-- Analytics for gig views & downloads
-- More ways to manage content:
-  - Downloadable promo materials
-    - Update promo materials (link)
-  - Update text content
+- Absolutely:
+  - Testing:
+    - Component tests (React Testing Library)
+    - E2E tests (Cypress/Playwright)
+    - MSW API mocking
+  - Performance: Lazy-load routes/components to reduce initial bundle size
+  - Form Feedback: Toast notifications for success/error messages
+- Possibly:
+  - Better CMS: Manage all content (promo materials, images, text>)
+  - UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
+  - Monitoring & Analytics: Pageview/event tracking or feature flags
 
 </details>
 
