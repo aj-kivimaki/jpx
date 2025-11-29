@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useIsScrolling from '../../hooks/useScrolling';
-import { nav, site, ui, getLang } from 'shared';
-import { sectionIds } from 'shared/schemas';
+import { nav, site, ui, getLang, sectionIds } from 'shared';
 import styles from './Header.module.css';
 
 const Header = () => {

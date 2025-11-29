@@ -4,8 +4,7 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import { type Gig } from 'shared/schemas';
-import { getLang } from 'shared';
+import { type Gig, getLang } from 'shared';
 import styles from './GigsTable.module.css';
 
 interface GigsTable {

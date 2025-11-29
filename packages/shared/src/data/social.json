@@ -19,5 +19,9 @@
     "href": "https://open.spotify.com/artist/5ZAj9VTFP2pdBWtWRLDNIL",
     "aria": "J. Partynen Spotify"
   },
-  { "key": "shop", "href": "#shop", "aria": "J. Partynen Shop" }
+  {
+    "key": "shop",
+    "href": "#uusi-verkkokauppa-tulossa-pian",
+    "aria": "J. Partynen Shop"
+  }
 ]

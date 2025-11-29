@@ -4,6 +4,7 @@ import { CiSettings } from 'react-icons/ci';
 import { social } from 'shared';
 import styles from './Sidebar.module.css';
 import SettingsModal from '../modal/SettingsModal';
+import { FaCartShopping } from 'react-icons/fa6';
 
 const Sidebar = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -21,7 +22,7 @@ const Sidebar = () => {
           {link.key === 'facebook' && <FaFacebook />}
           {link.key === 'youtube' && <FaYoutube />}
           {link.key === 'spotify' && <FaSpotify />}
-          {/* Shop link here - FaCartShopping from 'react-icons/fa6' */}
+          {link.key === 'shop' && <FaCartShopping />}
         </a>
       ))}
       <div className={styles.divider} />

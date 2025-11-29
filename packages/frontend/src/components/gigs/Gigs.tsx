@@ -1,8 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import GigsTable from './GigsTable';
-import { gigs, site } from 'shared/data';
-import { sectionIds } from 'shared/schemas';
-import { getLang } from 'shared';
+import { gigs, site, sectionIds, getLang } from 'shared';
 import styles from './Gigs.module.css';
 
 const Gigs = () => {
