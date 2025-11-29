@@ -11,6 +11,7 @@
     "build": "npm-run-all build:front build:admin",
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
+    "preview": "npm --workspace packages/frontend run preview",
     "test": "npm-run-all -p test:front test:admin",
     "test:front": "npm --workspace packages/frontend run test",
     "test:admin": "npm --workspace packages/admin-panel run test",

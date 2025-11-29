@@ -7,62 +7,47 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      # Checkout code
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Setup Node
-      - name: Setup Node
+      - name: Use Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      # Install project dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Build Vite site
-      - name: Build project
-        run: npm run build
+      - name: Build frontend
+        run: npm --workspace packages/frontend run build
 
-      # Install LHCI globally
-      - name: Install LHCI
-        run: npm install -g @lhci/cli
+      - name: Run Lighthouse CI
+        run: npx lhci autorun
 
-      # Serve dist/ so Lighthouse has a real URL
-      - name: Start static server
+      - name: Extract Lighthouse scores
+        id: extract
         run: |
-          npm install -g serve
-          nohup serve -s dist -l 4173 >/dev/null 2>&1 &
-          sleep 3
+          FILE=$(ls lhci-results/lhr-0.json)
+          echo "PERFORMANCE=$(jq '.categories.performance.score * 100' $FILE)" >> $GITHUB_ENV
+          echo "ACCESSIBILITY=$(jq '.categories.accessibility.score * 100' $FILE)" >> $GITHUB_ENV
+          echo "BESTPRACTICES=$(jq '.categories["best-practices"].score * 100' $FILE)" >> $GITHUB_ENV
+          echo "SEO=$(jq '.categories.seo.score * 100' $FILE)" >> $GITHUB_ENV
 
-      # Run Lighthouse on your production domain (recommended)
-      - name: Run Lighthouse (jpartynen.com)
+      - name: Update README badges
         run: |
-          mkdir -p lhr
-          lhci collect \
-            --url=https://jpartynen.com \
-            --numberOfRuns=1 \
-            --outputPath=./lhr
-          lhci assert || true
+          sed -i "s#\\(performance-\\)[0-9]\\+#\\1$PERFORMANCE#;" README.md
+          sed -i "s#\\(accessibility-\\)[0-9]\\+#\\1$ACCESSIBILITY#;" README.md
+          sed -i "s#\\(best--practices-\\)[0-9]\\+#\\1$BESTPRACTICES#;" README.md
+          sed -i "s#\\(seo-\\)[0-9]\\+#\\1$SEO#;" README.md
 
-      # Install lighthouse-badges CLI
-      - name: Install Badge Generator
-        run: npm install -g lighthouse-badges
-
-      # Generate badges from manifest.json
-      - name: Generate badges
-        run: lighthouse-badges --report=./lhr/manifest.json --output=./badges
-
-      # Commit & push updated SVG badge files
-      - name: Commit badges
+      - name: Commit README updates
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add badges/*.svg
-          git commit -m "Update Lighthouse badges" || echo "No changes to commit"
-          git push
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git add README.md
+            git commit -m "Update Lighthouse badges"
+            git push
+          fi
