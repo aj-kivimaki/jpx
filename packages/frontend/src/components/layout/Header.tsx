@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useIsScrolling from '../../hooks/useScrolling';
-import { nav, site, ui } from 'shared/data';
-import { sectionIds, type Language } from 'shared/schemas';
+import { nav, site, ui, getLang } from 'shared';
+import { sectionIds } from 'shared/schemas';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
 
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
 
   const { layout, logos } = site;
 
@@ -69,6 +69,7 @@ const Header = () => {
         <button
           className={`${styles.mobileMenuButton} ${isOpen ? '' : styles.paddingBottom}`}
           onClick={() => setIsOpen(!isOpen)}
+          onKeyDown={() => setIsOpen(!isOpen)}
         >
           {isOpen ? ui.mobileMenuOpenIcon : ui.mobileMenuClosedIcon}
         </button>

@@ -3,7 +3,7 @@ import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
 import LogoutButton from '../auth/LogoutButton';
-import { lineupOptions } from 'shared/schemas';
+import { lineupOptions } from 'shared';
 
 const lineupOptionsWithPlaceholder = ['Valitse kokoonpano', ...lineupOptions];
 
@@ -28,7 +28,7 @@ const Form: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    // Intentionally left minimal; replace with submission logic.
   };
 
   return (

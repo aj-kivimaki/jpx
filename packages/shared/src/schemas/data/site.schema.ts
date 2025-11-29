@@ -34,7 +34,12 @@ export const ContactSectionSchema = z.object({
 export const ModalSectionSchema = z.object({
   id: z.literal('modal'),
   title: SiteLocalizedStringSchema,
-  theme: SiteLocalizedStringSchema,
+  theme: z.object({
+    label: SiteLocalizedStringSchema,
+    themeLight: SiteLocalizedStringSchema,
+    themeDark: SiteLocalizedStringSchema,
+    themeSystem: SiteLocalizedStringSchema,
+  }),
   language: SiteLocalizedStringSchema,
   close: SiteLocalizedStringSchema,
 });
@@ -81,3 +86,5 @@ export type Site = z.infer<typeof SiteSchema>;
 export type SiteLogo = z.infer<typeof SiteLogoSchema>;
 export type SiteImage = z.infer<typeof SiteImageSchema>;
 export type SiteSection = z.infer<typeof SectionSchema>;
+export type ModalSection = z.infer<typeof ModalSectionSchema>;
+export type LocalizedString = z.infer<typeof SiteLocalizedStringSchema>;

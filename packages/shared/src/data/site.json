@@ -39,8 +39,22 @@
         "en": "SETTINGS"
       },
       "theme": {
-        "fi": "Teema",
-        "en": "Theme"
+        "label": {
+          "fi": "Teema",
+          "en": "Theme"
+        },
+        "themeLight": {
+          "fi": "Vaalea",
+          "en": "Light"
+        },
+        "themeDark": {
+          "fi": "Tumma",
+          "en": "Dark"
+        },
+        "themeSystem": {
+          "fi": "Järjestelmä",
+          "en": "System"
+        }
       },
       "language": {
         "fi": "Kieli",

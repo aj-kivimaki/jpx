@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { sectionIds, type Language } from 'shared/schemas';
-import { site, band } from 'shared/data';
+import { sectionIds } from 'shared/schemas';
+import { site, band, getLang } from 'shared';
 import styles from './Info.module.css';
 
 const Info = () => {
   const { i18n } = useTranslation();
 
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
   const { sections, images, description } = site;
 
   const infoSection = sections.find((s) => s.id === 'info');

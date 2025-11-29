@@ -12,10 +12,20 @@ export default function PrivateRoute({
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setLoggedIn(!!data.session);
-      setLoading(false);
-    });
+    const checkSession = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setLoggedIn(!!data.session);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to get session', err);
+        setLoggedIn(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkSession();
   }, []);
 
   if (loading) return <p>Loading...</p>;
