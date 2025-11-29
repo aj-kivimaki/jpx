@@ -28,7 +28,7 @@ const Form: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Intentionally left minimal; replace with submission logic.
+    console.log('Form submitted:', formData);
   };
 
   return (
