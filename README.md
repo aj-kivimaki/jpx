@@ -6,10 +6,12 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
 ![Coverage](https://codecov.io/gh/aj-kivimaki/jpx/branch/main/graph/badge.svg)
 
-![Performance](./badges/performance.svg)
-![Accessibility](./badges/accessibility.svg)
-![Best Practices](./badges/best-practices.svg)
-![SEO](./badges/seo.svg)
+## Lighthouse Scores
+
+![Performance](https://img.shields.io/badge/performance-100-brightgreen)
+![Accessibility](https://img.shields.io/badge/accessibility-100-brightgreen)
+![Best Practices](https://img.shields.io/badge/best--practices-100-brightgreen)
+![SEO](https://img.shields.io/badge/seo-100-brightgreen)
 
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
