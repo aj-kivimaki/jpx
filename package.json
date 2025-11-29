@@ -19,6 +19,7 @@
     "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/frontend",
     "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/admin-panel",
     "lint:changed": "npx lint-staged",
+    "typecheck:staged": "sh -c 'tsc -b --noEmit'",
     "typecheck": "tsc --build",
     "format:check": "prettier --check \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
@@ -63,7 +64,7 @@
     "*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write",
-      "tsc --noEmit"
+      "npm run typecheck:staged"
     ],
     "*.{js,jsx}": [
       "eslint --fix",

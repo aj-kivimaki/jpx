@@ -85,8 +85,8 @@
 ### Public Site
 
 - Browse upcoming gigs with dates and locations.
-- Band info, and social media links in a reusable sidebar.
-- Contact info for booking inquiries.
+- Social media links in a sidebar.
+- Band and contact info for booking inquiries.
 
 ### Admin Panel (CMS)
 
@@ -102,6 +102,10 @@
 - Responsive Design and mobile-first layouts.
 - Form Validation & Error Handling with reusable components.
 - Accessibility (a11y) with semantic markup and ARIA labels.
+- Performance Optimizations:
+  - WebP images in the correct sizes for faster load times.
+  - Lazy loading for conditional components (e.g., settings modal).
+  - Code-splitting and efficient bundle management.
 
 ## Backend / Supabase
 
@@ -130,8 +134,7 @@
 
 - Full TypeScript type-check (`npm run typecheck`)
 - All tests (`npm test`)
-  - Unit & Component
-  - End-to-End
+  - Unit
   - Code coverage
 - Build verification (`npm run build`)
 

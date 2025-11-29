@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { contact, site } from 'shared/data';
-import { sectionIds, type SiteLogo } from 'shared/schemas';
-import { getLang } from 'shared';
+import { sectionIds, getLang, type SiteLogo } from 'shared';
 import styles from './Footer.module.css';
 
 const Footer = () => {

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { sectionIds } from 'shared/schemas';
-import { site, band, getLang } from 'shared';
+import { site, band, getLang, sectionIds } from 'shared';
 import styles from './Info.module.css';
 
 const Info = () => {
@@ -18,7 +17,7 @@ const Info = () => {
 
   return (
     <div id={sectionIds.info} className={styles.info}>
-      <img src={imgSrc} alt={imgAlt} />
+      <img src={imgSrc} alt={imgAlt} loading="lazy" />
       <div className={styles.textContainer}>
         <div className={styles.members}>
           <h2 className={styles.title}>{title}</h2>
