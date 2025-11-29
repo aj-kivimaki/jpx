@@ -1,11 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import {
-  sectionIds,
-  type SiteImage,
-  type SiteSection,
-  type Language,
-} from 'shared/schemas';
-import { site } from 'shared/data';
+import { sectionIds, type Language, site } from 'shared';
 import styles from './Banner.module.css';
 
 const Banner: React.FC = () => {
@@ -14,9 +8,9 @@ const Banner: React.FC = () => {
   const lang = i18n.language as Language;
   const { sections, images } = site;
 
-  const bannerSection = sections.find((s: SiteSection) => s.id === 'banner');
+  const bannerSection = sections.find((s) => s.id === 'banner');
   const adjectives = bannerSection?.adjectives?.[lang] ?? [];
-  const soloImage = images.find((img: SiteImage) => img.id === 'solo');
+  const soloImage = images.find((img) => img.id === 'solo');
   const src = soloImage?.src ?? '';
   const alt = soloImage?.alt?.[lang] ?? soloImage?.alt?.fi ?? '';
 

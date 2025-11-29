@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useIsScrolling from '../../hooks/useScrolling';
-import LanguageSwitcher from '../LanguageSwitcher';
 import { nav, site, ui } from 'shared/data';
 import { sectionIds, type Language } from 'shared/schemas';
 import styles from './Header.module.css';
@@ -66,7 +65,6 @@ const Header = () => {
       </nav>
 
       <div className={styles.rightSection}>
-        <LanguageSwitcher />
         {/* Mobile Menu Button */}
         <button
           className={`${styles.mobileMenuButton} ${isOpen ? '' : styles.paddingBottom}`}

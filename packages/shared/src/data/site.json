@@ -31,6 +31,25 @@
         "fi": "YHTEYS",
         "en": "CONTACT"
       }
+    },
+    {
+      "id": "modal",
+      "title": {
+        "fi": "ASETUKSET",
+        "en": "SETTINGS"
+      },
+      "theme": {
+        "fi": "Teema",
+        "en": "Theme"
+      },
+      "language": {
+        "fi": "Kieli",
+        "en": "Language"
+      },
+      "close": {
+        "fi": "Sulje",
+        "en": "Close"
+      }
     }
   ],
   "layout": {
