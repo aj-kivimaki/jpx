@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { contact, site } from 'shared/data';
-import { sectionIds, type SiteLogo, type Language } from 'shared/schemas';
+import { sectionIds, type SiteLogo } from 'shared/schemas';
+import { getLang } from 'shared';
 import styles from './Footer.module.css';
 
 const Footer = () => {
   const { i18n } = useTranslation();
 
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
   const { logos: siteLogos, layout: siteLayout } = site;
   const { name, phone, email } = contact;
 

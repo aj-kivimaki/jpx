@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
-import { themeSchema, type Theme } from 'shared/schemas';
+import { themeSchema, type Theme, site, getLang } from 'shared';
 import { applyTheme } from '../utils';
 import styles from './ModeSwitcher.module.css';
+import { useTranslation } from 'react-i18next';
 
 const ModeSwitcher: React.FC = () => {
+  const { i18n } = useTranslation();
+  const lang = getLang(i18n);
+
+  const modalSection = site.sections.find((s) => s.id === 'modal');
+  if (!modalSection) throw new Error('Modal section not found');
+
   const [currentTheme, setCurrentTheme] = useState<Theme>(
     (localStorage.getItem('theme') as Theme) || 'system'
   );
@@ -31,16 +38,17 @@ const ModeSwitcher: React.FC = () => {
     applyTheme(next);
   };
 
-  const buttonLabel =
-    currentTheme === 'light'
-      ? 'Dark'
-      : currentTheme === 'dark'
-        ? 'System'
-        : 'Light';
+  const themeNextLabelMap: Record<Theme, string> = {
+    light: modalSection.theme.themeDark[lang],
+    dark: modalSection.theme.themeSystem[lang],
+    system: modalSection.theme.themeLight[lang],
+  };
+
+  const nextThemeLabel = themeNextLabelMap[currentTheme];
 
   return (
     <div className={styles.modeSwitcher}>
-      <button onClick={toggleTheme}>{buttonLabel}</button>
+      <button onClick={toggleTheme}>{nextThemeLabel}</button>
     </div>
   );
 };

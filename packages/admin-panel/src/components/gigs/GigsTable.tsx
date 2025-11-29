@@ -4,7 +4,8 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import { type Gig, type Language } from 'shared/schemas';
+import { type Gig } from 'shared/schemas';
+import { getLang } from 'shared';
 import styles from './GigsTable.module.css';
 
 interface GigsTable {
@@ -13,7 +14,7 @@ interface GigsTable {
 
 const GigsTable: React.FC<GigsTable> = ({ data }) => {
   const { i18n } = useTranslation();
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
 
   if (!data?.length) {
     return <p>{lang === 'fi' ? 'Ei keikkoja tulossa' : 'No gigs scheduled'}</p>;

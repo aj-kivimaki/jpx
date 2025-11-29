@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { sectionIds, type Language, site } from 'shared';
+import { sectionIds, site } from 'shared';
+import { getLang } from 'shared';
 import styles from './Banner.module.css';
 
 const Banner: React.FC = () => {
   const { i18n } = useTranslation();
 
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
   const { sections, images } = site;
 
   const bannerSection = sections.find((s) => s.id === 'banner');

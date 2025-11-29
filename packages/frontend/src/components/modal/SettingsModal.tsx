@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import ModeSwitcher from '../ModeSwitcher';
 import LanguageSwitcher from '../LanguageSwitcher';
-import { type Language, site } from 'shared';
+import { site, getLang } from 'shared';
 import styles from './SettingsModal.module.css';
 
 interface SettingsModalProps {
@@ -14,21 +14,33 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
 
   if (!open) return null;
 
-  const lang = i18n.language as Language;
+  const lang = getLang(i18n);
   const { sections } = site;
 
   const modalSection = sections.find((s) => s.id === 'modal');
 
-  const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) =>
-    e.stopPropagation();
+  const stopPropagation = (
+    e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+  ) => e.stopPropagation();
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={stopPropagation}>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      onKeyDown={onClose}
+      role=""
+    >
+      <div
+        className={styles.modal}
+        onClick={stopPropagation}
+        onKeyDown={stopPropagation}
+      >
         <h2 className={styles.title}>{modalSection?.title[lang]}</h2>
 
         <div className={styles.section}>
-          <label className={styles.label}>{modalSection?.theme[lang]}</label>
+          <label className={styles.label}>
+            {modalSection?.theme.label[lang]}
+          </label>
           <ModeSwitcher />
         </div>
 
@@ -37,7 +49,11 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
           <LanguageSwitcher />
         </div>
 
-        <button className={styles.closeBtn} onClick={onClose}>
+        <button
+          className={styles.closeBtn}
+          onClick={onClose}
+          onKeyDown={onClose}
+        >
           {modalSection?.close[lang]}
         </button>
       </div>

@@ -5,7 +5,7 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaExclamation } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
-import type { Gig } from 'shared/schemas';
+import { type Gig, getLang } from 'shared';
 import styles from './GigsTable.module.css';
 
 interface GigsTableProps {
@@ -14,7 +14,7 @@ interface GigsTableProps {
 
 const GigsTable = ({ gigs }: GigsTableProps) => {
   const { i18n } = useTranslation();
-  const lang = i18n.language as 'fi' | 'en';
+  const lang = getLang(i18n);
 
   return (
     <>

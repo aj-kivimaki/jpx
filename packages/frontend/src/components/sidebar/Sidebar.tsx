@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
-import { social } from 'shared/data';
+import { social } from 'shared';
 import styles from './Sidebar.module.css';
 import SettingsModal from '../modal/SettingsModal';
 

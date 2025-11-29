@@ -14,6 +14,12 @@ i18n
   .init({
     resources,
     fallbackLng: 'fi',
+    supportedLngs: ['fi', 'en'],
+    load: 'languageOnly',
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+      caches: ['localStorage'],
+    },
     interpolation: { escapeValue: false },
   });
 
