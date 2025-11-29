@@ -6,11 +6,12 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['react-hooks', 'react-refresh', '@typescript-eslint'],
+  plugins: ['react-hooks', 'react-refresh', '@typescript-eslint', 'jsx-a11y'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
   env: {
     browser: true,

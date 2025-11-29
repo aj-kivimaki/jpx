@@ -24,7 +24,7 @@ h2 {
 }
 
 :focus {
-  outline: 1px dotted #ffffff;
+  outline: 1px solid darkred;
   outline-offset: 1px;
   border-radius: 1px;
 }

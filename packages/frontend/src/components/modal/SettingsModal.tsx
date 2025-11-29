@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import ModeSwitcher from '../ModeSwitcher';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { site, getLang } from 'shared';
 import styles from './SettingsModal.module.css';
+import { useRef } from 'react';
 
 interface SettingsModalProps {
   open: boolean;
@@ -11,29 +13,33 @@ interface SettingsModalProps {
 
 const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   const { i18n } = useTranslation();
+  const lang = getLang(i18n);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Call the focus-trap hook unconditionally to follow the Rules of Hooks.
+  useFocusTrap(modalRef as React.RefObject<HTMLElement>, onClose);
 
   if (!open) return null;
 
-  const lang = getLang(i18n);
-  const { sections } = site;
+  const modalSection = site.sections.find((s) => s.id === 'modal');
+  if (!modalSection) return null;
 
-  const modalSection = sections.find((s) => s.id === 'modal');
-
-  const stopPropagation = (
-    e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
-  ) => e.stopPropagation();
+  // No click-stop propagation needed because the overlay background is a
+  // separate sibling element (a button). Clicks inside the modal won't reach
+  // the background button.
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={onClose}
-      onKeyDown={onClose}
-      role="presentation"
-    >
+    <div className={styles.overlayWrapper} role="presentation">
+      <button
+        type="button"
+        className={styles.overlayBackground}
+        onClick={onClose}
+        aria-label="Close settings"
+      />
+
       <div
         className={styles.modal}
-        onClick={stopPropagation}
-        onKeyDown={stopPropagation}
+        ref={modalRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="settings-modal-title"
@@ -54,11 +60,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
           <LanguageSwitcher />
         </div>
 
-        <button
-          className={styles.closeBtn}
-          onClick={onClose}
-          onKeyDown={onClose}
-        >
+        <button className={styles.closeBtn} onClick={onClose}>
           {modalSection?.close[lang]}
         </button>
       </div>

@@ -1,18 +1,38 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
+}
+
+.overlayWrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.overlayBackground {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(3px);
-  color: #333;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 2000;
 }
 
 .modal {
+  position: relative;
+  z-index: 2001;
   font-family: monospace;
   background: #ffffff;
+  color: #333;
   padding: 2rem;
   width: 90%;
   max-width: 380px;

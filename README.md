@@ -6,6 +6,11 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aj-kivimaki_jpx&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=aj-kivimaki_jpx)
 ![Coverage](https://codecov.io/gh/aj-kivimaki/jpx/branch/main/graph/badge.svg)
 
+![Performance](./badges/performance.svg)
+![Accessibility](./badges/accessibility.svg)
+![Best Practices](./badges/best-practices.svg)
+![SEO](./badges/seo.svg)
+
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
 > for gigs and promo materials plus a simple, secure CMS for easy updates.
