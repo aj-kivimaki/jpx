@@ -1,68 +1,46 @@
-name: Lighthouse Badges
+name: Lighthouse CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  lighthouse:
+  lhci:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      # Checkout code
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Setup Node
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Install project dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Build Vite site
-      - name: Build project
+      - name: Build site
         run: npm run build
 
-      # Install LHCI globally
-      - name: Install LHCI
-        run: npm install -g @lhci/cli
+      - name: Install serve + lighthouse-ci
+        run: npm install -g serve @lhci/cli
 
-      # Serve dist/ so Lighthouse has a real URL
-      - name: Start static server
+      - name: Start local server
         run: |
-          npm install -g serve
-          nohup serve -s dist -l 4173 >/dev/null 2>&1 &
-          sleep 3
+          serve -s dist -l 4173 &
+          echo "Started server"
+          sleep 5
 
-      # Run Lighthouse on your production domain (recommended)
-      - name: Run Lighthouse (jpartynen.com)
+      - name: Run Lighthouse CI
         run: |
           mkdir -p lhr
           lhci collect \
-            --url=https://jpartynen.com \
-            --numberOfRuns=1 \
-            --outputPath=./lhr
-          lhci assert || true
+            --url=http://localhost:4173 \
+            --outputPath=./lhr \
+            --numberOfRuns=1
 
-      # Install lighthouse-badges CLI
-      - name: Install Badge Generator
-        run: npm install -g lighthouse-badges
-
-      # Generate badges from manifest.json
-      - name: Generate badges
-        run: lighthouse-badges --report=./lhr/manifest.json --output=./badges
-
-      # Commit & push updated SVG badge files
-      - name: Commit badges
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add badges/*.svg
-          git commit -m "Update Lighthouse badges" || echo "No changes to commit"
-          git push
+      - name: Upload report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lhr
