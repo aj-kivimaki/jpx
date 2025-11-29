@@ -18,7 +18,7 @@ export const BannerSectionSchema = z.object({
 export const GigsSectionSchema = z.object({
   id: z.literal('gigs'),
   title: SiteLocalizedStringSchema,
-  items: z.array(z.unknown()).optional(), // your gigs come from gigs.json
+  items: z.array(z.unknown()).optional(),
 });
 
 export const InfoSectionSchema = z.object({
@@ -31,11 +31,20 @@ export const ContactSectionSchema = z.object({
   title: SiteLocalizedStringSchema,
 });
 
+export const ModalSectionSchema = z.object({
+  id: z.literal('modal'),
+  title: SiteLocalizedStringSchema,
+  theme: SiteLocalizedStringSchema,
+  language: SiteLocalizedStringSchema,
+  close: SiteLocalizedStringSchema,
+});
+
 export const SectionSchema = z.union([
   BannerSectionSchema,
   GigsSectionSchema,
   InfoSectionSchema,
   ContactSectionSchema,
+  ModalSectionSchema,
 ]);
 
 export const SiteLayoutSchema = z.object({
