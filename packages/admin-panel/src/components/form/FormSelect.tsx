@@ -1,21 +1,22 @@
+import type { UseFormRegisterReturn } from 'react-hook-form';
 import styles from './FormSelect.module.css';
 
 interface FormSelectProps {
   label: string;
   name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: readonly string[];
+  register: UseFormRegisterReturn;
   required: boolean;
+  error?: string;
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
   label,
   name,
-  value,
-  onChange,
   options,
+  register,
   required,
+  error,
 }) => {
   if (required) {
     label = label + ' *';
@@ -26,13 +27,8 @@ const FormSelect: React.FC<FormSelectProps> = ({
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={styles.select}
-      >
+      {error && <p>{error}</p>}
+      <select id={name} className={styles.select} {...register}>
         <option value="" disabled hidden>
           Valitse kokoonpano
         </option>

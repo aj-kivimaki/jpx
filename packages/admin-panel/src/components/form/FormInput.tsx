@@ -1,26 +1,27 @@
-import type { ChangeEvent } from 'react';
+import type { HTMLInputTypeAttribute } from 'react';
 import styles from './FormInput.module.css';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 
 interface FormInputProps {
   label: string;
   name: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  type?: 'text' | 'date' | 'time' | 'textarea';
+  register: UseFormRegisterReturn;
+  type?: HTMLInputTypeAttribute;
   rows?: number;
   placeholder?: string;
   required: boolean;
+  error?: string;
 }
 
 const FormInput = ({
   label,
   name,
-  value,
-  onChange,
+  register,
   type = 'text',
   rows,
   placeholder,
   required,
+  error,
 }: FormInputProps) => {
   if (required) {
     label = label + ' *';
@@ -30,25 +31,23 @@ const FormInput = ({
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
+      {error && <p>{error}</p>}
       {type === 'textarea' ? (
         <textarea
+          {...register}
           id={name}
           name={name}
-          value={value}
-          onChange={onChange}
           rows={rows || 3}
           placeholder={placeholder}
           className={styles.textarea}
         />
       ) : (
         <input
-          id={name}
-          name={name}
-          type={type}
-          value={value}
-          onChange={onChange}
+          {...register}
           placeholder={placeholder}
+          type={type}
           className={styles.input}
+          required={required}
         />
       )}
     </div>

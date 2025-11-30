@@ -1,6 +1,7 @@
 export * from './band.schema';
 export * from './contact.schema';
 export * from './gigs.schema';
+export * from './gig.form.schema';
 export * from './nav.schema';
 export * from './section.id.schema';
 export * from './site.schema';

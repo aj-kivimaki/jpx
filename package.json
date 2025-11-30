@@ -12,6 +12,7 @@
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
     "build:shared": "npm --workspace packages/shared run build",
+    "clean:shared": "npm --workspace packages/shared run clean",
     "preview": "npm --workspace packages/frontend run preview",
     "test": "npm-run-all -p test:front test:admin",
     "test:front": "npm --workspace packages/frontend run test",
@@ -35,6 +36,7 @@
     "@typescript-eslint/parser": "^8.47.0",
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/coverage-istanbul": "^3.2.4",
+    "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -77,6 +79,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "dayjs": "^1.11.19",
     "i18next": "^25.6.3",
     "i18next-browser-languagedetector": "^8.2.0",
     "react-hook-form": "^7.67.0",
