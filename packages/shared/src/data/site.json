@@ -44,21 +44,21 @@
       },
       "theme": {
         "label": {
-          "fi": "Teema",
-          "en": "Theme"
+          "fi": "Vaihda teema:",
+          "en": "Change theme:"
         },
         "themeLight": {
-          "fi": "Vaalea",
-          "en": "Light"
+          "fi": "Vaalea teema",
+          "en": "Light theme"
         },
         "themeDark": {
-          "fi": "Tumma",
-          "en": "Dark"
+          "fi": "Tumma teema",
+          "en": "Dark theme"
         }
       },
       "language": {
-        "fi": "Kieli",
-        "en": "Language"
+        "fi": "Vaihda kieli:",
+        "en": "Change language:"
       },
       "close": {
         "fi": "Sulje",

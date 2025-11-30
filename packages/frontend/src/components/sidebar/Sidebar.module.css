@@ -36,3 +36,55 @@
   background-color: #888888;
   margin: 0.5rem 0;
 }
+
+dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-family: monospace;
+  background: #ffffff;
+  color: #333;
+  max-width: 300px;
+  width: 100%;
+  animation: fadeIn 0.2s ease;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+}
+
+.title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: #b8b8b8 1px solid;
+}
+
+.section {
+  margin: 1.2rem 0;
+  flex: 1;
+  margin-bottom: 3rem;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+}
+
+.closeButton {
+  position: absolute;
+  bottom: 0rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: hsl(0, 0%, 23%);
+}
+
+.closeButton:hover {
+  color: hsl(0, 0%, 43%);
+}
