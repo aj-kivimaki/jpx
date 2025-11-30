@@ -14,9 +14,11 @@ interface SettingsModalProps {
 const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   const { i18n } = useTranslation();
   const lang = getLang(i18n);
-  const modalRef = useRef<HTMLDivElement>(null);
+  // dialog element -> use HTMLDialogElement for correct typing
+  const modalRef = useRef<HTMLDialogElement | null>(null);
 
   // Call the focus-trap hook unconditionally to follow the Rules of Hooks.
+  // HTMLDialogElement is an HTMLElement; cast to satisfy the hook's RefObject<HTMLElement> parameter
   useFocusTrap(modalRef as React.RefObject<HTMLElement>, onClose);
 
   if (!open) return null;
@@ -29,7 +31,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   // the background button.
 
   return (
-    <div className={styles.overlayWrapper} role="presentation">
+    <div className={styles.overlayWrapper}>
       <button
         type="button"
         className={styles.overlayBackground}
@@ -37,10 +39,9 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         aria-label="Close settings"
       />
 
-      <div
+      <dialog
         className={styles.modal}
         ref={modalRef}
-        role="dialog"
         aria-modal="true"
         aria-labelledby="settings-modal-title"
       >
@@ -63,7 +64,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         <button className={styles.closeBtn} onClick={onClose}>
           {modalSection?.close[lang]}
         </button>
-      </div>
+      </dialog>
     </div>
   );
 };

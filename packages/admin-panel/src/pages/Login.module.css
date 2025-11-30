@@ -14,7 +14,7 @@
   padding: 20px;
   border-radius: 5px;
   font-family: sans-serif;
-  background: #434343;
+  background: #343434;
 }
 
 .title {
@@ -36,7 +36,7 @@
 .button {
   width: 100%;
   padding: 10px;
-  background: hsl(38, 65%, 46%);
+  background: #6c4a0e;
   color: white;
   border: none;
   border-radius: 6px;
