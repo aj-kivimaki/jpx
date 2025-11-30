@@ -39,7 +39,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         aria-label="Close settings"
       />
 
-      <div
+      <dialog
         className={styles.modal}
         ref={modalRef}
         aria-modal="true"
@@ -64,7 +64,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         <button className={styles.closeBtn} onClick={onClose}>
           {modalSection?.close[lang]}
         </button>
-      </div>
+      </dialog>
     </div>
   );
 };
