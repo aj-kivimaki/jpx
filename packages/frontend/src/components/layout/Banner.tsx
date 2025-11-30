@@ -1,18 +1,17 @@
-import { useTranslation } from 'react-i18next';
-import { sectionIds, site, getLang } from 'shared';
+import { sectionIds, site } from 'shared';
+import useLocalized, { useLocalizedArray } from '../../hooks/useLocalized';
 import styles from './Banner.module.css';
 
 const Banner: React.FC = () => {
-  const { i18n } = useTranslation();
-
-  const lang = getLang(i18n);
   const { sections, images } = site;
+  const localize = useLocalized();
+  const localizeArray = useLocalizedArray();
 
   const bannerSection = sections.find((s) => s.id === 'banner');
-  const adjectives = bannerSection?.adjectives?.[lang] ?? [];
+  const adjectives = localizeArray(bannerSection?.adjectives);
   const soloImage = images.find((img) => img.id === 'solo');
   const src = soloImage?.src ?? '';
-  const alt = soloImage?.alt?.[lang] ?? soloImage?.alt?.fi ?? '';
+  const alt = localize(soloImage?.alt);
 
   return (
     <div id={sectionIds.top} className={styles.banner}>

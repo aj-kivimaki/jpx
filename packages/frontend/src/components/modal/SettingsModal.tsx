@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
 import ModeSwitcher from '../ModeSwitcher';
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
-import { site, getLang } from 'shared';
+import { site } from 'shared';
 import styles from './SettingsModal.module.css';
 import { useRef } from 'react';
+import useLocalized from '../../hooks/useLocalized';
 
 interface SettingsModalProps {
   open: boolean;
@@ -12,8 +12,7 @@ interface SettingsModalProps {
 }
 
 const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
-  const { i18n } = useTranslation();
-  const lang = getLang(i18n);
+  const localize = useLocalized();
   // div element -> use HTMLDivElement for correct typing
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,23 +45,25 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         aria-labelledby="settings-modal-title"
       >
         <h2 className={styles.title} id="settings-modal-title">
-          {modalSection?.title[lang]}
+          {localize(modalSection?.title)}
         </h2>
 
         <div className={styles.section}>
           <label className={styles.label}>
-            {modalSection?.theme.label[lang]}
+            {localize(modalSection?.theme.label)}
           </label>
           <ModeSwitcher />
         </div>
 
         <div className={styles.section}>
-          <label className={styles.label}>{modalSection?.language[lang]}</label>
+          <label className={styles.label}>
+            {localize(modalSection?.language)}
+          </label>
           <LanguageSwitcher />
         </div>
 
         <button className={styles.closeBtn} onClick={onClose}>
-          {modalSection?.close[lang]}
+          {localize(modalSection?.close)}
         </button>
       </div>
     </div>

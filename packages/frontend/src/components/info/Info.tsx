@@ -1,19 +1,18 @@
-import { useTranslation } from 'react-i18next';
-import { site, band, getLang, sectionIds } from 'shared';
+import { site, band, sectionIds } from 'shared';
+import useLocalized from '../../hooks/useLocalized';
 import styles from './Info.module.css';
 
 const Info = () => {
-  const { i18n } = useTranslation();
-
-  const lang = getLang(i18n);
+  // useTranslation is not needed here because `getLocalized` uses it internally
   const { sections, images, description } = site;
 
   const infoSection = sections.find((s) => s.id === 'info');
-  const title = infoSection?.title?.[lang] ?? infoSection?.title?.fi ?? '';
+  const localize = useLocalized();
+  const title = localize(infoSection?.title);
 
   const bandImage = images.find((img) => img.id === 'band');
   const imgSrc = bandImage?.src ?? '';
-  const imgAlt = bandImage?.alt?.[lang] ?? bandImage?.alt?.fi ?? '';
+  const imgAlt = localize(bandImage?.alt);
 
   return (
     <div id={sectionIds.info} className={styles.info}>
@@ -22,21 +21,14 @@ const Info = () => {
         <div className={styles.members}>
           <h2 className={styles.title}>{title}</h2>
           {band.map((member) => (
-            <p key={member.name.fi}>
-              <span className={styles.member}>
-                {member.name[lang] ?? member.name.fi}
-              </span>
-              ,{' '}
-              <span className={styles.instrument}>
-                {member.role[lang] ?? member.role.fi}
-              </span>
+            <p key={localize(member.name)}>
+              <span className={styles.member}>{localize(member.name)}</span>,{' '}
+              <span className={styles.instrument}>{localize(member.role)}</span>
             </p>
           ))}
         </div>
         <div className={styles.descriptionContainer}>
-          <p className={styles.descriptionText}>
-            {description[lang] ?? description.fi}
-          </p>
+          <p className={styles.descriptionText}>{localize(description)}</p>
         </div>
       </div>
     </div>

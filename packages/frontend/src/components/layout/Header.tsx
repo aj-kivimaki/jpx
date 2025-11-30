@@ -1,15 +1,13 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import useIsScrolling from '../../hooks/useScrolling';
-import { nav, site, ui, getLang, sectionIds } from 'shared';
+import { nav, site, ui, sectionIds } from 'shared';
 import styles from './Header.module.css';
+import useLocalized from '../../hooks/useLocalized';
 
 const Header = () => {
   const isScrolling = useIsScrolling();
   const [isOpen, setIsOpen] = useState(false);
-  const { i18n } = useTranslation();
-
-  const lang = getLang(i18n);
+  const localize = useLocalized();
 
   const { layout, logos } = site;
 
@@ -23,9 +21,9 @@ const Header = () => {
 
   const jpxLogo = logos.find((logo) => logo.id === 'jpx');
   const logoSrc = jpxLogo?.src ?? '';
-  const logoAlt = jpxLogo?.alt?.[lang] ?? jpxLogo?.alt?.fi ?? '';
+  const logoAlt = localize(jpxLogo?.alt);
 
-  const headerTitle = layout.header.title[lang] ?? layout.header.title.fi;
+  const headerTitle = localize(layout.header.title);
 
   return (
     <header
@@ -45,9 +43,7 @@ const Header = () => {
       <nav className={isOpen ? styles.mobileMenu : styles.desktopMenu}>
         {nav.map((item) => {
           const labelText =
-            typeof item.label === 'string'
-              ? item.label
-              : (item.label?.[lang] ?? item.label?.['fi'] ?? '');
+            typeof item.label === 'string' ? item.label : localize(item.label);
 
           return (
             labelText && (

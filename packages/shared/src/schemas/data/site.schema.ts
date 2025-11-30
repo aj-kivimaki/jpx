@@ -19,6 +19,7 @@ export const GigsSectionSchema = z.object({
   id: z.literal('gigs'),
   title: SiteLocalizedStringSchema,
   items: z.array(z.unknown()).optional(),
+  loadingText: SiteLocalizedStringSchema.optional(),
 });
 
 export const InfoSectionSchema = z.object({
@@ -86,4 +87,5 @@ export type SiteLogo = z.infer<typeof SiteLogoSchema>;
 export type SiteImage = z.infer<typeof SiteImageSchema>;
 export type SiteSection = z.infer<typeof SectionSchema>;
 export type ModalSection = z.infer<typeof ModalSectionSchema>;
+export type GigsSection = z.infer<typeof GigsSectionSchema>;
 export type LocalizedString = z.infer<typeof SiteLocalizedStringSchema>;

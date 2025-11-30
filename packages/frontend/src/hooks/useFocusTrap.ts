@@ -1,5 +1,22 @@
 import { useEffect, type RefObject } from 'react';
 
+/**
+ * Hook: useFocusTrap
+ *
+ * Traps keyboard focus within a container (typically a modal or dialog) and
+ * closes the container when the Escape key is pressed. On mount the hook
+ * focuses the first focusable element inside the container.
+ *
+ * SSR / safety: DOM access is guarded by checking `containerRef.current`, so
+ * the hook is safe to import in environments where `document` may be absent.
+ *
+ * Usage:
+ * const ref = useRef<HTMLElement | null>(null);
+ * useFocusTrap(ref, () => setOpen(false));
+ *
+ * @param containerRef - RefObject pointing to the container element
+ * @param onClose - Callback invoked when Escape is pressed (should hide/close)
+ */
 export const useFocusTrap = (
   containerRef: RefObject<HTMLElement>,
   onClose: () => void

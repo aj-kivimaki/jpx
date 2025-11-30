@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { themeSchema, type Theme, site, getLang } from 'shared';
+import { themeSchema, type Theme, site } from 'shared';
 import { applyTheme } from '../utils';
 import styles from './ModeSwitcher.module.css';
-import { useTranslation } from 'react-i18next';
+import useLocalized from '../hooks/useLocalized';
 
 const ModeSwitcher: React.FC = () => {
-  const { i18n } = useTranslation();
-  const lang = getLang(i18n);
+  const localize = useLocalized();
 
   const modalSection = site.sections.find((s) => s.id === 'modal');
   if (!modalSection) throw new Error('Modal section not found');
@@ -28,8 +27,8 @@ const ModeSwitcher: React.FC = () => {
 
   const nextThemeLabel =
     currentTheme === 'light'
-      ? modalSection.theme.themeDark[lang]
-      : modalSection.theme.themeLight[lang];
+      ? localize(modalSection.theme.themeDark)
+      : localize(modalSection.theme.themeLight);
 
   return (
     <div className={styles.modeSwitcher}>

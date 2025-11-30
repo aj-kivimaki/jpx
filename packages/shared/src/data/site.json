@@ -16,6 +16,10 @@
       "title": {
         "fi": "KEIKAT",
         "en": "GIGS"
+      },
+      "loadingText": {
+        "fi": "Ladataan keikkoja...",
+        "en": "Loading gigs..."
       }
     },
     {
