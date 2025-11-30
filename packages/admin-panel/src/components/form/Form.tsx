@@ -1,33 +1,52 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
-import FormField from './FormInput';
-import SelectField from './FormSelect';
-import styles from './Form.module.css';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
-import { lineupOptions } from 'shared';
+import HookFormInput from './FormInput';
+import HookFormSelect from './FormSelect';
+import { supabase } from '../../config/supabaseClient';
+import { type GigForm, GigFormSchema, lineupOptions } from 'shared';
+import styles from './Form.module.css';
 
-const initialFormData = {
-  id: '',
-  date: '',
-  time: '',
-  lineup: '',
-  venue: '',
-  city: '',
-  notes: '',
-};
+export default function GigForm() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+    reset,
+  } = useForm<GigForm>({
+    resolver: zodResolver(GigFormSchema),
+  });
 
-const Form = () => {
-  const [formData] = useState(initialFormData);
+  const handleFormSubmit = async (data: GigForm) => {
+    const { error } = await supabase
+      .from('gigs') // replace with your table name
+      .insert([data]); // insert expects an array of objects
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    console.log('Field changed:', name, value);
+    if (error) {
+      console.error('Error inserting data:', error.message);
+    } else {
+      alert('Event saved successfully!');
+      reset(); // reset form
+    }
+
+    console.log('[HookForm] formData (object):', data);
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted with data:', formData);
+  const handleFormError = (errors: Record<string, unknown>) => {
+    console.log('[HookForm] validation errors on submit:', errors);
+  };
+
+  const handleSubmitButtonClick = () => {
+    console.log(
+      '[HookForm] submit button clicked at',
+      new Date().toISOString()
+    );
+    try {
+      console.log('[HookForm] getValues():', getValues());
+    } catch (e) {
+      console.warn('[HookForm] getValues() failed', e);
+    }
   };
 
   return (
@@ -38,61 +57,89 @@ const Form = () => {
           <LogoutButton />
         </div>
       </div>
-      <form onSubmit={handleSubmit} className={styles.fields}>
-        <FormField
+      <form
+        onSubmit={handleSubmit(handleFormSubmit, handleFormError)}
+        className={styles.fields}
+        noValidate
+      >
+        <HookFormInput
           label="Päivänmäärä"
           name="date"
           type="date"
-          value={formData.date}
-          onChange={handleChange}
+          register={{ ...register('date') }}
           required={true}
+          error={errors.date?.message}
         />
-        <FormField
+
+        <HookFormInput
           label="Kellonaika"
           name="time"
           type="time"
-          value={formData.time}
-          onChange={handleChange}
-          required={true}
+          register={{ ...register('time') }}
+          required={false}
+          error={errors.time?.message}
         />
-        <SelectField
-          label="Kokoonpano"
-          name="lineup"
-          value={formData.lineup}
-          onChange={handleChange}
+
+        <HookFormSelect
+          label="Kokoonpano (FI)"
+          name="lineup_fi"
           options={lineupOptions}
+          register={{ ...register('lineup_fi') }}
           required={true}
+          error={errors.lineup_fi?.message}
         />
-        <FormField
+
+        <HookFormSelect
+          label="Kokoonpano (EN)"
+          name="lineup_en"
+          options={lineupOptions}
+          register={{ ...register('lineup_en') }}
+          required={true}
+          error={errors.lineup_en?.message}
+        />
+
+        <HookFormInput
           label="Keikkapaikka"
           name="venue"
-          placeholder="...eli venue"
-          value={formData.venue}
-          onChange={handleChange}
+          register={{ ...register('venue') }}
           required={false}
+          error={errors.venue?.message}
         />
-        <FormField
+
+        <HookFormInput
           label="Kaupunki"
           name="city"
-          placeholder="...tai kunta"
-          value={formData.city}
-          onChange={handleChange}
+          register={{ ...register('city') }}
           required={false}
+          error={errors.city?.message}
         />
-        <FormField
-          label="Huomioitavaa"
-          name="notes"
-          value={formData.notes}
-          placeholder='esim. "Yksityistilaisuus"'
-          onChange={handleChange}
+
+        <HookFormInput
+          label="Huomioitavaa (FI)"
+          name="notes_fi"
+          type="textarea"
+          register={{ ...register('notes_fi') }}
           required={false}
+          error={errors.notes_fi?.message}
         />
-        <button type="submit" className={styles.button}>
-          Lisää keikka
+
+        <HookFormInput
+          label="Huomioitavaa (EN)"
+          name="notes_en"
+          type="textarea"
+          register={{ ...register('notes_en') }}
+          required={false}
+          error={errors.notes_en?.message}
+        />
+
+        <button
+          type="submit"
+          className={styles.button}
+          onClick={handleSubmitButtonClick}
+        >
+          Submit
         </button>
       </form>
     </div>
   );
-};
-
-export default Form;
+}

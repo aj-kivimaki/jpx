@@ -20,3 +20,8 @@
   color: #111;
   background-color: #fff;
 }
+
+.textarea {
+  height: 5rem;
+  resize: none;
+}
