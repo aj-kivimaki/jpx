@@ -11,6 +11,7 @@
     "build": "npm-run-all build:front build:admin",
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
+    "build:shared": "npm --workspace packages/shared run build",
     "preview": "npm --workspace packages/frontend run preview",
     "test": "npm-run-all -p test:front test:admin",
     "test:front": "npm --workspace packages/frontend run test",
@@ -75,9 +76,12 @@
     ]
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "i18next": "^25.6.3",
     "i18next-browser-languagedetector": "^8.2.0",
+    "react-hook-form": "^7.67.0",
     "react-i18next": "^16.3.5",
+    "react-toastify": "^11.0.5",
     "zod": "^4.1.13",
     "zustand": "^5.0.8"
   }

@@ -33,6 +33,10 @@ const FormSelect: React.FC<FormSelectProps> = ({
         onChange={onChange}
         className={styles.select}
       >
+        <option value="" disabled hidden>
+          Valitse kokoonpano
+        </option>
+
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

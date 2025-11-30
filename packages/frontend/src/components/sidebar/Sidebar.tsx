@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { lazy, useState } from 'react';
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
 import { social } from 'shared';
 import styles from './Sidebar.module.css';
-import SettingsModal from '../modal/SettingsModal';
 import { FaCartShopping } from 'react-icons/fa6';
+
+const SettingsModal = lazy(() => import('../modal/SettingsModal'));
 
 const Sidebar = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
