@@ -14,11 +14,11 @@ interface SettingsModalProps {
 const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   const { i18n } = useTranslation();
   const lang = getLang(i18n);
-  // dialog element -> use HTMLDialogElement for correct typing
-  const modalRef = useRef<HTMLDialogElement | null>(null);
+  // div element -> use HTMLDivElement for correct typing
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   // Call the focus-trap hook unconditionally to follow the Rules of Hooks.
-  // HTMLDialogElement is an HTMLElement; cast to satisfy the hook's RefObject<HTMLElement> parameter
+  // HTMLDivElement is an HTMLElement; cast to satisfy the hook's RefObject<HTMLElement> parameter
   useFocusTrap(modalRef as React.RefObject<HTMLElement>, onClose);
 
   if (!open) return null;
@@ -39,7 +39,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         aria-label="Close settings"
       />
 
-      <dialog
+      <div
         className={styles.modal}
         ref={modalRef}
         aria-modal="true"
@@ -64,7 +64,7 @@ const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
         <button className={styles.closeBtn} onClick={onClose}>
           {modalSection?.close[lang]}
         </button>
-      </dialog>
+      </div>
     </div>
   );
 };
