@@ -38,7 +38,6 @@ export const ModalSectionSchema = z.object({
     label: SiteLocalizedStringSchema,
     themeLight: SiteLocalizedStringSchema,
     themeDark: SiteLocalizedStringSchema,
-    themeSystem: SiteLocalizedStringSchema,
   }),
   language: SiteLocalizedStringSchema,
   close: SiteLocalizedStringSchema,
