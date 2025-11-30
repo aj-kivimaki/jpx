@@ -1,8 +1,8 @@
 .footer {
   display: flex;
   gap: 1rem;
-  background-color: rgb(43, 43, 43);
-  color: white;
+  background-color: var(--color-bg);
+  color: var(--text-color);
   padding: 2rem;
   font-size: 0.85rem;
 }
