@@ -1,32 +1,36 @@
-import { useTranslation } from 'react-i18next';
 import GigsTable from './GigsTable';
 import { useSupabaseFetch } from '../../hooks/useSupabaseFetch';
-import { site, sectionIds, getLang, type GigForm } from 'shared';
+import { site, sectionIds, type GigForm, type GigsSection } from 'shared';
 import styles from './Gigs.module.css';
+import useLocalized from '../../hooks/useLocalized';
 
 const Gigs = () => {
-  const { i18n } = useTranslation();
-
   const {
     data: gigs,
     loading,
     error,
   } = useSupabaseFetch<GigForm>('gigs', '*', 'date', true);
 
+  const localize = useLocalized();
+
   if (error) return <p>Error loading events: {error.message}</p>;
-  if (loading) return <p>Loading events...</p>;
 
   const { sections } = site;
 
-  const lang = getLang(i18n);
-  const gigsSection = sections.find((s) => s.id === 'gigs');
-  const title = gigsSection?.title?.[lang] ?? gigsSection?.title?.fi ?? '';
+  const gigsSection = sections.find((s): s is GigsSection => s.id === 'gigs');
+
+  const title = localize(gigsSection?.title);
+  const loadingText = localize(gigsSection?.loadingText);
 
   return (
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
-        <GigsTable gigs={gigs} />
+        {loading ? (
+          <p className={styles.gigsLoadingText}>{loadingText}</p>
+        ) : (
+          <GigsTable gigs={gigs} />
+        )}
       </div>
     </div>
   );

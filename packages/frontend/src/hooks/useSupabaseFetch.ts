@@ -2,12 +2,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../config/supabaseClient';
 import type { PostgrestError } from '@supabase/supabase-js';
 
-/**
- * Custom hook to fetch data from Supabase.
- * @param {string} tableName - Name of the Supabase table.
- * @param {string} [columns='*'] - Columns to select.
- */
-
 interface UseSupabaseFetchResult<T = unknown> {
   data: T[];
   loading: boolean;

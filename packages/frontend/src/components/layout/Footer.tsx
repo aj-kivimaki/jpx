@@ -1,21 +1,19 @@
-import { useTranslation } from 'react-i18next';
 import { contact, site } from 'shared/data';
-import { sectionIds, getLang, type SiteLogo } from 'shared';
+import { sectionIds, type SiteLogo } from 'shared';
+import useLocalized from '../../hooks/useLocalized';
 import styles from './Footer.module.css';
 
 const Footer = () => {
-  const { i18n } = useTranslation();
-
-  const lang = getLang(i18n);
   const { logos: siteLogos, layout: siteLayout } = site;
   const { name, phone, email } = contact;
 
+  const localize = useLocalized();
+
   const stagentLogo = siteLogos.find((logo: SiteLogo) => logo.id === 'stagent');
   const logoSrc = stagentLogo?.src ?? '';
-  const logoAlt = stagentLogo?.alt?.[lang] ?? stagentLogo?.alt?.fi ?? '';
+  const logoAlt = localize(stagentLogo?.alt);
 
-  const footerTitle =
-    siteLayout.footer.title[lang] ?? siteLayout.footer.title.fi;
+  const footerTitle = localize(siteLayout.footer.title);
   return (
     <div id={sectionIds.contact} className={styles.footer}>
       <div className={styles.stagentLogo}>
