@@ -81,6 +81,7 @@
   }
 
   .descriptionContainer {
+    color: white;
     flex: 2;
     margin: 0;
     box-shadow: none;
