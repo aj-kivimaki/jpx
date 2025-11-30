@@ -12,7 +12,7 @@ const ModeSwitcher: React.FC = () => {
   if (!modalSection) throw new Error('Modal section not found');
 
   const [currentTheme, setCurrentTheme] = useState<Theme>(
-    (localStorage.getItem('theme') as Theme) || 'system'
+    (localStorage.getItem('theme') as Theme) || 'light'
   );
 
   useEffect(() => {
@@ -20,31 +20,16 @@ const ModeSwitcher: React.FC = () => {
   }, [currentTheme]);
 
   const toggleTheme = () => {
-    let next: Theme;
-    switch (currentTheme) {
-      case 'light':
-        next = 'dark';
-        break;
-      case 'dark':
-        next = 'system';
-        break;
-      case 'system':
-      default:
-        next = 'light';
-        break;
-    }
+    const next: Theme = currentTheme === 'light' ? 'dark' : 'light';
     setCurrentTheme(next);
     themeSchema.parse(next);
     applyTheme(next);
   };
 
-  const themeNextLabelMap: Record<Theme, string> = {
-    light: modalSection.theme.themeDark[lang],
-    dark: modalSection.theme.themeSystem[lang],
-    system: modalSection.theme.themeLight[lang],
-  };
-
-  const nextThemeLabel = themeNextLabelMap[currentTheme];
+  const nextThemeLabel =
+    currentTheme === 'light'
+      ? modalSection.theme.themeDark[lang]
+      : modalSection.theme.themeLight[lang];
 
   return (
     <div className={styles.modeSwitcher}>

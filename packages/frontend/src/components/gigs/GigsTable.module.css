@@ -3,7 +3,7 @@
   border-radius: 5px;
   padding: 1.75rem;
   margin-bottom: 1rem;
-  background-color: rgb(63, 63, 63);
+  background-color: var(--card-bg);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   gap: 1.5rem;
 }
@@ -25,7 +25,7 @@
 
 .time {
   display: flex;
-  color: #cdcdcd;
+  color: var(--text-color-light);
   padding-left: 3.5rem;
 }
 
@@ -67,7 +67,7 @@
 .cityText,
 .notes {
   font-size: 0.85rem;
-  color: #cdcdcd;
+  color: var(--text-color-light);
 }
 
 @media (max-width: 560px) {
