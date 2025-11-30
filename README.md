@@ -100,12 +100,10 @@
 - Light / Dark Mode with centralized theming.
 - Internationalization (i18n) for multi-language support.
 - Responsive Design and mobile-first layouts.
-- Form Validation & Error Handling with reusable components.
 - Accessibility (a11y) with semantic markup and ARIA labels.
 - Performance Optimizations:
   - WebP images in the correct sizes for faster load times.
   - Lazy loading for conditional components (e.g., settings modal).
-  - Code-splitting and efficient bundle management.
 
 ## Backend / Supabase
 
@@ -147,7 +145,7 @@
 - Unit tests
 - Build
 - Code quality analysis (SonarCloud)
-- Deploy to Netlify
+- Deploy to Netlify (push to `main` only)
 
 > Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
@@ -169,14 +167,14 @@
 <summary>Future Add-Ons:</summary>
 
 - Absolutely:
+  - Form Validation & Error Handling with reusable components.
+  - Form Feedback: Toast notifications for success/error messages
   - Testing:
     - Component tests (React Testing Library)
     - E2E tests (Cypress/Playwright)
     - MSW API mocking
-  - Performance: Lazy-load routes/components to reduce initial bundle size
-  - Form Feedback: Toast notifications for success/error messages
 - Possibly:
-  - Better CMS: Manage all content (promo materials, images, text>)
+  - More diverse CMS: Manage all content (promo materials, images, text)
   - UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
   - Monitoring & Analytics: Pageview/event tracking or feature flags
 

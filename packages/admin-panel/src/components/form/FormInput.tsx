@@ -1,19 +1,18 @@
+import type { ChangeEvent } from 'react';
 import styles from './FormInput.module.css';
 
 interface FormInputProps {
   label: string;
   name: string;
   value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   type?: 'text' | 'date' | 'time' | 'textarea';
   rows?: number;
   placeholder?: string;
   required: boolean;
 }
 
-const FormInput: React.FC<FormInputProps> = ({
+const FormInput = ({
   label,
   name,
   value,
@@ -22,7 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
   rows,
   placeholder,
   required,
-}) => {
+}: FormInputProps) => {
   if (required) {
     label = label + ' *';
   }

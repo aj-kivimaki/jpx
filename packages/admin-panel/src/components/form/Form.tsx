@@ -1,45 +1,44 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import FormField from './FormInput';
 import SelectField from './FormSelect';
 import styles from './Form.module.css';
 import LogoutButton from '../auth/LogoutButton';
 import { lineupOptions } from 'shared';
 
-const lineupOptionsWithPlaceholder = ['Valitse kokoonpano', ...lineupOptions];
+const initialFormData = {
+  id: '',
+  date: '',
+  time: '',
+  lineup: '',
+  venue: '',
+  city: '',
+  notes: '',
+};
 
-const Form: React.FC = () => {
-  const [formData, setFormData] = useState({
-    date: '',
-    time: '',
-    lineup: 'Valitse kokoonpano',
-    venue: '',
-    city: '',
-    notes: '',
-  });
+const Form = () => {
+  const [formData] = useState(initialFormData);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    console.log('Field changed:', name, value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    console.log('Form submitted with data:', formData);
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.form}>
       <div className={styles.header}>
         <h1 className={styles.title}>J. Partynen</h1>
-        <button className={styles.logout}>
+        <div className={styles.logout}>
           <LogoutButton />
-        </button>
+        </div>
       </div>
-      <div className={styles.fields}>
+      <form onSubmit={handleSubmit} className={styles.fields}>
         <FormField
           label="Päivänmäärä"
           name="date"
@@ -61,13 +60,13 @@ const Form: React.FC = () => {
           name="lineup"
           value={formData.lineup}
           onChange={handleChange}
-          options={lineupOptionsWithPlaceholder}
+          options={lineupOptions}
           required={true}
         />
         <FormField
           label="Keikkapaikka"
           name="venue"
-          placeholder="ei pakollinen"
+          placeholder="...eli venue"
           value={formData.venue}
           onChange={handleChange}
           required={false}
@@ -75,7 +74,7 @@ const Form: React.FC = () => {
         <FormField
           label="Kaupunki"
           name="city"
-          placeholder="ei pakollinen"
+          placeholder="...tai kunta"
           value={formData.city}
           onChange={handleChange}
           required={false}
@@ -91,8 +90,8 @@ const Form: React.FC = () => {
         <button type="submit" className={styles.button}>
           Lisää keikka
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
