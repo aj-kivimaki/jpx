@@ -32,25 +32,38 @@ At minimum, populate the following variables:
 | `VITE_SUPABASE_URL`      | Supabase project URL (example: `https://xyz.supabase.co`) |
 | `VITE_SUPABASE_ANON_KEY` | Supabase public anon key                                  |
 
-If you need additional values for Netlify or other integrations, follow the package-level `.env.example` files.
+## 3. Install & Dev (quick commands)
 
-## 3. Install & run
+Run these from the repository root.
 
 ```bash
+# Install workspace dependencies
 npm install
-npm run dev # Start development servers
-npm run build # Build project
-```
 
-Notes:
+# Start both apps in dev (runs frontend + admin concurrently)
+npm run dev
 
-- `npm install` installs workspace dependencies at the repository root. This repo uses npm workspaces.
-- `npm run dev` runs both apps concurrently via workspace scripts (`dev:front` and `dev:admin`).
-- To run a single package's dev server, use:
+# Start a single package dev server
+npm run dev:front   # frontend only
+npm run dev:admin   # admin-panel only
 
-```bash
-npm run dev:front
-npm run dev:admin
+# Build everything (shared, frontend, admin)
+npm run build
+
+# Build shared package (required before building apps that consume it)
+npm run build:shared
+
+# Typecheck across the workspace
+npm run typecheck
+
+# Lint (frontend + admin)
+npm run lint
+
+# Format across the workspace
+npm run format
+
+# Tests (frontend + admin)
+npm run test
 ```
 
 ## 4. Supabase setup
