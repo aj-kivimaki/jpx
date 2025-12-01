@@ -126,7 +126,7 @@ export default function GigForm() {
         />
 
         <button type="submit" className={styles.button}>
-          Submit
+          Tallenna
         </button>
       </form>
     </div>
