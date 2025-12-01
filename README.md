@@ -13,7 +13,13 @@
 🚀 **ARTIST PAGE:** https://jpartynen.com  
 🔐 **ADMIN PANEL:** https://admin.jpartynen.com
 
-<img src="assets/banner.webp" alt="J. Partynen banner screenshot" width="600" />
+### DESKTOP
+
+<img src="assets/banner-desktop.webp" alt="J. Partynen banner desktop" width="600" />
+
+### MOBILE
+
+<img src="assets/banner-mobile.webp" alt="J. Partynen banner mobile" width="300" />
 
 ## Table of Contents
 
@@ -171,10 +177,24 @@
 
 ## Screenshots
 
-**Public Site – Gigs Section**  
-<img src="assets/gigs.webp" alt="Gigs screenshot" width="400" />
+### Public site
 
-**Admin Panel – CMS Overview**  
+**Gigs Section**
+
+<img src="assets/gigs.webp" alt="Gigs section" width="400" />
+
+### CMS / Admin panel
+
+**Login page**
+
+<img src="assets/login.webp" alt="Admin panel login" width="400" />
+
+**Login email**
+
+<img src="assets/cms-login-email.webp" alt="Admin panel login email" width="400" />
+
+**Overview**
+
 <img src="assets/admin-panel.webp" alt="Admin panel screenshot" width="400" />
 
 ---
