@@ -5,6 +5,7 @@
   margin-bottom: 0.5rem;
   background-color: rgb(195, 195, 195);
   gap: 1.5rem;
+  position: relative;
 }
 
 .leftColumn {
@@ -67,6 +68,20 @@
 .notes {
   font-size: 0.85rem;
   color: #303030;
+}
+
+.deleteIcon {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: #ff0000;
+  font-size: 2rem;
+  text-align: right;
+  transition: background-color 0.3s ease;
+}
+
+.deleteIcon:hover {
+  color: #820b00;
 }
 
 @media (min-width: 769px) and (max-width: 900px), (max-width: 500px) {

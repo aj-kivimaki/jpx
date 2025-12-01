@@ -4,29 +4,41 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { type GigForm, getLang } from 'shared';
 import styles from './GigsTable.module.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { IoIosPin } from 'react-icons/io';
+import { useDeleteGig } from '../../hooks/useDeleteGig';
 
 dayjs.extend(customParseFormat);
 
 interface GigsTable {
-  data: GigForm[] | null;
+  gigs: GigForm[];
 }
 
-const GigsTable: React.FC<GigsTable> = ({ data }) => {
+const GigsTable = ({ gigs }: GigsTable) => {
+  const deleteGig = useDeleteGig();
+
   const { i18n } = useTranslation();
   const lang = getLang(i18n);
 
-  if (!data?.length) {
+  if (!gigs?.length) {
     return <p>{lang === 'fi' ? 'Ei keikkoja tulossa' : 'No gigs scheduled'}</p>;
   }
 
+  const handleDelete = (id: string) => {
+    try {
+      deleteGig.mutate(id);
+    } catch (error) {
+      console.error('Error deleting gig:', error);
+    }
+  };
+
   return (
     <>
-      {data?.map(
+      {gigs?.map(
         ({
           id,
           date,
@@ -80,6 +92,12 @@ const GigsTable: React.FC<GigsTable> = ({ data }) => {
                 </div>
               )}
             </div>
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete(id)}
+            >
+              <IoMdCloseCircleOutline className={styles.deleteIcon} />
+            </button>
           </div>
         )
       )}

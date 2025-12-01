@@ -6,17 +6,20 @@ import GigsTable from './GigsTable';
 const Gigs = () => {
   const {
     data: gigs,
-    loading,
+    isLoading,
     error,
   } = useSupabaseFetch<GigForm>('gigs', '*', 'date', true);
 
   if (error) return <p>Error loading events: {error.message}</p>;
-  if (loading) return <p>Loading events...</p>;
 
   return (
     <div className={styles.container}>
       <div className={styles.gigs}>
-        <GigsTable data={gigs} />
+        {isLoading ? (
+          <p className={styles.gigsLoadingText}>Lataa keikkoja...</p>
+        ) : (
+          <GigsTable gigs={gigs ?? []} />
+        )}
       </div>
     </div>
   );

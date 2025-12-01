@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../config/supabaseClient';
 import type { PostgrestError } from '@supabase/supabase-js';
-import { QUERY_REFETCH_TIMES, QUERY_STALE_TIME_MS } from '../config/CONSTANTS';
+import { QUERY_REFETCH_TIMES, QUERY_STALE_TIME_MS } from 'shared';
 
 interface UseSupabaseFetchResult<T = unknown> {
   data: T[] | undefined;

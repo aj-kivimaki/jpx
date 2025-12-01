@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../config/supabaseClient';
 import type { PostgrestError } from '@supabase/supabase-js';
-
-/**
- * Custom hook to fetch data from Supabase.
- * @param {string} tableName - Name of the Supabase table.
- * @param {string} [columns='*'] - Columns to select.
- */
+import { QUERY_REFETCH_TIMES, QUERY_STALE_TIME_MS } from 'shared';
 
 interface UseSupabaseFetchResult<T = unknown> {
-  data: T[];
-  loading: boolean;
+  data: T[] | undefined;
+  isLoading: boolean;
   error: PostgrestError | Error | null;
 }
 
@@ -20,39 +15,23 @@ export const useSupabaseFetch = <T = unknown>(
   orderBy: string = 'date',
   ascending: boolean = true
 ): UseSupabaseFetchResult<T> => {
-  const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<PostgrestError | Error | null>(null);
+  const fetcher = async (): Promise<T[]> => {
+    const { data, error } = await supabase
+      .from(tableName)
+      .select(columns)
+      .order(orderBy, { ascending });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    if (error) throw error;
+    return data as T[];
+  };
 
-      const query = supabase
-        .from(tableName)
-        .select(columns)
-        .order(orderBy, { ascending });
+  const { data, isLoading, error } = useQuery<T[], PostgrestError | Error>({
+    queryKey: [tableName, columns, orderBy, ascending],
+    queryFn: fetcher,
+    staleTime: QUERY_STALE_TIME_MS,
+    retry: QUERY_REFETCH_TIMES,
+    refetchOnWindowFocus: false,
+  });
 
-      try {
-        const { data: result, error: fetchError } = await query;
-
-        if (fetchError) {
-          setError(fetchError);
-          setData([] as T[]);
-        } else {
-          setData(result as T[]);
-          setError(null);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-        setData([] as T[]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [tableName, columns, orderBy, ascending]);
-
-  return { data, loading, error };
+  return { data, isLoading, error };
 };
