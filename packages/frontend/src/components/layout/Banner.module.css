@@ -5,19 +5,18 @@
 
 .bannerImg {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
+  top: 7%;
+  left: 7%;
+  width: 35%;
+  height: auto;
+  padding: 2rem 0;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
-  font-family: 'Satisfy', system-ui;
+  font-style: italic;
 }
 
 .adjectives {
@@ -25,7 +24,16 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  font-size: clamp(1.25rem, 4.25vw, 3rem);
+  font-size: clamp(1.5rem, 4.25vw, 2.25rem);
   width: 90%;
   padding-left: clamp(1rem, 4.25vw, 3rem);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .overlay {
+    top: 60%;
+    width: 100%;
+    padding: 1rem 0;
+  }
 }
