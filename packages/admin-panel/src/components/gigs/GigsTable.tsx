@@ -10,7 +10,9 @@ import { type GigForm, getLang } from 'shared';
 import styles from './GigsTable.module.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useDeleteGig } from '../../hooks/useDeleteGig';
+import { IoIosPin } from 'react-icons/io';
+import { useSupabaseDelete } from 'shared';
+import { supabase } from '../../config/supabaseClient';
 
 dayjs.extend(customParseFormat);
 
@@ -19,10 +21,7 @@ interface GigsTable {
 }
 
 const GigsTable = ({ gigs }: GigsTable) => {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-
-  const deleteGig = useDeleteGig();
+  const deleteGig = useSupabaseDelete(supabase, 'gigs');
 
   const { i18n } = useTranslation();
   const lang = getLang(i18n);

@@ -5,7 +5,10 @@ import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
 import { type GigForm, GigFormSchema, lineupOptions } from 'shared';
 import styles from './Form.module.css';
-import { useAddGig } from '../../hooks/useAddGig';
+import { useSupabaseAdd } from 'shared';
+import { supabase } from '../../config/supabaseClient';
+
+type NewGig = Omit<GigForm, 'id'>;
 
 export default function GigForm() {
   const {
@@ -13,13 +16,13 @@ export default function GigForm() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Omit<GigForm, 'id'>>({
+  } = useForm<NewGig>({
     resolver: zodResolver(GigFormSchema.omit({ id: true })),
   });
 
-  const addGig = useAddGig();
+  const addGig = useSupabaseAdd<NewGig>(supabase, 'gigs');
 
-  const handleFormSubmit = async (data: Omit<GigForm, 'id'>) => {
+  const handleFormSubmit = async (data: NewGig) => {
     const payload = {
       date: data.date,
       time: data.time || null,
