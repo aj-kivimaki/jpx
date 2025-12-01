@@ -18,3 +18,16 @@
 > Add short notes explaining the motivation and any migration steps needed for reviewer.
 
 Thanks for contributing! See package-specific READMEs for details.
+
+```mermaid
+flowchart TD
+    A[Developer Push / PR] --> B[GitHub Actions CI]
+    B --> C[Lint & Prettier Checks]
+    B --> D[Type Checking]
+    B --> E[Unit Tests / Coverage]
+    B --> F[Build Verification]
+    B --> G[SonarCloud Analysis]
+    C & D & E & F & G --> H{All Pass?}
+    H -->|Yes| I[Deploy to Netlify]
+    H -->|No| J[Fail & Report]
+```

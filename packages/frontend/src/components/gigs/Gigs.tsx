@@ -1,15 +1,16 @@
 import GigsTable from './GigsTable';
-import { useSupabaseFetch } from '../../hooks/useSupabaseFetch';
+import { useSupabaseFetch } from 'shared';
 import { site, sectionIds, type GigForm, type GigsSection } from 'shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
+import { supabase } from '../../config/supabaseClient';
 
 const Gigs = () => {
   const {
     data: gigs,
     isLoading,
     error,
-  } = useSupabaseFetch<GigForm>('gigs', '*', 'date', true);
+  } = useSupabaseFetch<GigForm>(supabase, 'gigs', '*', 'date', true);
 
   const localize = useLocalized();
 

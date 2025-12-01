@@ -10,7 +10,8 @@ import styles from './GigsTable.module.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { IoIosPin } from 'react-icons/io';
-import { useDeleteGig } from '../../hooks/useDeleteGig';
+import { useSupabaseDelete } from 'shared';
+import { supabase } from '../../config/supabaseClient';
 
 dayjs.extend(customParseFormat);
 
@@ -19,7 +20,7 @@ interface GigsTable {
 }
 
 const GigsTable = ({ gigs }: GigsTable) => {
-  const deleteGig = useDeleteGig();
+  const deleteGig = useSupabaseDelete(supabase, 'gigs');
 
   const { i18n } = useTranslation();
   const lang = getLang(i18n);

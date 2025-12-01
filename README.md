@@ -26,7 +26,7 @@
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Features](#features)
-- [Backend / Supabase](#backend--supabase)
+- [Backend](#backend)
 - [Code Quality](#code-quality)
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
@@ -45,7 +45,7 @@
 | **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`             |
 | **CI/CD**        | `GitHub Actions`                                          |
 
-## Packages
+### Packages
 
 | Category                  | Packages                                                         | Purpose                                         |
 | ------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
