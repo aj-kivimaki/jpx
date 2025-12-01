@@ -5,12 +5,11 @@ import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { IoMdCloseCircleOutline, IoIosPin } from 'react-icons/io';
 import { type GigForm, getLang } from 'shared';
 import styles from './GigsTable.module.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { IoIosPin } from 'react-icons/io';
 import { useDeleteGig } from '../../hooks/useDeleteGig';
 
 dayjs.extend(customParseFormat);
