@@ -1,8 +1,9 @@
 import { supabase } from '../../config/supabaseClient';
+import { signOut } from 'shared';
 
 export default function LogoutButton() {
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut(supabase);
   };
 
   return (

@@ -1,15 +1,26 @@
-import styles from './Gigs.module.css';
-import { type GigForm } from 'shared';
-import { useSupabaseFetch } from 'shared';
+import { useQuery } from '@tanstack/react-query';
 import GigsTable from './GigsTable';
 import { supabase } from '../../config/supabaseClient';
+import {
+  fetchGigs,
+  QUERY_REFETCH_TIMES,
+  QUERY_STALE_TIME_MS,
+  type GigForm,
+} from 'shared';
+import styles from './Gigs.module.css';
 
 const Gigs = () => {
   const {
     data: gigs,
     isLoading,
     error,
-  } = useSupabaseFetch<GigForm>(supabase, 'gigs', '*', 'date', true);
+  } = useQuery<GigForm[], Error>({
+    queryKey: ['gigs'],
+    queryFn: () => fetchGigs(supabase),
+    staleTime: QUERY_STALE_TIME_MS,
+    retry: QUERY_REFETCH_TIMES,
+    refetchOnWindowFocus: false,
+  });
 
   if (error) return <p>Error loading events: {error.message}</p>;
 

@@ -94,6 +94,7 @@
 
     /shared
       /src
+        /api        # Data Access Layer
         /data       # Static/shared data
         /schemas    # Zod validation and inferred types
         /styles     # CSS styles (reset, global)

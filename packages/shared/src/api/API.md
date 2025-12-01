@@ -1,4 +1,4 @@
-# API Layer Abstractions
+# Shared Package API
 
 ```mermaid
 flowchart TD
