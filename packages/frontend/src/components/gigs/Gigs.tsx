@@ -7,7 +7,7 @@ import useLocalized from '../../hooks/useLocalized';
 const Gigs = () => {
   const {
     data: gigs,
-    loading,
+    isLoading,
     error,
   } = useSupabaseFetch<GigForm>('gigs', '*', 'date', true);
 
@@ -26,10 +26,10 @@ const Gigs = () => {
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
-        {loading ? (
+        {isLoading ? (
           <p className={styles.gigsLoadingText}>{loadingText}</p>
         ) : (
-          <GigsTable gigs={gigs} />
+          <GigsTable gigs={gigs ?? []} />
         )}
       </div>
     </div>
