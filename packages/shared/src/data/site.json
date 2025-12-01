@@ -110,6 +110,14 @@
       }
     },
     {
+      "id": "solo-portrait",
+      "src": "/images/solo-portrait.webp",
+      "alt": {
+        "fi": "J. Partynen soolokuva pysty",
+        "en": "J. Partynen solo portrait"
+      }
+    },
+    {
       "id": "band",
       "src": "/images/jpx-band.webp",
       "alt": {
