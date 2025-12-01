@@ -6,7 +6,7 @@
 
 > A lightweight, cost-efficient artist website built with React and Supabase.  
 > Designed for a single admin and low traffic, it includes a fast public site  
-> for gigs and a simple, secure CMS for easy updates.
+> and a simple, secure CMS for easy updates.
 
 ## This project has two applications:
 
@@ -27,7 +27,7 @@
 - [Project Structure](#project-structure)
 - [Features](#features)
 - [Backend / Supabase](#backend--supabase)
-- [Code Quality: Git Hooks and CI/CD](#code-quality-git-hooks-and-cicd)
+- [Code Quality](#code-quality)
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
 - [Licenses](#licenses)
@@ -35,26 +35,28 @@
 
 ## Tech Stack
 
-| Layer        | Technology                                          |
-| ------------ | --------------------------------------------------- |
-| Frontend     | Vite • React • TypeScript • CSS Modules             |
-| Backend      | Supabase (Auth + Database with Row-Level Security)  |
-| Database     | PostgreSQL (via Supabase)                           |
-| Deployment   | Netlify                                             |
-| Testing      | Vitest • React Testing Library • Cypress/Playwright |
-| Code Quality | ESLint • Prettier • Husky + lint-staged             |
-| CI/CD        | GitHub Actions                                      |
+| Layer            | Technology                                                |
+| ---------------- | --------------------------------------------------------- |
+| **Frontend**     | `Vite` • `React` • `TypeScript` • `CSS Modules`           |
+| **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security`)  |
+| **Database**     | `PostgreSQL`                                              |
+| **Deployment**   | `Netlify`                                                 |
+| **Testing**      | `Vitest` • `React Testing Library` • `Cypress/Playwright` |
+| **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`             |
+| **CI/CD**        | `GitHub Actions`                                          |
 
-### Packages used
+## Packages
 
-- **React & build:** `react`, `react-dom`, `vite`, `typescript` — core UI framework and build/tooling.
-- **Forms & validation:** `react-hook-form`, `@hookform/resolvers`, `zod` — robust form handling and schema validation.
-- **State & data fetching:** `zustand`, `react-query` — lightweight client-side state and server data management with caching and synchronization.
-- **Localization (i18n):** `i18next`, `react-i18next`, `i18next-browser-languagedetector` — translations and language detection.
-- **Backend / Supabase:** `@supabase/supabase-js` — authentication and Postgres client used by the admin panel.
-- **UI & utilities:** `react-icons`, `dayjs`, `react-toastify` — icons, date handling, and toast notifications.
-- **Monorepo/shared:** local `shared` package — central Zod schemas, types, and shared data used by both apps.
-- **Dev & CI tooling:** `eslint`, `prettier`, `husky`, `lint-staged`, `vitest` — linting, formatting, git hooks and tests.
+| Category                  | Packages                                                         | Purpose                                         |
+| ------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
+| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.            |
+| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.            |
+| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.        |
+| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.            |
+| **Backend / Supabase**    | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel. |
+| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.      |
+| **Monorepo / shared**     | Local `shared` package                                           | Shared schemas, types, and data for both apps.  |
+| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.          |
 
 ## Project Structure
 
@@ -104,32 +106,32 @@
 
 ### Public Site
 
-| Section            | Description                                   |
-| ------------------ | --------------------------------------------- |
-| **Gigs**           | Browse upcoming gigs (dates, locations, etc.) |
-| **Info & Contact** | View band details and booking contacts.       |
-| **Sidebar**        | Social links and settings:                    |
-|                    | • Social Media – Quick access to profiles     |
-|                    | • Theme – Toggle Light / Dark mode            |
-|                    | • Language – Switch FI / EN                   |
+| Section            | Description                                     |
+| ------------------ | ----------------------------------------------- |
+| **Gigs**           | Browse `upcoming gigs` (dates, locations, etc.) |
+| **Info & Contact** | View `band details` and `booking contacts`.     |
+| **Sidebar**        | Links and settings:                             |
+|                    | • `Social media links`                          |
+|                    | • `Theme – Toggle Light / Dark mode`            |
+|                    | • `Language – Switch FI / EN`                   |
 
 ### Admin Panel (CMS)
 
-| Feature             | Description                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------ |
-| **Authentication**  | Secure Supabase login for administrators, ensuring only authorized access.           |
-| **Gigs Management** | Add, edit, and delete gig entries (dates, locations, details) via the CMS interface. |
+| Feature             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| **Authentication**  | `Secure Supabase login` for administrators, ensuring only authorized access.           |
+| **Gigs Management** | `Add, edit, and delete gig entries` (dates, locations, details) via the CMS interface. |
 
 > Shared `/shared` package ensures consistent types and utilities across the monorepo.
 
-### Developer & UX Enhancements
+### UX Enhancements
 
-- Responsive Design.
-- Accessibility (a11y) with semantic markup and ARIA labels.
-- Performance Optimizations:
+- `Responsive Design`.
+- `Accessibility` (a11y) with semantic markup and ARIA labels.
+- `Performance Optimizations`:
   - WebP images in the correct sizes for faster load times.
 
-## Backend / Supabase
+## Backend
 
 - **Database:** PostgreSQL (via Supabase)
   - Table: `gigs`
@@ -143,16 +145,18 @@
 
 > This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
-## Code Quality: Git Hooks and CI/CD
+## Code Quality
 
-### Pre-Commit – Fast checks before each commit:
+### Git Hooks
+
+#### Pre-Commit:
 
 - `eslint --fix` + `prettier --write` on staged files
 - `tsc --noEmit` on .ts / .tsx
 
-> Formatting is handled pre-commit, so all pushed code is consistent.
+> Pre-commit with fast formatting checks, so all pushed code is consistent.
 
-### Pre-Push – Thorough checks before pushing:
+#### Pre-Push:
 
 - Full TypeScript type-check (`npm run typecheck`)
 - All tests (`npm test`)
@@ -162,7 +166,9 @@
 
 > Pre-push is thorough, ensuring code is safe and production-ready.
 
-### CI/CD Pipeline: **GitHub Actions** runs on every PR or push to `main`
+### CI/CD Pipeline: **GitHub Actions**
+
+Runs on every PR or push to `main`
 
 - Linting & formatting (ESLint + Prettier)
 - Type checking
