@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { themeSchema, type Theme, site } from 'shared';
-import { applyTheme } from '../utils';
+import { applyTheme } from '../../utils';
 import styles from './ModeSwitcher.module.css';
-import useLocalized from '../hooks/useLocalized';
+import useLocalized from '../../hooks/useLocalized';
 
 const ModeSwitcher: React.FC = () => {
   const localize = useLocalized();

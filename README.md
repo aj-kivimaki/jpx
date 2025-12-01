@@ -39,6 +39,17 @@
 | Code Quality | ESLint • Prettier • Husky + lint-staged             |
 | CI/CD        | GitHub Actions                                      |
 
+### Packages used
+
+- **React & build:** `react`, `react-dom`, `vite`, `typescript` — core UI framework and build/tooling.
+- **Forms & validation:** `react-hook-form`, `@hookform/resolvers`, `zod` — robust form handling and schema validation.
+- **State & data fetching:** `zustand`, `react-query` — lightweight client-side state and server data management with caching and synchronization.
+- **Localization (i18n):** `i18next`, `react-i18next`, `i18next-browser-languagedetector` — translations and language detection.
+- **Backend / Supabase:** `@supabase/supabase-js` — authentication and Postgres client used by the admin panel.
+- **UI & utilities:** `react-icons`, `dayjs`, `react-toastify` — icons, date handling, and toast notifications.
+- **Monorepo/shared:** local `shared` package — central Zod schemas, types, and shared data used by both apps.
+- **Dev & CI tooling:** `eslint`, `prettier`, `husky`, `lint-staged`, `vitest` — linting, formatting, git hooks and tests.
+
 ## Project Structure
 
 <details>
@@ -58,6 +69,7 @@
           /form     # Form components for adding/editing gigs
           /gigs     # Gig display and management components
         /config     # Supabase client & database configuration
+        /hooks      #
         /pages      # Home, Login
 
     /frontend
@@ -67,6 +79,8 @@
           /info     # Band info section
           /layout   # Header, Banner, Footer
           /sidebar  # Social links
+          /language # LanguageSwitcher
+          /theme    # ModeSwitcher
         /hooks      # Custom React hooks (data fetching, scroll)
         /utils      # Helper functions (text formatting)
 
@@ -84,26 +98,30 @@
 
 ### Public Site
 
-- Browse upcoming gigs with dates and locations.
-- Social media links in a sidebar.
-- Band and contact info for booking inquiries.
+| Section            | Description                                   |
+| ------------------ | --------------------------------------------- |
+| **Gigs**           | Browse upcoming gigs (dates, locations, etc.) |
+| **Info & Contact** | View band details and booking contacts.       |
+| **Sidebar**        | Social links and settings:                    |
+|                    | • Social Media – Quick access to profiles     |
+|                    | • Theme – Toggle Light / Dark mode            |
+|                    | • Language – Switch FI / EN                   |
 
 ### Admin Panel (CMS)
 
-- Secure Supabase authentication for administrators.
-- Add, edit, and delete gigs.
+| Feature             | Description                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------ |
+| **Authentication**  | Secure Supabase login for administrators, ensuring only authorized access.           |
+| **Gigs Management** | Add, edit, and delete gig entries (dates, locations, details) via the CMS interface. |
 
 > Shared `/shared` package ensures consistent types and utilities across the monorepo.
 
 ### Developer & UX Enhancements
 
-- Light / Dark Mode with centralized theming.
-- Internationalization (i18n) for multi-language support.
-- Responsive Design and mobile-first layouts.
+- Responsive Design.
 - Accessibility (a11y) with semantic markup and ARIA labels.
 - Performance Optimizations:
   - WebP images in the correct sizes for faster load times.
-  - Lazy loading for conditional components (e.g., settings modal).
 
 ## Backend / Supabase
 
@@ -167,14 +185,14 @@
 <summary>Future Add-Ons:</summary>
 
 - Absolutely:
-  - Form Validation & Error Handling with reusable components.
+  - Form Validation & Error Handling.
   - Form Feedback: Toast notifications for success/error messages
   - Testing:
     - Component tests (React Testing Library)
     - E2E tests (Cypress/Playwright)
     - MSW API mocking
 - Possibly:
-  - More diverse CMS: Manage all content (promo materials, images, text)
+  - More diverse CMS: Manage more content (promo materials, images, text)
   - UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
   - Monitoring & Analytics: Pageview/event tracking or feature flags
 

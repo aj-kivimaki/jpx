@@ -5,11 +5,9 @@ import { CiSettings } from 'react-icons/ci';
 import { FaCartShopping } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import styles from './Sidebar.module.css';
-import LanguageSwitcher from '../LanguageSwitcher';
+import LanguageSwitcher from '../language/LanguageSwitcher';
 import useLocalized from '../../hooks/useLocalized';
-import ModeSwitcher from '../ModeSwitcher';
-
-// const SettingsModal = lazy(() => import('../modal/SettingsModal'));
+import ModeSwitcher from '../theme/ModeSwitcher';
 
 const Sidebar = () => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
