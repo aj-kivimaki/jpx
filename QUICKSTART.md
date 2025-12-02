@@ -39,7 +39,20 @@ Run these from the repository root.
 ```bash
 # Install workspace dependencies
 npm install
+```
 
+```bash
+# Build shared package
+npm run clean:shared # removes tsconfig.tsbuildinfo, sometimes necessary before rebuild
+npm run build:shared
+
+# Build ui
+npm run build:ui
+```
+
+> Build SHARED and UI packages before building apps that consume them!
+
+```bash
 # Start both apps in dev (runs frontend + admin concurrently)
 npm run dev
 
@@ -47,23 +60,20 @@ npm run dev
 npm run dev:front   # frontend only
 npm run dev:admin   # admin-panel only
 
-# Build everything (shared, frontend, admin)
-npm run build
+# Format across the workspace
+npm run format
 
-# Build shared package (required before building apps that consume it)
-npm run build:shared
+# Lint across the workspace
+npm run lint
 
 # Typecheck across the workspace
 npm run typecheck
 
-# Lint (frontend + admin)
-npm run lint
-
-# Format across the workspace
-npm run format
-
 # Tests (frontend + admin)
 npm run test
+
+# Build everything (shared, ui, frontend, admin)
+npm run build
 ```
 
 ## 4. Supabase setup
@@ -72,3 +82,10 @@ npm run test
 - Copy project URL and anon key into package `.env.local` files.
 
 For contribution guidelines, branch strategy, and code style, see `CONTRIBUTING.md`.
+
+## CI notes
+
+- The CI pipeline builds the internal packages that apps depend on before building the apps themselves. Specifically, `packages/shared` (type declarations) and `packages/ui` are built prior to `packages/frontend` and `packages/admin-panel` so that any type or packaging issues in the shared/ui packages are surfaced early.
+- When running checks locally you can reproduce the CI order as listed above.
+
+This helps catch issues where apps import bare package names (`shared`/`ui`) that must resolve to built artifacts in CI.

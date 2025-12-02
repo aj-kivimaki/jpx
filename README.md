@@ -47,16 +47,16 @@
 
 ### Packages
 
-| Category                  | Packages                                                         | Purpose                                         |
-| ------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
-| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.            |
-| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.            |
-| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.        |
-| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.            |
-| **Backend / Supabase**    | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel. |
-| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.      |
-| **Monorepo / shared**     | Local `shared` package                                           | Shared schemas, types, and data for both apps.  |
-| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.          |
+| Category                  | Packages                                                         | Purpose                                                   |
+| ------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------- |
+| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                      |
+| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                      |
+| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.                  |
+| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                      |
+| **Backend / Supabase**    | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.           |
+| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                |
+| **Monorepo / shared**     | Local `/shared` and `/ui` packages                               | Shared schemas, types, data and components for both apps. |
+| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                    |
 
 ## Project Structure
 
@@ -99,6 +99,10 @@
         /schemas    # Zod validation and inferred types
         /styles     # CSS styles (reset, global)
         /utils      # Helper functions
+
+    /ui
+      /src
+        /components # Shared components (e.g. GigCard.tsx)
 ```
 
 </details>
@@ -134,15 +138,17 @@
 
 ## Backend
 
-- **Database:** PostgreSQL (via Supabase)
-  - Table: `gigs`
+**Database:** PostgreSQL (via Supabase)
 
-- **Authentication:** Supabase Magic Links (passwordless)
-  - Only the artist has an account; signups are disabled
-  - Login flow:
-    1. Enter email on `/login`
-    2. Click the magic link sent via email
-    3. Access the admin panel (protected routes)
+- Table: `gigs`
+
+**Authentication:** Supabase Magic Links (passwordless)
+
+- Only the artist has an account; signups are disabled
+- Login flow:
+  1. Enter email on `/login`
+  2. Click the magic link sent via email
+  3. Access the admin panel (protected routes)
 
 > This setup keeps the admin panel **simple, secure, and low-maintenance**.
 

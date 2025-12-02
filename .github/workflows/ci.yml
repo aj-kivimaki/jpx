@@ -37,7 +37,7 @@ jobs:
 
       # Lint
       - name: Lint
-        run: npm run lint:all
+        run: npm run lint
 
       # Format check
       - name: Format Check
