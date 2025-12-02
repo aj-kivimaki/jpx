@@ -12,7 +12,7 @@ import type { PostgrestError } from '@supabase/supabase-js';
 import { supabase } from '../../config/supabaseClient';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { type GigForm, getLang, deleteGig } from 'shared';
+import { type GigForm, getLang, deleteGig, QUERY_KEY_GIGS } from 'shared';
 import styles from './GigsTable.module.css';
 
 dayjs.extend(customParseFormat);
@@ -30,8 +30,9 @@ const GigsTable = ({ gigs }: GigsTable) => {
       await deleteGig(supabase, gigId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_GIGS });
     },
+    onError: (err) => console.error(err),
   });
 
   const { i18n } = useTranslation();
@@ -48,11 +49,7 @@ const GigsTable = ({ gigs }: GigsTable) => {
 
   const handleConfirm = () => {
     if (!selectedId) return;
-    try {
-      deleteGigMutation.mutate(selectedId);
-    } catch (error) {
-      console.error('Error deleting gig:', error);
-    }
+    deleteGigMutation.mutate(selectedId);
     dialogRef.current?.close();
   };
 
@@ -74,73 +71,73 @@ const GigsTable = ({ gigs }: GigsTable) => {
           notes_fi,
           notes_en,
         }) => (
-          <>
-            <div key={id} className={styles.card}>
-              <div className={styles.leftColumn}>
-                {date && (
-                  <div className={styles.date}>
-                    <CiCalendar className={styles.dateIcon} />
-                    <span>{dayjs(date).format('DD.MM.')}</span>
-                  </div>
-                )}
-                {time && (
-                  <div className={styles.time}>
-                    <IoTimeOutline className={styles.timeIcon} />
-                    <span>{dayjs(time, 'HH:mm:ss').format('HH:mm')}</span>
-                  </div>
-                )}
-              </div>
-
-              <div className={styles.rightColumn}>
-                {lineup_fi && (
-                  <div className={styles.lineup}>
-                    <GiMicrophone className={styles.lineupIcon} />
-                    <span>{lang === 'fi' ? lineup_fi : lineup_en}</span>
-                  </div>
-                )}
-                {venue && (
-                  <div className={styles.venue}>
-                    <FaBuildingColumns className={styles.venueIcon} />
-                    <span>{venue}</span>
-                  </div>
-                )}
-                {city && (
-                  <div className={styles.city}>
-                    <IoIosPin className={styles.cityIcon} />
-                    <span className={styles.cityText}>{city}</span>
-                  </div>
-                )}
-                {notes_fi && (
-                  <div className={styles.notes}>
-                    <FaExclamation className={styles.notesIcon} />
-                    <span>{lang === 'fi' ? notes_fi : notes_en}</span>
-                  </div>
-                )}
-              </div>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDeleteClick(id)}
-              >
-                <IoMdCloseCircleOutline className={styles.deleteIcon} />
-              </button>
+          <div key={id} className={styles.card}>
+            <div className={styles.leftColumn}>
+              {date && (
+                <div className={styles.date}>
+                  <CiCalendar className={styles.dateIcon} />
+                  <span>{dayjs(date).format('DD.MM.')}</span>
+                </div>
+              )}
+              {time && (
+                <div className={styles.time}>
+                  <IoTimeOutline className={styles.timeIcon} />
+                  <span>{dayjs(time).format('HH:mm')}</span>
+                </div>
+              )}
             </div>
-            <dialog ref={dialogRef} closedby="any">
-              <p>Oletko varma että haluat poistaa tämän keikan?</p>
-              <menu className={styles.dialogMenu}>
-                <button
-                  className={styles.confirmButton}
-                  onClick={handleConfirm}
-                >
-                  Kyllä 👍
-                </button>
-                <button className={styles.cancelButton} onClick={handleCancel}>
-                  Ei 👎
-                </button>
-              </menu>
-            </dialog>
-          </>
+
+            <div className={styles.rightColumn}>
+              {lineup_fi && (
+                <div className={styles.lineup}>
+                  <GiMicrophone className={styles.lineupIcon} />
+                  <span>{lang === 'fi' ? lineup_fi : lineup_en}</span>
+                </div>
+              )}
+              {venue && (
+                <div className={styles.venue}>
+                  <FaBuildingColumns className={styles.venueIcon} />
+                  <span>{venue}</span>
+                </div>
+              )}
+              {city && (
+                <div className={styles.city}>
+                  <IoIosPin className={styles.cityIcon} />
+                  <span className={styles.cityText}>{city}</span>
+                </div>
+              )}
+              {notes_fi && (
+                <div className={styles.notes}>
+                  <FaExclamation className={styles.notesIcon} />
+                  <span>{lang === 'fi' ? notes_fi : notes_en}</span>
+                </div>
+              )}
+            </div>
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDeleteClick(id)}
+            >
+              <IoMdCloseCircleOutline className={styles.deleteIcon} />
+            </button>
+          </div>
         )
       )}
+      <dialog ref={dialogRef} closedby="any">
+        <p>Oletko varma että haluat poistaa tämän keikan?</p>
+        <p></p>
+        <menu className={styles.dialogMenu}>
+          <button
+            className={styles.confirmButton}
+            onClick={handleConfirm}
+            aria-label="Delete gig"
+          >
+            Kyllä 👍
+          </button>
+          <button className={styles.cancelButton} onClick={handleCancel}>
+            Ei 👎
+          </button>
+        </menu>
+      </dialog>
     </>
   );
 };

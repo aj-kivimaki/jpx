@@ -6,7 +6,13 @@ import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
 import { supabase } from '../../config/supabaseClient';
 import { queryClient } from '../../config/queryClient';
-import { type GigForm, GigFormSchema, lineupOptions, addGig } from 'shared';
+import {
+  type GigForm,
+  GigFormSchema,
+  lineupOptions,
+  addGig,
+  QUERY_KEY_GIGS,
+} from 'shared';
 import styles from './Form.module.css';
 
 type NewGig = Omit<GigForm, 'id'>;
@@ -25,7 +31,7 @@ export default function GigForm() {
     mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_GIGS });
     },
 
     onError: (error) => {
