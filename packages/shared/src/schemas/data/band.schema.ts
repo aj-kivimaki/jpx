@@ -6,6 +6,7 @@ export const BandLocalizedStringSchema = z.object({
 });
 
 export const BandMemberSchema = z.object({
+  id: z.string(),
   name: BandLocalizedStringSchema,
   role: BandLocalizedStringSchema,
 });
