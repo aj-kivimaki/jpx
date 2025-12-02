@@ -1,11 +1,19 @@
 import { useState } from 'react';
 import { supabase } from '../config/supabaseClient';
 import styles from './Login.module.css';
+import { sendMagicLink } from 'shared';
+import { useMutation } from '@tanstack/react-query';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+
+  const sendLoginLinkMutation = useMutation({
+    mutationFn: (email: string) => sendMagicLink(supabase, email),
+    onSuccess: () => console.log('Magic link sent!'),
+    onError: (error) => console.error(error),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,13 +21,7 @@ export default function Login() {
     setErrorMsg('');
     setSuccessMsg('');
 
-    const { error } = await supabase.auth.signInWithOtp({ email });
-
-    if (error) {
-      setErrorMsg(error.message);
-    } else {
-      setSuccessMsg('Kirjautumislinkki on lähetetty sähköpostiisi.');
-    }
+    sendLoginLinkMutation.mutate(email);
   };
 
   return (

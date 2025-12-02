@@ -1,12 +1,13 @@
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-import { type GigForm, GigFormSchema, lineupOptions } from 'shared';
-import styles from './Form.module.css';
-import { useSupabaseAdd } from 'shared';
 import { supabase } from '../../config/supabaseClient';
+import { queryClient } from '../../config/queryClient';
+import { type GigForm, GigFormSchema, lineupOptions, addGig } from 'shared';
+import styles from './Form.module.css';
 
 type NewGig = Omit<GigForm, 'id'>;
 
@@ -20,7 +21,17 @@ export default function GigForm() {
     resolver: zodResolver(GigFormSchema.omit({ id: true })),
   });
 
-  const addGig = useSupabaseAdd<NewGig>(supabase, 'gigs');
+  const addGigMutation = useMutation({
+    mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+    },
+
+    onError: (error) => {
+      console.error('Failed to add gig:', error);
+    },
+  });
 
   const handleFormSubmit = async (data: NewGig) => {
     const payload = {
@@ -35,7 +46,7 @@ export default function GigForm() {
     };
 
     try {
-      await addGig.mutateAsync(payload);
+      await addGigMutation.mutateAsync(payload);
       reset();
     } catch (err) {
       console.error('[HookForm] addGig failed', err);

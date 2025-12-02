@@ -6,12 +6,14 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { FaExclamation } from 'react-icons/fa';
 import { IoMdCloseCircleOutline, IoIosPin } from 'react-icons/io';
-import { type GigForm, getLang } from 'shared';
-import styles from './GigsTable.module.css';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../config/queryClient';
+import type { PostgrestError } from '@supabase/supabase-js';
+import { supabase } from '../../config/supabaseClient';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useSupabaseDelete } from 'shared';
-import { supabase } from '../../config/supabaseClient';
+import { type GigForm, getLang, deleteGig } from 'shared';
+import styles from './GigsTable.module.css';
 
 dayjs.extend(customParseFormat);
 
@@ -22,7 +24,15 @@ interface GigsTable {
 const GigsTable = ({ gigs }: GigsTable) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const deleteGig = useSupabaseDelete(supabase, 'gigs');
+
+  const deleteGigMutation = useMutation<void, PostgrestError, string>({
+    mutationFn: async (gigId: string) => {
+      await deleteGig(supabase, gigId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+    },
+  });
 
   const { i18n } = useTranslation();
   const lang = getLang(i18n);
@@ -39,7 +49,7 @@ const GigsTable = ({ gigs }: GigsTable) => {
   const handleConfirm = () => {
     if (!selectedId) return;
     try {
-      deleteGig.mutate(selectedId);
+      deleteGigMutation.mutate(selectedId);
     } catch (error) {
       console.error('Error deleting gig:', error);
     }

@@ -1,16 +1,30 @@
 import GigsTable from './GigsTable';
-import { useSupabaseFetch } from 'shared';
-import { site, sectionIds, type GigForm, type GigsSection } from 'shared';
+import {
+  site,
+  sectionIds,
+  type GigForm,
+  type GigsSection,
+  fetchGigs,
+  QUERY_STALE_TIME_MS,
+  QUERY_REFETCH_TIMES,
+} from 'shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
 import { supabase } from '../../config/supabaseClient';
+import { useQuery } from '@tanstack/react-query';
 
 const Gigs = () => {
   const {
     data: gigs,
     isLoading,
     error,
-  } = useSupabaseFetch<GigForm>(supabase, 'gigs', '*', 'date', true);
+  } = useQuery<GigForm[], Error>({
+    queryKey: ['gigs'],
+    queryFn: () => fetchGigs(supabase),
+    staleTime: QUERY_STALE_TIME_MS,
+    retry: QUERY_REFETCH_TIMES,
+    refetchOnWindowFocus: false,
+  });
 
   const localize = useLocalized();
 
