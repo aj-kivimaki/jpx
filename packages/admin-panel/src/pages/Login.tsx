@@ -3,6 +3,7 @@ import { supabase } from '../clients/supabaseClient';
 import styles from './Login.module.css';
 import { sendMagicLink } from 'shared';
 import { useMutation } from '@tanstack/react-query';
+import LoginWithGoogleButton from '../components/auth/LoginWithGoogleButton';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -27,14 +28,14 @@ export default function Login() {
   return (
     <div className={styles.app}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Kirjaudu</h1>
+        <h1 className={styles.title}>Kirjaudu sisään</h1>
 
         <form onSubmit={handleSubmit}>
           <input
             type="email"
             required
             className={styles.input}
-            placeholder="Sähköpostiosoite"
+            placeholder="Anna sähköpostiosoite"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -43,6 +44,12 @@ export default function Login() {
             Lähetä linkki
           </button>
         </form>
+
+        <div className={styles.orText}>
+          <p>Tai kirjaudu Googlella</p>
+        </div>
+
+        <LoginWithGoogleButton />
 
         {errorMsg && (
           <div className={styles.errorContainer}>
