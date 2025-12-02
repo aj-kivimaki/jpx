@@ -1,21 +1,26 @@
 [
   {
+    "id": "olli-tanttu",
     "name": { "fi": "Olli Tanttu", "en": "Olli Tanttu" },
     "role": { "fi": "kitara", "en": "guitar" }
   },
   {
+    "id": "atte-kivimaki",
     "name": { "fi": "Atte Kivimäki", "en": "Atte Kivimäki" },
     "role": { "fi": "koskettimet", "en": "keyboards" }
   },
   {
+    "id": "jani-partinen",
     "name": { "fi": "Jani Partinen", "en": "Jani Partinen" },
     "role": { "fi": "laulu & kitara", "en": "vocals & guitar" }
   },
   {
+    "id": "touko-ruokolainen",
     "name": { "fi": "Touko Ruokolainen", "en": "Touko Ruokolainen" },
     "role": { "fi": "rummut", "en": "drums" }
   },
   {
+    "id": "visa-ruokolainen",
     "name": { "fi": "Visa Ruokolainen", "en": "Visa Ruokolainen" },
     "role": { "fi": "basso", "en": "bass" }
   }

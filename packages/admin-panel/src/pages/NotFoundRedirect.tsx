@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '../config/supabaseClient';
+import { supabase } from '../clients/supabaseClient';
 
 export default function NotFoundRedirect() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);

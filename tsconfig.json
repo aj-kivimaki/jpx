@@ -1,7 +1,17 @@
 {
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "ui": ["packages/ui/src"],
+      "ui/*": ["packages/ui/src/*"],
+      "shared": ["packages/shared/src"],
+      "shared/*": ["packages/shared/src/*"]
+    }
+  },
   "files": [],
   "references": [
     { "path": "./packages/shared" },
+    { "path": "./packages/ui" },
     { "path": "./packages/frontend" },
     { "path": "./packages/admin-panel" }
   ]

@@ -23,6 +23,15 @@
   padding: 2rem;
 }
 
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+.logout :hover {
+  color: #eee;
+}
+
 .button {
   padding: 0.6rem 1.2rem;
   background-color: rgb(151, 108, 32);

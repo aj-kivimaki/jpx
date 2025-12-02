@@ -9,8 +9,10 @@
     "dev:front": "npm --workspace packages/frontend run dev",
     "dev:admin": "npm --workspace packages/admin-panel run dev",
     "build": "npm-run-all build:front build:admin",
+    "build:all": "npm-run-all build:shared build:ui build:front build:admin",
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
+    "build:ui": "npm --workspace packages/ui run build",
     "build:shared": "npm --workspace packages/shared run build",
     "clean:shared": "npm --workspace packages/shared run clean",
     "preview": "npm --workspace packages/frontend run preview",
@@ -18,6 +20,7 @@
     "test:front": "npm --workspace packages/frontend run test",
     "test:admin": "npm --workspace packages/admin-panel run test",
     "lint": "npm-run-all -p lint:front lint:admin",
+    "lint:all": "eslint \"packages/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/all",
     "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/frontend",
     "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/admin-panel",
     "lint:changed": "npx lint-staged",
@@ -61,6 +64,9 @@
     ],
     "@shared/*": [
       "packages/shared/src/*"
+    ],
+    "@ui/*": [
+      "packages/ui/src/*"
     ]
   },
   "lint-staged": {

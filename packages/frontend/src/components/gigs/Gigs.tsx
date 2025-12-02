@@ -4,27 +4,21 @@ import {
   sectionIds,
   type GigForm,
   type GigsSection,
-  fetchGigs,
-  QUERY_STALE_TIME_MS,
-  QUERY_REFETCH_TIMES,
+  gigsQueryOptions,
 } from 'shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
-import { supabase } from '../../config/supabaseClient';
-import { useQuery } from '@tanstack/react-query';
+import { supabase } from '../../clients/supabaseClient';
+import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 
 const Gigs = () => {
   const {
     data: gigs,
     isLoading,
     error,
-  } = useQuery<GigForm[], Error>({
-    queryKey: ['gigs'],
-    queryFn: () => fetchGigs(supabase),
-    staleTime: QUERY_STALE_TIME_MS,
-    retry: QUERY_REFETCH_TIMES,
-    refetchOnWindowFocus: false,
-  });
+  } = useQuery<GigForm[], Error>(
+    gigsQueryOptions(supabase) as UseQueryOptions<GigForm[], Error>
+  );
 
   const localize = useLocalized();
 

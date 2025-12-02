@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '../config/supabaseClient';
+import { supabase } from '../clients/supabaseClient';
 import styles from './Login.module.css';
 import { sendMagicLink } from 'shared';
 import { useMutation } from '@tanstack/react-query';

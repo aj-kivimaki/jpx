@@ -7,3 +7,4 @@ export * from './section.id.schema';
 export * from './site.schema';
 export * from './social.schema';
 export * from './ui.schema';
+export * from './image.id.schema';

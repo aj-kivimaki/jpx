@@ -11,12 +11,12 @@
  *
  * Notes:
  * - Accepts values that may be `null`/`undefined` for safety.
- * - `useLocalized` / `useLocalizedArray` use `react-i18next` and the
- *   project's `getLang` helper to derive the current language.
+ * - `useLocalized` / `useLocalizedArray` use `react-i18next` to derive the
+ *   current language.
  */
 
 import { useTranslation } from 'react-i18next';
-import { getLang, type LocalizedString } from 'shared';
+import { type LocalizedString } from 'shared';
 
 type MaybeLocalizedString =
   | { fi?: string | null; en?: string | null }
@@ -43,7 +43,11 @@ export function localizeByLang(
  */
 export function useLocalized() {
   const { i18n } = useTranslation();
-  const lang = getLang(i18n);
+  // Use i18n.language directly (reactive) and narrow to the known union.
+  // `useTranslation` re-renders on language change, so this stays in sync.
+  const rawLang = i18n.language;
+  const lang: 'fi' | 'en' = rawLang === 'en' ? 'en' : 'fi';
+
   return (obj?: LocalizedString | MaybeLocalizedString) =>
     localizeByLang(obj as MaybeLocalizedString, lang);
 }
@@ -56,7 +60,9 @@ export default useLocalized;
  */
 export function useLocalizedArray() {
   const { i18n } = useTranslation();
-  const lang = getLang(i18n);
+  const rawLang = i18n.language;
+  const lang: 'fi' | 'en' = rawLang === 'en' ? 'en' : 'fi';
+
   return (obj?: MaybeLocalizedArray) => {
     if (!obj) return [] as string[];
     const arr = obj[lang] ?? obj.fi ?? [];

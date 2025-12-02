@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import styles from './LanguageSwitcher.module.css';
-import { ui, getLang } from 'shared';
+import { ui } from 'shared';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
-
-  const lang = getLang(i18n);
+  const lang = i18n.language;
 
   const toggleLanguage = () => {
     const newLang = lang === 'fi' ? 'en' : 'fi';
@@ -16,7 +15,9 @@ const LanguageSwitcher: React.FC = () => {
 
   return (
     <div className={styles.languageSwitcher}>
-      <button onClick={toggleLanguage}>{buttonLabel}</button>
+      <button onClick={toggleLanguage} aria-label={`Toggle language`}>
+        {buttonLabel}
+      </button>
     </div>
   );
 };
