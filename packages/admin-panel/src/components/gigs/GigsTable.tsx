@@ -24,6 +24,8 @@ interface GigsTableProps {
 const GigsTable = ({ gigs }: GigsTableProps) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [venueName, setVenueName] = useState<string | null>(null);
+  const [formattedDate, setFormattedDate] = useState<string | null>(null);
 
   const deleteGigMutation = useMutation<void, PostgrestError, string>({
     mutationFn: async (gigId: string) => {
@@ -39,8 +41,18 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     return <p>Ei keikkoja</p>;
   }
 
-  const handleDeleteClick = (id: string) => {
+  const handleEditClick = (id: string) => {
+    alert(`Muokkaa keikkaa id:llä ${id}`);
+  };
+
+  const handleDeleteClick = (
+    id: string,
+    venue: string | undefined,
+    formattedDate: string
+  ) => {
     setSelectedId(id);
+    setVenueName(venue ?? null);
+    setFormattedDate(formattedDate ?? null);
     dialogRef.current?.showModal();
   };
 
@@ -82,12 +94,18 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             city={city ?? undefined}
             notes={notes_fi ?? undefined}
             onDelete={handleDeleteClick}
+            onEdit={handleEditClick}
           />
         )
       )}
 
       <dialog ref={dialogRef}>
         <p>Oletko varma että haluat poistaa tämän keikan?</p>
+        {selectedId && (
+          <p className={styles.dialogGigInfo}>
+            {venueName}, {formattedDate}
+          </p>
+        )}
         <menu className={styles.dialogMenu}>
           <button
             className={styles.confirmButton}
@@ -97,7 +115,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             Kyllä 👍
           </button>
           <button className={styles.cancelButton} onClick={handleCancel}>
-            Ei 👎
+            En 👎
           </button>
         </menu>
       </dialog>

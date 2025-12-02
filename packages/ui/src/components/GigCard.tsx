@@ -1,7 +1,7 @@
 import { IoIosPin } from 'react-icons/io';
 import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
-import { FaExclamation } from 'react-icons/fa';
+import { FaExclamation, FaRegEdit } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
 import { MdDeleteForever } from 'react-icons/md';
@@ -17,7 +17,8 @@ export interface GigCardProps {
   venue?: string;
   city?: string;
   notes?: string;
-  onDelete?: (id: string) => void;
+  onDelete?: (id: string, venue: string, formattedDate: string) => void;
+  onEdit?: (id: string) => void;
 }
 
 const GigCard = ({
@@ -31,6 +32,7 @@ const GigCard = ({
   city,
   notes,
   onDelete,
+  onEdit,
 }: GigCardProps) => (
   <article key={id} className={styles.card}>
     <div className={styles.leftColumn}>
@@ -78,10 +80,20 @@ const GigCard = ({
     {onDelete && (
       <button
         className={styles.deleteButton}
-        onClick={() => onDelete(id)}
+        onClick={() => onDelete(id, venue ?? '', formattedDate ?? '')}
         aria-label="Poista keikka"
       >
         <MdDeleteForever className={styles.deleteIcon} />
+      </button>
+    )}
+
+    {onEdit && (
+      <button
+        className={styles.editButton}
+        onClick={() => onEdit(id)}
+        aria-label="Muokkaa keikkaa"
+      >
+        <FaRegEdit className={styles.editIcon} />
       </button>
     )}
   </article>

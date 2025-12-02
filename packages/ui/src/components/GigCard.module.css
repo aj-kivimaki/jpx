@@ -56,6 +56,11 @@
   display: flex;
 }
 
+.notes span {
+  flex: 1;
+  text-wrap: balance;
+}
+
 .lineup {
   font-size: 1.15rem;
   font-weight: bold;
@@ -81,14 +86,29 @@
 }
 
 .deleteIcon {
-  color: #ffffff;
+  color: hsl(0, 100%, 69%);
   font-size: 1.5rem;
-  transition: background-color 0.3s ease;
 }
 
 .deleteIcon:hover {
-  color: #ff1500;
-  transform: scale(1.4);
+  color: hsl(0, 100%, 49%);
+}
+
+/* EDIT BUTTON */
+
+.editButton {
+  position: absolute;
+  bottom: 5rem;
+  right: 1rem;
+}
+
+.editIcon {
+  color: hsl(192, 100%, 63%);
+  font-size: 1.3rem;
+}
+
+.editIcon:hover {
+  color: hsl(192, 100%, 43%);
 }
 
 @media (min-width: 769px) and (max-width: 900px), (max-width: 500px) {
