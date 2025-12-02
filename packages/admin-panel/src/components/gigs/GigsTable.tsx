@@ -39,6 +39,10 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     return <p>Ei keikkoja</p>;
   }
 
+  const handleEditClick = (id: string) => {
+    alert(`Muokkaa keikkaa id:llä ${id}`);
+  };
+
   const handleDeleteClick = (id: string) => {
     setSelectedId(id);
     dialogRef.current?.showModal();
@@ -82,6 +86,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             city={city ?? undefined}
             notes={notes_fi ?? undefined}
             onDelete={handleDeleteClick}
+            onEdit={handleEditClick}
           />
         )
       )}
