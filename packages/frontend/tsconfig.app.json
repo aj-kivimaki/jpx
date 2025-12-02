@@ -30,7 +30,9 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "shared/*": ["../shared/src/*"]
+      "shared/*": ["../shared/src/*"],
+      "ui": ["../ui/src"],
+      "ui/*": ["../ui/src/*"]
     }
   },
   "include": ["src", "src/**/*.json"]

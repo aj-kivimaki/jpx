@@ -8,6 +8,8 @@ export default defineConfig({
     alias: {
       // Map 'shared' to the src folder of the shared package
       shared: path.resolve(__dirname, '../shared/src'),
+      // Map 'ui' to the src folder of the ui package
+      ui: path.resolve(__dirname, '../ui/src'),
     },
   },
 });

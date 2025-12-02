@@ -11,6 +11,7 @@
     "build": "npm-run-all build:front build:admin",
     "build:front": "npm --workspace packages/frontend run build",
     "build:admin": "npm --workspace packages/admin-panel run build",
+    "build:ui": "npm --workspace packages/ui run build",
     "build:shared": "npm --workspace packages/shared run build",
     "clean:shared": "npm --workspace packages/shared run clean",
     "preview": "npm --workspace packages/frontend run preview",
@@ -61,6 +62,9 @@
     ],
     "@shared/*": [
       "packages/shared/src/*"
+    ],
+    "@ui/*": [
+      "packages/ui/src/*"
     ]
   },
   "lint-staged": {

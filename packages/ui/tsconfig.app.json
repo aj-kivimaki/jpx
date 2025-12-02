@@ -5,9 +5,8 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client", "node", "react"],
+    "types": ["vite/client"],
     "skipLibCheck": true,
-    "noImplicitAny": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,17 +22,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* JSON imports + alias */
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "shared/*": ["../shared/src/*"],
-      "ui": ["../ui/src"],
-      "ui/*": ["../ui/src/*"]
-    }
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/**/*.json"]
+  "include": ["src"]
 }

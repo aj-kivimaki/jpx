@@ -13,6 +13,7 @@
     "test": "echo 'No tests for admin-panel yet'"
   },
   "dependencies": {
-    "shared": "*"
+    "shared": "*",
+    "ui": "*"
   }
 }
