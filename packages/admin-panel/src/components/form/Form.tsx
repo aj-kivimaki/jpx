@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-import { supabase } from '../../config/supabaseClient';
-import { queryClient } from '../../config/queryClient';
+import { supabase } from '../../clients/supabaseClient';
+import { queryClient } from '../../clients/queryClient';
 import {
   type GigForm,
   GigFormSchema,

@@ -1,4 +1,4 @@
-import { supabase } from '../../config/supabaseClient';
+import { supabase } from '../../clients/supabaseClient';
 import { signOut } from 'shared';
 
 export default function LogoutButton() {

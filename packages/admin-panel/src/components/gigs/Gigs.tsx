@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import GigsTable from './GigsTable';
-import { supabase } from '../../config/supabaseClient';
+import { supabase } from '../../clients/supabaseClient';
 import { gigsQueryOptions, type GigForm } from 'shared';
 import styles from './Gigs.module.css';
 
