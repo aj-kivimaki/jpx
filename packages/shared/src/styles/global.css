@@ -8,7 +8,7 @@
   --text-color: white;
 }
 
-/* ===== Dark Mode Variables ===== */
+/* ===== Light Mode Variables ===== */
 html[data-theme='light'] {
   --color-bg: #fff;
   --color-text: rgb(34, 34, 34);

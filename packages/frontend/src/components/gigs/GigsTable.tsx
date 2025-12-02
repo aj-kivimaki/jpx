@@ -1,82 +1,59 @@
-import { useTranslation } from 'react-i18next';
-import { IoIosPin } from 'react-icons/io';
-import { GiMicrophone } from 'react-icons/gi';
-import { CiCalendar } from 'react-icons/ci';
-import { FaExclamation } from 'react-icons/fa';
-import { FaBuildingColumns } from 'react-icons/fa6';
-import { IoTimeOutline } from 'react-icons/io5';
-import { type GigForm, getLang } from 'shared';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import styles from './GigsTable.module.css';
-
-dayjs.extend(customParseFormat);
+import useLocalized from '../../hooks/useLocalized';
+import {
+  type GigForm,
+  parseGigDates,
+  type ParsedGig as BaseParsedGig,
+} from 'shared';
+import { GigsCard } from 'ui';
 
 interface GigsTableProps {
   gigs: GigForm[];
 }
 
+interface LocalizedGig extends BaseParsedGig {
+  lineup: string; // localized lineup
+  notes: string; // localized notes
+}
+
 const GigsTable = ({ gigs }: GigsTableProps) => {
-  const { i18n } = useTranslation();
-  const lang = getLang(i18n);
+  const localize = useLocalized();
+
+  const parseGigs = (gigs: GigForm[]): BaseParsedGig[] => {
+    return gigs.map(parseGigDates);
+  };
+
+  const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => ({
+    ...gig,
+    lineup: localize({ fi: gig.lineup_fi, en: gig.lineup_en }),
+    notes: localize({ fi: gig.notes_fi, en: gig.notes_en }),
+  }));
 
   return (
     <>
-      {gigs.map(
+      {localizedGigs.map(
         ({
           id,
-          date,
-          time,
-          lineup_fi,
-          lineup_en,
+          formattedDate,
+          formattedTime,
+          dateTimeDate,
+          dateTimeTime,
+          lineup,
           venue,
           city,
-          notes_fi,
-          notes_en,
+          notes,
         }) => (
-          <div key={id} className={styles.card}>
-            <div className={styles.leftColumn}>
-              {date && (
-                <div className={styles.date}>
-                  <CiCalendar className={styles.dateIcon} />
-                  <span>{dayjs(date).format('DD.MM.')}</span>
-                </div>
-              )}
-              {time && (
-                <div className={styles.time}>
-                  <IoTimeOutline className={styles.timeIcon} />
-                  <span>{dayjs(time, 'HH:mm:ss').format('HH:mm')}</span>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.rightColumn}>
-              {lineup_fi && (
-                <div className={styles.lineup}>
-                  <GiMicrophone className={styles.lineupIcon} />
-                  <span>{lang === 'fi' ? lineup_fi : lineup_en}</span>
-                </div>
-              )}
-              {venue && (
-                <div className={styles.venue}>
-                  <FaBuildingColumns className={styles.venueIcon} />
-                  <span>{venue}</span>
-                </div>
-              )}
-              {city && (
-                <div className={styles.city}>
-                  <IoIosPin className={styles.cityIcon} />
-                  <span className={styles.cityText}>{city}</span>
-                </div>
-              )}
-              {notes_fi && (
-                <div className={styles.notes}>
-                  <FaExclamation className={styles.notesIcon} />
-                  <span>{lang === 'fi' ? notes_fi : notes_en}</span>
-                </div>
-              )}
-            </div>
-          </div>
+          <GigsCard
+            key={id}
+            id={id}
+            formattedDate={formattedDate}
+            formattedTime={formattedTime ?? undefined}
+            dateTimeDate={dateTimeDate}
+            dateTimeTime={dateTimeTime}
+            lineup={lineup}
+            venue={venue ?? undefined}
+            city={city ?? undefined}
+            notes={notes ?? undefined}
+          />
         )
       )}
     </>

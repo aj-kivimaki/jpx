@@ -14,16 +14,14 @@ const Gigs = () => {
   );
 
   return (
-    <div className={styles.container}>
-      <div className={styles.gigs}>
-        {error && <p>Error loading events: {error.message}</p>}
-        {isLoading ? (
-          <p className={styles.gigsLoadingText}>Lataa keikkoja...</p>
-        ) : (
-          <GigsTable gigs={gigs ?? []} />
-        )}
-      </div>
-    </div>
+    <>
+      {error && <p>Error loading events: {error.message}</p>}
+      {isLoading ? (
+        <p className={styles.gigsLoadingText}>Lataa keikkoja...</p>
+      ) : (
+        <GigsTable gigs={gigs ?? []} />
+      )}
+    </>
   );
 };
 
