@@ -98,13 +98,13 @@
 
 .editButton {
   position: absolute;
-  bottom: 1rem;
-  right: 5rem;
+  bottom: 5rem;
+  right: 1rem;
 }
 
 .editIcon {
   color: hsl(192, 100%, 63%);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .editIcon:hover {

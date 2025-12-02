@@ -17,7 +17,7 @@ export interface GigCardProps {
   venue?: string;
   city?: string;
   notes?: string;
-  onDelete?: (id: string) => void;
+  onDelete?: (id: string, venue: string, formattedDate: string) => void;
   onEdit?: (id: string) => void;
 }
 
@@ -80,7 +80,7 @@ const GigCard = ({
     {onDelete && (
       <button
         className={styles.deleteButton}
-        onClick={() => onDelete(id)}
+        onClick={() => onDelete(id, venue ?? '', formattedDate ?? '')}
         aria-label="Poista keikka"
       >
         <MdDeleteForever className={styles.deleteIcon} />

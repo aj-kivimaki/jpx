@@ -10,9 +10,11 @@ dialog {
   font-family: monospace;
   background: #ffffff;
   color: #333;
-  max-width: 300px;
-  width: 100%;
+  width: 90%;
+  max-width: 315px;
   animation: fadeIn 0.2s ease;
+  text-wrap: balance;
+  font-size: 1rem;
 }
 
 dialog::backdrop {
@@ -43,4 +45,12 @@ dialog::backdrop {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.dialogGigInfo {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
 }
