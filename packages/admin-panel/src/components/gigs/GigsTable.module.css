@@ -29,7 +29,7 @@ dialog::backdrop {
 }
 
 .confirmButton {
-  background-color: #d9534f;
+  background-color: #a72925;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -40,8 +40,8 @@ dialog::backdrop {
 
 .cancelButton {
   background-color: white;
-  border: 1px solid #08b8ee;
-  color: #08b8ee;
+  border: 1px solid #065f7a;
+  color: #065f7a;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
