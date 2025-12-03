@@ -7,16 +7,16 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev --parallel",
-    "build": "turbo run build",
+    "dev": "turbo run dev --parallel --force",
+    "build": "turbo run build --force",
+    "typecheck": "turbo run typecheck --force",
+    "test": "turbo run test:ci --force",
+    "clean": "turbo run clean --force && rm -rf node_modules",
     "lint": "eslint \"apps/**/*.{ts,tsx,js,jsx}\" \"packages/**/*.{ts,tsx,js,jsx}\" --ignore-pattern '**/lcov-report/**' --max-warnings=0",
     "lint:fix": "eslint \"apps/**/*.{ts,tsx,js,jsx}\" \"packages/**/*.{ts,tsx,js,jsx}\" --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test:ci",
-    "prepare": "husky",
-    "clean": "turbo run clean && rm -rf node_modules"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^20.5.2",

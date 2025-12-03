@@ -35,19 +35,33 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Lint
+      # Lint all
       - name: Lint
         run: npm run lint
 
-      # Format check
+      # Format check all
       - name: Format Check
         run: npm run format:check
 
-      # Type-check
-      - name: Typecheck
-        run: npm run typecheck
+      # Typecheck packages first
+      - name: Typecheck Packages
+        run: |
+          npm --workspace @jpx/shared run typecheck
+          npm --workspace @jpx/ui run typecheck
 
-      # Test
+      # Build packages first
+      - name: Build Packages
+        run: |
+          npm --workspace @jpx/shared run build
+          npm --workspace @jpx/ui run build
+
+      # Typecheck apps after packages are built
+      - name: Typecheck Apps
+        run: |
+          npm --workspace frontend run typecheck
+          npm --workspace admin-panel run typecheck
+
+      # Test apps
       - name: Run Tests
         run: npm run test
 
@@ -80,7 +94,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Build shared package (types) and ui package before building apps that depend on them
+      # Build shared and ui packages first
       - name: Build shared
         run: npm --workspace @jpx/shared run build
 
