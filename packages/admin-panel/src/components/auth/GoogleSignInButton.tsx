@@ -27,12 +27,14 @@ const GoogleSignInButton = ({ client }: { client: SupabaseClient }) => {
   };
 
   return (
-    <div className={styles.googleLogin}>
-      <button onClick={handleGoogleSignIn} disabled={loading}>
-        <FcGoogle className={styles.googleIcon} />
-      </button>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-    </div>
+    <button
+      className={styles.googleLogin}
+      onClick={handleGoogleSignIn}
+      disabled={loading}
+    >
+      <FcGoogle className={styles.googleIcon} />
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+    </button>
   );
 };
 

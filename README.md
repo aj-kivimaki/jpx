@@ -47,16 +47,16 @@
 
 ### Packages
 
-| Category                  | Packages                                                         | Purpose                                                   |
-| ------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------- |
-| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                      |
-| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                      |
-| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.                  |
-| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                      |
-| **Backend / Supabase**    | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.           |
-| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                |
-| **Monorepo / shared**     | Local `/shared` and `/ui` packages                               | Shared schemas, types, data and components for both apps. |
-| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                    |
+| Category                  | Packages                                                         | Purpose                                                                              |
+| ------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                                                 |
+| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                                                 |
+| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.                                             |
+| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                                                 |
+| **Backend**               | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.                                      |
+| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                                           |
+| **Monorepo packages**     | Local `/shared` and `/ui` packages                               | Shared api, data, schemas, global styles, types, utils and components for both apps. |
+| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                                               |
 
 ## Project Structure
 
@@ -127,7 +127,7 @@
 | **Authentication**  | `Secure Supabase login` for administrators, ensuring only authorized access.           |
 | **Gigs Management** | `Add, edit, and delete gig entries` (dates, locations, details) via the CMS interface. |
 
-> Shared `/shared` package ensures consistent types and utilities across the monorepo.
+> Shared `/shared` package ensures consistent schemas and types across the monorepo.
 
 ### UX Enhancements
 
@@ -142,13 +142,14 @@
 
 - Table: `gigs`
 
-**Authentication:** Supabase Magic Links (passwordless)
+**Authentication:** Google OAuth via Supabase
 
-- Only the artist has an account; signups are disabled
+- Account access: Only the artist can log in; signups are disabled.
+
 - Login flow:
-  1. Enter email on `/login`
-  2. Click the magic link sent via email
-  3. Access the admin panel (protected routes)
+  1. Click the Google icon on `/login`.
+  2. Authenticate with Google credentials.
+  3. Redirected to `/` with access to the protected admin panel.
 
 > This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
@@ -201,10 +202,6 @@ Runs on every PR or push to `main`
 **Login page**
 
 <img src="assets/login.webp" alt="Admin panel login" width="400" />
-
-**Login email**
-
-<img src="assets/cms-login-email.webp" alt="Admin panel login email" width="400" />
 
 **Overview**
 
