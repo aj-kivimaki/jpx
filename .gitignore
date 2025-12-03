@@ -30,3 +30,8 @@ build/
 # Optional caches
 .cache/
 coverage/
+
+# Temporary files
+.turbo/cache
+.turbo/cookies
+.turbo/daemon
