@@ -5,5 +5,3 @@ export const ContactSchema = z.object({
   phone: z.string(),
   email: z.string().email(),
 });
-
-export type Contact = z.infer<typeof ContactSchema>;

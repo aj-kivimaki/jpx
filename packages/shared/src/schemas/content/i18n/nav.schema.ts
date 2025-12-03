@@ -9,5 +9,3 @@ export const NavItemSchema = z.object({
 });
 
 export const NavSchema = z.array(NavItemSchema);
-export type NavItem = z.infer<typeof NavItemSchema>;
-export type Nav = z.infer<typeof NavSchema>;

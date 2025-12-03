@@ -2,7 +2,7 @@ import GigsTable from './GigsTable';
 import {
   site,
   sectionIds,
-  type GigForm,
+  type DbGig,
   type GigsSection,
   gigsQueryOptions,
 } from 'shared';
@@ -16,8 +16,8 @@ const Gigs = () => {
     data: gigs,
     isLoading,
     error,
-  } = useQuery<GigForm[], Error>(
-    gigsQueryOptions(supabase) as UseQueryOptions<GigForm[], Error>
+  } = useQuery<DbGig[], Error>(
+    gigsQueryOptions(supabase) as UseQueryOptions<DbGig[], Error>
   );
 
   const localize = useLocalized();

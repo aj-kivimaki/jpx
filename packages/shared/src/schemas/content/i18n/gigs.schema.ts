@@ -17,6 +17,3 @@ export const GigSchema = z.object({
 });
 
 export const GigsSchema = z.array(GigSchema);
-
-export type Gig = z.infer<typeof GigSchema>;
-export type Gigs = z.infer<typeof GigsSchema>;

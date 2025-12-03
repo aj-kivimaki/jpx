@@ -6,5 +6,3 @@ export const UISchema = z.object({
   finnishLanguage: z.string(),
   englishLanguage: z.string(),
 });
-
-export type UIConfig = z.infer<typeof UISchema>;

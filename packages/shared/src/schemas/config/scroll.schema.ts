@@ -9,5 +9,3 @@ export const ScrollConfigSchema = z.object({
   threshold: z.number(),
   label: z.literal('scroll'),
 });
-
-export type ScrollConfig = z.infer<typeof ScrollConfigSchema>;

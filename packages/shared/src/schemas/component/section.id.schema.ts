@@ -9,8 +9,6 @@ export const SectionIdSchema = z.enum([
   'modal',
 ]);
 
-export type SectionId = z.infer<typeof SectionIdSchema>;
-
 export const sectionIds = {
   top: 'top',
   gigs: 'gigs',

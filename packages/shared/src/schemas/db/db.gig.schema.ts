@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const GigFormSchema = z.object({
+export const DbGigSchema = z.object({
   id: z.string().uuid(),
   date: z.string(),
   lineup_fi: z.string(),
@@ -12,5 +12,4 @@ export const GigFormSchema = z.object({
   time: z.string().nullable(),
 });
 
-export const GigsFormSchema = z.array(GigFormSchema);
-export type GigForm = z.infer<typeof GigFormSchema>;
+export const GigsFormSchema = z.array(DbGigSchema);

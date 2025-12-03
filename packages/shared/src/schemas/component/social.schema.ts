@@ -7,6 +7,3 @@ export const SocialLinkSchema = z.object({
 });
 
 export const SocialSchema = z.array(SocialLinkSchema);
-
-export type SocialLink = z.infer<typeof SocialLinkSchema>;
-export type Social = z.infer<typeof SocialSchema>;
