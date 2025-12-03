@@ -3,7 +3,7 @@ import { supabase } from '../clients/supabaseClient';
 import styles from './Login.module.css';
 import { sendMagicLink } from 'shared';
 import { useMutation } from '@tanstack/react-query';
-import LoginWithGoogleButton from '../components/auth/LoginWithGoogleButton';
+import GoogleSignInButton from '../components/auth/GoogleSignInButton';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -49,7 +49,7 @@ export default function Login() {
           <p>Tai kirjaudu Googlella</p>
         </div>
 
-        <LoginWithGoogleButton />
+        <GoogleSignInButton client={supabase} />
 
         {errorMsg && (
           <div className={styles.errorContainer}>
