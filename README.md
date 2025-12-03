@@ -47,16 +47,16 @@
 
 ### Packages
 
-| Category                  | Packages                                                         | Purpose                                                                              |
-| ------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **React & build**         | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                                                 |
-| **Forms & validation**    | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                                                 |
-| **State & data fetching** | `zustand`<br>`react-query`                                       | Client state + server data with caching.                                             |
-| **Localization**          | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                                                 |
-| **Backend**               | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.                                      |
-| **UI & utilities**        | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                                           |
-| **Monorepo packages**     | Local `/shared` and `/ui` packages                               | Shared api, data, schemas, global styles, types, utils and components for both apps. |
-| **Dev & CI tooling**      | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                                               |
+| Category               | Packages                                                         | Purpose                                                                              |
+| ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **React & build**      | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                                                 |
+| **Forms & validation** | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                                                 |
+| **Data fetching**      | `react-query`                                                    | Server data with caching.                                                            |
+| **Localization**       | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                                                 |
+| **Backend**            | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.                                      |
+| **UI & utilities**     | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                                           |
+| **Monorepo packages**  | Local `/shared` and `/ui` packages                               | Shared api, data, schemas, global styles, types, utils and components for both apps. |
+| **Dev & CI tooling**   | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                                               |
 
 ## Project Structure
 
@@ -72,37 +72,39 @@
   /packages
     /admin-panel
       /src
+        /clients    # Supabase and React Query client
         /components
-          /auth     # LogoutButton, PrivateRoute
+          /auth     # GoogleSignInButton, LogoutButton, PrivateRoute
           /form     # Form components for adding/editing gigs
           /gigs     # Gig display and management components
-        /config     # Supabase client & database configuration
-        /hooks      #
+        /hooks      # Custom React hooks (useTostify)
         /pages      # Home, Login
 
     /frontend
       /src
+        /clients    # Supabase and React Query client
         /components
           /gigs     # Public gigs list/table
           /info     # Band info section
-          /layout   # Header, Banner, Footer
-          /sidebar  # Social links
           /language # LanguageSwitcher
+          /layout   # Banner, Header, Footer
+          /sidebar  # Social links, settings
           /theme    # ModeSwitcher
-        /hooks      # Custom React hooks (data fetching, scroll)
-        /utils      # Helper functions (text formatting)
+        /hooks      # Custom React hooks (useLocalized)
+        /utils      # Helper functions (applyTheme)
 
     /shared
       /src
         /api        # Data Access Layer
         /data       # Static/shared data
-        /schemas    # Zod validation and inferred types
+        /schemas    # Zod validation
         /styles     # CSS styles (reset, global)
+        /types      # Types
         /utils      # Helper functions
 
     /ui
       /src
-        /components # Shared components (e.g. GigCard.tsx)
+        /components # Shared components (GigCard.tsx)
 ```
 
 </details>
@@ -122,10 +124,10 @@
 
 ### Admin Panel (CMS)
 
-| Feature             | Description                                                                            |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| **Authentication**  | `Secure Supabase login` for administrators, ensuring only authorized access.           |
-| **Gigs Management** | `Add, edit, and delete gig entries` (dates, locations, details) via the CMS interface. |
+| Feature             | Description                                                                     |
+| ------------------- | ------------------------------------------------------------------------------- |
+| **Authentication**  | `Secure Supabase login` for administrators, ensuring only authorized access.    |
+| **Gigs Management** | `Add and delete gig entries` (dates, locations, details) via the CMS interface. |
 
 > Shared `/shared` package ensures consistent schemas and types across the monorepo.
 
@@ -183,7 +185,7 @@ Runs on every PR or push to `main`
 - Unit tests
 - Build
 - Code quality analysis (SonarCloud)
-- Deploy to Netlify (push to `main` only)
+- Deploy to Netlify (on push to `main` only)
 
 > Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
@@ -215,8 +217,9 @@ Runs on every PR or push to `main`
 <summary>Future Add-Ons:</summary>
 
 - Absolutely:
+  - Edit gigs
   - Form Validation & Error Handling.
-  - Form Feedback: Toast notifications for success/error messages
+  - Form Feedback: Toast notifications (`react-toastify`) for success/error messages
   - Testing:
     - Component tests (React Testing Library)
     - E2E tests (Cypress/Playwright)
