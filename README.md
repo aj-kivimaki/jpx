@@ -8,10 +8,10 @@
 > Designed for a single admin and low traffic, it includes a fast public site  
 > and a simple, secure CMS for easy updates.
 
-## This project has two applications:
+## 🚀 Live Demo
 
-🚀 **ARTIST PAGE:** https://jpartynen.com  
-🔐 **ADMIN PANEL:** https://admin.jpartynen.com
+> **Public Artist Page**: https://jpartynen.com  
+> **Admin Panel**: https://admin.jpartynen.com
 
 ### DESKTOP
 
@@ -65,11 +65,11 @@
 
 ```text
   /.github
-    /workflows      # GitHub Actions pipelines for frontend and admin-panel
+    /workflows      # GitHub Actions pipelines for apps and packages
 
   /.husky           # Git hooks for linting, formatting, typecheck, tests and build
 
-  /packages
+  /apps
     /admin-panel
       /src
         /clients    # Supabase and React Query client
@@ -79,7 +79,6 @@
           /gigs     # Gig display and management components
         /hooks      # Custom React hooks (useTostify)
         /pages      # Home, Login
-
     /frontend
       /src
         /clients    # Supabase and React Query client
@@ -93,6 +92,7 @@
         /hooks      # Custom React hooks (useLocalized)
         /utils      # Helper functions (applyTheme)
 
+  /packages
     /shared
       /src
         /api        # Data Access Layer
@@ -101,7 +101,6 @@
         /styles     # CSS styles (reset, global)
         /types      # Types
         /utils      # Helper functions
-
     /ui
       /src
         /components # Shared components (GigCard.tsx)
@@ -133,10 +132,9 @@
 
 ### UX Enhancements
 
-- `Responsive Design`.
-- `Accessibility` (a11y) with semantic markup and ARIA labels.
-- `Performance Optimizations`:
-  - WebP images in the correct sizes for faster load times.
+- Responsive Design
+- Accessibility (a11y)
+- Performance Optimizations
 
 ## Backend
 
@@ -168,6 +166,8 @@
 
 #### Pre-Push:
 
+> Packages `must` be built before running typecheck for apps
+
 - Full TypeScript type-check (`npm run typecheck`)
 - All tests (`npm test`)
   - Unit
@@ -181,9 +181,14 @@
 Runs on every PR or push to `main`
 
 - Linting & formatting (ESLint + Prettier)
-- Type checking
+- Typecheck packages
+- Build packages
+
+> Packages `must` be built before running typecheck for apps
+
+- Typecheck apps
 - Unit tests
-- Build
+- Build all
 - Code quality analysis (SonarCloud)
 - Deploy to Netlify (on push to `main` only)
 
@@ -216,28 +221,41 @@ Runs on every PR or push to `main`
 <details>
 <summary>Future Add-Ons:</summary>
 
-- Absolutely:
-  - Edit gigs
-  - Form Validation & Error Handling.
-  - Form Feedback: Toast notifications (`react-toastify`) for success/error messages
-  - Testing:
-    - Component tests (React Testing Library)
-    - E2E tests (Cypress/Playwright)
-    - MSW API mocking
-- Possibly:
-  - More diverse CMS: Manage more content (promo materials, images, text)
-  - UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
-  - Monitoring & Analytics: Pageview/event tracking or feature flags
+### Sooner:
+
+```properties
+- Edit gigs
+- Form / Login Feedback and validation & error handeling
+  - react-toastify for success/error messages
+- Environment-Based Configuration (w/ zod schemas)
+- Testing:
+  - Component tests (React Testing Library)
+  - E2E tests (Cypress/Playwright)
+  - MSW API mocking
+- Security
+  - Rate limiting
+  - ...
+```
+
+### Later:
+
+```properties
+- More diverse CMS: Manage more content (promo materials, images, text)
+- CDN / image optimization layer: (artist promo materials)
+- UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
+  - CSS, Framer motion?
+- Monitoring & Analytics: Pageview/event tracking, uptime & performance
+- Pre-render static pages: via Vite SSG
+- Containerize: Docker
+```
 
 </details>
 
----
-
 ## Licenses
 
-> MIT [LICENSE](./LICENSE.md) applies to all **Code:** (HTML, CSS, JS, TS)
+MIT [LICENSE](./LICENSE) applies to all **Code:** (HTML, CSS, JS, TS)
 
-> CC BY-ND 4.0 [LICENSE-CONTENT](./LICENSE-CONTENT.md) applies to all **Website Content & Promo Materials:**
+CC BY-ND 4.0 [LICENSE-CC](./LICENSE-CC) applies to all **Website Content & Promo Materials:**
 
 - Share as-is with attribution; no derivative works allowed
 

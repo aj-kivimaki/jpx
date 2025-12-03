@@ -1,5 +1,6 @@
 {
   "name": "jpartynen",
+  "license": "MIT",
   "private": true,
   "packageManager": "npm@10.9.3",
   "workspaces": [
