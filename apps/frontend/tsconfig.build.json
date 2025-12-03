@@ -3,7 +3,14 @@
   "compilerOptions": {
     "noEmit": false,
     "outDir": "dist",
-    "composite": true
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@jpx/shared/*": ["../../packages/shared/dist/*"],
+      "@jpx/ui/*": ["../../packages/ui/dist/*"],
+      "@jpx/shared": ["../../packages/shared/dist/index.d.ts"],
+      "@jpx/ui": ["../../packages/ui/dist/types/index.d.ts"]
+    }
   },
   "include": ["src"]
 }

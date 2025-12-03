@@ -51,10 +51,6 @@ jobs:
       - name: Run Tests
         run: npm run test
 
-      # Build UI package (declaration emit + sanity build) to catch UI-specific build errors early
-      - name: Build ui (check)
-        run: npm run build:ui
-
   # ===========================
   # Build + Deploy (main only)
   # ===========================
@@ -86,21 +82,21 @@ jobs:
 
       # Build shared package (types) and ui package before building apps that depend on them
       - name: Build shared
-        run: npm run build:shared
+        run: npm --workspace @jpx/shared run build
 
       - name: Build ui
-        run: npm run build:ui
+        run: npm --workspace @jpx/ui run build
 
       # Build frontend
       - name: Build frontend
-        run: npm run build:front
+        run: npm --workspace frontend run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       # Build admin panel
       - name: Build admin panel
-        run: npm run build:admin
+        run: npm --workspace admin-panel run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -109,7 +105,7 @@ jobs:
       - name: Deploy Frontend
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
-          publish-dir: packages/frontend/dist
+          publish-dir: apps/frontend/dist
           production-deploy: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -119,7 +115,7 @@ jobs:
       - name: Deploy Admin Panel
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
-          publish-dir: packages/admin-panel/dist
+          publish-dir: apps/admin-panel/dist
           production-deploy: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}

@@ -5,12 +5,12 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "dist",
-    "rootDir": "src",
+    "declarationDir": "dist/types",
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo/ui",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": false
   },
   "include": ["src"]
 }
