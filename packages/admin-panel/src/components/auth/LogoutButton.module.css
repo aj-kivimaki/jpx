@@ -1,9 +1,0 @@
-.logoutIcon {
-  color: white;
-  transition: color 0.3s ease;
-  font-size: 25px;
-}
-
-.logoutIcon:hover {
-  color: #333;
-}
