@@ -1,0 +1,21 @@
+.googleLogin {
+  padding: 0.5rem;
+  display: flex;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.googleLogin:hover {
+  background-color: #b8e6fd;
+}
+
+.googleIcon {
+  font-size: 2.5rem;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}

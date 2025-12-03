@@ -15,7 +15,7 @@ flowchart TD
     API2["addGig()"]
     API3["updateGig()"]
     API4["deleteGig()"]
-    API5["sendMagicLink()"]
+    API5["signInWithGoogle()"]
     API6["signOut()"]
   end
 
@@ -36,6 +36,6 @@ flowchart TD
   API2 -->|insert| DB
   API3 -->|update| DB
   API4 -->|delete| DB
-  API5 -->|magic link| AUTH
+  API5 -->|Google OAuth| AUTH
   API6 -->|logout| AUTH
 ```
