@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo/frontend",
+    "baseUrl": ".",
+    "noEmit": true,
+    "paths": {
+      "@jpx/shared/*": ["../../packages/shared/src/*"],
+      "@jpx/ui/*": ["../../packages/ui/src/*"]
+    }
+  },
+  "include": ["src", "src/vite-env.d.ts"]
+}

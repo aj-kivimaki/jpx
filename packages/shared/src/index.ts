@@ -1,3 +1,5 @@
+import './styles/reset.css';
+import './styles/global.css';
 export * from './api';
 export * from './data';
 export * from './schemas';

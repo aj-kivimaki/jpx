@@ -1,17 +1,15 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
     "composite": true,
-    "noImplicitAny": true,
     "declaration": true,
     "declarationMap": true,
     "outDir": "dist",
     "rootDir": "src",
-    "moduleResolution": "node",
-    "module": "ESNext",
-    "target": "ESNext",
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo/shared",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*", "src/**/*.json"]
+  "include": ["src", "src/**/*.json", "src/declarations.d.ts"]
 }

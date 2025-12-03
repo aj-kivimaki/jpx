@@ -1,14 +1,22 @@
 {
-  "name": "shared",
-  "version": "1.0.0",
-  "type": "module",
+  "name": "@jpx/shared",
+  "version": "0.0.1",
+  "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
-    "clean": "tsc -b --clean"
+    "typecheck": "tsc -b --noEmit",
+    "test": "echo \"no tests for shared\"",
+    "test:ci": "echo \"no tests for shared\"",
+    "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
+  "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.3.0"
+    "typescript": "^5.9.3",
+    "@types/node": "^20.5.2",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "@typescript-eslint/eslint-plugin": "^8.47.0"
   }
 }

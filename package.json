@@ -1,77 +1,42 @@
 {
   "name": "jpartynen",
   "private": true,
+  "packageManager": "npm@10.9.3",
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm-run-all -p dev:front dev:admin",
-    "dev:front": "npm --workspace packages/frontend run dev",
-    "dev:admin": "npm --workspace packages/admin-panel run dev",
-    "build": "npm-run-all build:shared build:ui build:front build:admin",
-    "build:front": "npm --workspace packages/frontend run build",
-    "build:admin": "npm --workspace packages/admin-panel run build",
-    "build:ui": "npm --workspace packages/ui run build",
-    "build:shared": "npm --workspace packages/shared run build",
-    "clean:shared": "npm --workspace packages/shared run clean",
-    "preview": "npm --workspace packages/frontend run preview",
-    "test": "npm-run-all -p test:front test:admin",
-    "test:front": "npm --workspace packages/frontend run test",
-    "test:admin": "npm --workspace packages/admin-panel run test",
-    "lint": "eslint \"packages/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/all",
-    "lint:front": "eslint \"packages/frontend/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/frontend",
-    "lint:admin": "eslint \"packages/admin-panel/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/admin-panel",
-    "lint:changed": "npx lint-staged",
-    "typecheck:staged": "sh -c 'tsc -b --noEmit'",
-    "typecheck": "tsc --build",
-    "format:check": "prettier --check \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "format": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "prepare": "husky"
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "eslint \"apps/**/*.{ts,tsx,js,jsx}\" \"packages/**/*.{ts,tsx,js,jsx}\" --ignore-pattern '**/lcov-report/**' --max-warnings=0",
+    "lint:fix": "eslint \"apps/**/*.{ts,tsx,js,jsx}\" \"packages/**/*.{ts,tsx,js,jsx}\" --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test:ci",
+    "prepare": "husky",
+    "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
-    "@eslint/js": "^8.57.1",
     "@types/node": "^20.5.2",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@typescript-eslint/eslint-plugin": "^8.47.0",
-    "@typescript-eslint/parser": "^8.47.0",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "@vitest/coverage-istanbul": "^3.2.4",
-    "depcheck": "^1.4.7",
-    "eslint": "^8.57.1",
+    "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "npm-run-all": "^4.1.5",
     "prettier": "^3.6.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "turbo": "latest",
     "typescript": "^5.9.3",
-    "vite": "^7.2.2",
     "vitest": "^3.2.4"
-  },
-  "paths": {
-    "@frontend/*": [
-      "packages/frontend/src/*"
-    ],
-    "@admin/*": [
-      "packages/admin-panel/src/*"
-    ],
-    "@shared/*": [
-      "packages/shared/src/*"
-    ],
-    "@ui/*": [
-      "packages/ui/src/*"
-    ]
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "npm run typecheck:staged"
+      "prettier --write"
     ],
     "*.{js,jsx}": [
       "eslint --fix",
@@ -80,20 +45,5 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
-    "@supabase/supabase-js": "^2.86.0",
-    "@tanstack/react-query": "^5.90.11",
-    "@tanstack/react-query-devtools": "^5.91.1",
-    "dayjs": "^1.11.19",
-    "i18next": "^25.6.3",
-    "i18next-browser-languagedetector": "^8.2.0",
-    "react-hook-form": "^7.67.0",
-    "react-i18next": "^16.3.5",
-    "react-icons": "^5.5.0",
-    "react-router-dom": "^7.9.6",
-    "react-toastify": "^11.0.5",
-    "zod": "^4.1.13"
   }
 }
