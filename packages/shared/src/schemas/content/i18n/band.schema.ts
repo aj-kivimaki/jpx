@@ -11,6 +11,4 @@ export const BandMemberSchema = z.object({
   role: BandLocalizedStringSchema,
 });
 
-export type BandMember = z.infer<typeof BandMemberSchema>;
 export const BandSchema = z.array(BandMemberSchema);
-export type Band = z.infer<typeof BandSchema>;

@@ -6,7 +6,7 @@ const queryConstants = {
   QUERY_KEY_GIGS: ['gigs'] as const,
 };
 
-const QueryConfigSchema = z.object({
+export const QueryConfigSchema = z.object({
   QUERY_STALE_TIME_MS: z
     .number()
     .int()
@@ -25,5 +25,3 @@ const parsed = QueryConfigSchema.parse(queryConstants);
 export const QUERY_STALE_TIME_MS: number = parsed.QUERY_STALE_TIME_MS;
 export const QUERY_REFETCH_TIMES: number = parsed.QUERY_REFETCH_TIMES;
 export const QUERY_KEY_GIGS = parsed.QUERY_KEY_GIGS;
-
-export type QueryConfig = z.infer<typeof QueryConfigSchema>;

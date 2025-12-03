@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { type GigForm } from '../schemas';
+import { type DbGig } from '../types';
 
 dayjs.extend(customParseFormat);
 
-export interface ParsedGig extends GigForm {
+export interface ParsedGig extends DbGig {
   parsedDate?: dayjs.Dayjs;
   parsedTime?: dayjs.Dayjs;
   formattedDate?: string;
@@ -17,7 +17,7 @@ export interface ParsedGig extends GigForm {
  * Parses and formats a GigForm into ParsedGig
  * - Handles invalid/missing dates and times safely
  */
-export function parseGigDates(gig: GigForm): ParsedGig {
+export function parseGigDates(gig: DbGig): ParsedGig {
   const parsedDate = gig.date ? dayjs(gig.date) : undefined;
   const parsedTime = gig.time ? dayjs(gig.time, 'HH:mm:ss') : undefined;
 

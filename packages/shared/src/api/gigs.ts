@@ -1,18 +1,18 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { GigForm } from '../schemas';
+import type { DbGig } from '../types';
 
-export const fetchGigs = async (client: SupabaseClient): Promise<GigForm[]> => {
+export const fetchGigs = async (client: SupabaseClient): Promise<DbGig[]> => {
   const { data, error } = await client.from('gigs').select('*').order('date');
   if (error) throw error;
   return data ?? [];
 };
 
-export type NewGig = Omit<GigForm, 'id'>;
+export type NewGig = Omit<DbGig, 'id'>;
 
 export const addGig = async (
   client: SupabaseClient,
   gig: NewGig
-): Promise<GigForm[]> => {
+): Promise<DbGig[]> => {
   const { data, error } = await client.from('gigs').insert([gig]).select();
 
   if (error) throw error;
@@ -21,8 +21,8 @@ export const addGig = async (
 
 export const updateGig = async (
   client: SupabaseClient,
-  gig: GigForm
-): Promise<GigForm[]> => {
+  gig: DbGig
+): Promise<DbGig[]> => {
   const { data, error } = await client
     .from('gigs')
     .update(gig)

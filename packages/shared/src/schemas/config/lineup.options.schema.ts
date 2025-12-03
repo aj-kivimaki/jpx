@@ -9,4 +9,3 @@ export const lineupOptions = [
 ] as const;
 
 export const LineupOptionSchema = z.enum(lineupOptions);
-export type LineupOption = z.infer<typeof LineupOptionSchema>;

@@ -7,7 +7,7 @@ import socialJson from './social.json';
 import uiJson from './ui.json';
 
 // Import types or Zod schemas
-import type { Band, Contact, Nav, Site, Social, UIConfig } from '../schemas';
+import type { Band, Contact, Nav, Site, Social, UIConfig } from '../types';
 
 // Validate JSON with Zod (if using schemas)
 import {

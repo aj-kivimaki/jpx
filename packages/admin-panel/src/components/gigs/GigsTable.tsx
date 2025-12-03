@@ -6,7 +6,7 @@ import { supabase } from '../../clients/supabaseClient';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {
-  type GigForm,
+  type DbGig,
   type ParsedGig,
   deleteGig,
   parseGigDates,
@@ -18,7 +18,7 @@ import { GigsCard } from 'ui';
 dayjs.extend(customParseFormat);
 
 interface GigsTableProps {
-  gigs: GigForm[];
+  gigs: DbGig[];
 }
 
 const GigsTable = ({ gigs }: GigsTableProps) => {

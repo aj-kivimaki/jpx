@@ -1,13 +1,13 @@
 import useLocalized from '../../hooks/useLocalized';
 import {
-  type GigForm,
+  type DbGig,
   parseGigDates,
   type ParsedGig as BaseParsedGig,
 } from 'shared';
 import { GigsCard } from 'ui';
 
 interface GigsTableProps {
-  gigs: GigForm[];
+  gigs: DbGig[];
 }
 
 interface LocalizedGig extends BaseParsedGig {
@@ -18,7 +18,7 @@ interface LocalizedGig extends BaseParsedGig {
 const GigsTable = ({ gigs }: GigsTableProps) => {
   const localize = useLocalized();
 
-  const parseGigs = (gigs: GigForm[]): BaseParsedGig[] => {
+  const parseGigs = (gigs: DbGig[]): BaseParsedGig[] => {
     return gigs.map(parseGigDates);
   };
 

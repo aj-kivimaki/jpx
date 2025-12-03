@@ -7,24 +7,24 @@ import HookFormSelect from './FormSelect';
 import { supabase } from '../../clients/supabaseClient';
 import { queryClient } from '../../clients/queryClient';
 import {
-  type GigForm,
-  GigFormSchema,
+  type DbGig,
+  DbGigSchema,
   lineupOptions,
   addGig,
   QUERY_KEY_GIGS,
 } from 'shared';
 import styles from './Form.module.css';
 
-type NewGig = Omit<GigForm, 'id'>;
+type NewGig = Omit<DbGig, 'id'>;
 
-export default function GigForm() {
+export default function AddGig() {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<NewGig>({
-    resolver: zodResolver(GigFormSchema.omit({ id: true })),
+    resolver: zodResolver(DbGigSchema.omit({ id: true })),
   });
 
   const addGigMutation = useMutation({
