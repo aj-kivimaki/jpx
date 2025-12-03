@@ -253,13 +253,11 @@ Runs on every PR or push to `main`
 
 ## Licenses
 
-MIT [LICENSE](./LICENSE) applies to all **Code:** (HTML, CSS, JS, TS)
+Creative content (images, text, artworks) is licensed under:
 
-CC BY-ND 4.0 [LICENSE-CC](./LICENSE-CC) applies to all **Website Content & Promo Materials:**
+[Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)](CONTENT-LICENSE-CC_BY_ND_4.0.md)
 
-- Share as-is with attribution; no derivative works allowed
-
----
+Code is licensed separately under MIT (see [LICENSE](./LICENSE))
 
 ## Quickstart & Contributing
 
