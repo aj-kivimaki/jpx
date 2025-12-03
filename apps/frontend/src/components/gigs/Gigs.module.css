@@ -1,0 +1,23 @@
+.gigs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+}
+
+.gigsTitle {
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.gigsCardContainer {
+  width: 100%;
+  max-width: 800px;
+}
+
+.gigsLoadingText {
+  font-size: 1.2rem;
+  color: var(--text-color-light);
+}

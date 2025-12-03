@@ -1,0 +1,8 @@
+.languageSwitcher {
+  font-size: 2rem;
+}
+
+.languageSwitcher:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
