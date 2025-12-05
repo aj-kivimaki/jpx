@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { themeSchema, type Theme, site } from '@jpx/shared';
+import { ThemeSchema, type Theme, site } from '@jpx/shared';
 import { applyTheme } from '../../utils';
 import styles from './ModeSwitcher.module.css';
 import useLocalized from '../../hooks/useLocalized';
@@ -21,7 +21,7 @@ const ModeSwitcher: React.FC = () => {
   const toggleTheme = () => {
     const next: Theme = currentTheme === 'light' ? 'dark' : 'light';
     setCurrentTheme(next);
-    themeSchema.parse(next);
+    ThemeSchema.parse(next);
     applyTheme(next);
   };
 

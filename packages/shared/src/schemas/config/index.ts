@@ -1,3 +1,4 @@
+export * from './env.schema';
 export * from './language.schema';
 export * from './lineup.options.schema';
 export * from './query.config.schema';
