@@ -10,7 +10,8 @@ export default defineConfig({
       reportsDirectory: './coverage',
       all: true,
     },
-    include: ['src/**'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['src/.DS_Store', 'src/**/*.d.ts'],
   },
   resolve: {
     alias: aliases,
