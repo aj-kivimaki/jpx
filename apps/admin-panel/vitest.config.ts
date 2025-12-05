@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitest/config';
-import path from 'node:path';
+import { aliases } from '../../config/build-config';
 
 export default defineConfig({
   test: {
@@ -9,13 +9,11 @@ export default defineConfig({
       reporter: ['lcov', 'text'],
       reportsDirectory: './coverage',
       all: true,
-      include: ['src/utils/**'],
     },
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['src/.DS_Store', 'src/**/*.d.ts'],
   },
   resolve: {
-    alias: {
-      '@jpx/ui': path.resolve(__dirname, '../../packages/ui/src'),
-      '@jpx/shared': path.resolve(__dirname, '../../packages/shared/src'),
-    },
+    alias: aliases,
   },
 });

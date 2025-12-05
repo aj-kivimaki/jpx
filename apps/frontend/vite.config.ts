@@ -1,25 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'node:path';
+import { aliases, createFsAllow } from '../../config/build-config';
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      '@jpx/shared': path.resolve(__dirname, '../../packages/shared/src'),
-      '@jpx/ui': path.resolve(__dirname, '../../packages/ui/src'),
-    },
+    alias: aliases,
   },
   server: {
     port: 5173,
     open: true,
     fs: {
-      // Allow serving files from the app folder, the monorepo packages and repo root
-      allow: [
-        path.resolve(__dirname),
-        path.resolve(__dirname, '../../packages'),
-        path.resolve(__dirname, '../../'),
-      ],
+      allow: createFsAllow(__dirname),
     },
   },
 });
