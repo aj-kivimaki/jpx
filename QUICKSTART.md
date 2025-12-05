@@ -1,3 +1,5 @@
+[⬅ Back to Root README](./README.md#documentation) | [Contributing](./CONTRIBUTING.md)
+
 # Quickstart
 
 This guide helps you get the project running locally.
@@ -17,8 +19,8 @@ cd jpx
 ## 2. Set up environment variables
 
 ```bash
-cp packages/admin-panel/.env.example packages/admin-panel/.env.local
-cp packages/frontend/.env.example packages/frontend/.env.local
+cp apps/admin-panel/.env.example apps/admin-panel/.env.local
+cp apps/frontend/.env.example apps/frontend/.env.local
 ```
 
 Edit `.env.local` files and fill in required values. **Do not commit local env files.**
@@ -42,15 +44,13 @@ npm install
 ```
 
 ```bash
+cd packages/shared
 # Build shared package
-npm run clean:shared # removes tsconfig.tsbuildinfo, sometimes necessary before rebuild
-npm run build:shared
-
-# Build ui
-npm run build:ui
+npm run clean
+npm run build
 ```
 
-> Build SHARED and UI packages before building apps that consume them!
+> 💡 **Note**: Build SHARED and UI packages before building apps that consume them!
 
 ```bash
 # Start both apps in dev (runs frontend + admin concurrently)
@@ -81,7 +81,7 @@ npm run build
 - Create a Supabase project.
 - Copy project URL and anon key into package `.env.local` files.
 
-For contribution guidelines, branch strategy, and code style, see `CONTRIBUTING.md`.
+For contribution guidelines, branch strategy, and code style, see [CONTRIBUTING](CONTRIBUTING.md).
 
 ## CI notes
 

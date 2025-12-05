@@ -1,10 +1,19 @@
-# `/shared` & `/ui` Packages
+[⬅ Back to Root README](../README.md#packages) | [Shared](./shared/README.md) | [UI](./ui/README.md)
+
+# Packages Overview
+
+This folder contains all the internal packages in the monorepo.
+
+| Package | Description                        | Link                         |
+| ------- | ---------------------------------- | ---------------------------- |
+| shared  | Shared types and utility functions | [shared](./shared/README.md) |
+| ui      | Reusable UI components             | [ui](./ui/README.md)         |
 
 ## Build Requirements
 
 > 💡 **Note**: Before **building** or **type-checking** any applications that depend on the `/shared` or `/ui` packages, you must first build these packages. This ensures that all shared types, utilities, and UI components are up to date, preventing type errors in consuming apps.
 
-Build `/shared`
+### Build `/shared`
 
 ```bash
 cd packages/shared
@@ -16,10 +25,10 @@ npm run clean
 npm run build
 ```
 
-Build `/ui`
+### Build `/ui`
 
 ```bash
-cd packages/shared
+cd packages/ui
 
 # Clean (optional)
 npm run clean

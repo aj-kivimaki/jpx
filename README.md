@@ -13,19 +13,39 @@
 > **Public Artist Page**: https://jpartynen.com  
 > **Admin Panel**: https://admin.jpartynen.com
 
-### DESKTOP
+### Desktop
 
 <img src="assets/banner-desktop.webp" alt="J. Partynen banner desktop" width="600" />
 
-### MOBILE
+### Mobile
 
 <img src="assets/banner-mobile.webp" alt="J. Partynen banner mobile" width="300" />
+
+## Documentation
+
+- [Architecture](./docs/ARCHITECTURE.md)
+- [CI/CD](./docs/CI-CD.md)
+- [Pre-Hooks](./docs/PRE-HOOKS.md)
+
+### Apps
+
+- [Overview](./apps/README.md)
+- [Frontend](./apps/frontend/README.md)
+- [Admin Panel](./apps/admin-panel/README.md)
+
+### Packages
+
+- [Overview](./packages/README.md)
+- [Shared](./packages/shared/README.md)
+- [UI](./packages/ui/README.md)
 
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
+- [NPM Packages](#npm-packages)
 - [Project Structure](#project-structure)
 - [Features](#features)
+- [UX Enhancements](#ux-enhancements)
 - [Backend](#backend)
 - [Code Quality](#code-quality)
 - [Screenshots](#screenshots)
@@ -45,7 +65,7 @@
 | **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`             |
 | **CI/CD**        | `GitHub Actions`                                          |
 
-### Packages
+## NPM Packages
 
 | Category               | Packages                                                         | Purpose                                                                              |
 | ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -60,77 +80,49 @@
 
 ## Project Structure
 
-<details>
-<summary>File Tree</summary>
+See [ARCHITECTURE](./docs/ARCHITECTURE.md)
 
-```text
-  /.github
-    /workflows      # GitHub Actions pipelines for apps and packages
+```mermaid
+graph TD
+    Root["/"] --> Apps["/apps"]
+    Apps --> Frontend["/frontend - Public site"]
+    Apps --> Admin["/admin-panel - Admin CMS"]
 
-  /.husky           # Git hooks for linting, formatting, typecheck, tests and build
+    Root --> Packages["/packages"]
+    Packages --> Shared["/shared - Types, utils, API clients"]
+    Packages --> UI["/ui - Reusable React components"]
 
-  /apps
-    /admin-panel
-      /src
-        /clients    # Supabase and React Query client
-        /components
-          /auth     # GoogleSignInButton, LogoutButton, PrivateRoute
-          /form     # Form components for adding/editing gigs
-          /gigs     # Gig display and management components
-        /hooks      # Custom React hooks (useTostify)
-        /pages      # Home, Login
-    /frontend
-      /src
-        /clients    # Supabase and React Query client
-        /components
-          /gigs     # Public gigs list/table
-          /info     # Band info section
-          /language # LanguageSwitcher
-          /layout   # Banner, Header, Footer
-          /sidebar  # Social links, settings
-          /theme    # ModeSwitcher
-        /hooks      # Custom React hooks (useLocalized)
-        /utils      # Helper functions (applyTheme)
-
-  /packages
-    /shared
-      /src
-        /api        # Data Access Layer
-        /data       # Static/shared data
-        /schemas    # Zod validation
-        /styles     # CSS styles (reset, global)
-        /types      # Types
-        /utils      # Helper functions
-    /ui
-      /src
-        /components # Shared components (GigCard.tsx)
+    Root --> Others["Other files ..."]
 ```
-
-</details>
 
 ## Features
 
+See [Frontend](./apps/frontend/README.md)
+
 ### Public Site
 
-| Section            | Description                                     |
-| ------------------ | ----------------------------------------------- |
-| **Gigs**           | Browse `upcoming gigs` (dates, locations, etc.) |
-| **Info & Contact** | View `band details` and `booking contacts`.     |
-| **Sidebar**        | Links and settings:                             |
-|                    | • `Social media links`                          |
-|                    | • `Theme – Toggle Light / Dark mode`            |
-|                    | • `Language – Switch FI / EN`                   |
+| Section            | Description                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------- |
+| **Gigs**           | Browse                                                                                            |
+|                    | • `upcoming gigs`                                                                                 |
+| **Info & Contact** | View                                                                                              |
+|                    | • `band details` <br> • `booking contacts`                                                        |
+| **Sidebar**        | Settings & Links                                                                                  |
+|                    | • `Social media links` <br> • `Theme: Toggle Light / Dark mode` <br> • `Language: Switch FI / EN` |
+
+---
 
 ### Admin Panel (CMS)
 
-| Feature             | Description                                                                     |
-| ------------------- | ------------------------------------------------------------------------------- |
-| **Authentication**  | `Secure Supabase login` for administrators, ensuring only authorized access.    |
-| **Gigs Management** | `Add and delete gig entries` (dates, locations, details) via the CMS interface. |
+See [Admin Panel](./apps/admin-panel/README.md)
+| Feature | Description |
+| ------------------- | -------------------------------------------------------------- |
+| **Authentication** | `Secure Supabase login` ensuring only authorized admin access. |
+| **Gigs Management** | `Add and delete gig entries` (dates, locations, details). |
 
-> Shared `/shared` package ensures consistent schemas and types across the monorepo.
+---
 
-### UX Enhancements
+## UX Enhancements
 
 - Responsive Design
 - Accessibility (a11y)
@@ -151,48 +143,23 @@
   2. Authenticate with Google credentials.
   3. Redirected to `/` with access to the protected admin panel.
 
-> This setup keeps the admin panel **simple, secure, and low-maintenance**.
+> 💡 **Note**: This setup keeps the admin panel **simple, secure, and low-maintenance**.
 
 ## Code Quality
 
 ### Git Hooks
 
-#### Pre-Commit:
+Pre-hooks ensure code quality at every step: fast formatting checks on pre-commit, and thorough type, test, and build verification on pre-push to guarantee safe, production-ready code.
 
-- `eslint --fix` + `prettier --write` on staged files
-- `tsc --noEmit` on .ts / .tsx
+See [Pre-Hooks](./docs/PRE-HOOKS.md)
 
-> Pre-commit with fast formatting checks, so all pushed code is consistent.
-
-#### Pre-Push:
-
-> Packages `must` be built before running typecheck for apps
-
-- Full TypeScript type-check (`npm run typecheck`)
-- All tests (`npm test`)
-  - Unit
-  - Code coverage
-- Build verification (`npm run build`)
-
-> Pre-push is thorough, ensuring code is safe and production-ready.
+---
 
 ### CI/CD Pipeline: **GitHub Actions**
 
-Runs on every PR or push to `main`
+Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
-- Linting & formatting (ESLint + Prettier)
-- Typecheck packages
-- Build packages
-
-> Packages `must` be built before running typecheck for apps
-
-- Typecheck apps
-- Unit tests
-- Build all
-- Code quality analysis (SonarCloud)
-- Deploy to Netlify (on push to `main` only)
-
-> Ensures a **consistent, high-quality codebase** with automated checks and deployments.
+See [CI/CD](./docs/CI-CD.md)
 
 ---
 
@@ -261,4 +228,4 @@ Code is licensed separately under MIT (see [LICENSE](./LICENSE))
 
 ## Quickstart & Contributing
 
-See [QUICKSTART.md](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
+See [QUICKSTART](./docs/QUICKSTART.md) for a concise setup guide and [CONTRIBUTING](./CONTRIBUTING.md) for contribution guidelines.
