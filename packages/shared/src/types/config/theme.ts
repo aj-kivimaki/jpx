@@ -1,4 +1,4 @@
 import z from 'zod';
-import { themeSchema } from '../../schemas';
+import { ThemeSchema } from '../../schemas';
 
-export type Theme = z.infer<typeof themeSchema>;
+export type Theme = z.infer<typeof ThemeSchema>;
