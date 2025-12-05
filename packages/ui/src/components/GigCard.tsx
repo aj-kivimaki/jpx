@@ -13,6 +13,7 @@ export interface GigCardProps {
   formattedTime?: string;
   dateTimeDate?: string;
   dateTimeTime?: string;
+  weekdayAbbrev?: string;
   lineup?: string;
   venue?: string;
   city?: string;
@@ -27,6 +28,7 @@ const GigCard = ({
   formattedTime,
   dateTimeDate,
   dateTimeTime,
+  weekdayAbbrev,
   lineup,
   venue,
   city,
@@ -39,7 +41,12 @@ const GigCard = ({
       {formattedDate && (
         <div className={styles.date}>
           <CiCalendar className={styles.dateIcon} aria-hidden="true" />
-          <time dateTime={dateTimeDate}>{formattedDate}</time>
+          <time dateTime={dateTimeDate}>
+            {weekdayAbbrev && (
+              <span className={styles.weekday}>{weekdayAbbrev}</span>
+            )}
+            {formattedDate}
+          </time>
         </div>
       )}
       {formattedTime && (

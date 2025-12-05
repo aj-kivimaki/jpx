@@ -37,6 +37,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           formattedTime,
           dateTimeDate,
           dateTimeTime,
+          weekdayAbbrev,
           lineup,
           venue,
           city,
@@ -49,6 +50,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             formattedTime={formattedTime ?? undefined}
             dateTimeDate={dateTimeDate}
             dateTimeTime={dateTimeTime}
+            weekdayAbbrev={weekdayAbbrev}
             lineup={lineup}
             venue={venue ?? undefined}
             city={city ?? undefined}

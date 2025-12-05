@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { type DbGig } from '../types';
+import { FINNISH_WEEKDAYS } from '../schemas';
 
 dayjs.extend(customParseFormat);
 
@@ -11,6 +12,7 @@ export interface ParsedGig extends DbGig {
   formattedTime?: string;
   dateTimeDate?: string;
   dateTimeTime?: string;
+  weekdayAbbrev?: string;
 }
 
 /**
@@ -35,6 +37,10 @@ export function parseGigDates(gig: DbGig): ParsedGig {
     ? parsedTime.format('HH:mm:ss')
     : undefined;
 
+  const weekdayAbbrev = parsedDate?.isValid()
+    ? FINNISH_WEEKDAYS[parsedDate.day()]
+    : undefined;
+
   return {
     ...gig,
     parsedDate,
@@ -43,5 +49,6 @@ export function parseGigDates(gig: DbGig): ParsedGig {
     formattedTime,
     dateTimeDate,
     dateTimeTime,
+    weekdayAbbrev,
   };
 }

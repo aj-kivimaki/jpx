@@ -25,6 +25,13 @@
   padding-bottom: 0.5rem;
 }
 
+.weekday {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  color: var(--text-color);
+}
+
 .time {
   display: flex;
   color: var(--text-color-light);
