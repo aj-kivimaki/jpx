@@ -1,17 +1,11 @@
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import GigsTable from './GigsTable';
 import { supabase } from '../../clients/supabaseClient';
-import { gigsQueryOptions, type DbGig } from '@jpx/shared';
+import { gigsQueryOptions } from '@jpx/shared';
 import styles from './Gigs.module.css';
 
 const Gigs = () => {
-  const {
-    data: gigs,
-    isLoading,
-    error,
-  } = useQuery<DbGig[], Error>(
-    gigsQueryOptions(supabase) as UseQueryOptions<DbGig[], Error>
-  );
+  const { data: gigs, isLoading, error } = useQuery(gigsQueryOptions(supabase));
 
   return (
     <>

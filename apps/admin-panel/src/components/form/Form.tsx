@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
@@ -8,14 +8,12 @@ import { supabase } from '../../clients/supabaseClient';
 import { queryClient } from '../../clients/queryClient';
 import {
   DbGigSchema,
-  fetchLineupOptions,
   addGig,
-  QUERY_KEY_GIGS,
+  VALIDATED_KEYS,
+  lineupQueryOptions,
   type NewGig,
-  type DbLineupOption,
 } from '@jpx/shared';
 import styles from './Form.module.css';
-import { useEffect, useState } from 'react';
 
 export default function AddGig() {
   const {
@@ -24,31 +22,21 @@ export default function AddGig() {
     formState: { errors },
     reset,
   } = useForm<NewGig>({
-    resolver: zodResolver(
-      DbGigSchema.omit({
-        id: true,
-        lineup_en: true,
-        lineup_fi: true,
-        lineup: true,
-      })
-    ),
+    resolver: zodResolver(DbGigSchema.omit({ id: true, lineup: true })),
     defaultValues: { lineup_id: '' },
   });
 
-  const [lineupOptions, setLineupOptions] = useState<DbLineupOption[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const lineup = await fetchLineupOptions(supabase);
-      setLineupOptions(lineup);
-    })();
-  }, []);
+  const {
+    data: lineupOptions,
+    isLoading: isLineupLoading,
+    error: lineupError,
+  } = useQuery(lineupQueryOptions(supabase));
 
   const addGigMutation = useMutation({
     mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY_GIGS });
+      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
 
     onError: (error) => {
@@ -112,10 +100,13 @@ export default function AddGig() {
         <HookFormSelect
           label="Kokoonpano"
           name="lineup_id"
-          options={lineupOptions}
+          error={
+            errors.lineup_id?.message ||
+            (lineupError ? 'Vaihtoehtojen lataus epäonnistui' : undefined)
+          }
+          options={isLineupLoading ? [] : lineupOptions || []}
           register={{ ...register('lineup_id') }}
           required={true}
-          error={errors.lineup_id?.message}
         />
 
         <HookFormInput
@@ -139,7 +130,7 @@ export default function AddGig() {
         <HookFormInput
           label="Huomioitavaa 🇫🇮"
           name="notes_fi"
-          placeholder="jos on jotain erityistä sanottavaa"
+          placeholder="Jos on jotain erityistä huomautettavaa..."
           type="textarea"
           register={{ ...register('notes_fi') }}
           required={false}
@@ -149,7 +140,7 @@ export default function AddGig() {
         <HookFormInput
           label="Huomioitavaa 🇬🇧"
           name="notes_en"
-          placeholder="... ja laita englanniksikin jotain"
+          placeholder="...niin laita englanniksikin jotain!"
           type="textarea"
           register={{ ...register('notes_en') }}
           required={false}

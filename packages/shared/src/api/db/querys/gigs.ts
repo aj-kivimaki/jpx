@@ -1,13 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { DbGig, NewGig } from '../types';
+import type { DbGig, NewGig } from '../../../types';
 
 export const fetchGigs = async (client: SupabaseClient): Promise<DbGig[]> => {
   const { data, error } = await client
     .from('gigs')
     .select('*, lineup:lineup_options(name_en, name_fi)')
     .order('date');
-
-  console.log('Fetched gigs:', data);
 
   if (error) throw error;
   return data ?? [];
