@@ -12,8 +12,13 @@ import {
   VALIDATED_KEYS,
   lineupQueryOptions,
   type NewGig,
+  fetchGigById,
+  type UpdateGig,
+  updateGig,
 } from '@jpx/shared';
+import { useGigStore } from '../../store/gigStore';
 import styles from './Form.module.css';
+import { useEffect } from 'react';
 
 export default function AddGig() {
   const {
@@ -32,34 +37,49 @@ export default function AddGig() {
     error: reactQueryError,
   } = useQuery(lineupQueryOptions(supabase));
 
+  const { selectedGigId, setSelectedGigId } = useGigStore();
+  const isEditMode = Boolean(selectedGigId);
+
+  useEffect(() => {
+    if (!selectedGigId) {
+      reset();
+      return;
+    }
+
+    const fetchGigAndResetForm = async () => {
+      const data = await fetchGigById(supabase, selectedGigId);
+
+      reset(data);
+    };
+    fetchGigAndResetForm();
+  }, [selectedGigId, reset]);
+
   const addGigMutation = useMutation({
     mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
-
-    onError: (error) => {
-      console.error('Failed to add gig:', error);
-    },
   });
 
   const handleFormSubmit = async (data: NewGig) => {
-    const payload = {
-      date: data.date,
-      time: data.time || null,
-      venue: data.venue || null,
-      city: data.city || null,
-      notes_fi: data.notes_fi || null,
-      notes_en: data.notes_en || null,
-      lineup_id: data.lineup_id,
-    };
-
     try {
-      await addGigMutation.mutateAsync(payload);
+      if (isEditMode) {
+        const payload = { ...data, id: selectedGigId } as UpdateGig;
+        await updateGig(supabase, payload);
+      } else {
+        await addGigMutation.mutateAsync(data);
+      }
+
+      setSelectedGigId(null);
       reset();
-    } catch (err) {
-      console.error('[HookForm] addGig failed', err);
+      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+    } catch (err: unknown) {
+      console.error(err);
+      alert(
+        'Error saving gig: ' +
+          (err instanceof Error ? err.message : String(err))
+      );
     }
   };
 
@@ -79,6 +99,9 @@ export default function AddGig() {
         className={styles.fields}
         noValidate
       >
+        <h2 className={styles.formTitle}>
+          {isEditMode ? 'Muokkaa keikkaa' : 'Lisää uusi keikka'}
+        </h2>
         <HookFormInput
           label="Päivänmäärä"
           name="date"
@@ -148,7 +171,7 @@ export default function AddGig() {
         />
 
         <button type="submit" className={styles.button}>
-          Tallenna
+          {isEditMode ? 'Tallenna muutokset' : 'Lisää keikka'}
         </button>
       </form>
     </div>

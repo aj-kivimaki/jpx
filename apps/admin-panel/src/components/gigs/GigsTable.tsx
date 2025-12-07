@@ -14,6 +14,7 @@ import {
 } from '@jpx/shared';
 import styles from './GigsTable.module.css';
 import { GigsCard } from '@jpx/ui';
+import { useGigStore } from '../../store/gigStore';
 
 dayjs.extend(customParseFormat);
 
@@ -26,6 +27,8 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [venueName, setVenueName] = useState<string | null>(null);
   const [formattedDate, setFormattedDate] = useState<string | null>(null);
+
+  const { setSelectedGigId } = useGigStore();
 
   const deleteGigMutation = useMutation<void, PostgrestError, string>({
     mutationFn: async (gigId: string) => {
@@ -42,7 +45,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
   }
 
   const handleEditClick = (id: string) => {
-    alert(`Muokkaa keikkaa id:llä ${id}`);
+    setSelectedGigId(id);
   };
 
   const handleDeleteClick = (

@@ -19,6 +19,13 @@
   font-size: 2rem;
 }
 
+.formTitle {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
 .fields {
   padding: 2rem;
 }
