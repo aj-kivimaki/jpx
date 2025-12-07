@@ -115,10 +115,11 @@ See [Frontend](./apps/frontend/README.md)
 ### Admin Panel (CMS)
 
 See [Admin Panel](./apps/admin-panel/README.md)
-| Feature | Description |
-| ------------------- | -------------------------------------------------------------- |
-| **Authentication** | `Secure Supabase login` ensuring only authorized admin access. |
-| **Gigs Management** | `Add and delete gig entries` (dates, locations, details). |
+
+| Feature             | Description                                                           |
+| ------------------- | --------------------------------------------------------------------- |
+| **Authentication**  | Secure Supabase `login` ensuring only authorized admin access.        |
+| **Gigs Management** | `Add`, `update` and `delete` gig entries (dates, locations, details). |
 
 ---
 
@@ -132,7 +133,9 @@ See [Admin Panel](./apps/admin-panel/README.md)
 
 **Database:** PostgreSQL (via Supabase)
 
-- Table: `gigs`
+- Tables: `gigs`, `lineup_options`
+
+<img src="assets/tables.webp" alt="Table schema" width="600" />
 
 **Authentication:** Google OAuth via Supabase
 
@@ -191,7 +194,6 @@ See [CI/CD](./docs/CI-CD.md)
 ### Sooner:
 
 ```properties
-- Edit gigs
 - Form / Login Feedback and validation & error handeling
   - react-toastify for success/error messages
 - Environment-Based Configuration (w/ zod schemas)
