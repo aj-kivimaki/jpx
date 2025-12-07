@@ -9,12 +9,12 @@ import styles from './GigCard.module.css';
 
 export interface GigCardProps {
   id: string;
-  formattedDate?: string;
+  formattedDate: string;
   formattedTime?: string;
-  dateTimeDate?: string;
+  dateTimeDate: string;
   dateTimeTime?: string;
-  weekdayAbbrev?: string;
-  lineup?: string;
+  weekdayAbbrev: string;
+  lineup: string;
   venue?: string;
   city?: string;
   notes?: string;

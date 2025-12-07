@@ -7,15 +7,15 @@ import HookFormSelect from './FormSelect';
 import { supabase } from '../../clients/supabaseClient';
 import { queryClient } from '../../clients/queryClient';
 import {
-  type DbGig,
   DbGigSchema,
-  lineupOptions,
+  fetchLineupOptions,
   addGig,
   QUERY_KEY_GIGS,
+  type NewGig,
+  type DbLineupOption,
 } from '@jpx/shared';
 import styles from './Form.module.css';
-
-type NewGig = Omit<DbGig, 'id'>;
+import { useEffect, useState } from 'react';
 
 export default function AddGig() {
   const {
@@ -24,8 +24,25 @@ export default function AddGig() {
     formState: { errors },
     reset,
   } = useForm<NewGig>({
-    resolver: zodResolver(DbGigSchema.omit({ id: true })),
+    resolver: zodResolver(
+      DbGigSchema.omit({
+        id: true,
+        lineup_en: true,
+        lineup_fi: true,
+        lineup: true,
+      })
+    ),
+    defaultValues: { lineup_id: '' },
   });
+
+  const [lineupOptions, setLineupOptions] = useState<DbLineupOption[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const lineup = await fetchLineupOptions(supabase);
+      setLineupOptions(lineup);
+    })();
+  }, []);
 
   const addGigMutation = useMutation({
     mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
@@ -43,12 +60,11 @@ export default function AddGig() {
     const payload = {
       date: data.date,
       time: data.time || null,
-      lineup_fi: data.lineup_fi,
-      lineup_en: data.lineup_en,
       venue: data.venue || null,
       city: data.city || null,
       notes_fi: data.notes_fi || null,
       notes_en: data.notes_en || null,
+      lineup_id: data.lineup_id,
     };
 
     try {
@@ -94,42 +110,36 @@ export default function AddGig() {
         />
 
         <HookFormSelect
-          label="Kokoonpano (FI)"
-          name="lineup_fi"
+          label="Kokoonpano"
+          name="lineup_id"
           options={lineupOptions}
-          register={{ ...register('lineup_fi') }}
+          register={{ ...register('lineup_id') }}
           required={true}
-          error={errors.lineup_fi?.message}
-        />
-
-        <HookFormSelect
-          label="Kokoonpano (EN)"
-          name="lineup_en"
-          options={lineupOptions}
-          register={{ ...register('lineup_en') }}
-          required={true}
-          error={errors.lineup_en?.message}
+          error={errors.lineup_id?.message}
         />
 
         <HookFormInput
           label="Keikkapaikka"
-          name="venue"
+          name="venuen nimi"
+          placeholder="venue"
           register={{ ...register('venue') }}
           required={false}
           error={errors.venue?.message}
         />
 
         <HookFormInput
-          label="Kaupunki"
+          label="Paikkakunta"
           name="city"
+          placeholder="pitäjä"
           register={{ ...register('city') }}
           required={false}
           error={errors.city?.message}
         />
 
         <HookFormInput
-          label="Huomioitavaa (FI)"
+          label="Huomioitavaa 🇫🇮"
           name="notes_fi"
+          placeholder="jos on jotain erityistä sanottavaa"
           type="textarea"
           register={{ ...register('notes_fi') }}
           required={false}
@@ -137,8 +147,9 @@ export default function AddGig() {
         />
 
         <HookFormInput
-          label="Huomioitavaa (EN)"
+          label="Huomioitavaa 🇬🇧"
           name="notes_en"
+          placeholder="... ja laita englanniksikin jotain"
           type="textarea"
           register={{ ...register('notes_en') }}
           required={false}

@@ -78,7 +78,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           dateTimeDate,
           dateTimeTime,
           weekdayAbbrev,
-          lineup_fi,
+          lineup,
           venue,
           city,
           notes_fi,
@@ -86,12 +86,12 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           <GigsCard
             key={id}
             id={id}
-            formattedDate={formattedDate}
+            formattedDate={formattedDate ?? ''}
             formattedTime={formattedTime ?? undefined}
-            dateTimeDate={dateTimeDate}
-            dateTimeTime={dateTimeTime}
-            weekdayAbbrev={weekdayAbbrev}
-            lineup={lineup_fi}
+            dateTimeDate={dateTimeDate ?? ''}
+            dateTimeTime={dateTimeTime ?? undefined}
+            weekdayAbbrev={weekdayAbbrev ?? ''}
+            lineup={lineup.name_fi}
             venue={venue ?? undefined}
             city={city ?? undefined}
             notes={notes_fi ?? undefined}
