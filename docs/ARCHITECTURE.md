@@ -2,7 +2,7 @@
 
 # 🏗️ Monorepo Architecture
 
-> <p style='text-wrap: balance'>This project is a TypeScript-based full-stack monorepo organized using modern, production-grade architectural patterns. The codebase includes shared packages and independent applications (<strong>frontend</strong> and <strong>admin</strong> panel), while integrating with an external backend service (Supabase). This structure makes the project scalable, maintainable, and easy to reason about as it grows.</p>
+> This project is a TypeScript-based full-stack monorepo organized using modern, production-grade architectural patterns. The codebase includes shared packages and independent applications (**frontend** and **admin** panel), while integrating with an external backend service (Supabase). This structure makes the project scalable, maintainable, and easy to reason about as it grows.
 
 ```mermaid
 graph TD
