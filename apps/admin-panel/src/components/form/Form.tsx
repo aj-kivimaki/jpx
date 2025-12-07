@@ -12,10 +12,10 @@ import {
   addGig,
   QUERY_KEY_GIGS,
   type NewGig,
+  type DbLineupOption,
 } from '@jpx/shared';
 import styles from './Form.module.css';
 import { useEffect, useState } from 'react';
-import { type DbLineupOption } from '@jpx/shared';
 
 export default function AddGig() {
   const {
