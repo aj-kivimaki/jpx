@@ -6,7 +6,7 @@ import {
   QUERY_STALE_TIME_MS,
 } from '../../../schemas';
 import { fetchLineupOptions } from '../querys/lineupOptions';
-import type { DbLineupOption } from '@shared/index';
+import type { DbLineupOption } from '../../../types';
 
 export const lineupQueryOptions = (
   client: SupabaseClient

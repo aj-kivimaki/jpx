@@ -6,7 +6,7 @@ import {
   QUERY_REFETCH_TIMES,
   QUERY_STALE_TIME_MS,
 } from '../../../schemas';
-import type { DbGig } from '@shared/types';
+import type { DbGig } from '../../../types';
 
 export const gigsQueryOptions = (
   client: SupabaseClient
