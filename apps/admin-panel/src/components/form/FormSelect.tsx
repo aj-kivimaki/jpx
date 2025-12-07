@@ -1,10 +1,11 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import styles from './FormSelect.module.css';
+import type { DbLineupOption } from '@jpx/shared';
 
 interface FormSelectProps {
   label: string;
   name: string;
-  options: readonly string[];
+  options: DbLineupOption[];
   register: UseFormRegisterReturn;
   required: boolean;
   error?: string;
@@ -34,8 +35,8 @@ const FormSelect: React.FC<FormSelectProps> = ({
         </option>
 
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+          <option key={option.id} value={option.id}>
+            {option.name_fi}
           </option>
         ))}
       </select>

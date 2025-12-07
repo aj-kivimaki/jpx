@@ -10,10 +10,10 @@ interface GigsTableProps {
   gigs: DbGig[];
 }
 
-interface LocalizedGig extends BaseParsedGig {
-  lineup: string; // localized lineup
-  notes: string; // localized notes
-}
+type LocalizedGig = Omit<BaseParsedGig, 'lineup' | 'notes'> & {
+  lineup: string;
+  notes: string;
+};
 
 const GigsTable = ({ gigs }: GigsTableProps) => {
   const localize = useLocalized();
@@ -24,7 +24,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
 
   const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => ({
     ...gig,
-    lineup: localize({ fi: gig.lineup_fi, en: gig.lineup_en }),
+    lineup: localize({ fi: gig.lineup.name_fi, en: gig.lineup.name_en }),
     notes: localize({ fi: gig.notes_fi, en: gig.notes_en }),
   }));
 
@@ -46,11 +46,11 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           <GigsCard
             key={id}
             id={id}
-            formattedDate={formattedDate}
+            formattedDate={formattedDate ?? ''}
             formattedTime={formattedTime ?? undefined}
-            dateTimeDate={dateTimeDate}
-            dateTimeTime={dateTimeTime}
-            weekdayAbbrev={weekdayAbbrev}
+            dateTimeDate={dateTimeDate ?? ''}
+            dateTimeTime={dateTimeTime ?? undefined}
+            weekdayAbbrev={weekdayAbbrev ?? ''}
             lineup={lineup}
             venue={venue ?? undefined}
             city={city ?? undefined}
