@@ -5,6 +5,8 @@
 
 .bannerImg {
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .overlay {
@@ -36,5 +38,9 @@
     width: 100%;
     padding: 1rem 0;
     left: 0;
+  }
+
+  .bannerImg {
+    aspect-ratio: 3 / 4;
   }
 }
