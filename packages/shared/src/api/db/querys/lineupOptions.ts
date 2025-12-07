@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { DbLineupOption } from '../types/config/lineup.options';
+import type { DbLineupOption } from '../../../types/config/lineup.options';
 
 export const fetchLineupOptions = async (
   client: SupabaseClient

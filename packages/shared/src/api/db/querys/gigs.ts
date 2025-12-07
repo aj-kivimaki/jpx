@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { DbGig, NewGig } from '../types';
+import type { DbGig, NewGig } from '../../../types';
 
 export const fetchGigs = async (client: SupabaseClient): Promise<DbGig[]> => {
   const { data, error } = await client
