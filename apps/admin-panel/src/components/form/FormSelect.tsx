@@ -38,14 +38,14 @@ const FormSelect: React.FC<FormSelectProps> = ({
 
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={label}>
         {label}
       </label>
 
       {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
       <select
-        id={name}
+        id={label}
         className={styles.select}
         {...register}
         disabled={isDisabled}

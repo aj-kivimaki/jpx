@@ -28,14 +28,14 @@ const FormInput = ({
   }
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={label}>
         {label}
       </label>
       {error && <p>{error}</p>}
       {type === 'textarea' ? (
         <textarea
           {...register}
-          id={name}
+          id={label}
           name={name}
           rows={rows || 3}
           placeholder={placeholder}
@@ -44,6 +44,8 @@ const FormInput = ({
       ) : (
         <input
           {...register}
+          id={label}
+          name={name}
           placeholder={placeholder}
           type={type}
           className={styles.input}
