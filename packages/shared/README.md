@@ -38,8 +38,7 @@ Fetches all gigs from the database, ordered by date.
 ```typescript
 import { fetchGigs } from '@jpx/shared';
 
-const gigs = await fetchGigs(supabaseClient);
-// Returns: DbGig[]
+const gigs: DbGig[] = await fetchGigs(supabaseClient);
 ```
 
 #### `addGig(client: SupabaseClient, gig: NewGig): Promise<DbGig[]>`
@@ -49,15 +48,16 @@ Adds a new gig to the database.
 ```typescript
 import { addGig, type NewGig } from '@jpx/shared';
 
+// `lineup_id` references the lookup table (lineup_options),
+// keeping creation simple and data consistent.
 const newGig: NewGig = {
   date: '2025-12-02',
-  lineup_fi: 'Artist Name',
-  lineup_en: 'Artist Name',
   venue: 'Venue Name',
   city: 'City Name',
   notes_fi: null,
   notes_en: null,
   time: '20:30:00',
+  lineup_id: 'options_id', // FK to `lineup_options` (string id)
 };
 
 const addedGigs = await addGig(supabaseClient, newGig);
@@ -93,11 +93,18 @@ await deleteGig(supabaseClient, 'gig-uuid');
 Database representation of a gig with all fields.
 
 ```typescript
+// Gigs include a `lineup_id`. The database and shared API support
+// a nested `lineup` object which holds the resolved lineup option details.
+
 interface DbGig {
   id: string; // UUID
   date: string; // Date string (YYYY-MM-DD)
-  lineup_fi: string; // Finnish lineup
-  lineup_en: string; // English lineup
+  lineup_id: string; // FK to `lineup_options` (string id)
+  lineup: {
+    id: string;
+    name_fi: string;
+    name_en: string;
+  };
   venue: string | null; // Venue name
   city: string | null; // City name
   notes_fi: string | null; // Finnish notes
@@ -108,10 +115,10 @@ interface DbGig {
 
 ### `NewGig`
 
-Type for creating new gigs (excludes auto-generated `id`).
+Type for creating new gigs (excludes auto-generated `id` and `lineup` lookup table data).
 
 ```typescript
-type NewGig = Omit<DbGig, 'id'>;
+type NewGig = Omit<DbGig, 'id' | 'lineup'>;
 ```
 
 ### `ParsedGig`

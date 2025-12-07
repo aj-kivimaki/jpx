@@ -7,8 +7,6 @@ export const fetchGigs = async (client: SupabaseClient): Promise<DbGig[]> => {
     .select('*, lineup:lineup_options(name_en, name_fi)')
     .order('date');
 
-  console.log('Fetched gigs:', data);
-
   if (error) throw error;
   return data ?? [];
 };

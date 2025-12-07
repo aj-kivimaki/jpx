@@ -1,14 +1,14 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
-import { fetchGigs } from './gigs';
 import {
   VALIDATED_KEYS,
   QUERY_REFETCH_TIMES,
   QUERY_STALE_TIME_MS,
 } from '../schemas';
+import { fetchLineupOptions } from './lineup.options';
 
-export const gigsQueryOptions = (client: SupabaseClient) => ({
-  queryKey: [VALIDATED_KEYS.GIGS],
-  queryFn: () => fetchGigs(client),
+export const lineupQueryOptions = (client: SupabaseClient) => ({
+  queryKey: [VALIDATED_KEYS.LINEUP_OPTIONS],
+  queryFn: () => fetchLineupOptions(client),
   staleTime: QUERY_STALE_TIME_MS,
   retry: QUERY_REFETCH_TIMES,
   refetchOnWindowFocus: false,

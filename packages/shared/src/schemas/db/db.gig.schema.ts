@@ -9,8 +9,6 @@ export const DbGigSchema = z.object({
   notes_en: z.string().nullable(),
   time: z.string().nullable(),
   lineup_id: z.string(),
-  lineup_en: z.string(),
-  lineup_fi: z.string(),
   lineup: z.object({
     id: z.string(),
     name_en: z.string(),

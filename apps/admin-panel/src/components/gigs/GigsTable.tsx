@@ -10,7 +10,7 @@ import {
   type ParsedGig,
   deleteGig,
   parseGigDates,
-  QUERY_KEY_GIGS,
+  VALIDATED_KEYS,
 } from '@jpx/shared';
 import styles from './GigsTable.module.css';
 import { GigsCard } from '@jpx/ui';
@@ -32,7 +32,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
       await deleteGig(supabase, gigId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY_GIGS });
+      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
     onError: (err) => console.error(err),
   });

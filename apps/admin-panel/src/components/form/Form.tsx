@@ -10,7 +10,7 @@ import {
   DbGigSchema,
   fetchLineupOptions,
   addGig,
-  QUERY_KEY_GIGS,
+  VALIDATED_KEYS,
   type NewGig,
   type DbLineupOption,
 } from '@jpx/shared';
@@ -24,14 +24,7 @@ export default function AddGig() {
     formState: { errors },
     reset,
   } = useForm<NewGig>({
-    resolver: zodResolver(
-      DbGigSchema.omit({
-        id: true,
-        lineup_en: true,
-        lineup_fi: true,
-        lineup: true,
-      })
-    ),
+    resolver: zodResolver(DbGigSchema.omit({ id: true, lineup: true })),
     defaultValues: { lineup_id: '' },
   });
 
@@ -48,7 +41,7 @@ export default function AddGig() {
     mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY_GIGS });
+      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
 
     onError: (error) => {
@@ -139,7 +132,7 @@ export default function AddGig() {
         <HookFormInput
           label="Huomioitavaa 🇫🇮"
           name="notes_fi"
-          placeholder="jos on jotain erityistä sanottavaa"
+          placeholder="jos on jotain erityistä huomautettavaa..."
           type="textarea"
           register={{ ...register('notes_fi') }}
           required={false}
@@ -149,7 +142,7 @@ export default function AddGig() {
         <HookFormInput
           label="Huomioitavaa 🇬🇧"
           name="notes_en"
-          placeholder="... ja laita englanniksikin jotain"
+          placeholder="...niin laita englanniksikin jotain!"
           type="textarea"
           register={{ ...register('notes_en') }}
           required={false}
