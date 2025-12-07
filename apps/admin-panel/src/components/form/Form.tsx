@@ -130,7 +130,6 @@ export default function AddGig() {
 
         <HookFormSelect
           label="Kokoonpano"
-          name="lineup_id"
           isLoading={isLoading}
           options={lineupOptions || []}
           register={{ ...register('lineup_id') }}
