@@ -75,9 +75,8 @@ export default function AddGig() {
 
       setSelectedGigId(null);
       reset();
-      queryClient.invalidateQueries({ queryKey: ['gigs'] });
+      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     } catch (err: unknown) {
-      console.error(err);
       alert(
         'Error saving gig: ' +
           (err instanceof Error ? err.message : String(err))

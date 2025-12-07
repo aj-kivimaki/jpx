@@ -14,7 +14,6 @@ const GoogleSignInButton = ({ client }: { client: SupabaseClient }) => {
 
     try {
       await googleSignIn(client);
-      console.log('Signed in successfully');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
