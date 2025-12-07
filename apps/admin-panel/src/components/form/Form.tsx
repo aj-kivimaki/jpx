@@ -20,6 +20,8 @@ import { useGigStore } from '../../store/gigStore';
 import styles from './Form.module.css';
 import { useEffect } from 'react';
 
+const defaultValue = { lineup_id: '' };
+
 export default function AddGig() {
   const {
     register,
@@ -28,7 +30,7 @@ export default function AddGig() {
     reset,
   } = useForm<NewGig>({
     resolver: zodResolver(DbGigSchema.omit({ id: true, lineup: true })),
-    defaultValues: { lineup_id: '' },
+    defaultValues: defaultValue,
   });
 
   const {
@@ -83,6 +85,11 @@ export default function AddGig() {
     }
   };
 
+  const handleCancelEdit = () => {
+    setSelectedGigId(null);
+    reset(defaultValue);
+  };
+
   const handleFormError = (errors: Record<string, unknown>) =>
     console.log('[HookForm] validation errors on submit:', errors);
 
@@ -105,6 +112,7 @@ export default function AddGig() {
         <HookFormInput
           label="Päivänmäärä"
           name="date"
+          placeholder="valitse päivä"
           type="date"
           register={{ ...register('date') }}
           required={true}
@@ -114,6 +122,7 @@ export default function AddGig() {
         <HookFormInput
           label="Kellonaika"
           name="time"
+          placeholder="lisää kellonaika"
           type="time"
           register={{ ...register('time') }}
           required={false}
@@ -170,9 +179,21 @@ export default function AddGig() {
           error={hookFormErrors.notes_en?.message}
         />
 
-        <button type="submit" className={styles.button}>
-          {isEditMode ? 'Tallenna muutokset' : 'Lisää keikka'}
-        </button>
+        <div className={styles.buttons}>
+          <button type="submit" className={styles.button}>
+            {isEditMode ? 'Tallenna muutokset' : 'Lisää keikka'}
+          </button>
+
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={handleCancelEdit}
+              className={styles.cancelButton}
+            >
+              Peruuta muokkaus
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
