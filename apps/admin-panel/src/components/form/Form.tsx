@@ -19,7 +19,7 @@ export default function AddGig() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors: hookFormErrors },
     reset,
   } = useForm<NewGig>({
     resolver: zodResolver(DbGigSchema.omit({ id: true, lineup: true })),
@@ -28,8 +28,8 @@ export default function AddGig() {
 
   const {
     data: lineupOptions,
-    isLoading: isLineupLoading,
-    error: lineupError,
+    isLoading,
+    error: reactQueryError,
   } = useQuery(lineupQueryOptions(supabase));
 
   const addGigMutation = useMutation({
@@ -85,7 +85,7 @@ export default function AddGig() {
           type="date"
           register={{ ...register('date') }}
           required={true}
-          error={errors.date?.message}
+          error={hookFormErrors.date?.message}
         />
 
         <HookFormInput
@@ -94,19 +94,19 @@ export default function AddGig() {
           type="time"
           register={{ ...register('time') }}
           required={false}
-          error={errors.time?.message}
+          error={hookFormErrors.time?.message}
         />
 
         <HookFormSelect
           label="Kokoonpano"
           name="lineup_id"
-          error={
-            errors.lineup_id?.message ||
-            (lineupError ? 'Vaihtoehtojen lataus epäonnistui' : undefined)
-          }
-          options={isLineupLoading ? [] : lineupOptions || []}
+          isLoading={isLoading}
+          options={lineupOptions || []}
           register={{ ...register('lineup_id') }}
           required={true}
+          disabled={isLoading || !!reactQueryError}
+          reactQueryError={reactQueryError}
+          hookFormError={hookFormErrors.lineup_id?.message}
         />
 
         <HookFormInput
@@ -115,7 +115,7 @@ export default function AddGig() {
           placeholder="venue"
           register={{ ...register('venue') }}
           required={false}
-          error={errors.venue?.message}
+          error={hookFormErrors.venue?.message}
         />
 
         <HookFormInput
@@ -124,7 +124,7 @@ export default function AddGig() {
           placeholder="pitäjä"
           register={{ ...register('city') }}
           required={false}
-          error={errors.city?.message}
+          error={hookFormErrors.city?.message}
         />
 
         <HookFormInput
@@ -134,7 +134,7 @@ export default function AddGig() {
           type="textarea"
           register={{ ...register('notes_fi') }}
           required={false}
-          error={errors.notes_fi?.message}
+          error={hookFormErrors.notes_fi?.message}
         />
 
         <HookFormInput
@@ -144,7 +144,7 @@ export default function AddGig() {
           type="textarea"
           register={{ ...register('notes_en') }}
           required={false}
-          error={errors.notes_en?.message}
+          error={hookFormErrors.notes_en?.message}
         />
 
         <button type="submit" className={styles.button}>

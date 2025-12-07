@@ -8,7 +8,10 @@ interface FormSelectProps {
   options: DbLineupOption[];
   register: UseFormRegisterReturn;
   required: boolean;
-  error?: string;
+  hookFormError?: string;
+  reactQueryError?: Error | null;
+  disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -17,28 +20,47 @@ const FormSelect: React.FC<FormSelectProps> = ({
   options,
   register,
   required,
-  error,
+  hookFormError,
+  reactQueryError,
+  disabled,
+  isLoading,
 }) => {
-  if (required) {
-    label = label + ' *';
-  }
+  if (required) label += ' *';
+
+  let placeholder = 'Valitse kokoonpano';
+  if (isLoading) placeholder = 'Ladataan vaihtoehtoja…';
+  else if (reactQueryError) placeholder = 'Virhe ladattaessa';
+
+  const isDisabled = disabled || isLoading || !!reactQueryError;
+  const errorMessage =
+    hookFormError ||
+    (reactQueryError ? 'Vaihtoehtojen lataus epäonnistui' : undefined);
 
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
-      {error && <p>{error}</p>}
-      <select id={name} className={styles.select} {...register}>
+
+      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
+      <select
+        id={name}
+        className={styles.select}
+        {...register}
+        disabled={isDisabled}
+      >
         <option value="" disabled hidden>
-          Valitse kokoonpano
+          {placeholder}
         </option>
 
-        {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.name_fi}
-          </option>
-        ))}
+        {!isLoading &&
+          !reactQueryError &&
+          options.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.name_fi}
+            </option>
+          ))}
       </select>
     </div>
   );
