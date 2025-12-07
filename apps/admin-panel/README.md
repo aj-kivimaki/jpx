@@ -147,3 +147,9 @@ npm run test
 - **UI Package**: Imports reusable components from `@jpx/ui`
 - **Frontend App**: Admin changes sync with public artist site
 - **Supabase**: Centralized data storage and authentication
+
+## Installing new packages
+
+```bash
+npm install _package_name_ --workspace=admin-panel
+```
