@@ -4,7 +4,6 @@ import type { DbLineupOption } from '@jpx/shared';
 
 interface FormSelectProps {
   label: string;
-  name: string;
   options: DbLineupOption[];
   register: UseFormRegisterReturn;
   required: boolean;
@@ -16,7 +15,6 @@ interface FormSelectProps {
 
 const FormSelect: React.FC<FormSelectProps> = ({
   label,
-  name,
   options,
   register,
   required,
@@ -38,14 +36,14 @@ const FormSelect: React.FC<FormSelectProps> = ({
 
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={label}>
         {label}
       </label>
 
       {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
       <select
-        id={name}
+        id={label}
         className={styles.select}
         {...register}
         disabled={isDisabled}

@@ -110,7 +110,6 @@ export default function AddGig() {
         </h2>
         <HookFormInput
           label="Päivänmäärä"
-          name="date"
           placeholder="valitse päivä"
           type="date"
           register={{ ...register('date') }}
@@ -120,7 +119,6 @@ export default function AddGig() {
 
         <HookFormInput
           label="Kellonaika"
-          name="time"
           placeholder="lisää kellonaika"
           type="time"
           register={{ ...register('time') }}
@@ -130,7 +128,6 @@ export default function AddGig() {
 
         <HookFormSelect
           label="Kokoonpano"
-          name="lineup_id"
           isLoading={isLoading}
           options={lineupOptions || []}
           register={{ ...register('lineup_id') }}
@@ -142,7 +139,6 @@ export default function AddGig() {
 
         <HookFormInput
           label="Keikkapaikka"
-          name="venuen nimi"
           placeholder="venue"
           register={{ ...register('venue') }}
           required={false}
@@ -151,7 +147,6 @@ export default function AddGig() {
 
         <HookFormInput
           label="Paikkakunta"
-          name="city"
           placeholder="pitäjä"
           register={{ ...register('city') }}
           required={false}
@@ -160,7 +155,6 @@ export default function AddGig() {
 
         <HookFormInput
           label="Huomioitavaa 🇫🇮"
-          name="notes_fi"
           placeholder="Jos on jotain erityistä huomautettavaa..."
           type="textarea"
           register={{ ...register('notes_fi') }}
@@ -170,7 +164,6 @@ export default function AddGig() {
 
         <HookFormInput
           label="Huomioitavaa 🇬🇧"
-          name="notes_en"
           placeholder="...niin laita englanniksikin jotain!"
           type="textarea"
           register={{ ...register('notes_en') }}

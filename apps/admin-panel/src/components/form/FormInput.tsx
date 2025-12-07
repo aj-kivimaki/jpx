@@ -4,7 +4,6 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 
 interface FormInputProps {
   label: string;
-  name: string;
   register: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
   rows?: number;
@@ -15,7 +14,6 @@ interface FormInputProps {
 
 const FormInput = ({
   label,
-  name,
   register,
   type = 'text',
   rows,
@@ -28,15 +26,14 @@ const FormInput = ({
   }
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={label}>
         {label}
       </label>
       {error && <p>{error}</p>}
       {type === 'textarea' ? (
         <textarea
           {...register}
-          id={name}
-          name={name}
+          id={label}
           rows={rows || 3}
           placeholder={placeholder}
           className={styles.textarea}
@@ -44,6 +41,7 @@ const FormInput = ({
       ) : (
         <input
           {...register}
+          id={label}
           placeholder={placeholder}
           type={type}
           className={styles.input}
