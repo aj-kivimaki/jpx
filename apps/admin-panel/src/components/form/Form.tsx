@@ -7,18 +7,15 @@ import HookFormSelect from './FormSelect';
 import { supabase } from '../../clients/supabaseClient';
 import { queryClient } from '../../clients/queryClient';
 import {
-  type DbGig,
   DbGigSchema,
   fetchLineupOptions,
   addGig,
   QUERY_KEY_GIGS,
+  type NewGig,
 } from '@jpx/shared';
 import styles from './Form.module.css';
 import { useEffect, useState } from 'react';
 import { type DbLineupOption } from '@jpx/shared';
-
-type NewGig = Omit<DbGig, 'id' | 'lineup_en' | 'lineup_fi' | 'lineup'>;
-// DB creates id, lineup names are derived from lineup_id
 
 export default function AddGig() {
   const {
