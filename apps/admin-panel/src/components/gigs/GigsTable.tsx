@@ -13,6 +13,8 @@ import {
   VALIDATED_KEYS,
   scrollToTop,
 } from '@jpx/shared';
+import { useToastify } from '../../hooks/useToastify';
+import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
 import { GigsCard } from '@jpx/ui';
 import styles from './GigsTable.module.css';
 
@@ -37,8 +39,16 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
-    onError: (err) => console.error(err),
+    onError: (err: unknown) => {
+      const handled = mapAppErrorToFormErrors(err, undefined, toastError);
+      if (handled) return;
+
+      console.error(err);
+      toastError(err instanceof Error ? err.message : 'Tuntematon virhe');
+    },
   });
+
+  const { success: toastSuccess, error: toastError } = useToastify();
 
   if (!gigs?.length) {
     return <p>Ei keikkoja</p>;
@@ -62,7 +72,11 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
 
   const handleConfirm = () => {
     if (!selectedId) return;
-    deleteGigMutation.mutate(selectedId);
+    deleteGigMutation.mutate(selectedId, {
+      onSuccess: () => {
+        toastSuccess('Keikka poistettu');
+      },
+    });
     dialogRef.current?.close();
   };
 

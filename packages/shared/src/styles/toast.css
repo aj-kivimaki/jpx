@@ -1,0 +1,7 @@
+/* Re-export React-Toastify styles so apps can import a single shared module.
+   This lets you import toast styles like other project CSS:
+   `import '@jpx/shared/styles/toast.css'`
+
+   If you need to customize variables, override them in your app's CSS after importing this file.
+*/
+@import 'react-toastify/dist/ReactToastify.css';

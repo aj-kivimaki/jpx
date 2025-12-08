@@ -16,6 +16,9 @@ import {
   updateGig,
 } from '@jpx/shared';
 import { useGigStore } from '../../store';
+import { useToastify } from '../../hooks/useToastify';
+import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
+import { sanitizeGigInput } from '../../utils/sanitizeGigInput';
 import styles from './GigForm.module.css';
 
 const defaultValue: Partial<GigInsert> = { lineup_id: '' };
@@ -33,12 +36,15 @@ export default function GigForm() {
     handleSubmit,
     setFocus,
     formState: { errors: hookFormErrors },
+    setError,
     reset,
   } = useForm<GigInsert>({
     resolver: formResolver,
     defaultValues: defaultValue,
     shouldFocusError: true,
   });
+
+  const { success: toastSuccess, error: toastError } = useToastify();
 
   const {
     data: lineupOptions,
@@ -74,21 +80,26 @@ export default function GigForm() {
 
   const handleFormSubmit = async (data: GigInsert) => {
     try {
+      const sanitized = sanitizeGigInput(data);
+
       if (isEditMode) {
         if (!selectedGigId) return;
-        await updateGig(supabase, selectedGigId, data);
+        await updateGig(supabase, selectedGigId, sanitized);
+        toastSuccess('Keikka päivitetty');
       } else {
-        await addGigMutation.mutateAsync(data);
+        await addGigMutation.mutateAsync(sanitized);
+        toastSuccess('Keikka lisätty');
       }
 
       setSelectedGigId(null);
-      reset();
+      reset(defaultValue);
       queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     } catch (err: unknown) {
-      alert(
-        'Error saving gig: ' +
-          (err instanceof Error ? err.message : String(err))
-      );
+      const handled = mapAppErrorToFormErrors(err, setError, toastError);
+      if (handled) return;
+
+      // Fallback for unexpected errors
+      toastError(err instanceof Error ? err.message : String(err));
     }
   };
 
