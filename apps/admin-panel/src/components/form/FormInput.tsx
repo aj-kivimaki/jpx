@@ -27,9 +27,9 @@ const FormInput = ({
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={label}>
-        {label}
+        {!error ? <p>{label}</p> : <p className={styles.error}>{error}</p>}
       </label>
-      {error && <p>{error}</p>}
+
       {type === 'textarea' ? (
         <textarea
           {...register}

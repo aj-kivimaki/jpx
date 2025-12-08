@@ -1,1 +1,2 @@
-export * from './db.gig.schema';
+export * from './gigs';
+export * from './lineup_options';

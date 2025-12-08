@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { LineupModelSchema } from '../lineup_options';
 
-export const DbGigSchema = z.object({
+export const GigModelSchema = z.object({
   id: z.string().uuid(),
   date: z.string(),
   venue: z.string().nullable(),
@@ -9,11 +10,5 @@ export const DbGigSchema = z.object({
   notes_en: z.string().nullable(),
   time: z.string().nullable(),
   lineup_id: z.string(),
-  lineup: z.object({
-    id: z.string(),
-    name_en: z.string(),
-    name_fi: z.string(),
-  }),
+  lineup: LineupModelSchema.optional(), // only present if selected
 });
-
-export const GigsFormSchema = z.array(DbGigSchema);

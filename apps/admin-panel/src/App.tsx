@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import { supabase } from './clients/supabaseClient';
+import { supabase } from './clients';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import PrivateRoute from './components/auth/PrivateRoute';

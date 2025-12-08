@@ -5,7 +5,7 @@ import {
   QUERY_REFETCH_TIMES,
   QUERY_STALE_TIME_MS,
 } from '../../../schemas';
-import { fetchLineupOptions } from '../querys/lineupOptions';
+import { fetchLineupOptions } from '../querys';
 import type { DbLineupOption } from '../../../types';
 
 export const lineupQueryOptions = (

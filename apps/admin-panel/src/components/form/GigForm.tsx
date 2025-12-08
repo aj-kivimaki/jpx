@@ -1,35 +1,40 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-import { supabase } from '../../clients/supabaseClient';
-import { queryClient } from '../../clients/queryClient';
+import { supabase, queryClient } from '../../clients';
 import {
-  DbGigSchema,
-  addGig,
   VALIDATED_KEYS,
   lineupQueryOptions,
-  type NewGig,
-  fetchGigById,
-  type UpdateGig,
+  type GigInsert,
+  GigInsertSchema,
+  getGigById,
+  createGig,
   updateGig,
 } from '@jpx/shared';
-import { useGigStore } from '../../store/gigStore';
-import styles from './Form.module.css';
-import { useEffect } from 'react';
+import { useGigStore } from '../../store';
+import styles from './GigForm.module.css';
 
-const defaultValue = { lineup_id: '' };
+const defaultValue: Partial<GigInsert> = { lineup_id: '' };
 
-export default function AddGig() {
+export default function GigForm() {
+  const { selectedGigId, setSelectedGigId } = useGigStore();
+  const isEditMode = Boolean(selectedGigId);
+
+  const formResolver = zodResolver(
+    GigInsertSchema
+  ) as unknown as Resolver<GigInsert>;
+
   const {
     register,
     handleSubmit,
     formState: { errors: hookFormErrors },
     reset,
-  } = useForm<NewGig>({
-    resolver: zodResolver(DbGigSchema.omit({ id: true, lineup: true })),
+  } = useForm<GigInsert>({
+    resolver: formResolver,
     defaultValues: defaultValue,
   });
 
@@ -39,9 +44,6 @@ export default function AddGig() {
     error: reactQueryError,
   } = useQuery(lineupQueryOptions(supabase));
 
-  const { selectedGigId, setSelectedGigId } = useGigStore();
-  const isEditMode = Boolean(selectedGigId);
-
   useEffect(() => {
     if (!selectedGigId) {
       reset();
@@ -49,7 +51,7 @@ export default function AddGig() {
     }
 
     const fetchGigAndResetForm = async () => {
-      const data = await fetchGigById(supabase, selectedGigId);
+      const data = await getGigById(supabase, selectedGigId);
 
       reset(data);
     };
@@ -57,18 +59,18 @@ export default function AddGig() {
   }, [selectedGigId, reset]);
 
   const addGigMutation = useMutation({
-    mutationFn: (newGig: NewGig) => addGig(supabase, newGig),
+    mutationFn: (newGig: GigInsert) => createGig(supabase, newGig),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
   });
 
-  const handleFormSubmit = async (data: NewGig) => {
+  const handleFormSubmit = async (data: GigInsert) => {
     try {
       if (isEditMode) {
-        const payload = { ...data, id: selectedGigId } as UpdateGig;
-        await updateGig(supabase, payload);
+        if (!selectedGigId) return;
+        await updateGig(supabase, selectedGigId, data);
       } else {
         await addGigMutation.mutateAsync(data);
       }

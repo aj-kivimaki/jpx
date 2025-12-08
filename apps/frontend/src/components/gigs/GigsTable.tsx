@@ -24,7 +24,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
 
   const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => ({
     ...gig,
-    lineup: localize({ fi: gig.lineup.name_fi, en: gig.lineup.name_en }),
+    lineup: localize({ fi: gig.lineup?.name_fi, en: gig.lineup?.name_en }),
     notes: localize({ fi: gig.notes_fi, en: gig.notes_en }),
   }));
 

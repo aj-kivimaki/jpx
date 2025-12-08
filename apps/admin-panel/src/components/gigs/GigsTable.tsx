@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../clients/queryClient';
+import { queryClient, supabase } from '../../clients';
 import type { PostgrestError } from '@supabase/supabase-js';
-import { supabase } from '../../clients/supabaseClient';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useGigStore } from '../../store';
 import {
   type DbGig,
   type ParsedGig,
@@ -12,9 +12,8 @@ import {
   parseGigDates,
   VALIDATED_KEYS,
 } from '@jpx/shared';
-import styles from './GigsTable.module.css';
 import { GigsCard } from '@jpx/ui';
-import { useGigStore } from '../../store/gigStore';
+import styles from './GigsTable.module.css';
 
 dayjs.extend(customParseFormat);
 
@@ -94,7 +93,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             dateTimeDate={dateTimeDate ?? ''}
             dateTimeTime={dateTimeTime ?? undefined}
             weekdayAbbrev={weekdayAbbrev ?? ''}
-            lineup={lineup.name_fi}
+            lineup={lineup?.name_fi ?? ''}
             venue={venue ?? undefined}
             city={city ?? undefined}
             notes={notes_fi ?? undefined}

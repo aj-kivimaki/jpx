@@ -8,7 +8,7 @@ import {
 } from '@jpx/shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
-import { supabase } from '../../clients/supabaseClient';
+import { supabase } from '../../clients';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 
 const Gigs = () => {

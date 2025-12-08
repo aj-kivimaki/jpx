@@ -1,5 +1,5 @@
 import styles from './Home.module.css';
-import Form from '../components/form/Form';
+import Form from '../components/form/GigForm';
 import Gigs from '../components/gigs/Gigs';
 
 const Home = () => {

@@ -37,10 +37,12 @@ const FormSelect: React.FC<FormSelectProps> = ({
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={label}>
-        {label}
+        {!errorMessage ? (
+          <p>{label}</p>
+        ) : (
+          <p className={styles.error}>{errorMessage}</p>
+        )}
       </label>
-
-      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
       <select
         id={label}

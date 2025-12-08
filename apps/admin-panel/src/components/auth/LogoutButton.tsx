@@ -1,4 +1,4 @@
-import { supabase } from '../../clients/supabaseClient';
+import { supabase } from '../../clients';
 import { MdLogout } from 'react-icons/md';
 import { signOut } from '@jpx/shared';
 import styles from './LogoutButton.module.css';

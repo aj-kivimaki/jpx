@@ -1,11 +1,14 @@
 import { z } from 'zod';
 
+const TRESHOLD = 75;
+const LABEL = 'scroll';
+
 export const scrollConfig = {
-  threshold: 75,
-  label: 'scroll',
+  threshold: TRESHOLD,
+  label: LABEL,
 } as const;
 
 export const ScrollConfigSchema = z.object({
-  threshold: z.number(),
-  label: z.literal('scroll'),
+  threshold: z.number().int().nonnegative(),
+  label: z.literal(LABEL),
 });
