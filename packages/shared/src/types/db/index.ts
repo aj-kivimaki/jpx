@@ -1,1 +1,1 @@
-export * from './db.gig';
+export * from './gigs';

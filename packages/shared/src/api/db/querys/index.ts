@@ -1,2 +1,2 @@
 export * from './gigs';
-export * from './lineupOptions';
+export * from './lineup_options';
