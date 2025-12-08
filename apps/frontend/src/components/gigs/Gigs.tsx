@@ -30,7 +30,6 @@ const Gigs = () => {
   const gigsSection = sections.find((s): s is GigsSection => s.id === 'gigs');
 
   const title = localize(gigsSection?.title);
-  const loadingText = localize(gigsSection?.loadingText);
 
   return (
     <div id={sectionIds.gigs} className={styles.gigs}>
