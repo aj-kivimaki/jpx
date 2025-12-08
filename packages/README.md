@@ -36,3 +36,14 @@ npm run clean
 # Build the UI package
 npm run build
 ```
+
+## Monorepo & Build
+
+This repository uses npm workspaces and `turbo` to orchestrate builds across packages and apps. Use the root-level scripts (see `package.json`) to run builds, tests, and checks across the monorepo.
+
+Example:
+
+```bash
+# From repo root
+npm run build   # runs turbo to build packages and apps
+```

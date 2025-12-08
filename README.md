@@ -55,28 +55,32 @@
 
 ## Tech Stack
 
-| Layer            | Technology                                                |
-| ---------------- | --------------------------------------------------------- |
-| **Frontend**     | `Vite` • `React` • `TypeScript` • `CSS Modules`           |
-| **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security`)  |
-| **Database**     | `PostgreSQL`                                              |
-| **Deployment**   | `Netlify`                                                 |
-| **Testing**      | `Vitest` • `React Testing Library` • `Cypress/Playwright` |
-| **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`             |
-| **CI/CD**        | `GitHub Actions`                                          |
+| Layer            | Technology                                                               |
+| ---------------- | ------------------------------------------------------------------------ |
+| **Frontend**     | `Vite` • `React` • `TypeScript` • `CSS Modules`                          |
+| **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security (RLS)`)           |
+| **Database**     | `PostgreSQL`                                                             |
+| **Deployment**   | `Netlify`                                                                |
+| **Testing**      | `Vitest` • ( React Testing Library and Cypress / Playwright: `planned` ) |
+| **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`                            |
+| **CI/CD**        | `GitHub Actions`                                                         |
 
 ## NPM Packages
 
-| Category               | Packages                                                         | Purpose                                                                              |
-| ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **React & build**      | `react`, `react-dom`<br>`vite`, `typescript`                     | Core UI framework and build/tooling.                                                 |
-| **Forms & validation** | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`              | Form handling and schema validation.                                                 |
-| **Data fetching**      | `react-query`                                                    | Server data with caching.                                                            |
-| **Localization**       | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector` | Translations and language detection.                                                 |
-| **Backend**            | `@supabase/supabase-js`                                          | Auth + Postgres client used by the admin panel.                                      |
-| **UI & utilities**     | `react-icons`<br>`dayjs`<br>`react-toastify`                     | Icons, date handling, toast notifications.                                           |
-| **Monorepo packages**  | Local `/shared` and `/ui` packages                               | Shared api, data, schemas, global styles, types, utils and components for both apps. |
-| **Dev & CI tooling**   | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`        | Linting, formatting, git hooks, tests.                                               |
+| Category               | Packages                                                                                      | Purpose                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Monorepo & build**   | `turbo`, `npm workspaces`, `vite`                                                             | Monorepo orchestration and build tooling.                                            |
+| **React & build**      | `react`, `react-dom`<br>`typescript`                                                          | Core UI framework and build/tooling.                                                 |
+| **Routing**            | `react-router-dom`                                                                            | Client-side routing for single-page apps.                                            |
+| **Forms & validation** | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`                                           | Form handling and schema validation.                                                 |
+| **Data fetching**      | `@tanstack/react-query`                                                                       | Server data with caching.                                                            |
+| **State management**   | `zustand`                                                                                     | Lightweight global state management for React.                                       |
+| **Sanitization**       | `dompurify`                                                                                   | Sanitize user inputs to prevent XSS when rendering HTML.                             |
+| **Localization**       | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector`                              | Translations and language detection.                                                 |
+| **Backend**            | `@supabase/supabase-js`                                                                       | Auth + Postgres client used by the admin panel.                                      |
+| **UI & utilities**     | `react-icons`<br>`dayjs`<br>`react-toastify`                                                  | Icons, date handling, toast notifications.                                           |
+| **Monorepo packages**  | Local `/shared` and `/ui` packages                                                            | Shared api, data, schemas, global styles, types, utils and components for both apps. |
+| **Dev & CI tooling**   | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`<br>`@tanstack/react-query-devtools` | Linting, formatting, git hooks, tests, and developer tools.                          |
 
 ## Project Structure
 
@@ -191,32 +195,29 @@ See [CI/CD](./docs/CI-CD.md)
 <details>
 <summary>Future Add-Ons:</summary>
 
-### Sooner:
+- Testing
+  - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
+  - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
+  - E2E test (1): a single happy-path test using Playwright or Cypress (create → verify → delete)
+  - Optional: MSW for component tests to mock API responses.
+  - CI: run unit + component tests in PRs; E2E in a separate job or nightly.
 
-```properties
-- Form / Login Feedback and validation & error handeling
-  - react-toastify for success/error messages
-- Environment-Based Configuration (w/ zod schemas)
-- Testing:
-  - Component tests (React Testing Library)
-  - E2E tests (Cypress/Playwright)
-  - MSW API mocking
-- Security
-  - Rate limiting
-  - ...
-```
+- Monitoring
+  - Capture client-side errors and sessions for easy reproduction (Highlight).
+  - Produce structured, typed logs on the server with request/context metadata (tslog).
+  - Correlate client & server activity using a request/session ID.
+  - Keep costs and noise low by sampling and by sending only necessary context.
+  - Analytics: Pageview/event tracking, uptime & performance
 
-### Later:
+- Security & Optimization
+  - Harden the frontend (CSP, source maps) and backend (rate-limiting and possibly `x-request-id`).
+  - Reduce bundle size, improve loading performance, and optimize API/database queries.
+  - Add automation: dependency updates, scanning, and basic observability.
 
-```properties
-- More diverse CMS: Manage more content (promo materials, images, text)
-- CDN / image optimization layer: (artist promo materials)
-- UI/UX Polish: Animations or micro-interactions (e.g., modals, sidebar transitions)
-  - CSS, Framer motion?
-- Monitoring & Analytics: Pageview/event tracking, uptime & performance
-- Pre-render static pages: via Vite SSG
-- Containerize: Docker
-```
+- Features
+  - More diverse CMS: Manage more content (promo materials, images, text)
+  - CDN layer: (artist promo materials, images)
+  - UI/UX Polish: Animations or micro-interactions (e.g., spinner)
 
 </details>
 
