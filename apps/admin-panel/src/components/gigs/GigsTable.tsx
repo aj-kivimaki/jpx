@@ -132,10 +132,10 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             onClick={handleConfirm}
             aria-label="Poista keikka"
           >
-            Kyllä 👍
+            Kyllä
           </button>
           <button className={styles.cancelButton} onClick={handleCancel}>
-            En 👎
+            En
           </button>
         </menu>
       </dialog>

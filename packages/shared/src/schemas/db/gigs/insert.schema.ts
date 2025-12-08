@@ -6,7 +6,7 @@ const emptyToNullString = z.preprocess((val) => {
 }, z.string().nullable());
 
 export const GigInsertSchema = z.object({
-  date: z.string().min(1, { message: 'Päivä on pakollinen *' }),
+  date: z.string().min(1, { message: 'Päivänmäärä on pakollinen *' }),
   venue: emptyToNullString,
   city: emptyToNullString,
   notes_fi: emptyToNullString,

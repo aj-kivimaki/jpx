@@ -184,9 +184,25 @@ See [CI/CD](./docs/CI-CD.md)
 
 <img src="assets/login.webp" alt="Admin panel login" width="400" />
 
-**Overview**
+**Add gig**
 
-<img src="assets/admin-panel.webp" alt="Admin panel screenshot" width="400" />
+<img src="assets/admin-form.webp" alt="Add gig form" width="400" />
+
+**Edit or delete**
+
+<img src="assets/edit-gig-card.webp" alt="Editable gig card" width="400" />
+
+**Confirm delete**
+
+<img src="assets/confirm-delete.webp" alt="Confirm delete modal" width="400" />
+
+**Edit mode**
+
+<img src="assets/edit-mode.webp" alt="Edit gig form" width="400" />
+
+**Error notifications**
+
+<img src="assets/error-notification.webp" alt="Editable gig card" width="400" />
 
 ---
 
