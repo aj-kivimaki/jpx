@@ -4,6 +4,11 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    "./styles": "./src/styles/index.css",
+    ".": "./dist/index.js"
+  },
+  "style": "src/styles/index.css",
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc -b --noEmit",

@@ -1,0 +1,7 @@
+/* Centralized stylesheet index for apps to import.
+   Imports shared reset, global, and toast styles so apps can
+   import a single module: `import '@jpx/shared/styles/index.css'`
+*/
+@import './reset.css';
+@import './global.css';
+@import './toast.css';
