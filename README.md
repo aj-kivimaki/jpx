@@ -233,7 +233,6 @@ See [CI/CD](./docs/CI-CD.md)
 - Features
   - More diverse CMS: Manage more content (promo materials, images, text)
   - CDN layer: (artist promo materials, images)
-  - UI/UX Polish: Animations or micro-interactions (e.g., spinner)
 
 </details>
 
