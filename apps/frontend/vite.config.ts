@@ -29,12 +29,11 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor.react';
-            if (id.includes('react-dom')) return 'vendor.react-dom';
             if (id.includes('react-router-dom')) return 'vendor.router';
+            if (id.includes('react-dom')) return 'vendor.react-dom';
+            if (id.includes('react-hook-form')) return 'vendor.react-hook-form';
             if (id.includes('@tanstack')) return 'vendor.react-query';
             if (id.includes('@supabase')) return 'vendor.supabase';
-            if (id.includes('react-hook-form')) return 'vendor.react-hook-form';
             if (id.includes('@hookform/resolvers'))
               return 'vendor.hookform-resolvers';
             if (id.includes('zod')) return 'vendor.zod';
