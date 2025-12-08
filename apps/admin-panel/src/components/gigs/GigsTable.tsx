@@ -11,6 +11,7 @@ import {
   deleteGig,
   parseGigDates,
   VALIDATED_KEYS,
+  scrollToTop,
 } from '@jpx/shared';
 import { GigsCard } from '@jpx/ui';
 import styles from './GigsTable.module.css';
@@ -44,6 +45,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
   }
 
   const handleEditClick = (id: string) => {
+    scrollToTop();
     setSelectedGigId(id);
   };
 

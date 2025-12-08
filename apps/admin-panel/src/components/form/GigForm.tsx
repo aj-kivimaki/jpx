@@ -31,11 +31,13 @@ export default function GigForm() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors: hookFormErrors },
     reset,
   } = useForm<GigInsert>({
     resolver: formResolver,
     defaultValues: defaultValue,
+    shouldFocusError: true,
   });
 
   const {
@@ -43,6 +45,10 @@ export default function GigForm() {
     isLoading,
     error: reactQueryError,
   } = useQuery(lineupQueryOptions(supabase));
+
+  useEffect(() => {
+    setFocus('date');
+  }, [setFocus]);
 
   useEffect(() => {
     if (!selectedGigId) {
