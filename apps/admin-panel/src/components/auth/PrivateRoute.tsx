@@ -1,6 +1,6 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '../../clients/supabaseClient';
+import { supabase } from '../../clients';
 
 interface PrivateRouteProps {
   children: JSX.Element;

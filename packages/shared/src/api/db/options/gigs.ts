@@ -1,6 +1,6 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
 import { type UseQueryOptions } from '@tanstack/react-query';
-import { fetchGigs } from '../querys/gigs';
+import { fetchGigs } from '../querys';
 import {
   VALIDATED_KEYS,
   QUERY_REFETCH_TIMES,

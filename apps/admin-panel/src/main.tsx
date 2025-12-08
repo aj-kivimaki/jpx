@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { queryClient } from './clients/queryClient';
+import { queryClient } from './clients';
 import '@jpx/shared/utils/i18n.ts';
 import '@jpx/shared';
 

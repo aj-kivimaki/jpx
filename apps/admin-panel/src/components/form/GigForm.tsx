@@ -1,12 +1,11 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import type { Resolver } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-import { supabase } from '../../clients/supabaseClient';
-import { queryClient } from '../../clients/queryClient';
+import { supabase, queryClient } from '../../clients';
 import {
   VALIDATED_KEYS,
   lineupQueryOptions,
@@ -16,9 +15,8 @@ import {
   createGig,
   updateGig,
 } from '@jpx/shared';
-import { useGigStore } from '../../store/gigStore';
+import { useGigStore } from '../../store';
 import styles from './GigForm.module.css';
-import { useEffect } from 'react';
 
 const defaultValue: Partial<GigInsert> = { lineup_id: '' };
 
