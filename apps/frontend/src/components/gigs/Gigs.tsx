@@ -10,6 +10,7 @@ import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
 import { supabase } from '../../clients';
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import { Spinner } from '@jpx/ui';
 
 const Gigs = () => {
   const {
@@ -35,11 +36,7 @@ const Gigs = () => {
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
-        {isLoading ? (
-          <p className={styles.gigsLoadingText}>{loadingText}</p>
-        ) : (
-          <GigsTable gigs={gigs ?? []} />
-        )}
+        {isLoading ? <Spinner /> : <GigsTable gigs={gigs ?? []} />}
       </div>
     </div>
   );
