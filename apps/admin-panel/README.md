@@ -2,30 +2,13 @@
 
 # Admin Panel | CMS `/admin-panel`
 
-The admin panel is a secure content management system (CMS) for managing artist gigs and content. It provides authenticated administrators with tools to add, view, and manage upcoming performances.
+Secure CMS for managing artist gigs and content. Authenticated admin can add, edit, delete, view gigs.
 
 ## Features
 
-### 🔐 Authentication
-
-- **Google OAuth Integration**: Secure login using Google accounts
-- **Protected Routes**: All admin functionality requires authentication
-- **Single Admin Access**: Only the artist can access the admin panel
-
-### 🎵 Gig Management
-
-- **Add New Gigs**: Form-based interface for adding performances
-- **View All Gigs**: Table display of all upcoming and past gigs
-- **Real-time Updates**: Changes reflect immediately in the frontend
-
-### 📝 Content Management Form
-
-The gig creation form includes fields for:
-
-- **Date & Time**: Performance scheduling
-- **Lineup**: Artist/band name (Finnish & English)
-- **Venue & City**: Location details
-- **Notes**: Additional information (Finnish & English)
+- 🔐 **Authentication**: Google OAuth, protected routes, single-admin access
+- 🎵 **Gig Management**: Add/edit/delete/view gigs
+- 📝 **Content Form**: Date/Time, Lineup (FI/EN), Venue & City, Notes (FI/EN)
 
 ## Architecture
 
@@ -33,126 +16,74 @@ The gig creation form includes fields for:
 flowchart TD
     A[Admin Panel] --> B[Authentication Layer]
     A --> C[Gig Management]
-
     B --> D[Google OAuth]
     B --> E[Supabase Auth]
     B --> F[Protected Routes]
-
-    C --> G[Add Gig Form]
+    C --> G[Add/Edit Gig Form]
     C --> H[Gigs Table View]
-    C --> I[Real-time Updates]
-
+    C --> I[Delete Gig Action]
     G --> J[React Hook Form]
     G --> K[Zod Validation]
-    J --> L[Form Submission]
-    L --> M[Supabase Database]
-    H --> N[Data Fetching]
-    N --> M
+    J --> L[Form Submission] --> M[Supabase Database]
+    H --> N[Data Fetching] --> M
+    I --> M
 ```
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript + Vite
-- **Forms**: React Hook Form + Zod validation
-- **Styling**: CSS Modules
-- **Data Fetching**: TanStack Query (React Query)
-- **Backend**: Supabase (Auth + Database)
-- **Icons**: React Icons
-- **Routing**: `react-router-dom` for client-side routing
-- **Data Fetching**: `@tanstack/react-query` (use `@tanstack/react-query-devtools` in development)
-- **Monorepo & Build**: `turbo`, `npm workspaces`, `vite`
+React + TypeScript + Vite | CSS Modules | React Hook Form + Zod | TanStack Query | Supabase | React Icons | `react-router-dom` | Turborepo + NPM Workspaces
 
 ## Key Components
 
-### Authentication Components
-
-- `GoogleSignInButton`: Initiates Google OAuth flow
-- `LogoutButton`: Signs out current admin user
-- `PrivateRoute`: Protects admin routes from unauthorized access
-
-### Form Components
-
-- `Form`: Main gig creation form with validation
-- `FormInput`: Reusable text input component
-- `FormSelect`: Dropdown for predefined options
-
-### Gig Management Components
-
-- `Gigs`: Container component for gig management
-- `GigsTable`: Displays gigs in tabular format
+- **Auth**: `GoogleSignInButton`, `LogoutButton`, `PrivateRoute`
+- **Forms**: `Form`, `FormInput`, `FormSelect`
+- **Gigs**: `Gigs`, `GigsTable`
 
 ## Data Flow
 
-1. **Authentication**: User signs in with Google OAuth
-2. **Authorization**: Supabase validates admin access
-3. **Data Loading**: Gigs fetched from Supabase on app load
-4. **Form Submission**: New gigs validated and saved to database
-5. **Real-time Sync**: UI updates immediately after changes
-6. **Frontend Sync**: Public site reflects admin changes
+1. Google OAuth sign-in
+2. Supabase validates admin access
+3. Gigs fetched on load
+4. Form submission saves gigs
+5. UI updates in real-time
 
-## Security Features
+## Security
 
-- **Row Level Security**: Database-level access control
-- **OAuth Only**: No password-based authentication
-- **Session Management**: Automatic logout on session expiry
-- **Input Validation**: Client and server-side validation
-- **Type Safety**: Full TypeScript coverage
+- Row-level security, OAuth-only login
+- Session management, input validation, TypeScript coverage
 
 ## Development
 
-### Environment Setup
-
 ```bash
-# Copy environment template
+# Setup
 cp .env.example .env.local
-
-# Required variables:
+# Env variables
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
 
-### Available Scripts
+# Scripts
+npm run dev       # Dev server
+npm run build     # Production build
+npm run typecheck # Type checking
+npm run test      # Run tests
 
-```bash
-# Development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Type checking
-npm run typecheck
-
-# Run tests
-npm run test
-```
-
-## User Experience
-
-### Admin Workflow
-
-1. **Login**: Access admin panel via Google authentication
-2. **Dashboard**: View existing gigs in organized table
-3. **Add Content**: Use form to add new performances
-4. **Review**: Verify information before submission
-5. **Publish**: Changes appear immediately on public site
-
-### Form Validation
-
-- Real-time validation feedback
-- Required field indicators
-- Error messages for invalid inputs
-- Zod schema validation for data integrity
-
-## Integration Points
-
-- **Shared Package**: Uses `@jpx/shared` for API functions and types
-- **UI Package**: Imports reusable components from `@jpx/ui`
-- **Frontend App**: Admin changes sync with public artist site
-- **Supabase**: Centralized data storage and authentication
-
-## Installing new packages
-
-```bash
+# Install package
 npm install _package_name_ --workspace=admin-panel
 ```
+
+## User Workflow
+
+1. Login via Google
+2. View gigs in dashboard
+3. Add gigs with form
+4. Review & submit
+5. Changes appear immediately
+
+**Form Validation**: Real-time feedback, required fields, errors, Zod schema
+
+## Integration
+
+- Shared API/types: `@jpx/shared`
+- Reusable UI: `@jpx/ui`
+- Public frontend displays updated content after page reload
+- Centralized Supabase backend
