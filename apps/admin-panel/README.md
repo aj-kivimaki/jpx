@@ -58,6 +58,9 @@ flowchart TD
 - **Data Fetching**: TanStack Query (React Query)
 - **Backend**: Supabase (Auth + Database)
 - **Icons**: React Icons
+- **Routing**: `react-router-dom` for client-side routing
+- **Data Fetching**: `@tanstack/react-query` (use `@tanstack/react-query-devtools` in development)
+- **Monorepo & Build**: `turbo`, `npm workspaces`, `vite`
 
 ## Key Components
 
