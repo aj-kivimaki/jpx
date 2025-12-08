@@ -211,13 +211,6 @@ See [CI/CD](./docs/CI-CD.md)
 <details>
 <summary>Future Add-Ons:</summary>
 
-- Testing
-  - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
-  - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
-  - E2E test (1): a single happy-path test using Playwright or Cypress (create → verify → delete)
-  - Optional: MSW for component tests to mock API responses.
-  - CI: run unit + component tests in PRs; E2E in a separate job or nightly.
-
 - Monitoring
   - Capture client-side errors and sessions for easy reproduction (Highlight).
   - Produce structured, typed logs on the server with request/context metadata (tslog).
@@ -225,9 +218,16 @@ See [CI/CD](./docs/CI-CD.md)
   - Keep costs and noise low by sampling and by sending only necessary context.
   - Analytics: Pageview/event tracking, uptime & performance
 
+- Testing
+  - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
+  - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
+  - E2E test (1): a single happy-path test using Playwright or Cypress (create → verify → delete)
+  - Optional: MSW for component tests to mock API responses.
+  - CI: run unit + component tests in PRs; E2E in a separate job or nightly.
+
 - Security & Optimization
   - Harden the frontend (CSP, source maps) and backend (rate-limiting and possibly `x-request-id`).
-  - Reduce bundle size, improve loading performance, and optimize API/database queries.
+  - Improve loading performance, and optimize API/database queries.
   - Add automation: dependency updates, scanning, and basic observability.
 
 - Features

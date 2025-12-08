@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import { supabase } from './clients';
 import Login from './pages/Login';
-import Home from './pages/Home';
 import PrivateRoute from './components/auth/PrivateRoute';
 import NotFoundRedirect from './pages/NotFoundRedirect';
 import '@jpx/shared/styles/reset.css';
 import '@jpx/shared/styles/global.css';
+
+const Home = lazy(() => import('./pages/Home'));
 
 export default function App() {
   const navigate = useNavigate();
