@@ -57,6 +57,9 @@ flowchart TD
 - **Frontend**: React + TypeScript + Vite
 - **Styling**: CSS Modules for scoped component styles
 - **Data Fetching**: TanStack Query (React Query) for server state
+- **Routing**: `react-router-dom` for client-side routing
+- **Data Fetching**: `@tanstack/react-query` for server state (use `@tanstack/react-query-devtools` during development)
+- **Monorepo & Build**: `turbo`, `npm workspaces`, `vite`
 - **Internationalization**: Custom i18n hook with Finnish/English support
 - **Backend**: Supabase for data fetching
 - **Icons**: React Icons for consistent iconography
