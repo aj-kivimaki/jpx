@@ -9,17 +9,16 @@ import {
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
 import { supabase } from '../../clients';
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '@jpx/ui';
+import { FETCH_GIGS_PAGE_SIZE, FETCH_GIGS_START_PAGE } from '../../config';
 
 const Gigs = () => {
-  const {
-    data: gigs,
-    isLoading,
-    error,
-  } = useQuery<DbGig[], Error>(
-    gigsQueryOptions(supabase) as UseQueryOptions<DbGig[], Error>
+  const query = useQuery(
+    gigsQueryOptions(supabase, FETCH_GIGS_START_PAGE, FETCH_GIGS_PAGE_SIZE)
   );
+
+  const { data: gigsResult, isLoading, error } = query;
 
   const localize = useLocalized();
 
@@ -30,7 +29,7 @@ const Gigs = () => {
   const gigsSection = sections.find((s): s is GigsSection => s.id === 'gigs');
 
   const title = localize(gigsSection?.title);
-
+  const gigs: DbGig[] = gigsResult?.data ?? [];
   return (
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>

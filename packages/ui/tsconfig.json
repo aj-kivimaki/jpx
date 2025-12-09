@@ -12,5 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": false
   },
+  "references": [{ "path": "../shared" }],
   "include": ["src"]
 }

@@ -1,16 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import GigsTable from './GigsTable';
 import { supabase } from '../../clients';
-import { gigsQueryOptions } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
+import { gigsQueryOptions, type DbGig } from '@jpx/shared';
 
 const Gigs = () => {
-  const { data: gigs, isLoading, error } = useQuery(gigsQueryOptions(supabase));
+  const {
+    data: gigsResult,
+    isLoading,
+    error,
+  } = useQuery(gigsQueryOptions(supabase));
+
+  const gigs: DbGig[] = gigsResult?.data ?? [];
 
   return (
     <>
       {error && <p>Error loading events: {error.message}</p>}
-      {!error && isLoading ? <Spinner /> : <GigsTable gigs={gigs ?? []} />}
+      {!error && isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
     </>
   );
 };

@@ -7,12 +7,19 @@ import {
   QUERY_STALE_TIME_MS,
 } from '../../../schemas';
 import type { DbGig } from '../../../types';
+import {
+  AppError,
+  withPagination,
+  type PaginationResult,
+} from '../../../utils';
 
 export const gigsQueryOptions = (
-  client: SupabaseClient
-): UseQueryOptions<DbGig[], Error> => ({
+  client: SupabaseClient,
+  page?: number,
+  pageSize?: number
+): UseQueryOptions<PaginationResult<DbGig>, AppError> => ({
   queryKey: [VALIDATED_KEYS.GIGS],
-  queryFn: () => fetchGigs(client),
+  queryFn: () => withPagination<DbGig>(() => fetchGigs(client), page, pageSize),
   staleTime: QUERY_STALE_TIME_MS,
   retry: QUERY_REFETCH_TIMES,
   refetchOnWindowFocus: false,
