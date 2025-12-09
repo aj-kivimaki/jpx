@@ -48,7 +48,7 @@ const Gigs = () => {
   const title = localize(gigsSection?.title);
 
   return (
-    <div id={sectionIds.gigs} className={styles.gigs}>
+    <section id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
         {isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
@@ -70,7 +70,7 @@ const Gigs = () => {
           </button>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

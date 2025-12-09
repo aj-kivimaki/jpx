@@ -14,7 +14,7 @@ const Footer = () => {
 
   const footerTitle = localize(siteLayout.footer.title);
   return (
-    <div id={sectionIds.contact} className={styles.footer}>
+    <footer id={sectionIds.contact} className={styles.footer}>
       <div className={styles.stagentLogo}>
         <img src={logoSrc} alt={logoAlt} />
       </div>
@@ -24,7 +24,7 @@ const Footer = () => {
         <p>{phone}</p>
         <p>{email}</p>
       </div>
-    </div>
+    </footer>
   );
 };
 

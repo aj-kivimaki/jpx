@@ -24,7 +24,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <aside className={styles.sidebar}>
       {social.map((link) => (
         <a
           key={link.key}
@@ -68,7 +68,7 @@ const Sidebar = () => {
           <IoMdCloseCircleOutline />
         </button>
       </dialog>
-    </div>
+    </aside>
   );
 };
 

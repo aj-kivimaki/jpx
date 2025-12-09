@@ -19,7 +19,7 @@ const Info = () => {
   }));
 
   return (
-    <div id={sectionIds.info} className={styles.info}>
+    <section id={sectionIds.info} className={styles.info}>
       {bandImage?.src && (
         <img src={bandImage.src} alt={imgAlt} loading="lazy" />
       )}
@@ -39,7 +39,7 @@ const Info = () => {
           <p className={styles.descriptionText}>{localize(description)}</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
