@@ -1,10 +1,20 @@
 export class AppError extends Error {
-  code: 'VALIDATION_ERROR' | 'DB_ERROR' | 'NOT_FOUND' | 'UNKNOWN';
+  code:
+    | 'VALIDATION_ERROR'
+    | 'DB_ERROR'
+    | 'NOT_FOUND'
+    | 'UNKNOWN'
+    | 'AUTH_ERROR';
   details?: unknown;
 
   constructor(
     message: string,
-    code: 'VALIDATION_ERROR' | 'DB_ERROR' | 'NOT_FOUND' | 'UNKNOWN',
+    code:
+      | 'VALIDATION_ERROR'
+      | 'DB_ERROR'
+      | 'NOT_FOUND'
+      | 'UNKNOWN'
+      | 'AUTH_ERROR',
     details?: unknown
   ) {
     super(message);
