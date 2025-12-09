@@ -60,6 +60,15 @@ export default function GigForm() {
   } = useQuery(lineupQueryOptions(supabase));
 
   useEffect(() => {
+    if (reactQueryError) {
+      logger.warn({
+        msg: 'Failed to load lineup options',
+        err: reactQueryError,
+      });
+    }
+  }, [reactQueryError]);
+
+  useEffect(() => {
     setFocus('date');
   }, [setFocus]);
 
@@ -70,12 +79,23 @@ export default function GigForm() {
     }
 
     const fetchGigAndResetForm = async () => {
-      const data = await getGigById(supabase, selectedGigId);
-
-      reset(data);
+      try {
+        const data = await getGigById(supabase, selectedGigId);
+        reset(data);
+      } catch (err: unknown) {
+        logger.error({
+          msg: 'Failed to load gig for editing',
+          err,
+          gigId: selectedGigId,
+        });
+        toastError(
+          err instanceof Error ? err.message : 'Virhe ladattaessa keikkaa'
+        );
+        setSelectedGigId(null);
+      }
     };
     fetchGigAndResetForm();
-  }, [selectedGigId, reset]);
+  }, [selectedGigId, reset, setSelectedGigId, toastError]);
 
   const addGigMutation = useMutation({
     mutationFn: (newGig: GigInsert) => createGig(supabase, newGig),
@@ -109,6 +129,7 @@ export default function GigForm() {
       if (handled) return;
 
       // Fallback for unexpected errors
+      logger.error({ msg: 'Gig form submit failed', err });
       toastError(err instanceof Error ? err.message : String(err));
     }
   };
@@ -119,7 +140,7 @@ export default function GigForm() {
   };
 
   const handleFormError = (errors: Record<string, unknown>) =>
-    logger.error('[HookForm] validation errors on submit:', errors);
+    logger.error({ msg: '[HookForm] validation errors on submit', errors });
 
   return (
     <div className={styles.form}>

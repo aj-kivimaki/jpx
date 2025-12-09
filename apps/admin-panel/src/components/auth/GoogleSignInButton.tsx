@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { FcGoogle } from 'react-icons/fc';
-import { googleSignIn } from '@jpx/shared';
+import { googleSignIn, logger } from '@jpx/shared';
 import styles from './GoogleSignInButton.module.css';
 
 const GoogleSignInButton = ({ client }: { client: SupabaseClient }) => {
@@ -16,8 +16,10 @@ const GoogleSignInButton = ({ client }: { client: SupabaseClient }) => {
       await googleSignIn(client);
     } catch (err: unknown) {
       if (err instanceof Error) {
+        logger.error({ msg: 'Google sign-in failed', err });
         setErrorMessage(err.message);
       } else {
+        logger.error({ msg: 'Google sign-in failed', err });
         setErrorMessage('An unexpected error occurred.');
       }
     } finally {

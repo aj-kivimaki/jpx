@@ -1,4 +1,4 @@
-import type { Theme } from '@jpx/shared';
+import { type Theme, logger } from '@jpx/shared';
 
 /**
  * Apply a theme to the document and persist the choice to localStorage.
@@ -21,5 +21,9 @@ import type { Theme } from '@jpx/shared';
 export const applyTheme = (theme: Theme) => {
   const root = document.documentElement;
   root.dataset.theme = theme;
-  localStorage.setItem('theme', theme);
+  try {
+    localStorage.setItem('theme', theme);
+  } catch (err) {
+    logger.warn({ msg: 'Could not persist theme to localStorage', err });
+  }
 };

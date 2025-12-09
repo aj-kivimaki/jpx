@@ -40,11 +40,11 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
     },
-    onError: (err: unknown) => {
+    onError: (err: unknown, gigId?: string) => {
       const handled = mapAppErrorToFormErrors(err, undefined, toastError);
       if (handled) return;
 
-      logger.error(err);
+      logger.error('Delete gig failed', { err, gigId });
       toastError(err instanceof Error ? err.message : 'Tuntematon virhe');
     },
   });

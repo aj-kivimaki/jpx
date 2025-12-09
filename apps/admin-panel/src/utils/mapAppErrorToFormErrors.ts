@@ -1,4 +1,4 @@
-import { AppError } from '@jpx/shared';
+import { AppError, logger } from '@jpx/shared';
 import type { UseFormSetError, Path } from 'react-hook-form';
 
 type ZodIssue = {
@@ -22,6 +22,7 @@ export function mapAppErrorToFormErrors<
   const { code, details, message } = error;
 
   if (code === 'VALIDATION_ERROR') {
+    logger.warn('Server validation error', details);
     handleValidationError(details as ZodErrorLike | undefined, setError, toast);
     return true;
   }
@@ -32,6 +33,7 @@ export function mapAppErrorToFormErrors<
   }
 
   toast?.(message || 'Palvelinvirhe');
+  logger.error('AppError handled', error as AppError);
   return true;
 }
 

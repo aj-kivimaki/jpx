@@ -5,6 +5,7 @@ import { Spinner } from '@jpx/ui';
 import {
   fetchGigs,
   type DbGig,
+  logger,
   VALIDATED_KEYS,
   QUERY_STALE_TIME_MS,
 } from '@jpx/shared';
@@ -21,12 +22,12 @@ const Gigs = () => {
     refetchOnWindowFocus: false,
   });
 
-  return (
-    <>
-      {error && <p>Error loading events: {error.message}</p>}
-      {!error && isLoading ? <Spinner /> : <GigsTable gigs={gigs || []} />}
-    </>
-  );
+  if (error) {
+    logger.error('Failed to load gigs (admin)', error);
+    return <p>Error loading events: {error.message}</p>;
+  }
+
+  return !isLoading ? <GigsTable gigs={gigs || []} /> : <Spinner />;
 };
 
 export default Gigs;

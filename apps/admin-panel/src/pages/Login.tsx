@@ -6,9 +6,13 @@ export default function Login() {
   return (
     <div className={styles.app}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Kirjaudu sisään</h1>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>Kirjaudu sisään</h1>
+        </div>
         <div className={styles.divider}></div>
-        <GoogleSignInButton client={supabase} />
+        <div className={styles.buttonContainer}>
+          <GoogleSignInButton client={supabase} />
+        </div>
       </div>
     </div>
   );

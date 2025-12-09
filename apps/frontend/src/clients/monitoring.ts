@@ -17,7 +17,10 @@ export async function initMonitoring() {
 
   try {
     const pkgName = '@highlight-run/browser';
-    const mod = await import(pkgName);
+    // Vite cannot statically analyze dynamic import variables; explicitly
+    // ignore analysis for this optional runtime import so the dev server
+    // doesn't warn when the SDK is not installed.
+    const mod = await import(/* @vite-ignore */ pkgName);
     // highlight run exports may be default or named
     const maybeDefault = mod && (mod as { default?: unknown }).default;
     highlight = (maybeDefault as HighlightSDK) ?? (mod as HighlightSDK);
@@ -29,13 +32,16 @@ export async function initMonitoring() {
         try {
           highlight.init(projectId);
         } catch {
-          // ignore init failure
+          // ignore init failure but log for diagnostics
+          logger.warn('Highlight init failed (init(projectId) variant)', {
+            projectId,
+          });
         }
       }
     }
   } catch (error) {
     // SDK not installed or failed to load — that's fine; we'll fallback
-    console.warn('Highlight SDK not initialized', error);
+    logger.warn('Highlight SDK not initialized', { error, projectId });
   }
 
   // Global error handlers — normalize errors through captureError
@@ -50,7 +56,7 @@ export async function initMonitoring() {
         captureError(new Error(errorEvent.message));
       }
     } catch (error) {
-      logger.error('Error handling window.onerror', error);
+      logger.error({ msg: 'Error handling window.onerror', err: error });
     }
   });
 
@@ -66,7 +72,7 @@ export async function initMonitoring() {
         );
       }
     } catch (error) {
-      logger.error('Error handling unhandledrejection', error);
+      logger.error({ msg: 'Error handling unhandledrejection', err: error });
     }
   });
 }
@@ -106,7 +112,13 @@ export function captureError(err: unknown, context?: Record<string, unknown>) {
       const session = result?.data?.session ?? null;
       sendToHighlight(appErr, { session });
     })
-    .catch(() => sendToHighlight(appErr));
+    .catch((err) => {
+      logger.warn({
+        msg: 'Failed to get supabase session for error capture',
+        err,
+      });
+      sendToHighlight(appErr);
+    });
 
   // Also keep local visibility
   logger.error(appErr);
@@ -139,8 +151,11 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
         });
         return;
       }
-    } catch {
-      // ignore
+    } catch (err) {
+      logger.warn({
+        msg: 'Failed when attempting to send error to Highlight SDK',
+        err,
+      });
     }
   }
 
@@ -159,8 +174,9 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
           extra,
         }),
       });
-    } catch {
-      // ignore
+    } catch (e) {
+      // log fallback ingestion failures
+      logger.warn({ msg: 'Failed to POST to client error ingest URL', err: e });
     }
   }
 }

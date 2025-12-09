@@ -1,4 +1,5 @@
 import { makeError } from '../../../../utils';
+import { logDbError } from '../../../../logger';
 import { GigIdSchema } from '../../../../schemas';
 import type { GigId } from '../../../../types';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -19,7 +20,10 @@ export const deleteGig = async (
     .select()
     .single();
 
-  if (error) throw makeError(error.message, 'DB_ERROR');
+  if (error) {
+    logDbError('deleteGig', error, { id: safeId.data });
+    throw makeError(error.message, 'DB_ERROR');
+  }
   if (!data) throw makeError('Gig not found', 'NOT_FOUND');
 
   return true;
