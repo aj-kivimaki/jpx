@@ -105,14 +105,14 @@ See [Frontend](./apps/frontend/README.md)
 
 ### Public Site
 
-| Section            | Description                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------------- |
-| **Gigs**           | Browse                                                                                            |
-|                    | • `upcoming gigs`                                                                                 |
-| **Info & Contact** | View                                                                                              |
-|                    | • `band details` <br> • `booking contacts`                                                        |
-| **Sidebar**        | Settings & Links                                                                                  |
-|                    | • `Social media links` <br> • `Theme: Toggle Light / Dark mode` <br> • `Language: Switch FI / EN` |
+| Section            | Description                                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| **Gigs**           | Browse:                                                                                                                |
+|                    | upcoming gigs <br> load more `pagination`                                                                              |
+| **Info & Contact** | View:                                                                                                                  |
+|                    | band details <br> booking contacts                                                                                     |
+| **Sidebar**        | Open:                                                                                                                  |
+|                    | Social media `links` <br> Settings `modal`: <br> • `Toggle Theme:` Light / Dark mode <br> • `Switch Language:` FI / EN |
 
 ---
 
@@ -120,10 +120,11 @@ See [Frontend](./apps/frontend/README.md)
 
 See [Admin Panel](./apps/admin-panel/README.md)
 
-| Feature             | Description                                                           |
-| ------------------- | --------------------------------------------------------------------- |
-| **Authentication**  | Secure Supabase `login` ensuring only authorized admin access.        |
-| **Gigs Management** | `Add`, `update` and `delete` gig entries (dates, locations, details). |
+| Feature             | Description                                                                   |
+| ------------------- | ----------------------------------------------------------------------------- |
+| **Authentication**  | Secure Supabase / Google OAuth `Login` ensuring only authorized admin access. |
+| **Gigs Management** | Add, update and delete gig entries (dates, locations, details).               |
+|                     | `Add` and `Edit` mode, `confirm delete modal` and `toast feedback`.           |
 
 ---
 
@@ -230,8 +231,13 @@ See [CI/CD](./docs/CI-CD.md)
   - Improve loading performance, and optimize API/database queries.
   - Add automation: dependency updates, scanning, and basic observability.
 
+- README
+  - GIFs / Video demos
+
 - Features
-  - More diverse CMS: Manage more content (promo materials, images, text)
+  - More diverse CMS:
+    - Manage more content: (Text & Drag and drop promo materials, images)
+    - Analytics dashboard
   - CDN layer: (artist promo materials, images)
 
 </details>

@@ -1,5 +1,4 @@
-import { env } from '@jpx/shared';
-import { makeError, AppError } from '@jpx/shared';
+import { env, makeError, AppError } from '@jpx/shared';
 import { supabase } from '../clients';
 
 type HighlightSDK = {
@@ -18,10 +17,7 @@ export async function initMonitoring() {
 
   try {
     const pkgName = '@highlight-run/browser';
-    const mod = (await import(pkgName)) as
-      | { default?: unknown }
-      | HighlightSDK
-      | unknown;
+    const mod = await import(pkgName);
     // highlight run exports may be default or named
     const maybeDefault = mod && (mod as { default?: unknown }).default;
     highlight = (maybeDefault as HighlightSDK) ?? (mod as HighlightSDK);
@@ -43,10 +39,10 @@ export async function initMonitoring() {
   }
 
   // Global error handlers — normalize errors through captureError
-  window.addEventListener('error', (ev) => {
+  globalThis.addEventListener('error', (ev) => {
     try {
       // Event may contain .error (Error) or message
-      const errorEvent = ev as ErrorEvent;
+      const errorEvent = ev;
       const err =
         (errorEvent.error as unknown) ?? new Error(errorEvent.message);
       captureError(err);
@@ -55,9 +51,9 @@ export async function initMonitoring() {
     }
   });
 
-  window.addEventListener('unhandledrejection', (ev) => {
+  globalThis.addEventListener('unhandledrejection', (ev) => {
     try {
-      const pre = ev as PromiseRejectionEvent;
+      const pre = ev;
       const reason = pre.reason as unknown;
       captureError(reason ?? new Error('Unhandled Promise Rejection'));
     } catch (error) {
@@ -76,7 +72,21 @@ export function captureError(err: unknown, context?: Record<string, unknown>) {
       ...context,
     });
   } else {
-    appErr = makeError(String(err ?? 'Unknown error'), 'UNKNOWN', context);
+    let msg: string;
+
+    if (err instanceof Error) {
+      msg = err.message;
+    } else if (typeof err === 'string') {
+      msg = err;
+    } else {
+      try {
+        msg = JSON.stringify(err) ?? 'Unknown error';
+      } catch {
+        msg = 'Unknown error';
+      }
+    }
+
+    appErr = makeError(msg, 'UNKNOWN', context);
   }
 
   // Attach session info from supabase if available
