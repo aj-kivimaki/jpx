@@ -1,5 +1,6 @@
 import { env } from '@jpx/shared';
 import { makeError, AppError } from '@jpx/shared';
+import { supabase } from '../clients';
 
 type HighlightSDK = {
   init?: (opts?: unknown) => void;
@@ -16,7 +17,8 @@ export async function initMonitoring() {
   if (!projectId) return;
 
   try {
-    const mod = (await import('@highlight-run/browser')) as
+    const pkgName = '@highlight-run/browser';
+    const mod = (await import(pkgName)) as
       | { default?: unknown }
       | HighlightSDK
       | unknown;
@@ -77,23 +79,15 @@ export function captureError(err: unknown, context?: Record<string, unknown>) {
     appErr = makeError(String(err ?? 'Unknown error'), 'UNKNOWN', context);
   }
 
-  // Try to attach session info from supabase if available
-  // Lazy-import to avoid circular dependencies
-  try {
-    void import('../clients/supabaseClient')
-      .then(({ supabase }) => {
-        // supabase.auth.getSession returns a promise-like result
-        return supabase?.auth?.getSession?.();
-      })
-      .then((res) => {
-        const result = res as { data?: { session?: unknown } } | undefined;
-        const session = result?.data?.session ?? null;
-        sendToHighlight(appErr, { session });
-      })
-      .catch(() => sendToHighlight(appErr));
-  } catch {
-    sendToHighlight(appErr);
-  }
+  // Attach session info from supabase if available
+  supabase?.auth
+    ?.getSession?.()
+    .then((res) => {
+      const result = res as { data?: { session?: unknown } } | undefined;
+      const session = result?.data?.session ?? null;
+      sendToHighlight(appErr, { session });
+    })
+    .catch(() => sendToHighlight(appErr));
 
   // Also keep local visibility
   console.error(appErr);
