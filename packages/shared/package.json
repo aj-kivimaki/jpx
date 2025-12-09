@@ -11,7 +11,7 @@
   "style": "src/styles/index.css",
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
-    "typecheck": "tsc -b --noEmit tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
     "test": "echo \"no tests for shared\"",
     "test:ci": "echo \"no tests for shared\"",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
