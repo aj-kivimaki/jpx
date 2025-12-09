@@ -1,13 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist",
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo/ui",
-    "baseUrl": ".",
-    "noEmit": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": false
   },
+  "references": [{ "path": "../shared/tsconfig.build.json" }],
   "include": ["src"]
 }

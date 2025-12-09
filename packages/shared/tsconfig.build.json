@@ -1,10 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tsbuildinfo/shared",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo/shared",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true

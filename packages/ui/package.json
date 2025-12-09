@@ -6,8 +6,8 @@
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
-    "build": "vite build && tsc --build --force && node ./scripts/write-types.cjs",
-    "typecheck": "tsc -b --noEmit",
+    "build": "vite build && tsc -b --force tsconfig.build.json && node ./scripts/write-types.cjs",
+    "typecheck": "tsc -b --noEmit tsconfig.build.json",
     "test": "vitest",
     "test:ci": "echo \"no tests for ui\"",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
