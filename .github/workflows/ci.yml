@@ -43,23 +43,15 @@ jobs:
       - name: Format Check
         run: npm run format:check
 
-      # Typecheck packages first
-      - name: Typecheck Packages
-        run: |
-          npm --workspace @jpx/shared run typecheck
-          npm --workspace @jpx/ui run typecheck
-
-      # Build packages first
+      # Build packages first (needed for typecheck and apps)
       - name: Build Packages
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      # Typecheck apps after packages are built
-      - name: Typecheck Apps
-        run: |
-          npm --workspace frontend run typecheck
-          npm --workspace admin-panel run typecheck
+      # Typecheck repository (all packages & apps)
+      - name: Typecheck
+        run: npm run typecheck
 
       # Test apps
       - name: Run Tests
