@@ -34,7 +34,7 @@ const Gigs = () => {
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
-        {isLoading ? <Spinner /> : <GigsTable gigs={gigs ?? []} />}
+        {isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
       </div>
     </div>
   );
