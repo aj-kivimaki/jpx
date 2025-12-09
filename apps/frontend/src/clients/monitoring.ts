@@ -1,6 +1,5 @@
-import { env, makeError, AppError } from '@jpx/shared';
+import { env, makeError, AppError, logger } from '@jpx/shared';
 import { supabase } from '../clients';
-import { logger } from '@jpx/shared';
 
 type HighlightSDK = {
   init?: (opts?: unknown) => void;
@@ -43,7 +42,7 @@ export async function initMonitoring() {
   globalThis.addEventListener('error', (ev) => {
     try {
       // Event may contain .error (Error) or message
-      const errorEvent = ev as ErrorEvent;
+      const errorEvent = ev;
       const reported = errorEvent.error;
       if (reported instanceof Error) {
         captureError(reported);
@@ -57,7 +56,7 @@ export async function initMonitoring() {
 
   globalThis.addEventListener('unhandledrejection', (ev) => {
     try {
-      const pre = ev as PromiseRejectionEvent;
+      const pre = ev;
       const reason = pre.reason;
       if (reason instanceof Error) {
         captureError(reason);
