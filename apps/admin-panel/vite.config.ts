@@ -21,27 +21,34 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor.react';
-            if (id.includes('react-dom')) return 'vendor.react-dom';
-            if (id.includes('react-router-dom')) return 'vendor.router';
-            if (id.includes('@tanstack/react-query-devtools'))
-              return 'vendor.react-query-devtools';
-            if (id.includes('@tanstack/react-query'))
-              return 'vendor.react-query';
-            if (id.includes('@supabase')) return 'vendor.supabase';
-            if (id.includes('react-hook-form')) return 'vendor.react-hook-form';
-            if (id.includes('@hookform/resolvers'))
-              return 'vendor.hookform-resolvers';
-            if (id.includes('zod')) return 'vendor.zod';
-            if (id.includes('dayjs')) return 'vendor.dayjs';
-            if (id.includes('zustand')) return 'vendor.zustand';
-            if (id.includes('i18next')) return 'vendor.i18n';
-            if (id.includes('react-i18next')) return 'vendor.react-i18n';
-            if (id.includes('react-toastify')) return 'vendor.toastify';
-            if (id.includes('dompurify')) return 'vendor.dompurify';
-            return 'vendor';
-          }
+          if (!id.includes('node_modules')) return;
+
+          const vendorMap = [
+            { match: 'react', chunk: 'vendor.react' },
+            { match: 'react-dom', chunk: 'vendor.react-dom' },
+            { match: 'react-router-dom', chunk: 'vendor.router' },
+            {
+              match: '@tanstack/react-query-devtools',
+              chunk: 'vendor.react-query-devtools',
+            },
+            { match: '@tanstack/react-query', chunk: 'vendor.react-query' },
+            { match: '@supabase', chunk: 'vendor.supabase' },
+            { match: 'react-hook-form', chunk: 'vendor.react-hook-form' },
+            {
+              match: '@hookform/resolvers',
+              chunk: 'vendor.hookform-resolvers',
+            },
+            { match: 'zod', chunk: 'vendor.zod' },
+            { match: 'dayjs', chunk: 'vendor.dayjs' },
+            { match: 'zustand', chunk: 'vendor.zustand' },
+            { match: 'i18next', chunk: 'vendor.i18n' },
+            { match: 'react-i18next', chunk: 'vendor.react-i18n' },
+            { match: 'react-toastify', chunk: 'vendor.toastify' },
+            { match: 'dompurify', chunk: 'vendor.dompurify' },
+          ];
+
+          const found = vendorMap.find((entry) => id.includes(entry.match));
+          return found ? found.chunk : 'vendor';
         },
       },
     },
