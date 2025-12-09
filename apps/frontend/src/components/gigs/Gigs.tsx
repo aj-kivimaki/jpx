@@ -1,40 +1,73 @@
 import GigsTable from './GigsTable';
+import { CiCircleMore } from 'react-icons/ci';
 import {
   site,
   sectionIds,
   type DbGig,
   type GigsSection,
-  gigsQueryOptions,
+  type PaginationResult,
 } from '@jpx/shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
 import { supabase } from '../../clients';
-import { useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  type UseInfiniteQueryResult,
+  type InfiniteData,
+} from '@tanstack/react-query';
+import { gigsInfiniteOptions } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
-import { FETCH_GIGS_PAGE_SIZE, FETCH_GIGS_START_PAGE } from '../../config';
+import { FETCH_GIGS_PAGE_SIZE } from '../../config';
 
 const Gigs = () => {
-  const query = useQuery(
-    gigsQueryOptions(supabase, FETCH_GIGS_START_PAGE, FETCH_GIGS_PAGE_SIZE)
-  );
+  const query = useInfiniteQuery(
+    gigsInfiniteOptions(supabase, FETCH_GIGS_PAGE_SIZE)
+  ) as UseInfiniteQueryResult<InfiniteData<PaginationResult<DbGig>>, Error>;
 
-  const { data: gigsResult, isLoading, error } = query;
+  const {
+    data: gigsResult,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    error,
+  } = query;
+
+  const gigs: DbGig[] =
+    gigsResult?.pages.flatMap((p: PaginationResult<DbGig>) => p.data) ?? [];
 
   const localize = useLocalized();
 
   if (error) return <p>Error loading events: {error.message}</p>;
 
   const { sections } = site;
-
-  const gigsSection = sections.find((s): s is GigsSection => s.id === 'gigs');
+  const gigsSection = sections.find(
+    (s): s is GigsSection => s.id === sectionIds.gigs
+  );
 
   const title = localize(gigsSection?.title);
-  const gigs: DbGig[] = gigsResult?.data ?? [];
+
   return (
     <div id={sectionIds.gigs} className={styles.gigs}>
       <h2 className={styles.gigsTitle}>{title}</h2>
       <div className={styles.gigsCardContainer}>
         {isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
+      </div>
+
+      <div className={styles.loadMoreContainer}>
+        {hasNextPage && (
+          <button
+            className={styles.loadMoreButton}
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+          >
+            {isFetchingNextPage ? (
+              <Spinner />
+            ) : (
+              <CiCircleMore className={styles.loadMoreIcon} />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );
