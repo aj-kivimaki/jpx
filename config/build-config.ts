@@ -15,3 +15,11 @@ export const createFsAllow = (appDir: string) => [
   path.resolve(appDir, '../../packages'),
   path.resolve(appDir, '../../'),
 ];
+
+// Shared visualizer settings
+export const visualizerConfig = {
+  filename: './dist/stats.html', // Output file
+  template: 'sunburst', // Other options: sunburst, network
+  gzipSize: true, // Show gzipped size
+  brotliSize: true, // Show brotli size
+};

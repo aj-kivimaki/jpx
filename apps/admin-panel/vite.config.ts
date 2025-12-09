@@ -1,18 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { aliases, createFsAllow } from '../../config/build-config';
-import { visualizer } from 'rollup-plugin-visualizer';
+import {
+  aliases,
+  createFsAllow,
+  visualizerConfig,
+} from '../../config/build-config';
+import { PluginVisualizerOptions, visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    visualizer({
-      filename: './dist/stats.html', // Output file
-      template: 'sunburst', // Other options: sunburst, network
-      gzipSize: true, // Show gzipped size
-      brotliSize: true, // Show brotli size
-    }),
-  ],
+  plugins: [react(), visualizer(visualizerConfig as PluginVisualizerOptions)],
   resolve: {
     alias: aliases,
   },
