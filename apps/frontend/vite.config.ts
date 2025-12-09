@@ -22,21 +22,27 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react-router-dom')) return 'vendor.router';
-            if (id.includes('react-dom')) return 'vendor.react-dom';
-            if (id.includes('react-hook-form')) return 'vendor.react-hook-form';
-            if (id.includes('@tanstack')) return 'vendor.react-query';
-            if (id.includes('@supabase')) return 'vendor.supabase';
-            if (id.includes('@hookform/resolvers'))
-              return 'vendor.hookform-resolvers';
-            if (id.includes('zod')) return 'vendor.zod';
-            if (id.includes('dayjs')) return 'vendor.dayjs';
-            if (id.includes('i18next')) return 'vendor.i18n';
-            if (id.includes('react-i18next')) return 'vendor.react-i18n';
-            if (id.includes('react-toastify')) return 'vendor.toastify';
-            return 'vendor';
-          }
+          if (!id.includes('node_modules')) return;
+
+          const vendorMap = [
+            { match: 'react-router-dom', chunk: 'vendor.router' },
+            { match: 'react-dom', chunk: 'vendor.react-dom' },
+            { match: 'react-hook-form', chunk: 'vendor.react-hook-form' },
+            { match: '@tanstack', chunk: 'vendor.react-query' },
+            { match: '@supabase', chunk: 'vendor.supabase' },
+            {
+              match: '@hookform/resolvers',
+              chunk: 'vendor.hookform-resolvers',
+            },
+            { match: 'zod', chunk: 'vendor.zod' },
+            { match: 'dayjs', chunk: 'vendor.dayjs' },
+            { match: 'i18next', chunk: 'vendor.i18n' },
+            { match: 'react-i18next', chunk: 'vendor.react-i18n' },
+            { match: 'react-toastify', chunk: 'vendor.toastify' },
+          ];
+
+          const found = vendorMap.find((entry) => id.includes(entry.match));
+          return found ? found.chunk : 'vendor';
         },
       },
     },
