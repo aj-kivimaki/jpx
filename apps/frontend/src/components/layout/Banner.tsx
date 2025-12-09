@@ -17,7 +17,7 @@ const Banner: React.FC = () => {
   const alt = localize(soloImage?.alt);
 
   return (
-    <div id={sectionIds.top} className={styles.banner}>
+    <section id={sectionIds.top} className={styles.banner}>
       <picture>
         <source
           srcSet={soloPortraitSrc}
@@ -34,7 +34,7 @@ const Banner: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

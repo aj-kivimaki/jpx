@@ -9,14 +9,16 @@ const SocialSidebar = lazy(() => import('./components/sidebar/Sidebar'));
 
 const App = () => {
   return (
-    <div>
+    <>
       <Header />
-      <Banner />
-      <Gigs />
-      <Info />
-      <Footer />
       <SocialSidebar />
-    </div>
+      <main>
+        <Banner />
+        <Gigs />
+        <Info />
+      </main>
+      <Footer />
+    </>
   );
 };
 
