@@ -35,7 +35,7 @@ export const gigsInfiniteOptions = (
   queryFn: ({ pageParam = 1 }: { pageParam?: number }) =>
     fetchGigs(client, pageParam, pageSize),
   getNextPageParam: (lastPage: PaginationResult<DbGig> | undefined) =>
-    lastPage && lastPage.hasNextPage ? lastPage.page + 1 : undefined,
+    lastPage?.hasNextPage ? lastPage.page + 1 : undefined,
   initialPageParam: 1,
   staleTime: QUERY_STALE_TIME_MS,
   retry: QUERY_REFETCH_TIMES,
