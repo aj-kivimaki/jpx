@@ -60,6 +60,7 @@ const Gigs = () => {
             className={styles.loadMoreButton}
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
+            aria-label="Load more gigs"
           >
             {isFetchingNextPage ? (
               <Spinner />
