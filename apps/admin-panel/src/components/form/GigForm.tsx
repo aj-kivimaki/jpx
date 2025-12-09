@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { z } from 'zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
@@ -14,6 +15,7 @@ import {
   getGigById,
   createGig,
   updateGig,
+  logger,
 } from '@jpx/shared';
 import { useGigStore } from '../../store';
 import { useToastify } from '../../hooks/useToastify';
@@ -21,15 +23,20 @@ import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
 import { sanitizeGigInput } from '../../utils/sanitizeGigInput';
 import styles from './GigForm.module.css';
 
-const defaultValue: Partial<GigInsert> = { lineup_id: '' };
+type GigFormInput = z.input<typeof GigInsertSchema>;
+
+const defaultValue: Partial<GigFormInput> = { lineup_id: '' };
 
 export default function GigForm() {
   const { selectedGigId, setSelectedGigId } = useGigStore();
   const isEditMode = Boolean(selectedGigId);
 
-  const formResolver = zodResolver(
-    GigInsertSchema
-  ) as unknown as Resolver<GigInsert>;
+  const rawResolver = zodResolver(GigInsertSchema);
+  const formResolver: Resolver<GigFormInput> = (values, context, options) =>
+    // delegate to the well-tested zod resolver but expose a form-typed signature
+    // (we intentionally keep this thin wrapper to avoid an unsafe global cast)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (rawResolver as any)(values, context, options);
 
   const {
     register,
@@ -38,7 +45,7 @@ export default function GigForm() {
     formState: { errors: hookFormErrors },
     setError,
     reset,
-  } = useForm<GigInsert>({
+  } = useForm<GigFormInput>({
     resolver: formResolver,
     defaultValues: defaultValue,
     shouldFocusError: true,
@@ -78,9 +85,12 @@ export default function GigForm() {
     },
   });
 
-  const handleFormSubmit = async (data: GigInsert) => {
+  const handleFormSubmit = async (data: GigFormInput) => {
     try {
-      const sanitized = sanitizeGigInput(data);
+      // Parse/validate with the canonical schema to get the output shape
+      const parsed = GigInsertSchema.parse(data);
+
+      const sanitized = sanitizeGigInput(parsed);
 
       if (isEditMode) {
         if (!selectedGigId) return;
@@ -109,7 +119,7 @@ export default function GigForm() {
   };
 
   const handleFormError = (errors: Record<string, unknown>) =>
-    console.log('[HookForm] validation errors on submit:', errors);
+    logger.error('[HookForm] validation errors on submit:', errors);
 
   return (
     <div className={styles.form}>

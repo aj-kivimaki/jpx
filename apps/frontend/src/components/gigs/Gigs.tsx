@@ -10,19 +10,18 @@ import {
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
 import { supabase } from '../../clients';
-import {
-  useInfiniteQuery,
-  type UseInfiniteQueryResult,
-  type InfiniteData,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
 import { gigsInfiniteOptions } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
 import { FETCH_GIGS_PAGE_SIZE } from '../../config';
 
 const Gigs = () => {
-  const query = useInfiniteQuery(
-    gigsInfiniteOptions(supabase, FETCH_GIGS_PAGE_SIZE)
-  ) as UseInfiniteQueryResult<InfiniteData<PaginationResult<DbGig>>, Error>;
+  const query = useInfiniteQuery<
+    PaginationResult<DbGig>,
+    Error,
+    InfiniteData<PaginationResult<DbGig>, number>,
+    readonly string[]
+  >(gigsInfiniteOptions(supabase, FETCH_GIGS_PAGE_SIZE));
 
   const {
     data: gigsResult,
@@ -34,7 +33,8 @@ const Gigs = () => {
   } = query;
 
   const gigs: DbGig[] =
-    gigsResult?.pages.flatMap((p: PaginationResult<DbGig>) => p.data) ?? [];
+    gigsResult?.pages.flatMap((p: PaginationResult<DbGig>) => p.data ?? []) ??
+    [];
 
   const localize = useLocalized();
 

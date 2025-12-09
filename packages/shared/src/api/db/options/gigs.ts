@@ -6,6 +6,11 @@ import {
   QUERY_REFETCH_TIMES,
   QUERY_STALE_TIME_MS,
 } from '../../../schemas';
+import type {
+  UseInfiniteQueryOptions,
+  QueryFunctionContext,
+  InfiniteData,
+} from '@tanstack/react-query';
 
 /**
  * Options for a single-page query (useQuery).
@@ -29,10 +34,17 @@ export const gigsQueryOptions = (
 export const gigsInfiniteOptions = (
   client: SupabaseClient,
   pageSize: number = 5
-) => ({
-  queryKey: [VALIDATED_KEYS.GIGS],
-  queryFn: ({ pageParam = 1 }: { pageParam?: number }) =>
-    fetchGigs(client, pageParam, pageSize),
+): UseInfiniteQueryOptions<
+  PaginationResult<DbGig>,
+  Error,
+  InfiniteData<PaginationResult<DbGig>, number>,
+  readonly string[]
+> => ({
+  queryKey: [VALIDATED_KEYS.GIGS] as const,
+  queryFn: ({ pageParam }: QueryFunctionContext<readonly string[]>) => {
+    const page = typeof pageParam === 'number' ? pageParam : 1;
+    return fetchGigs(client, page, pageSize);
+  },
   getNextPageParam: (lastPage: PaginationResult<DbGig> | undefined) =>
     lastPage?.hasNextPage ? lastPage.page + 1 : undefined,
   initialPageParam: 1,

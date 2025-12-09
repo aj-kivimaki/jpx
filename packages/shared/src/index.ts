@@ -2,6 +2,7 @@ import './styles/reset.css';
 import './styles/global.css';
 export * from './api';
 export * from './data';
+export * from './logger';
 export * from './schemas';
 export * from './types';
 export * from './utils';

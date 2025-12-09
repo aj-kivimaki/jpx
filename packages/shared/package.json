@@ -16,12 +16,14 @@
     "test:ci": "echo \"no tests for shared\"",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tslog": "^4.10.2"
+  },
   "devDependencies": {
-    "typescript": "^5.9.3",
     "@types/node": "^20.5.2",
-    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
-    "@typescript-eslint/eslint-plugin": "^8.47.0"
+    "eslint": "^9.0.0",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,5 +1,6 @@
 import { env, makeError, AppError } from '@jpx/shared';
 import { supabase } from '../clients';
+import { logger } from '@jpx/shared';
 
 type HighlightSDK = {
   init?: (opts?: unknown) => void;
@@ -42,22 +43,31 @@ export async function initMonitoring() {
   globalThis.addEventListener('error', (ev) => {
     try {
       // Event may contain .error (Error) or message
-      const errorEvent = ev;
-      const err =
-        (errorEvent.error as unknown) ?? new Error(errorEvent.message);
-      captureError(err);
+      const errorEvent = ev as ErrorEvent;
+      const reported = errorEvent.error;
+      if (reported instanceof Error) {
+        captureError(reported);
+      } else {
+        captureError(new Error(errorEvent.message));
+      }
     } catch (error) {
-      console.error('Error handling window.onerror', error);
+      logger.error('Error handling window.onerror', error);
     }
   });
 
   globalThis.addEventListener('unhandledrejection', (ev) => {
     try {
-      const pre = ev;
-      const reason = pre.reason as unknown;
-      captureError(reason ?? new Error('Unhandled Promise Rejection'));
+      const pre = ev as PromiseRejectionEvent;
+      const reason = pre.reason;
+      if (reason instanceof Error) {
+        captureError(reason);
+      } else {
+        captureError(
+          new Error(String(reason ?? 'Unhandled Promise Rejection'))
+        );
+      }
     } catch (error) {
-      console.error('Error handling unhandledrejection', error);
+      logger.error('Error handling unhandledrejection', error);
     }
   });
 }
@@ -100,7 +110,7 @@ export function captureError(err: unknown, context?: Record<string, unknown>) {
     .catch(() => sendToHighlight(appErr));
 
   // Also keep local visibility
-  console.error(appErr);
+  logger.error(appErr);
 }
 
 function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
