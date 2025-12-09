@@ -1,4 +1,5 @@
 import { makeError } from '../../../../utils';
+import { logDbError } from '../../../../logger';
 import { GigInsertSchema, GigModelSchema } from '../../../../schemas';
 import { type GigInsert, type DbGig } from '../../../../types';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -17,7 +18,10 @@ export const createGig = async (
     .select('*, lineup:lineup_options(id, name_en, name_fi)')
     .single();
 
-  if (error) throw makeError(error.message, 'DB_ERROR', error);
+  if (error) {
+    logDbError('createGig', error, { input: parsed.data });
+    throw makeError(error.message, 'DB_ERROR', error);
+  }
 
   const output = GigModelSchema.safeParse(data);
   if (!output.success)

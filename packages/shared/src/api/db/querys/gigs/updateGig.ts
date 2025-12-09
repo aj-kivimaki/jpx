@@ -1,4 +1,5 @@
 import { makeError } from '../../../../utils';
+import { logDbError } from '../../../../logger';
 import {
   GigIdSchema,
   GigModelSchema,
@@ -27,7 +28,13 @@ export const updateGig = async (
     .select('*, lineup:lineup_options(id, name_en, name_fi)')
     .single();
 
-  if (error) throw makeError(error.message, 'DB_ERROR', error);
+  if (error) {
+    logDbError('updateGig', error, {
+      id: safeId.data,
+      update: parsed.data,
+    });
+    throw makeError(error.message, 'DB_ERROR', error);
+  }
   if (!data) throw makeError('Gig not found', 'NOT_FOUND');
 
   const output = GigModelSchema.safeParse(data);

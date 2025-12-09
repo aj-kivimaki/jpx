@@ -6,6 +6,7 @@ import {
   type DbGig,
   type GigsSection,
   type PaginationResult,
+  logDbError,
 } from '@jpx/shared';
 import styles from './Gigs.module.css';
 import useLocalized from '../../hooks/useLocalized';
@@ -38,7 +39,10 @@ const Gigs = () => {
 
   const localize = useLocalized();
 
-  if (error) return <p>Error loading events: {error.message}</p>;
+  if (error) {
+    logDbError('fetchGigs', error);
+    return <p>Error loading events: {error.message}</p>;
+  }
 
   const { sections } = site;
   const gigsSection = sections.find(

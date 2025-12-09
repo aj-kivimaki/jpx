@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { type DbGig, type PaginationResult } from '../../../../types';
 import { GigModelSchema } from '../../../../schemas';
 import { makeError } from '../../../../utils';
+import { logDbError } from '../../../../logger';
 
 // Overloads: fetch all gigs, or fetch a page of gigs
 export function fetchGigs(client: SupabaseClient): Promise<DbGig[]>;
@@ -29,7 +30,10 @@ export async function fetchGigs(
       .order('date')
       .range(from, to);
 
-    if (error) throw makeError(error.message, 'DB_ERROR');
+    if (error) {
+      logDbError('fetchGigs.paginated', error, { page, pageSize });
+      throw makeError(error.message, 'DB_ERROR');
+    }
 
     const output = GigModelSchema.array().safeParse(data ?? []);
     if (!output.success)
@@ -57,7 +61,10 @@ export async function fetchGigs(
     .select('*, lineup:lineup_options(id, name_en, name_fi)')
     .order('date');
 
-  if (error) throw makeError(error.message, 'DB_ERROR');
+  if (error) {
+    logDbError('fetchGigs.list', error);
+    throw makeError(error.message, 'DB_ERROR');
+  }
 
   const output = GigModelSchema.array().safeParse(data ?? []);
   if (!output.success)

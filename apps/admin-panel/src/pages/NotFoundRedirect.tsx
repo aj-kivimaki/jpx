@@ -13,7 +13,7 @@ export default function NotFoundRedirect() {
         setLoggedIn(!!data.session);
       } catch (err) {
         // Log and treat as not logged in
-        logger.error('Failed to get session', err);
+        logger.error({ msg: 'Failed to get session', err });
         setLoggedIn(false);
       }
     };

@@ -1,11 +1,15 @@
 import { supabase } from '../../clients';
 import { MdLogout } from 'react-icons/md';
-import { signOut } from '@jpx/shared';
+import { signOut, logger } from '@jpx/shared';
 import styles from './LogoutButton.module.css';
 
 export default function LogoutButton() {
   const handleLogout = async () => {
-    await signOut(supabase);
+    try {
+      await signOut(supabase);
+    } catch (err: unknown) {
+      logger.error({ msg: 'Sign out failed', err });
+    }
   };
 
   return (

@@ -18,7 +18,7 @@ export default function PrivateRoute({
         const { data } = await supabase.auth.getSession();
         setLoggedIn(!!data.session);
       } catch (err) {
-        logger.error('Failed to get session', err);
+        logger.error({ msg: 'Failed to get session', err });
         setLoggedIn(false);
       } finally {
         setLoading(false);
