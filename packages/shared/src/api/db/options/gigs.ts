@@ -1,7 +1,6 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
 import { fetchGigs } from '../querys';
-import type { PaginationResult } from '../../../utils/withPagination';
-import type { DbGig } from '../../../types';
+import { type DbGig, type PaginationResult } from '../../../types';
 import {
   VALIDATED_KEYS,
   QUERY_REFETCH_TIMES,
