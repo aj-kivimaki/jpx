@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../clients';
+import { logger } from '@jpx/shared';
 
 export default function NotFoundRedirect() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
@@ -12,7 +13,7 @@ export default function NotFoundRedirect() {
         setLoggedIn(!!data.session);
       } catch (err) {
         // Log and treat as not logged in
-        console.error('Failed to get session', err);
+        logger.error('Failed to get session', err);
         setLoggedIn(false);
       }
     };

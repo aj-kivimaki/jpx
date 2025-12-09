@@ -1,6 +1,7 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../../clients';
+import { logger } from '@jpx/shared';
 
 interface PrivateRouteProps {
   children: JSX.Element;
@@ -17,7 +18,7 @@ export default function PrivateRoute({
         const { data } = await supabase.auth.getSession();
         setLoggedIn(!!data.session);
       } catch (err) {
-        console.error('Failed to get session', err);
+        logger.error('Failed to get session', err);
         setLoggedIn(false);
       } finally {
         setLoading(false);

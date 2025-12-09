@@ -12,6 +12,7 @@ import {
   parseGigDates,
   VALIDATED_KEYS,
   scrollToTop,
+  logger,
 } from '@jpx/shared';
 import { useToastify } from '../../hooks/useToastify';
 import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
@@ -43,7 +44,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
       const handled = mapAppErrorToFormErrors(err, undefined, toastError);
       if (handled) return;
 
-      console.error(err);
+      logger.error(err);
       toastError(err instanceof Error ? err.message : 'Tuntematon virhe');
     },
   });
