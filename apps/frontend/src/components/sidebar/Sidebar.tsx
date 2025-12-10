@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { site, social, makeError } from '@jpx/shared';
+import { site, social, makeError, logger } from '@jpx/shared';
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
 import { FaCartShopping } from 'react-icons/fa6';
@@ -8,7 +8,6 @@ import styles from './Sidebar.module.css';
 import LanguageSwitcher from '../language/LanguageSwitcher';
 import useLocalized from '../../hooks/useLocalized';
 import ModeSwitcher from '../theme/ModeSwitcher';
-import { logger } from '@jpx/shared';
 
 const Sidebar = () => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);

@@ -19,12 +19,12 @@ import { type Theme, logger } from '@jpx/shared';
  * ```
  */
 export const applyTheme = (theme: Theme) => {
-  if (typeof globalThis.document === 'undefined') return;
+  if (globalThis.document === undefined) return;
 
   const root = globalThis.document.documentElement;
   root.dataset.theme = theme;
 
-  if (typeof globalThis.localStorage === 'undefined') return;
+  if (globalThis.localStorage === undefined) return;
 
   try {
     globalThis.localStorage.setItem('theme', theme);

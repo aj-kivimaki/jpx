@@ -1,6 +1,12 @@
-import { site, band, sectionIds, imageIds } from '@jpx/shared';
+import {
+  site,
+  band,
+  sectionIds,
+  imageIds,
+  makeError,
+  logger,
+} from '@jpx/shared';
 import useLocalized from '../../hooks/useLocalized';
-import { makeError, logger } from '@jpx/shared';
 import styles from './Info.module.css';
 
 const Info = () => {
