@@ -16,39 +16,33 @@ export interface ParsedGig extends DbGig {
 }
 
 /**
- * Parses and formats a GigForm into ParsedGig
- * - Handles invalid/missing dates and times safely
+ * Helper to format a Dayjs object if valid, otherwise returns undefined.
+ */
+function formatIfValid(
+  date: dayjs.Dayjs | undefined,
+  format: string
+): string | undefined {
+  return date?.isValid() ? date.format(format) : undefined;
+}
+
+/**
+ * Parses and formats a Gig into ParsedGig
+ * Handles invalid/missing dates and times safely
  */
 export function parseGigDates(gig: DbGig): ParsedGig {
   const parsedDate = gig.date ? dayjs(gig.date) : undefined;
   const parsedTime = gig.time ? dayjs(gig.time, 'HH:mm:ss') : undefined;
 
-  const formattedDate = parsedDate?.isValid()
-    ? parsedDate.format('DD.MM.')
-    : undefined;
-  const formattedTime = parsedTime?.isValid()
-    ? parsedTime.format('HH:mm')
-    : undefined;
-
-  const dateTimeDate = parsedDate?.isValid()
-    ? parsedDate.toISOString()
-    : undefined;
-  const dateTimeTime = parsedTime?.isValid()
-    ? parsedTime.format('HH:mm:ss')
-    : undefined;
-
-  const weekdayAbbrev = parsedDate?.isValid()
-    ? FINNISH_WEEKDAYS[parsedDate.day()]
-    : undefined;
-
   return {
     ...gig,
     parsedDate,
     parsedTime,
-    formattedDate,
-    formattedTime,
-    dateTimeDate,
-    dateTimeTime,
-    weekdayAbbrev,
+    formattedDate: formatIfValid(parsedDate, 'DD.MM.'),
+    formattedTime: formatIfValid(parsedTime, 'HH:mm'),
+    dateTimeDate: formatIfValid(parsedDate, 'YYYY-MM-DDTHH:mm:ss[Z]'),
+    dateTimeTime: formatIfValid(parsedTime, 'HH:mm:ss'),
+    weekdayAbbrev: parsedDate?.isValid()
+      ? FINNISH_WEEKDAYS[parsedDate.day()]
+      : undefined,
   };
 }

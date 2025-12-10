@@ -1,65 +1,46 @@
 import { logger } from './logger';
+import type { SupabaseClient, Session } from '@supabase/supabase-js';
 
 /**
- * Standardized DB error logger.
+ * Logs a database-related error with optional contextual metadata.
  *
- * Logs immediately, then attempts to enrich the log with a Supabase session
- * if a global `supabase` client is available at runtime.
+ * Performs an immediate log of the error and context, then attempts to enrich
+ * the log with the current Supabase user session if a global `supabase` client
+ * is available. Enrichment is non-blocking and will not throw.
  *
- * @param operation - short operation name (e.g. 'createGig')
- * @param err - caught error or error payload
- * @param ctx - optional contextual metadata to include
+ * @param operation - Short identifier for the operation where the error occurred (e.g., 'createGig').
+ * @param err - The caught error object or error payload.
+ * @param ctx - Optional additional metadata to include in the log (e.g., page number, input data).
  */
-export const logDbError = (
+export const logDbError = async (
   operation: string,
   err: unknown,
   ctx: Record<string, unknown> = {}
 ) => {
-  // Immediate log for visibility
+  // Immediate log
   logger.error({ op: operation, err, ...ctx });
 
-  // Best-effort: if a global Supabase client exists, try to fetch session
-  // and log an enriched entry. This is intentionally non-blocking.
-  type GetSessionResult = {
-    data?: { session?: { user?: { id?: string } } | null } | null;
-    error?: unknown;
-  };
-
   try {
-    const getter = globalThis.supabase?.auth?.getSession;
-    if (typeof getter !== 'function') return;
+    const maybeSupabase = (globalThis as { supabase?: SupabaseClient })
+      ?.supabase;
+    const getSession = maybeSupabase?.auth?.getSession;
 
-    getter()
-      .then((res: GetSessionResult) => {
-        try {
-          const session =
-            (res as { data?: { session?: { user?: { id?: string } } } })?.data
-              ?.session ?? null;
-          const userId = session?.user?.id ?? null;
+    if (typeof getSession !== 'function') return;
 
-          logger.error({
-            op: operation,
-            err,
-            session: userId ? { id: userId } : session,
-            ...ctx,
-          });
-        } catch (e) {
-          logger.warn({
-            msg: 'Failed to enrich DB error with session',
-            err: e,
-          });
-        }
-      })
-      .catch((e: Error) => {
-        logger.warn({
-          msg: 'Failed to get supabase session for DB error',
-          err: e,
-        });
-      });
-  } catch (e) {
+    const res = await getSession();
+    const session: Session | null = res?.data?.session ?? null;
+    const userId = session?.user?.id ?? null;
+
+    logger.error({
+      op: operation,
+      err,
+      session: userId ? { id: userId } : session,
+      ...ctx,
+    });
+  } catch (error) {
     logger.warn({
-      msg: 'Unexpected error in logDbError enrichment',
-      err: e,
+      msg: 'Failed to enrich DB error with Supabase session',
+      err: error,
     });
   }
 };

@@ -5,6 +5,7 @@ import { FaExclamation, FaRegEdit } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
 import { IoTimeOutline } from 'react-icons/io5';
 import { MdDeleteForever } from 'react-icons/md';
+import { RenderField } from './RenderField';
 import styles from './GigCard.module.css';
 
 export interface GigCardProps {
@@ -36,7 +37,7 @@ const GigCard = ({
   onDelete,
   onEdit,
 }: GigCardProps) => (
-  <article key={id} className={styles.card}>
+  <article className={styles.card}>
     <div className={styles.leftColumn}>
       {formattedDate && (
         <div className={styles.date}>
@@ -58,36 +59,34 @@ const GigCard = ({
     </div>
 
     <div className={styles.rightColumn}>
-      {lineup && (
-        <div className={styles.lineup}>
-          <GiMicrophone className={styles.lineupIcon} aria-hidden="true" />
-          <span>{lineup}</span>
-        </div>
-      )}
-      {venue && (
-        <div className={styles.venue}>
+      <RenderField
+        icon={<GiMicrophone className={styles.lineupIcon} aria-hidden="true" />}
+        content={lineup}
+        className={styles.lineup}
+      />
+      <RenderField
+        icon={
           <FaBuildingColumns className={styles.venueIcon} aria-hidden="true" />
-          <span>{venue}</span>
-        </div>
-      )}
-      {city && (
-        <div className={styles.city}>
-          <IoIosPin className={styles.cityIcon} aria-hidden="true" />
-          <span className={styles.cityText}>{city}</span>
-        </div>
-      )}
-      {notes && (
-        <div className={styles.notes}>
-          <FaExclamation className={styles.notesIcon} aria-hidden="true" />
-          <span>{notes}</span>
-        </div>
-      )}
+        }
+        content={venue}
+        className={styles.venue}
+      />
+      <RenderField
+        icon={<IoIosPin className={styles.cityIcon} aria-hidden="true" />}
+        content={city}
+        className={styles.city}
+      />
+      <RenderField
+        icon={<FaExclamation className={styles.notesIcon} aria-hidden="true" />}
+        content={notes}
+        className={styles.notes}
+      />
     </div>
 
     {onDelete && (
       <button
         className={styles.deleteButton}
-        onClick={() => onDelete(id, venue ?? '', formattedDate ?? '')}
+        onClick={() => onDelete(id, venue ?? '', formattedDate)}
         aria-label="Poista keikka"
       >
         <MdDeleteForever className={styles.deleteIcon} />

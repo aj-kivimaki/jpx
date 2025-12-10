@@ -1,4 +1,4 @@
-[⬅ Back to Root README](../README.md#documentation) | [Architecture](./ARCHITECTURE.md) | [Pre-Hooks](./PRE-HOOKS.md)
+[⬅ Back to Root README](../README.md#documentation) | [Architecture](./ARCHITECTURE.md) | [E2E-CRUD-Flow](./E2E-CRUD-FLOW.md) | [I18N](./I18N.md) | [Pre-Hooks](./PRE-HOOKS.md)
 
 # CI/CD Pipeline
 

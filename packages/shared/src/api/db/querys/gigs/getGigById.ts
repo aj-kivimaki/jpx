@@ -1,5 +1,5 @@
 import { makeError } from '../../../../utils';
-import { logger, logDbError } from '../../../../logger';
+import { logDbError } from '../../../../logger';
 import { GigIdSchema, GigModelSchema } from '../../../../schemas';
 import type { DbGig, GigId } from '../../../../types';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -9,9 +9,8 @@ export const getGigById = async (
   id: GigId
 ): Promise<DbGig> => {
   const safeId = GigIdSchema.safeParse(id);
-
   if (!safeId.success) {
-    logger.warn('getGigById: invalid id', { id, details: safeId.error });
+    // only throw, no separate log
     throw makeError('Invalid gig ID', 'VALIDATION_ERROR', safeId.error);
   }
 
@@ -23,10 +22,9 @@ export const getGigById = async (
 
   if (error) {
     logDbError('getGigById', error, { id: safeId.data });
-    throw makeError(error.message, 'DB_ERROR');
+    throw makeError(error.message, 'DB_ERROR', error);
   }
   if (!data) {
-    logger.warn('getGigById: gig not found', { id: safeId.data });
     throw makeError('Gig not found', 'NOT_FOUND');
   }
 

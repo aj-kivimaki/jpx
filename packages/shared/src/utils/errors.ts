@@ -1,22 +1,15 @@
+export type AppErrorCode =
+  | 'VALIDATION_ERROR'
+  | 'DB_ERROR'
+  | 'NOT_FOUND'
+  | 'UNKNOWN'
+  | 'AUTH_ERROR';
+
 export class AppError extends Error {
-  code:
-    | 'VALIDATION_ERROR'
-    | 'DB_ERROR'
-    | 'NOT_FOUND'
-    | 'UNKNOWN'
-    | 'AUTH_ERROR';
+  code: AppErrorCode;
   details?: unknown;
 
-  constructor(
-    message: string,
-    code:
-      | 'VALIDATION_ERROR'
-      | 'DB_ERROR'
-      | 'NOT_FOUND'
-      | 'UNKNOWN'
-      | 'AUTH_ERROR',
-    details?: unknown
-  ) {
+  constructor(message: string, code: AppErrorCode, details?: unknown) {
     super(message);
     this.code = code;
     this.details = details;
@@ -24,10 +17,8 @@ export class AppError extends Error {
   }
 }
 
-export function makeError(
+export const makeError = (
   message: string,
-  code: AppError['code'],
+  code: AppErrorCode,
   details?: unknown
-): AppError {
-  return new AppError(message, code, details);
-}
+): AppError => new AppError(message, code, details);

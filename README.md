@@ -25,6 +25,8 @@
 
 - [Architecture](./docs/ARCHITECTURE.md)
 - [CI/CD](./docs/CI-CD.md)
+- [End-to-End Gig CRUD Lifecycle](docs/E2E-CRUD-FLOW.md)
+- [I18N](./docs/I18N.md)
 - [Pre-Hooks](./docs/PRE-HOOKS.md)
 
 ### Apps
