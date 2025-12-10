@@ -19,6 +19,8 @@ export function useGigFormState() {
     defaultValues: { lineup_id: '' },
   });
 
+  const { setFocus } = form;
+
   const {
     data: lineupOptions,
     isLoading,
@@ -37,8 +39,8 @@ export function useGigFormState() {
 
   // Autofocus date field on mount
   useEffect(() => {
-    form.setFocus('date');
-  }, [form]);
+    setFocus('date');
+  }, [setFocus]);
 
   return {
     form,
