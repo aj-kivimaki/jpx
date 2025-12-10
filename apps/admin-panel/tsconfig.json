@@ -6,7 +6,8 @@
     "noEmit": true,
     "paths": {
       "@jpx/shared/*": ["../../packages/shared/src/*"],
-      "@jpx/ui/*": ["../../packages/ui/src/*"]
+      "@jpx/ui/*": ["../../packages/ui/src/*"],
+      "@jpx/ui": ["../../packages/ui/src/index.ts"]
     }
   },
   "include": ["src"]
