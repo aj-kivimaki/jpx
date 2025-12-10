@@ -1,11 +1,11 @@
 import type { HTMLInputTypeAttribute } from 'react';
-import styles from './FormInput.module.css';
 import type { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './FormInput.module.css';
 
 interface FormInputProps {
   label: string;
   register: UseFormRegisterReturn;
-  type?: HTMLInputTypeAttribute;
+  type?: HTMLInputTypeAttribute | 'textarea';
   rows?: number;
   placeholder?: string;
   required: boolean;
@@ -22,17 +22,14 @@ const FormInput = ({
   error,
 }: FormInputProps) => {
   const displayLabel = required ? `${label} *` : label;
-
   const id = `${register.name}-input`;
 
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={id}>
-        {error ? (
-          <p className={styles.error}>{error}</p>
-        ) : (
-          <p>{displayLabel}</p>
-        )}
+        <span className={error ? styles.error : undefined}>
+          {error || displayLabel}
+        </span>
       </label>
 
       {type === 'textarea' ? (
@@ -42,6 +39,7 @@ const FormInput = ({
           rows={rows || 3}
           placeholder={placeholder}
           className={styles.textarea}
+          required={required}
         />
       ) : (
         <input

@@ -4,8 +4,6 @@ import { supabase } from './clients';
 import Login from './pages/Login';
 import PrivateRoute from './components/auth/PrivateRoute';
 import NotFoundRedirect from './pages/NotFoundRedirect';
-import '@jpx/shared/styles/reset.css';
-import '@jpx/shared/styles/global.css';
 
 const Home = lazy(() => import('./pages/Home'));
 
@@ -13,16 +11,17 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: subscription } = supabase.auth.onAuthStateChange((event) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_IN') {
         navigate('/', { replace: true });
-      }
-      if (event === 'SIGNED_OUT') {
+      } else if (event === 'SIGNED_OUT') {
         navigate('/login', { replace: true });
       }
     });
 
-    return () => subscription?.subscription.unsubscribe();
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getGigById, logger } from '@jpx/shared';
 import { supabase } from '../../clients';
 import { useGigStore } from '../../store';
@@ -13,6 +13,8 @@ export function useGigLoader(form: UseFormReturn<GigFormInput>) {
 
   const { reset } = form;
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     toastErrorRef.current = toastError;
   }, [toastError]);
@@ -20,28 +22,31 @@ export function useGigLoader(form: UseFormReturn<GigFormInput>) {
   useEffect(() => {
     if (!selectedGigId) {
       reset();
+      setLoading(false);
       return;
     }
 
     let cancelled = false;
+    setLoading(true);
 
-    getGigById(supabase, selectedGigId)
-      .then((data) => {
+    (async () => {
+      try {
+        const data = await getGigById(supabase, selectedGigId);
         if (!cancelled) reset(data);
-      })
-      .catch((err) => {
+      } catch (err) {
         logger.error({
           msg: 'Failed to load gig for editing',
           err,
           gigId: selectedGigId,
         });
-
         toastErrorRef.current(
           err instanceof Error ? err.message : 'Virhe ladattaessa keikkaa'
         );
-
         setSelectedGigId(null);
-      });
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
 
     return () => {
       cancelled = true;
@@ -50,6 +55,7 @@ export function useGigLoader(form: UseFormReturn<GigFormInput>) {
 
   return {
     isEditMode: Boolean(selectedGigId),
+    loading,
     selectedGigId,
     setSelectedGigId,
   };

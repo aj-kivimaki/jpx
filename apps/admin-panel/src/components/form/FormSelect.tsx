@@ -1,6 +1,6 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import styles from './FormSelect.module.css';
 import type { DbLineupOption } from '@jpx/shared';
+import styles from './FormSelect.module.css';
 
 interface FormSelectProps {
   label: string;
@@ -13,7 +13,7 @@ interface FormSelectProps {
   isLoading?: boolean;
 }
 
-const FormSelect: React.FC<FormSelectProps> = ({
+const FormSelect = ({
   label,
   options,
   register,
@@ -22,12 +22,18 @@ const FormSelect: React.FC<FormSelectProps> = ({
   reactQueryError,
   disabled,
   isLoading,
-}) => {
+}: FormSelectProps) => {
   const displayLabel = required ? `${label} *` : label;
 
-  let placeholder = 'Valitse kokoonpano';
-  if (isLoading) placeholder = 'Ladataan vaihtoehtoja…';
-  else if (reactQueryError) placeholder = 'Virhe ladattaessa';
+  let placeholder;
+
+  if (isLoading) {
+    placeholder = 'Ladataan vaihtoehtoja…';
+  } else if (reactQueryError) {
+    placeholder = 'Virhe ladattaessa';
+  } else {
+    placeholder = 'Valitse kokoonpano';
+  }
 
   const isDisabled = disabled || isLoading || !!reactQueryError;
   const errorMessage =
@@ -39,11 +45,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={id}>
-        {errorMessage ? (
-          <p className={styles.error}>{errorMessage}</p>
-        ) : (
-          <p>{displayLabel}</p>
-        )}
+        <span className={errorMessage ? styles.error : undefined}>
+          {errorMessage || displayLabel}
+        </span>
       </label>
 
       <select

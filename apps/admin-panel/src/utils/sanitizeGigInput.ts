@@ -12,17 +12,22 @@ export type SanitizedGigInput = {
   time: string | null;
 };
 
-// Sanitize user-provided gig input fields. Returns a new object suitable for
-// sending to the API. Keep this app-level so apps can customize which fields
-// to sanitize or how.
+/**
+ * Sanitizes user-provided gig input fields and trims whitespace.
+ * Returns a new object suitable for sending to the API.
+ * Uses DOMPurify to prevent XSS attacks.
+ */
 export function sanitizeGigInput(data: GigFormInput): SanitizedGigInput {
+  const sanitizeTrim = (value: unknown) =>
+    value != null ? DOMPurify.sanitize(String(value)).trim() : null;
+
   return {
-    date: DOMPurify.sanitize(String(data.date)),
-    time: data.time ? DOMPurify.sanitize(String(data.time)) : null,
-    venue: data.venue ? DOMPurify.sanitize(String(data.venue)) : null,
-    city: data.city ? DOMPurify.sanitize(String(data.city)) : null,
-    notes_fi: data.notes_fi ? DOMPurify.sanitize(String(data.notes_fi)) : null,
-    notes_en: data.notes_en ? DOMPurify.sanitize(String(data.notes_en)) : null,
-    lineup_id: DOMPurify.sanitize(String(data.lineup_id)),
+    date: sanitizeTrim(data.date)!, // required
+    lineup_id: sanitizeTrim(data.lineup_id)!, // required
+    time: sanitizeTrim(data.time),
+    venue: sanitizeTrim(data.venue),
+    city: sanitizeTrim(data.city),
+    notes_fi: sanitizeTrim(data.notes_fi),
+    notes_en: sanitizeTrim(data.notes_en),
   } as GigInsert;
 }

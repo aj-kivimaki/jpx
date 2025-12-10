@@ -7,18 +7,15 @@ export default function NotFoundRedirect() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const { data } = await supabase.auth.getSession();
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
         setLoggedIn(!!data.session);
-      } catch (err) {
-        // Log and treat as not logged in
+      })
+      .catch((err) => {
         logger.error({ msg: 'Failed to get session', err });
         setLoggedIn(false);
-      }
-    };
-
-    checkSession();
+      });
   }, []);
 
   if (loggedIn === null) return null;

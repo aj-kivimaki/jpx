@@ -10,6 +10,10 @@ type ZodErrorLike = {
   issues?: ZodIssue[];
 };
 
+/**
+ * Maps AppError to form field errors or shows toast messages
+ * @returns true if the error was handled, false otherwise
+ */
 export function mapAppErrorToFormErrors<
   TFormValues extends Record<string, unknown>,
 >(
@@ -21,24 +25,32 @@ export function mapAppErrorToFormErrors<
 
   const { code, details, message } = error;
 
-  if (code === 'VALIDATION_ERROR') {
-    logger.warn('Server validation error', details);
-    handleValidationError(details as ZodErrorLike | undefined, setError, toast);
-    return true;
-  }
+  switch (code) {
+    case 'VALIDATION_ERROR':
+      logger.warn('Server validation error', details);
+      handleValidationError(
+        details as ZodErrorLike | undefined,
+        setError,
+        toast
+      );
+      return true;
 
-  if (code === 'NOT_FOUND') {
-    toast?.('Pyydetty resurssi ei löytynyt');
-    return true;
-  }
+    case 'NOT_FOUND':
+      toast?.('Pyydetty resurssi ei löytynyt');
+      return true;
 
-  toast?.(message || 'Palvelinvirhe');
-  logger.error('AppError handled', error as AppError);
-  return true;
+    default:
+      toast?.(message || 'Palvelinvirhe');
+      logger.error('AppError handled', error as AppError);
+      return true;
+  }
 }
 
 /* ------------------ Helpers ------------------ */
 
+/**
+ * Maps server validation issues to react-hook-form field errors
+ */
 function handleValidationError<TFormValues extends Record<string, unknown>>(
   details: ZodErrorLike | undefined,
   setError?: UseFormSetError<TFormValues>,
@@ -59,7 +71,6 @@ function handleValidationError<TFormValues extends Record<string, unknown>>(
 
     if (!field) continue;
 
-    // field existence check simplified; avoids needless in-object test
     setError(field, {
       type: 'server',
       message: issue.message,
