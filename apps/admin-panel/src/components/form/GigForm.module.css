@@ -30,15 +30,6 @@
   padding: 2rem;
 }
 
-.logout {
-  display: flex;
-  align-items: center;
-}
-
-.logout :hover {
-  color: #eee;
-}
-
 .buttons {
   display: flex;
   justify-content: center;

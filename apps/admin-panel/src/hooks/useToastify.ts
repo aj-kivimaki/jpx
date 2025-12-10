@@ -1,4 +1,4 @@
-import { toast, type ToastOptions } from 'react-toastify';
+import { toast, type ToastOptions, type Id } from 'react-toastify';
 
 export function useToastify() {
   const success = (message: string, opts?: ToastOptions) => {
@@ -9,11 +9,11 @@ export function useToastify() {
     toast.error(message, opts);
   };
 
-  const loading = (message: string, opts?: ToastOptions) => {
+  const loading = (message: string, opts?: ToastOptions): Id => {
     return toast.loading(message, opts);
   };
 
-  const dismiss = (id?: string | number) => {
+  const dismiss = (id?: Id) => {
     toast.dismiss(id);
   };
 
