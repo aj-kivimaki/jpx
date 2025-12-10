@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useIsScrolling from '../../hooks/useScrolling';
-import { nav, site, ui, sectionIds } from '@jpx/shared';
+import { nav, site, ui, sectionIds, makeError, logger } from '@jpx/shared';
 import styles from './Header.module.css';
 import useLocalized from '../../hooks/useLocalized';
 
@@ -20,8 +20,22 @@ const Header = () => {
   };
 
   const jpxLogo = logos.find((logo) => logo.id === 'jpx');
+  if (!jpxLogo) {
+    const err = makeError(
+      'JPX logo not found in site configuration',
+      'NOT_FOUND'
+    );
+    err.__logged = true;
+    logger.error(err);
+  }
+
   const logoSrc = jpxLogo?.src ?? '';
   const logoAlt = localize(jpxLogo?.alt);
+  if (!logoAlt) {
+    const err = makeError('Alt text missing for JPX logo', 'NOT_FOUND');
+    err.__logged = true;
+    logger.warn(err);
+  }
 
   const headerTitle = localize(layout.header.title);
 

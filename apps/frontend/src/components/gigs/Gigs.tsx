@@ -39,8 +39,9 @@ const Gigs = () => {
 
   const localize = useLocalized();
 
+  // If an error occurs, log it and show fallback UI
   if (error) {
-    logDbError('fetchGigs', error);
+    logDbError('fetchGigs', error); // __logged handled internally
     return <p>Error loading events: {error.message}</p>;
   }
 

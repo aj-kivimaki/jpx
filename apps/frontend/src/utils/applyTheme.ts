@@ -9,7 +9,7 @@ import { type Theme, logger } from '@jpx/shared';
  *   preference is remembered on subsequent visits.
  *
  * Notes:
- * - Only call in the browser (guard against `document`/`localStorage` on SSR).
+ * - Only call in the browser (guarded for SSR).
  * - `Theme` is the shared type (currently `'light' | 'dark'`).
  *
  * Usage:
@@ -19,10 +19,15 @@ import { type Theme, logger } from '@jpx/shared';
  * ```
  */
 export const applyTheme = (theme: Theme) => {
-  const root = document.documentElement;
+  if (typeof globalThis.document === 'undefined') return;
+
+  const root = globalThis.document.documentElement;
   root.dataset.theme = theme;
+
+  if (typeof globalThis.localStorage === 'undefined') return;
+
   try {
-    localStorage.setItem('theme', theme);
+    globalThis.localStorage.setItem('theme', theme);
   } catch (err) {
     logger.warn({ msg: 'Could not persist theme to localStorage', err });
   }
