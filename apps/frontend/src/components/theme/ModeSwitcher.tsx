@@ -1,13 +1,24 @@
-import { useState, useEffect } from 'react';
-import { ThemeSchema, type Theme, site, makeError, logger } from '@jpx/shared';
-import { applyTheme } from '../../utils';
-import styles from './ModeSwitcher.module.css';
+import { useEffect, useState } from 'react';
+import {
+  logger,
+  makeError,
+  siteJson,
+  SiteSchema,
+  type Theme,
+  ThemeSchema,
+} from '@jpx/shared';
+
 import useLocalized from '../../hooks/useLocalized';
+import { applyTheme, parseRequired } from '../../utils';
+
+import styles from './ModeSwitcher.module.css';
 
 const ModeSwitcher: React.FC = () => {
   const localize = useLocalized();
 
-  const modalSection = site.sections.find((s) => s.id === 'modal');
+  const { sections } = parseRequired(SiteSchema, siteJson, 'Site');
+
+  const modalSection = sections.find((s) => s.id === 'modal');
   if (!modalSection) {
     const err = makeError('Modal section not found', 'NOT_FOUND');
     err.__logged = true;

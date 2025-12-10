@@ -1,19 +1,32 @@
 import {
-  contact,
-  site,
-  sectionIds,
-  type SiteLogo,
-  makeError,
+  contactJson,
+  ContactSchema,
   logger,
+  makeError,
+  sectionIds,
+  siteJson,
+  type SiteLogo,
+  SiteSchema,
 } from '@jpx/shared';
+
 import useLocalized from '../../hooks/useLocalized';
+import { parseRequired } from '../../utils';
+
 import styles from './Footer.module.css';
 
 const Footer = () => {
-  const { logos: siteLogos, layout: siteLayout } = site;
-  const { name, phone, email } = contact;
-
   const localize = useLocalized();
+
+  const { logos: siteLogos, layout: siteLayout } = parseRequired(
+    SiteSchema,
+    siteJson,
+    'Site'
+  );
+  const { name, phone, email } = parseRequired(
+    ContactSchema,
+    contactJson,
+    'Contact'
+  );
 
   const stagentLogo = siteLogos.find((logo: SiteLogo) => logo.id === 'stagent');
   if (!stagentLogo) {

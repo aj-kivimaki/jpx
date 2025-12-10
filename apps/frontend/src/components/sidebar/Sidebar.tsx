@@ -1,19 +1,32 @@
 import { useRef } from 'react';
-import { site, social, makeError, logger } from '@jpx/shared';
-import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
+import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import styles from './Sidebar.module.css';
-import LanguageSwitcher from '../language/LanguageSwitcher';
+import {
+  logger,
+  makeError,
+  siteJson,
+  SiteSchema,
+  socialJson,
+  SocialSchema,
+} from '@jpx/shared';
+
 import useLocalized from '../../hooks/useLocalized';
+import { parseRequired } from '../../utils';
+import LanguageSwitcher from '../language/LanguageSwitcher';
 import ModeSwitcher from '../theme/ModeSwitcher';
+
+import styles from './Sidebar.module.css';
 
 const Sidebar = () => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const localize = useLocalized();
 
-  const modalSection = site.sections.find((s) => s.id === 'modal');
+  const { sections } = parseRequired(SiteSchema, siteJson, 'Site');
+  const social = parseRequired(SocialSchema, socialJson, 'Social Links');
+
+  const modalSection = sections.find((s) => s.id === 'modal');
   if (!modalSection) {
     const err = makeError('Modal section not found', 'NOT_FOUND');
     err.__logged = true;
