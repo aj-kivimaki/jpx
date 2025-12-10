@@ -27,7 +27,7 @@ const Gigs = () => {
     return <p>Error loading events: {error.message}</p>;
   }
 
-  return !isLoading ? <GigsTable gigs={gigs || []} /> : <Spinner />;
+  return isLoading ? <Spinner /> : <GigsTable gigs={gigs || []} />;
 };
 
 export default Gigs;
