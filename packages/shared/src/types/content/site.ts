@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import {
   GigsSectionSchema,
   ModalSectionSchema,
@@ -7,7 +8,7 @@ import {
   SiteLocalizedStringSchema,
   SiteLogoSchema,
   SiteSchema,
-} from '../../../schemas';
+} from '../../schemas';
 
 export type Site = z.infer<typeof SiteSchema>;
 export type SiteLogo = z.infer<typeof SiteLogoSchema>;

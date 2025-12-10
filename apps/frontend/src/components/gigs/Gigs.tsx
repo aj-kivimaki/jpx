@@ -1,25 +1,33 @@
-import GigsTable from './GigsTable';
 import { CiCircleMore } from 'react-icons/ci';
 import {
-  site,
-  sectionIds,
   type DbGig,
   type GigsSection,
-  type PaginationResult,
   logDbError,
+  type PaginationResult,
+  sectionIds,
+  siteJson,
+  SiteSchema,
 } from '@jpx/shared';
-import styles from './Gigs.module.css';
-import useLocalized from '../../hooks/useLocalized';
-import { supabase } from '../../clients';
-import { useInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
 import { gigsInfiniteOptions } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
+import { type InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
+
+import { supabase } from '../../clients';
 import { FETCH_GIGS_PAGE_SIZE } from '../../config';
+import useLocalized from '../../hooks/useLocalized';
+import { parseRequired } from '../../utils';
+
+import styles from './Gigs.module.css';
+import GigsTable from './GigsTable';
 
 const Gigs = () => {
+  const localize = useLocalized();
+
+  const { sections } = parseRequired(SiteSchema, siteJson, 'Sections');
+
   const query = useInfiniteQuery<
     PaginationResult<DbGig>,
-    Error,
+    unknown,
     InfiniteData<PaginationResult<DbGig>, number>,
     readonly string[]
   >(gigsInfiniteOptions(supabase, FETCH_GIGS_PAGE_SIZE));
@@ -37,15 +45,13 @@ const Gigs = () => {
     gigsResult?.pages.flatMap((p: PaginationResult<DbGig>) => p.data ?? []) ??
     [];
 
-  const localize = useLocalized();
-
   // If an error occurs, log it and show fallback UI
   if (error) {
     logDbError('fetchGigs', error); // __logged handled internally
-    return <p>Error loading events: {error.message}</p>;
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return <p>Error loading events: {msg}</p>;
   }
 
-  const { sections } = site;
   const gigsSection = sections.find(
     (s): s is GigsSection => s.id === sectionIds.gigs
   );

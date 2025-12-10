@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import type { SupabaseClient } from '@supabase/supabase-js';
 import { FcGoogle } from 'react-icons/fc';
 import { googleSignIn, logger } from '@jpx/shared';
-import styles from './GoogleSignInButton.module.css';
 import { Spinner } from '@jpx/ui';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
+import styles from './GoogleSignInButton.module.css';
 
 interface GoogleSignInButtonProps {
   client: SupabaseClient;

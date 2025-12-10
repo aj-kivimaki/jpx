@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+
 import { aliases } from '../../config/build-config';
 
 export default defineConfig({

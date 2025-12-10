@@ -1,5 +1,6 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import type { DbLineupOption } from '@jpx/shared';
+
 import styles from './FormSelect.module.css';
 
 interface FormSelectProps {

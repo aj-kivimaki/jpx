@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { captureError } from '../clients/monitoring';
 import { makeError } from '@jpx/shared';
+
+import { captureError } from '../clients/monitoring';
 
 type Props = { children: React.ReactNode };
 

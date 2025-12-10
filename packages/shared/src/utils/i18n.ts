@@ -1,11 +1,12 @@
-import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { site } from '../data';
+
+import { siteJson } from '../data';
 
 const resources = {
-  fi: { translation: site },
-  en: { translation: site },
+  fi: { translation: siteJson },
+  en: { translation: siteJson },
 };
 
 i18n

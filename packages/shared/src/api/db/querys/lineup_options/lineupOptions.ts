@@ -1,8 +1,9 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { DbLineupOption } from '../../../../types';
-import { makeError } from '../../../../utils';
+
 import { logDbError } from '../../../../logger';
 import { LineupModelSchema } from '../../../../schemas';
+import type { DbLineupOption } from '../../../../types';
+import { makeError } from '../../../../utils';
 
 export const fetchLineupOptions = async (
   client: SupabaseClient

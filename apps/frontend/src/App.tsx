@@ -1,7 +1,8 @@
-import Header from './components/layout/Header';
-import Banner from './components/layout/Banner';
-import Gigs from './components/gigs/Gigs';
 import { lazy } from 'react';
+
+import Gigs from './components/gigs/Gigs';
+import Banner from './components/layout/Banner';
+import Header from './components/layout/Header';
 
 const Info = lazy(() => import('./components/info/Info'));
 const Footer = lazy(() => import('./components/layout/Footer'));

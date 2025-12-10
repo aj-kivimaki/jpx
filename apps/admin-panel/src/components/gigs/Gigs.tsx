@@ -1,14 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import GigsTable from './GigsTable';
-import { supabase } from '../../clients';
-import { Spinner } from '@jpx/ui';
 import {
-  fetchGigs,
   type DbGig,
+  fetchGigs,
   logger,
-  VALIDATED_KEYS,
   QUERY_STALE_TIME_MS,
+  VALIDATED_KEYS,
 } from '@jpx/shared';
+import { Spinner } from '@jpx/ui';
+import { useQuery } from '@tanstack/react-query';
+
+import { supabase } from '../../clients';
+
+import GigsTable from './GigsTable';
 
 const Gigs = () => {
   const {

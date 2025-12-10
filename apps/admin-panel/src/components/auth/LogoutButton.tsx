@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { supabase } from '../../clients';
 import { MdLogout } from 'react-icons/md';
-import { signOut, logger } from '@jpx/shared';
-import styles from './LogoutButton.module.css';
+import { logger, signOut } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
+
+import { supabase } from '../../clients';
+
+import styles from './LogoutButton.module.css';
 
 export default function LogoutButton() {
   const [loading, setLoading] = useState(false);

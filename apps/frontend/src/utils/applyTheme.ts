@@ -1,4 +1,4 @@
-import { type Theme, logger } from '@jpx/shared';
+import { logger, type Theme } from '@jpx/shared';
 
 /**
  * Apply a theme to the document and persist the choice to localStorage.

@@ -1,16 +1,17 @@
 import { useTranslation } from 'react-i18next';
+import { uiJson, UISchema } from '@jpx/shared';
+
+import { parseRequired, warnIfMissing } from '../../utils';
+
 import styles from './LanguageSwitcher.module.css';
-import { ui, makeError, logger } from '@jpx/shared';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language;
 
-  if (!lang) {
-    const err = makeError('Current language not detected', 'UNKNOWN');
-    err.__logged = true;
-    logger.warn(err);
-  }
+  const ui = parseRequired(UISchema, uiJson, 'UI');
+
+  warnIfMissing(lang, 'Current language not detected', 'UNKNOWN');
 
   const toggleLanguage = () => {
     const newLang = lang === 'fi' ? 'en' : 'fi';

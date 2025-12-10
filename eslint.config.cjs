@@ -21,6 +21,7 @@ module.exports = [
       '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
       'react-hooks': require('eslint-plugin-react-hooks'),
       'jsx-a11y': require('eslint-plugin-jsx-a11y'),
+      'simple-import-sort': require('eslint-plugin-simple-import-sort'),
     },
     rules: {
       ...require('@typescript-eslint/eslint-plugin').configs.recommended.rules,
@@ -31,6 +32,24 @@ module.exports = [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            // Packages: react, next, node_modules
+            ['^\\u0000', '^react', '^@?\\w'],
+            // Internal packages / aliases
+            ['^(@|components|utils|config)(/.*|$)'],
+            // Parent imports
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            // Other relative imports
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            // Side effect imports
+            ['^\\u0000'],
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
     },
   },
 ];

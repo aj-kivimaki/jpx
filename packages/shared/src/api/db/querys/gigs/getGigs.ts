@@ -1,8 +1,9 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { type DbGig, type PaginationResult } from '../../../../types';
-import { GigModelSchema } from '../../../../schemas';
-import { makeError } from '../../../../utils';
+
 import { logDbError } from '../../../../logger';
+import { GigModelSchema } from '../../../../schemas';
+import { type DbGig, type PaginationResult } from '../../../../types';
+import { makeError } from '../../../../utils';
 
 // Overloads: fetch all gigs, or fetch a page of gigs
 export function fetchGigs(client: SupabaseClient): Promise<DbGig[]>;

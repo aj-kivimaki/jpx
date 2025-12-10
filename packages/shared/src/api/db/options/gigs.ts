@@ -1,16 +1,17 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
-import { fetchGigs } from '../querys';
-import { type DbGig, type PaginationResult } from '../../../types';
+import type {
+  InfiniteData,
+  QueryFunctionContext,
+  UseInfiniteQueryOptions,
+} from '@tanstack/react-query';
+
 import {
-  VALIDATED_KEYS,
   QUERY_REFETCH_TIMES,
   QUERY_STALE_TIME_MS,
+  VALIDATED_KEYS,
 } from '../../../schemas';
-import type {
-  UseInfiniteQueryOptions,
-  QueryFunctionContext,
-  InfiniteData,
-} from '@tanstack/react-query';
+import { type DbGig, type PaginationResult } from '../../../types';
+import { fetchGigs } from '../querys';
 
 /** Single-page query options for useQuery */
 export const gigsQueryOptions = (
@@ -31,7 +32,7 @@ export const gigsInfiniteOptions = (
   pageSize: number = 5
 ): UseInfiniteQueryOptions<
   PaginationResult<DbGig>,
-  Error,
+  unknown,
   InfiniteData<PaginationResult<DbGig>, number>,
   readonly string[]
 > => ({

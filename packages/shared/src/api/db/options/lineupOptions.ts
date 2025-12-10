@@ -1,12 +1,13 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
 import { type UseQueryOptions } from '@tanstack/react-query';
+
 import {
-  VALIDATED_KEYS,
-  QUERY_STALE_TIME_MS,
   QUERY_REFETCH_TIMES,
+  QUERY_STALE_TIME_MS,
+  VALIDATED_KEYS,
 } from '../../../schemas';
-import { fetchLineupOptions } from '../querys';
 import type { DbLineupOption } from '../../../types';
+import { fetchLineupOptions } from '../querys';
 
 export const lineupQueryOptions = (
   client: SupabaseClient

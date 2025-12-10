@@ -1,5 +1,5 @@
+import type { Path, UseFormSetError } from 'react-hook-form';
 import { AppError, logger } from '@jpx/shared';
-import type { UseFormSetError, Path } from 'react-hook-form';
 
 type ZodIssue = {
   path?: Array<string | number>;

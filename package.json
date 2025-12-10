@@ -27,11 +27,12 @@
     "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^6.0.5",
-    "turbo": "latest",
+    "turbo": "2.6.3",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },

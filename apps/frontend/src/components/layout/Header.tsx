@@ -1,15 +1,30 @@
 import { useState } from 'react';
-import useIsScrolling from '../../hooks/useScrolling';
-import { nav, site, ui, sectionIds, makeError, logger } from '@jpx/shared';
-import styles from './Header.module.css';
+import {
+  logger,
+  makeError,
+  navJson,
+  NavSchema,
+  sectionIds,
+  siteJson,
+  SiteSchema,
+  uiJson,
+  UISchema,
+} from '@jpx/shared';
+
 import useLocalized from '../../hooks/useLocalized';
+import useIsScrolling from '../../hooks/useScrolling';
+import { parseRequired } from '../../utils';
+
+import styles from './Header.module.css';
 
 const Header = () => {
   const isScrolling = useIsScrolling();
   const [isOpen, setIsOpen] = useState(false);
   const localize = useLocalized();
 
-  const { layout, logos } = site;
+  const { layout, logos } = parseRequired(SiteSchema, siteJson, 'Site');
+  const nav = parseRequired(NavSchema, navJson, 'Nav');
+  const ui = parseRequired(UISchema, uiJson, 'UI');
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);

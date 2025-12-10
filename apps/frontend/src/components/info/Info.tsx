@@ -1,51 +1,43 @@
 import {
-  site,
-  band,
-  sectionIds,
+  bandJson,
+  BandSchema,
   imageIds,
-  makeError,
-  logger,
+  InfoSectionSchema,
+  sectionIds,
+  siteJson,
+  SiteSchema,
 } from '@jpx/shared';
+
 import useLocalized from '../../hooks/useLocalized';
+import { parseRequired } from '../../utils';
+
 import styles from './Info.module.css';
 
 const Info = () => {
-  const { sections, images, description } = site;
   const localize = useLocalized();
 
-  const infoSection = sections.find((s) => s.id === sectionIds.info);
+  const { sections, images, description } = parseRequired(
+    SiteSchema,
+    siteJson,
+    'Site'
+  );
+  const band = parseRequired(BandSchema, bandJson, 'Band');
+
+  const infoSection = parseRequired(
+    InfoSectionSchema,
+    sections.find((s) => s.id === sectionIds.info),
+    'Info section'
+  );
+
   const title = infoSection ? localize(infoSection.title) : '';
-
-  if (!infoSection || !title) {
-    const err = makeError('Info section or title missing', 'NOT_FOUND');
-    err.__logged = true;
-    logger.warn(err);
-  }
-
   const bandImage = images.find((img) => img.id === imageIds.band);
   const imgAlt = bandImage?.alt ? localize(bandImage.alt) : '';
 
-  if (!bandImage?.src) {
-    const err = makeError('Band image missing', 'NOT_FOUND');
-    err.__logged = true;
-    logger.warn(err);
-  }
+  const localizedBand = band.map(({ id, name, role }) => {
+    const memberName = localize(name);
+    const memberRole = localize(role);
 
-  const localizedBand = band.map((member) => {
-    const name = localize(member.name);
-    const role = localize(member.role);
-
-    if (!name || !role) {
-      const err = makeError('Band member name or role missing', 'UNKNOWN');
-      err.__logged = true;
-      logger.warn(err, { memberId: member.id });
-    }
-
-    return {
-      key: member.id,
-      name,
-      role,
-    };
+    return { key: id, memberName, memberRole };
   });
 
   return (
@@ -56,10 +48,10 @@ const Info = () => {
       <div className={styles.textContainer}>
         <div className={styles.members}>
           <h2 className={styles.title}>{title}</h2>
-          {localizedBand.map(({ key, name, role }) => (
+          {localizedBand.map(({ key, memberName, memberRole }) => (
             <p key={key}>
-              <span className={styles.member}>{name}</span>,{' '}
-              <span className={styles.instrument}>{role}</span>
+              <span className={styles.member}>{memberName}</span>,{' '}
+              <span className={styles.instrument}>{memberRole}</span>
             </p>
           ))}
         </div>
