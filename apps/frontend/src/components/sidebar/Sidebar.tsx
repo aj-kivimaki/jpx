@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { site, social } from '@jpx/shared';
+import { site, social, makeError, logger } from '@jpx/shared';
 import { FaInstagram, FaFacebook, FaYoutube, FaSpotify } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
 import { FaCartShopping } from 'react-icons/fa6';
@@ -14,13 +14,20 @@ const Sidebar = () => {
   const localize = useLocalized();
 
   const modalSection = site.sections.find((s) => s.id === 'modal');
+  if (!modalSection) {
+    const err = makeError('Modal section not found', 'NOT_FOUND');
+    err.__logged = true;
+    logger.error(err);
+    // fallback rendering to avoid crash
+    return null;
+  }
 
   const openModal = () => {
-    dialogRef.current?.showModal();
+    if (dialogRef.current) dialogRef.current.showModal();
   };
 
   const closeModal = () => {
-    dialogRef.current?.close();
+    if (dialogRef.current) dialogRef.current.close();
   };
 
   return (
@@ -50,17 +57,17 @@ const Sidebar = () => {
       </button>
       {/* Modal */}
       <dialog ref={dialogRef} closedby="any">
-        <h2 className={styles.title}>{localize(modalSection?.title)}</h2>
+        <h2 className={styles.title}>{localize(modalSection.title)}</h2>
 
         <div className={styles.modalContent}>
           <div className={styles.section}>
             <h2 className={styles.label}>
-              {localize(modalSection?.theme.label)}
+              {localize(modalSection.theme.label)}
             </h2>
             <ModeSwitcher />
           </div>
           <div className={styles.section}>
-            <h2 className={styles.label}>{localize(modalSection?.language)}</h2>
+            <h2 className={styles.label}>{localize(modalSection.language)}</h2>
             <LanguageSwitcher />
           </div>
         </div>

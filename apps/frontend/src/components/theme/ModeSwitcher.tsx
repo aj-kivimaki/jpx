@@ -9,36 +9,46 @@ const ModeSwitcher: React.FC = () => {
 
   const modalSection = site.sections.find((s) => s.id === 'modal');
   if (!modalSection) {
-    logger.error({ msg: 'Modal section not found in site configuration' });
-    throw makeError('Modal section not found', 'NOT_FOUND');
+    const err = makeError('Modal section not found', 'NOT_FOUND');
+    err.__logged = true;
+    logger.error(err);
+    throw err;
   }
 
-  let initialTheme: Theme = 'light';
-  try {
-    const stored = localStorage.getItem('theme');
-    if (stored) initialTheme = (stored as Theme) || 'light';
-  } catch (err) {
-    logger.warn({
-      msg: 'Could not read theme from localStorage, using default',
-      err,
-    });
-  }
+  // Safe initial theme read
+  const getInitialTheme = (): Theme => {
+    try {
+      const stored = globalThis.localStorage?.getItem('theme');
+      if (stored) return (stored as Theme) || 'light';
+    } catch (err) {
+      logger.warn({
+        msg: 'Could not read theme from localStorage, using default',
+        err,
+      });
+    }
+    return 'light';
+  };
 
-  const [currentTheme, setCurrentTheme] = useState<Theme>(initialTheme);
+  const [currentTheme, setCurrentTheme] = useState<Theme>(getInitialTheme);
 
+  // Apply theme whenever state changes
   useEffect(() => {
     applyTheme(currentTheme);
   }, [currentTheme]);
 
   const toggleTheme = () => {
     const next: Theme = currentTheme === 'light' ? 'dark' : 'light';
-    setCurrentTheme(next);
     try {
-      ThemeSchema.parse(next);
+      ThemeSchema.parse(next); // validate before state update
+      setCurrentTheme(next);
     } catch (err) {
-      logger.error({ msg: 'Parsed invalid theme value', err, value: next });
+      const error = makeError('Invalid theme value', 'UNKNOWN', {
+        err,
+        value: next,
+      });
+      error.__logged = true;
+      logger.error(error);
     }
-    applyTheme(next);
   };
 
   const nextThemeLabel =

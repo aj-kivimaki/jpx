@@ -10,6 +10,9 @@ type HighlightSDK = {
 
 let highlight: HighlightSDK | null = null;
 
+/**
+ * Initialize optional Highlight monitoring and global error handlers.
+ */
 export async function initMonitoring() {
   const projectId = (env as Record<string, string | undefined>)
     .VITE_HIGHLIGHT_PROJECT_ID;
@@ -17,22 +20,17 @@ export async function initMonitoring() {
 
   try {
     const pkgName = '@highlight-run/browser';
-    // Vite cannot statically analyze dynamic import variables; explicitly
-    // ignore analysis for this optional runtime import so the dev server
-    // doesn't warn when the SDK is not installed.
     const mod = await import(/* @vite-ignore */ pkgName);
-    // highlight run exports may be default or named
     const maybeDefault = mod && (mod as { default?: unknown }).default;
     highlight = (maybeDefault as HighlightSDK) ?? (mod as HighlightSDK);
+
     if (highlight?.init) {
-      // best-effort init; SDKs differ in option names
       try {
         highlight.init({ projectID: projectId });
       } catch {
         try {
           highlight.init(projectId);
         } catch {
-          // ignore init failure but log for diagnostics
           logger.warn('Highlight init failed (init(projectId) variant)', {
             projectId,
           });
@@ -40,45 +38,44 @@ export async function initMonitoring() {
       }
     }
   } catch (error) {
-    // SDK not installed or failed to load — that's fine; we'll fallback
     logger.warn('Highlight SDK not initialized', { error, projectId });
   }
 
-  // Global error handlers — normalize errors through captureError
+  // Global JS error handler
   globalThis.addEventListener('error', (ev) => {
     try {
-      // Event may contain .error (Error) or message
-      const errorEvent = ev;
-      const reported = errorEvent.error;
-      if (reported instanceof Error) {
-        captureError(reported);
-      } else {
-        captureError(new Error(errorEvent.message));
-      }
+      const reported = ev.error;
+      if (reported instanceof Error) captureError(reported);
+      else captureError(new Error(ev.message));
     } catch (error) {
       logger.error({ msg: 'Error handling window.onerror', err: error });
     }
   });
 
+  // Global unhandled promise rejection
   globalThis.addEventListener('unhandledrejection', (ev) => {
     try {
-      const pre = ev;
-      const reason = pre.reason;
-      if (reason instanceof Error) {
-        captureError(reason);
-      } else {
+      const reason = ev.reason;
+      if (reason instanceof Error) captureError(reason);
+      else
         captureError(
           new Error(String(reason ?? 'Unhandled Promise Rejection'))
         );
-      }
     } catch (error) {
       logger.error({ msg: 'Error handling unhandledrejection', err: error });
     }
   });
 }
 
+/**
+ * Centralized error capture
+ * - Converts any JS error into AppError
+ * - Prevents duplicate logging via `__logged` marker
+ * - Sends to Highlight/SDK or fallback ingestion
+ */
 export function captureError(err: unknown, context?: Record<string, unknown>) {
   let appErr: AppError;
+
   if (err instanceof AppError) {
     appErr = err;
   } else if (err instanceof Error) {
@@ -87,43 +84,36 @@ export function captureError(err: unknown, context?: Record<string, unknown>) {
       ...context,
     });
   } else {
-    let msg: string;
-
-    if (err instanceof Error) {
-      msg = err.message;
-    } else if (typeof err === 'string') {
-      msg = err;
-    } else {
-      try {
-        msg = JSON.stringify(err) ?? 'Unknown error';
-      } catch {
-        msg = 'Unknown error';
-      }
-    }
-
+    const msg =
+      typeof err === 'string' ? err : (JSON.stringify(err) ?? 'Unknown error');
     appErr = makeError(msg, 'UNKNOWN', context);
   }
 
-  // Attach session info from supabase if available
+  // Skip duplicate logging
+  if (!appErr.__logged) {
+    logger.error(appErr);
+    appErr.__logged = true;
+  }
+
+  // Attach session info from Supabase if available
   supabase?.auth
     ?.getSession?.()
     .then((res) => {
-      const result = res as { data?: { session?: unknown } } | undefined;
-      const session = result?.data?.session ?? null;
+      const session = res?.data?.session ?? null;
       sendToHighlight(appErr, { session });
     })
     .catch((err) => {
       logger.warn({
-        msg: 'Failed to get supabase session for error capture',
+        msg: 'Failed to get Supabase session for error capture',
         err,
       });
       sendToHighlight(appErr);
     });
-
-  // Also keep local visibility
-  logger.error(appErr);
 }
 
+/**
+ * Send error to external monitoring (Highlight or fallback ingestion)
+ */
 function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
   if (highlight) {
     try {
@@ -133,7 +123,6 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
         });
         return;
       }
-
       if (typeof highlight.recordIssue === 'function') {
         highlight.recordIssue({
           title: err.message,
@@ -141,7 +130,6 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
         });
         return;
       }
-
       if (typeof highlight.log === 'function') {
         highlight.log('error', {
           message: err.message,
@@ -151,15 +139,12 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
         });
         return;
       }
-    } catch (err) {
-      logger.warn({
-        msg: 'Failed when attempting to send error to Highlight SDK',
-        err,
-      });
+    } catch (e) {
+      logger.warn({ msg: 'Failed to send error to Highlight SDK', err: e });
     }
   }
 
-  // Fallback: send to a configurable ingestion URL if provided
+  // Fallback: POST to ingestion URL if provided
   const url = (env as Record<string, string | undefined>)
     .VITE_CLIENT_ERROR_INGEST_URL;
   if (url) {
@@ -175,7 +160,6 @@ function sendToHighlight(err: AppError, extra?: Record<string, unknown>) {
         }),
       });
     } catch (e) {
-      // log fallback ingestion failures
       logger.warn({ msg: 'Failed to POST to client error ingest URL', err: e });
     }
   }

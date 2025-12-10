@@ -3,6 +3,8 @@ import {
   type DbGig,
   parseGigDates,
   type ParsedGig as BaseParsedGig,
+  makeError,
+  logger,
 } from '@jpx/shared';
 import { GigsCard } from '@jpx/ui';
 
@@ -22,11 +24,31 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     return gigs.map(parseGigDates);
   };
 
-  const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => ({
-    ...gig,
-    lineup: localize({ fi: gig.lineup?.name_fi, en: gig.lineup?.name_en }),
-    notes: localize({ fi: gig.notes_fi, en: gig.notes_en }),
-  }));
+  const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => {
+    const lineup = localize({
+      fi: gig.lineup?.name_fi,
+      en: gig.lineup?.name_en,
+    });
+    const notes = localize({ fi: gig.notes_fi, en: gig.notes_en });
+
+    if (!lineup) {
+      const err = makeError('Gig lineup missing', 'UNKNOWN', { gigId: gig.id });
+      err.__logged = true;
+      logger.warn(err);
+    }
+
+    if (!notes) {
+      const err = makeError('Gig notes missing', 'UNKNOWN', { gigId: gig.id });
+      err.__logged = true;
+      logger.warn(err);
+    }
+
+    return {
+      ...gig,
+      lineup,
+      notes,
+    };
+  });
 
   return (
     <>

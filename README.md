@@ -26,6 +26,7 @@
 - [Architecture](./docs/ARCHITECTURE.md)
 - [CI/CD](./docs/CI-CD.md)
 - [End-to-End Gig CRUD Lifecycle](docs/E2E-CRUD-FLOW.md)
+- [Error Logging](./docs/ERROR-LOGGING.md)
 - [I18N](./docs/I18N.md)
 - [Pre-Hooks](./docs/PRE-HOOKS.md)
 
@@ -50,6 +51,7 @@
 - [UX Enhancements](#ux-enhancements)
 - [Backend](#backend)
 - [Code Quality](#code-quality)
+- [Error Handling and Logging](#error-handling-and-logging)
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
 - [Licenses](#licenses)
@@ -116,8 +118,6 @@ See [Frontend](./apps/frontend/README.md)
 | **Sidebar**        | Open:                                                                                                                  |
 |                    | Social media `links` <br> Settings `modal`: <br> • `Toggle Theme:` Light / Dark mode <br> • `Switch Language:` FI / EN |
 
----
-
 ### Admin Panel (CMS)
 
 See [Admin Panel](./apps/admin-panel/README.md)
@@ -127,8 +127,6 @@ See [Admin Panel](./apps/admin-panel/README.md)
 | **Authentication**  | Secure Supabase / Google OAuth `Login` ensuring only authorized admin access. |
 | **Gigs Management** | Add, update and delete gig entries (dates, locations, details).               |
 |                     | `Add` and `Edit` mode, `confirm delete modal` and `toast feedback`.           |
-
----
 
 ## UX Enhancements
 
@@ -163,15 +161,17 @@ Pre-hooks ensure code quality at every step: fast formatting checks on pre-commi
 
 See [Pre-Hooks](./docs/PRE-HOOKS.md)
 
----
-
 ### CI/CD Pipeline: **GitHub Actions**
 
 Ensures a **consistent, high-quality codebase** with automated checks and deployments.
 
 See [CI/CD](./docs/CI-CD.md)
 
----
+## Error Handling and Logging
+
+Covers **AppError propagation**, **client/server logging**, and **UI feedback** for all operations.
+
+See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging](./docs/ERROR-LOGGING.md)
 
 ## Screenshots
 
@@ -206,8 +206,6 @@ See [CI/CD](./docs/CI-CD.md)
 **Error notifications**
 
 <img src="assets/error-notification.webp" alt="Editable gig card" width="400" />
-
----
 
 ## Future Improvements
 

@@ -25,6 +25,10 @@ export default class ErrorBoundary extends Component<
             info,
           })
         : makeError(String(error), 'UNKNOWN', { info });
+
+    // Mark as logged to avoid duplicate logging
+    err.__logged = true;
+
     captureError(err);
   }
 
