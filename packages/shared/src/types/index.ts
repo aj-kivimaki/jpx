@@ -1,4 +1,4 @@
-export * from './content';
-export * from './config';
 export * from './component';
+export * from './config';
+export * from './content';
 export * from './db';

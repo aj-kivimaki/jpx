@@ -1,22 +1,24 @@
 import { useRef, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient, supabase } from '../../clients';
-import type { PostgrestError } from '@supabase/supabase-js';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useGigStore } from '../../store';
 import {
   type DbGig,
-  type ParsedGig,
   deleteGig,
-  parseGigDates,
-  VALIDATED_KEYS,
-  scrollToTop,
   logger,
+  type ParsedGig,
+  parseGigDates,
+  scrollToTop,
+  VALIDATED_KEYS,
 } from '@jpx/shared';
-import { useToastify } from '../../hooks/useToastify';
-import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
 import { GigsCard } from '@jpx/ui';
+import type { PostgrestError } from '@supabase/supabase-js';
+import { useMutation } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+import { queryClient, supabase } from '../../clients';
+import { useToastify } from '../../hooks/useToastify';
+import { useGigStore } from '../../store';
+import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
+
 import styles from './GigsTable.module.css';
 
 dayjs.extend(customParseFormat);

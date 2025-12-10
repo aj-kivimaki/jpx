@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { makeError } from '../../utils';
+
 import { logger } from '../../logger';
+import { makeError } from '../../utils';
 
 export const googleSignIn = async (client: SupabaseClient): Promise<void> => {
   const { error } = await client.auth.signInWithOAuth({

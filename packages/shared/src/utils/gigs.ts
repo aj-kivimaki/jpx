@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { type DbGig } from '../types';
+
 import { FINNISH_WEEKDAYS } from '../schemas';
+import { type DbGig } from '../types';
 
 dayjs.extend(customParseFormat);
 

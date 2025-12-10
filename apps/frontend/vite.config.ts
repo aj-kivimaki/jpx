@@ -1,11 +1,12 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { PluginVisualizerOptions, visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
+
 import {
   aliases,
   createFsAllow,
   visualizerConfig,
 } from '../../config/build-config';
-import { PluginVisualizerOptions, visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   plugins: [react(), visualizer(visualizerConfig as PluginVisualizerOptions)],

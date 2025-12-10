@@ -1,9 +1,10 @@
 import { lazy, useEffect } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
-import { supabase } from './clients';
-import Login from './pages/Login';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
 import PrivateRoute from './components/auth/PrivateRoute';
+import Login from './pages/Login';
 import NotFoundRedirect from './pages/NotFoundRedirect';
+import { supabase } from './clients';
 
 const Home = lazy(() => import('./pages/Home'));
 

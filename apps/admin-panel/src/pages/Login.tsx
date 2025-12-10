@@ -1,6 +1,7 @@
 import { supabase } from '../clients';
-import styles from './Login.module.css';
 import GoogleSignInButton from '../components/auth/GoogleSignInButton';
+
+import styles from './Login.module.css';
 
 export default function Login() {
   return (

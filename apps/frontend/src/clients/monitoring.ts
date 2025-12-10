@@ -1,4 +1,5 @@
-import { env, makeError, AppError, logger } from '@jpx/shared';
+import { AppError, env, logger, makeError } from '@jpx/shared';
+
 import { supabase } from '../clients';
 
 type HighlightSDK = {

@@ -1,8 +1,9 @@
-import { makeError } from '../../../../utils';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
 import { logDbError } from '../../../../logger';
 import { GigIdSchema } from '../../../../schemas';
 import type { GigId } from '../../../../types';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { makeError } from '../../../../utils';
 
 export const deleteGig = async (
   client: SupabaseClient,

@@ -1,8 +1,9 @@
-import { makeError } from '../../../../utils';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
 import { logDbError } from '../../../../logger';
 import { GigIdSchema, GigModelSchema } from '../../../../schemas';
 import type { DbGig, GigId } from '../../../../types';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { makeError } from '../../../../utils';
 
 export const getGigById = async (
   client: SupabaseClient,

@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { makeError } from '../../utils';
+
 import { logger } from '../../logger';
+import { makeError } from '../../utils';
 
 export const EnvSchema = z.object({
   VITE_SUPABASE_URL: z.string().url().describe('Supabase project URL'),

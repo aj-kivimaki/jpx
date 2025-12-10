@@ -1,10 +1,10 @@
 import { Spinner } from '@jpx/ui';
+
 import LogoutButton from '../auth/LogoutButton';
+
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-
 import styles from './GigForm.module.css';
-
 import { useGigFormState } from './useGigFormState';
 import { useGigLoader } from './useGigLoader';
 import { useGigSubmit } from './useGigSubmit';

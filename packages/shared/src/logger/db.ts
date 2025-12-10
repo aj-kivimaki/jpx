@@ -1,6 +1,8 @@
+import type { Session, SupabaseClient } from '@supabase/supabase-js';
+
 import { AppError } from '../utils';
+
 import { logger } from './logger';
-import type { SupabaseClient, Session } from '@supabase/supabase-js';
 
 type LoggableError =
   | AppError

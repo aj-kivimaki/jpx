@@ -1,4 +1,4 @@
-import { toast, type ToastOptions, type Id } from 'react-toastify';
+import { type Id, toast, type ToastOptions } from 'react-toastify';
 
 export function useToastify() {
   const success = (message: string, opts?: ToastOptions) => {

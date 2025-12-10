@@ -1,5 +1,6 @@
-import DOMPurify from 'dompurify';
 import type { GigInsert } from '@jpx/shared';
+import DOMPurify from 'dompurify';
+
 import type { GigFormInput } from '../components/form/useGigFormState';
 
 export type SanitizedGigInput = {

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { LineupModelSchema } from '../lineup_options';
 
 export const GigModelSchema = z.object({

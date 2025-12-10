@@ -1,5 +1,5 @@
-import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query';
-import { logger, formatKey, type MutationWithKey } from '@jpx/shared';
+import { formatKey, logger, type MutationWithKey } from '@jpx/shared';
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({

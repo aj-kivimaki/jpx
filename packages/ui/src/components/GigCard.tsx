@@ -1,12 +1,13 @@
-import { IoIosPin } from 'react-icons/io';
-import { GiMicrophone } from 'react-icons/gi';
 import { CiCalendar } from 'react-icons/ci';
 import { FaExclamation, FaRegEdit } from 'react-icons/fa';
 import { FaBuildingColumns } from 'react-icons/fa6';
+import { GiMicrophone } from 'react-icons/gi';
+import { IoIosPin } from 'react-icons/io';
 import { IoTimeOutline } from 'react-icons/io5';
 import { MdDeleteForever } from 'react-icons/md';
-import { RenderField } from './RenderField';
+
 import styles from './GigCard.module.css';
+import { RenderField } from './RenderField';
 
 export interface GigCardProps {
   id: string;

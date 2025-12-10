@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { getGigById, logger } from '@jpx/shared';
-import { supabase } from '../../clients';
-import { useGigStore } from '../../store';
-import { useToastify } from '../../hooks/useToastify';
 import type { UseFormReturn } from 'react-hook-form';
+import { getGigById, logger } from '@jpx/shared';
+
+import { supabase } from '../../clients';
+import { useToastify } from '../../hooks/useToastify';
+import { useGigStore } from '../../store';
+
 import type { GigFormInput } from './useGigFormState';
 
 export function useGigLoader(form: UseFormReturn<GigFormInput>) {
