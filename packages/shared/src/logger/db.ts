@@ -21,8 +21,10 @@ export const logDbError = (
   // Best-effort: if a global Supabase client exists, try to fetch session
   // and log an enriched entry. This is intentionally non-blocking.
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const maybeSupabase = (globalThis as any).supabase;
+    type MaybeSupabase = { auth?: { getSession?: () => Promise<unknown> } };
+    const maybeSupabase = (
+      globalThis as unknown as { supabase?: MaybeSupabase }
+    ).supabase;
     const getter = maybeSupabase?.auth?.getSession;
     if (typeof getter === 'function') {
       void getter()
@@ -30,8 +32,12 @@ export const logDbError = (
           try {
             // Attach session (if present) to an additional error log
             // Keep payload small — include user id if available
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const session = (res as any)?.data?.session ?? null;
+            const session =
+              (
+                res as unknown as {
+                  data?: { session?: { user?: { id?: string } } };
+                }
+              )?.data?.session ?? null;
             const userId = session?.user?.id ?? null;
             logger.error({
               op: operation,
