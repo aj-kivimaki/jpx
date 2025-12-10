@@ -1,161 +1,44 @@
-import { useEffect } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useForm, type Resolver } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { z } from 'zod';
 import LogoutButton from '../auth/LogoutButton';
 import HookFormInput from './FormInput';
 import HookFormSelect from './FormSelect';
-import { supabase, queryClient } from '../../clients';
-import {
-  VALIDATED_KEYS,
-  lineupQueryOptions,
-  type GigInsert,
-  GigInsertSchema,
-  getGigById,
-  createGig,
-  updateGig,
-  logger,
-} from '@jpx/shared';
-import { useGigStore } from '../../store';
-import { useToastify } from '../../hooks/useToastify';
-import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
-import { sanitizeGigInput } from '../../utils/sanitizeGigInput';
+
 import styles from './GigForm.module.css';
 
-type GigFormInput = z.input<typeof GigInsertSchema>;
-
-const defaultValue: Partial<GigFormInput> = { lineup_id: '' };
+import { useGigFormState } from './useGigFormState';
+import { useGigLoader } from './useGigLoader';
+import { useGigSubmit } from './useGigSubmit';
 
 export default function GigForm() {
-  const { selectedGigId, setSelectedGigId } = useGigStore();
-  const isEditMode = Boolean(selectedGigId);
+  const {
+    form,
+    toastSuccess,
+    toastError,
+    lineupOptions,
+    isLoading,
+    reactQueryError,
+  } = useGigFormState();
 
-  const rawResolver = zodResolver(
-    GigInsertSchema
-  ) as unknown as Resolver<GigFormInput>;
-  const formResolver: Resolver<GigFormInput> = rawResolver;
+  const { isEditMode, selectedGigId, setSelectedGigId } = useGigLoader(form);
+
+  const { submit, onError } = useGigSubmit(form, {
+    isEditMode,
+    selectedGigId,
+    setSelectedGigId,
+    toastSuccess,
+    toastError,
+  });
 
   const {
     register,
     handleSubmit,
-    setFocus,
-    formState: { errors: hookFormErrors },
-    setError,
+    formState: { errors },
     reset,
-  } = useForm<GigFormInput>({
-    resolver: formResolver,
-    defaultValues: defaultValue,
-    shouldFocusError: true,
-  });
+  } = form;
 
-  const { success: toastSuccess, error: toastError } = useToastify();
-
-  const {
-    data: lineupOptions,
-    isLoading,
-    error: reactQueryError,
-  } = useQuery(lineupQueryOptions(supabase));
-
-  useEffect(() => {
-    if (reactQueryError) {
-      logger.warn({
-        msg: 'Failed to load lineup options',
-        err: reactQueryError,
-      });
-    }
-  }, [reactQueryError]);
-
-  useEffect(() => {
-    setFocus('date');
-  }, [setFocus]);
-
-  // Fetch and populate form when a gig id is selected.
-  // We intentionally narrow the dependency list to `selectedGigId` only.
-  // The helpers used inside (reset, setSelectedGigId, toastError) are
-  // stable-enough for our usage but may be re-created by their providers;
-  // including them would cause repeated fetch/reset cycles. This is a
-  // deliberate trade-off and the behavior is guarded with a `mounted`
-  // flag to avoid race conditions.
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (!selectedGigId) {
-      reset();
-      return;
-    }
-
-    let mounted = true;
-
-    const fetchGigAndResetForm = async () => {
-      try {
-        const data = await getGigById(supabase, selectedGigId);
-        if (!mounted) return;
-        reset(data);
-      } catch (err: unknown) {
-        logger.error({
-          msg: 'Failed to load gig for editing',
-          err,
-          gigId: selectedGigId,
-        });
-        toastError(
-          err instanceof Error ? err.message : 'Virhe ladattaessa keikkaa'
-        );
-        setSelectedGigId(null);
-      }
-    };
-
-    fetchGigAndResetForm();
-
-    return () => {
-      mounted = false;
-    };
-  }, [selectedGigId]);
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  const addGigMutation = useMutation({
-    mutationFn: (newGig: GigInsert) => createGig(supabase, newGig),
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
-    },
-  });
-
-  const handleFormSubmit = async (data: GigFormInput) => {
-    try {
-      // Parse/validate with the canonical schema to get the output shape
-      const parsed = GigInsertSchema.parse(data);
-
-      const sanitized = sanitizeGigInput(parsed);
-
-      if (isEditMode) {
-        if (!selectedGigId) return;
-        await updateGig(supabase, selectedGigId, sanitized);
-        toastSuccess('Keikka päivitetty');
-      } else {
-        await addGigMutation.mutateAsync(sanitized);
-        toastSuccess('Keikka lisätty');
-      }
-
-      setSelectedGigId(null);
-      reset(defaultValue);
-      queryClient.invalidateQueries({ queryKey: [VALIDATED_KEYS.GIGS] });
-    } catch (err: unknown) {
-      const handled = mapAppErrorToFormErrors(err, setError, toastError);
-      if (handled) return;
-
-      // Fallback for unexpected errors
-      logger.error({ msg: 'Gig form submit failed', err });
-      toastError(err instanceof Error ? err.message : String(err));
-    }
-  };
-
-  const handleCancelEdit = () => {
+  const cancelEdit = () => {
     setSelectedGigId(null);
-    reset(defaultValue);
+    reset({ lineup_id: '' });
   };
-
-  const handleFormError = (errors: Record<string, unknown>) =>
-    logger.error({ msg: '[HookForm] validation errors on submit', errors });
 
   return (
     <div className={styles.form}>
@@ -165,75 +48,77 @@ export default function GigForm() {
           <LogoutButton />
         </div>
       </div>
+
       <form
-        onSubmit={handleSubmit(handleFormSubmit, handleFormError)}
+        onSubmit={handleSubmit(submit, onError)}
         className={styles.fields}
         noValidate
       >
         <h2 className={styles.formTitle}>
           {isEditMode ? 'Muokkaa keikkaa' : 'Lisää uusi keikka'}
         </h2>
+
         <HookFormInput
           label="Päivänmäärä"
-          placeholder="valitse päivä"
           type="date"
-          register={{ ...register('date') }}
-          required={true}
-          error={hookFormErrors.date?.message}
+          placeholder="valitse päivä"
+          register={register('date')}
+          required
+          error={errors.date?.message}
         />
 
         <HookFormInput
           label="Kellonaika"
-          placeholder="lisää kellonaika"
           type="time"
-          register={{ ...register('time') }}
+          placeholder="lisää kellonaika"
+          register={register('time')}
+          error={errors.time?.message}
           required={false}
-          error={hookFormErrors.time?.message}
         />
 
         <HookFormSelect
           label="Kokoonpano"
+          register={register('lineup_id')}
+          options={lineupOptions}
           isLoading={isLoading}
-          options={lineupOptions || []}
-          register={{ ...register('lineup_id') }}
-          required={true}
-          disabled={isLoading || !!reactQueryError}
           reactQueryError={reactQueryError}
-          hookFormError={hookFormErrors.lineup_id?.message}
+          hookFormError={errors.lineup_id?.message}
+          required
+          disabled={isLoading || !!reactQueryError}
         />
 
         <HookFormInput
           label="Keikkapaikka"
           placeholder="venue"
-          register={{ ...register('venue') }}
+          register={register('venue')}
+          error={errors.venue?.message}
           required={false}
-          error={hookFormErrors.venue?.message}
         />
 
         <HookFormInput
           label="Paikkakunta"
           placeholder="pitäjä"
-          register={{ ...register('city') }}
+          register={register('city')}
+          error={errors.city?.message}
           required={false}
-          error={hookFormErrors.city?.message}
         />
 
         <HookFormInput
           label="Huomioitavaa 🇫🇮"
-          placeholder="Jos on jotain erityistä huomautettavaa..."
           type="textarea"
-          register={{ ...register('notes_fi') }}
+          placeholder="Jos on jotain erityistä huomautettavaa..."
+          register={register('notes_fi')}
+          error={errors.notes_fi?.message}
           required={false}
-          error={hookFormErrors.notes_fi?.message}
         />
 
         <HookFormInput
           label="Huomioitavaa 🇬🇧"
-          placeholder="...niin laita englanniksikin jotain!"
           type="textarea"
-          register={{ ...register('notes_en') }}
+          placeholder="...niin laita englanniksikin jotain!"
+          register={register('notes_en')}
+          error={errors.notes_en?.message}
           required={false}
-          error={hookFormErrors.notes_en?.message}
         />
 
         <div className={styles.buttons}>
@@ -244,8 +129,8 @@ export default function GigForm() {
           {isEditMode && (
             <button
               type="button"
-              onClick={handleCancelEdit}
               className={styles.cancelButton}
+              onClick={cancelEdit}
             >
               Peruuta muokkaus
             </button>

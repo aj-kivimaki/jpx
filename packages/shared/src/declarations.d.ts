@@ -14,3 +14,12 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+type SupabaseClient = import('@supabase/supabase-js').SupabaseClient;
+
+declare global {
+  // adapt the generic params to your SupabaseClient usage if needed
+  var supabase: SupabaseClient | undefined;
+}
+
+export {};

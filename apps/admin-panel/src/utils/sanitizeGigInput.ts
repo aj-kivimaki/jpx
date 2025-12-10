@@ -1,12 +1,22 @@
 import DOMPurify from 'dompurify';
 import type { GigInsert } from '@jpx/shared';
+import type { GigFormInput } from '../components/form/useGigFormState';
+
+export type SanitizedGigInput = {
+  date: string;
+  lineup_id: string;
+  venue: string | null;
+  city: string | null;
+  notes_fi: string | null;
+  notes_en: string | null;
+  time: string | null;
+};
 
 // Sanitize user-provided gig input fields. Returns a new object suitable for
 // sending to the API. Keep this app-level so apps can customize which fields
 // to sanitize or how.
-export function sanitizeGigInput(data: GigInsert): GigInsert {
+export function sanitizeGigInput(data: GigFormInput): SanitizedGigInput {
   return {
-    ...data,
     date: DOMPurify.sanitize(String(data.date)),
     time: data.time ? DOMPurify.sanitize(String(data.time)) : null,
     venue: data.venue ? DOMPurify.sanitize(String(data.venue)) : null,

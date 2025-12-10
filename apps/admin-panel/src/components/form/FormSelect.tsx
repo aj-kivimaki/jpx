@@ -34,11 +34,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     hookFormError ||
     (reactQueryError ? 'Vaihtoehtojen lataus epäonnistui' : undefined);
 
-  // Derive a stable id from the registered field name when available
-  const registeredName = (register as unknown as { name?: string }).name;
-  const id = registeredName
-    ? `${String(registeredName)}-select`
-    : `${displayLabel.replace(/\s+/g, '-')}-select`;
+  const id = `${register.name}-select`;
 
   return (
     <div className={styles.field}>

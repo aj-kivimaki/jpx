@@ -20,48 +20,47 @@ export const logDbError = (
 
   // Best-effort: if a global Supabase client exists, try to fetch session
   // and log an enriched entry. This is intentionally non-blocking.
+  type GetSessionResult = {
+    data?: { session?: { user?: { id?: string } } | null } | null;
+    error?: unknown;
+  };
+
   try {
-    type MaybeSupabase = { auth?: { getSession?: () => Promise<unknown> } };
-    const maybeSupabase = (
-      globalThis as unknown as { supabase?: MaybeSupabase }
-    ).supabase;
-    const getter = maybeSupabase?.auth?.getSession;
-    if (typeof getter === 'function') {
-      void getter()
-        .then((res: unknown) => {
-          try {
-            // Attach session (if present) to an additional error log
-            // Keep payload small — include user id if available
-            const session =
-              (
-                res as unknown as {
-                  data?: { session?: { user?: { id?: string } } };
-                }
-              )?.data?.session ?? null;
-            const userId = session?.user?.id ?? null;
-            logger.error({
-              op: operation,
-              err,
-              session: userId ? { id: userId } : session,
-              ...ctx,
-            });
-          } catch (e) {
-            logger.warn({
-              msg: 'Failed to enrich DB error with session',
-              err: e,
-            });
-          }
-        })
-        .catch((e: unknown) => {
+    const getter = globalThis.supabase?.auth?.getSession;
+    if (typeof getter !== 'function') return;
+
+    getter()
+      .then((res: GetSessionResult) => {
+        try {
+          const session =
+            (res as { data?: { session?: { user?: { id?: string } } } })?.data
+              ?.session ?? null;
+          const userId = session?.user?.id ?? null;
+
+          logger.error({
+            op: operation,
+            err,
+            session: userId ? { id: userId } : session,
+            ...ctx,
+          });
+        } catch (e) {
           logger.warn({
-            msg: 'Failed to get supabase session for DB error',
+            msg: 'Failed to enrich DB error with session',
             err: e,
           });
+        }
+      })
+      .catch((e: Error) => {
+        logger.warn({
+          msg: 'Failed to get supabase session for DB error',
+          err: e,
         });
-    }
+      });
   } catch (e) {
-    // Never throw from the logger helper
-    logger.warn({ msg: 'Unexpected error in logDbError enrichment', err: e });
+    logger.warn({
+      msg: 'Unexpected error in logDbError enrichment',
+      err: e,
+    });
   }
 };
 

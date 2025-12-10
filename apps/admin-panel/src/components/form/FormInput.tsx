@@ -23,11 +23,7 @@ const FormInput = ({
 }: FormInputProps) => {
   const displayLabel = required ? `${label} *` : label;
 
-  // Derive a stable id from the registered field name when available
-  const registeredName = (register as unknown as { name?: string }).name;
-  const id = registeredName
-    ? `${String(registeredName)}-input`
-    : `${displayLabel.replace(/\s+/g, '-')}-input`;
+  const id = `${register.name}-input`;
 
   return (
     <div className={styles.field}>
@@ -46,7 +42,6 @@ const FormInput = ({
           rows={rows || 3}
           placeholder={placeholder}
           className={styles.textarea}
-          defaultValue={''}
         />
       ) : (
         <input
