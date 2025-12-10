@@ -8,6 +8,7 @@ export type AppErrorCode =
 export class AppError extends Error {
   code: AppErrorCode;
   details?: unknown;
+  __logged?: boolean; // internal marker to prevent duplicate logging
 
   constructor(message: string, code: AppErrorCode, details?: unknown) {
     super(message);
