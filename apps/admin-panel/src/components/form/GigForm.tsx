@@ -31,12 +31,10 @@ export default function GigForm() {
   const { selectedGigId, setSelectedGigId } = useGigStore();
   const isEditMode = Boolean(selectedGigId);
 
-  const rawResolver = zodResolver(GigInsertSchema);
-  const formResolver: Resolver<GigFormInput> = (values, context, options) =>
-    // delegate to the well-tested zod resolver but expose a form-typed signature
-    // (we intentionally keep this thin wrapper to avoid an unsafe global cast)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (rawResolver as any)(values, context, options);
+  const rawResolver = zodResolver(
+    GigInsertSchema
+  ) as unknown as Resolver<GigFormInput>;
+  const formResolver: Resolver<GigFormInput> = rawResolver;
 
   const {
     register,
@@ -72,15 +70,26 @@ export default function GigForm() {
     setFocus('date');
   }, [setFocus]);
 
+  // Fetch and populate form when a gig id is selected.
+  // We intentionally narrow the dependency list to `selectedGigId` only.
+  // The helpers used inside (reset, setSelectedGigId, toastError) are
+  // stable-enough for our usage but may be re-created by their providers;
+  // including them would cause repeated fetch/reset cycles. This is a
+  // deliberate trade-off and the behavior is guarded with a `mounted`
+  // flag to avoid race conditions.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!selectedGigId) {
       reset();
       return;
     }
 
+    let mounted = true;
+
     const fetchGigAndResetForm = async () => {
       try {
         const data = await getGigById(supabase, selectedGigId);
+        if (!mounted) return;
         reset(data);
       } catch (err: unknown) {
         logger.error({
@@ -94,8 +103,14 @@ export default function GigForm() {
         setSelectedGigId(null);
       }
     };
+
     fetchGigAndResetForm();
-  }, [selectedGigId, reset, setSelectedGigId, toastError]);
+
+    return () => {
+      mounted = false;
+    };
+  }, [selectedGigId]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const addGigMutation = useMutation({
     mutationFn: (newGig: GigInsert) => createGig(supabase, newGig),

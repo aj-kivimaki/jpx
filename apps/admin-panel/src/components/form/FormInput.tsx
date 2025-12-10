@@ -21,27 +21,37 @@ const FormInput = ({
   required,
   error,
 }: FormInputProps) => {
-  if (required) {
-    label = label + ' *';
-  }
+  const displayLabel = required ? `${label} *` : label;
+
+  // Derive a stable id from the registered field name when available
+  const registeredName = (register as unknown as { name?: string }).name;
+  const id = registeredName
+    ? `${String(registeredName)}-input`
+    : `${displayLabel.replace(/\s+/g, '-')}-input`;
+
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={label}>
-        {error ? <p className={styles.error}>{error}</p> : <p>{label}</p>}
+      <label className={styles.label} htmlFor={id}>
+        {error ? (
+          <p className={styles.error}>{error}</p>
+        ) : (
+          <p>{displayLabel}</p>
+        )}
       </label>
 
       {type === 'textarea' ? (
         <textarea
           {...register}
-          id={label}
+          id={id}
           rows={rows || 3}
           placeholder={placeholder}
           className={styles.textarea}
+          defaultValue={''}
         />
       ) : (
         <input
           {...register}
-          id={label}
+          id={id}
           placeholder={placeholder}
           type={type}
           className={styles.input}

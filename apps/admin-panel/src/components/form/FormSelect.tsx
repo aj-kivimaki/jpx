@@ -23,7 +23,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   disabled,
   isLoading,
 }) => {
-  if (required) label += ' *';
+  const displayLabel = required ? `${label} *` : label;
 
   let placeholder = 'Valitse kokoonpano';
   if (isLoading) placeholder = 'Ladataan vaihtoehtoja…';
@@ -34,18 +34,24 @@ const FormSelect: React.FC<FormSelectProps> = ({
     hookFormError ||
     (reactQueryError ? 'Vaihtoehtojen lataus epäonnistui' : undefined);
 
+  // Derive a stable id from the registered field name when available
+  const registeredName = (register as unknown as { name?: string }).name;
+  const id = registeredName
+    ? `${String(registeredName)}-select`
+    : `${displayLabel.replace(/\s+/g, '-')}-select`;
+
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={label}>
+      <label className={styles.label} htmlFor={id}>
         {errorMessage ? (
           <p className={styles.error}>{errorMessage}</p>
         ) : (
-          <p>{label}</p>
+          <p>{displayLabel}</p>
         )}
       </label>
 
       <select
-        id={label}
+        id={id}
         className={styles.select}
         {...register}
         disabled={isDisabled}
