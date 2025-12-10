@@ -1,7 +1,6 @@
-import { queryClient } from '../../clients';
+import { queryClient, supabase } from '../../clients';
 import { VALIDATED_KEYS, createGig, updateGig, logger } from '@jpx/shared';
 
-import { supabase } from '../../clients';
 import { sanitizeGigInput } from '../../utils/sanitizeGigInput';
 import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
 
