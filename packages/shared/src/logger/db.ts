@@ -37,10 +37,10 @@ export const logDbError = async (
       session: userId ? { id: userId } : session,
       ...ctx,
     });
-  } catch (sessionErr) {
+  } catch (error) {
     logger.warn({
       msg: 'Failed to enrich DB error with Supabase session',
-      err: sessionErr,
+      err: error,
     });
   }
 };

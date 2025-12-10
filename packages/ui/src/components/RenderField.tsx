@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
 interface RenderFieldProps {
-  icon: ReactNode;
-  content?: string | null;
-  className?: string;
+  readonly icon: ReactNode;
+  readonly content?: string | null;
+  readonly className?: string;
 }
 
 export function RenderField({ icon, content, className }: RenderFieldProps) {
