@@ -3,7 +3,8 @@ export type AppErrorCode =
   | 'DB_ERROR'
   | 'NOT_FOUND'
   | 'UNKNOWN'
-  | 'AUTH_ERROR';
+  | 'AUTH_ERROR'
+  | 'WARN_MISSING_DATA';
 
 export class AppError extends Error {
   code: AppErrorCode;

@@ -1,12 +1,12 @@
-import useLocalized from '../../hooks/useLocalized';
 import {
   type DbGig,
-  parseGigDates,
-  type ParsedGig as BaseParsedGig,
-  makeError,
   logger,
+  type ParsedGig as BaseParsedGig,
+  parseGigDates,
 } from '@jpx/shared';
 import { GigsCard } from '@jpx/ui';
+
+import useLocalized from '../../hooks/useLocalized';
 
 interface GigsTableProps {
   gigs: DbGig[];
@@ -32,15 +32,20 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     const notes = localize({ fi: gig.notes_fi, en: gig.notes_en });
 
     if (!lineup) {
-      const err = makeError('Gig lineup missing', 'UNKNOWN', { gigId: gig.id });
-      err.__logged = true;
-      logger.warn(err);
+      logger.warn({
+        msg: 'Gig lineup missing',
+        gigId: gig.id,
+        lineup,
+      });
     }
 
-    if (!notes) {
-      const err = makeError('Gig notes missing', 'UNKNOWN', { gigId: gig.id });
-      err.__logged = true;
-      logger.warn(err);
+    if (!gig.formattedDate) {
+      logger.warn({
+        msg: 'Gig formattedDate missing',
+        gigId: gig.id,
+        formattedDate: gig.formattedDate,
+        rawDate: gig.date,
+      });
     }
 
     return {
