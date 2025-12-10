@@ -1,4 +1,4 @@
-[⬅ Back to Root README](../README.md#documentation) | [CI/CD](./CI-CD.md) | [PRE-HOOKS](./Pre-Hooks.md)
+[⬅ Back to Root README](../README.md#documentation) | [CI/CD](./CI-CD.md) | [E2E-CRUD-Flow](./E2E-CRUD-FLOW.md) | [I18N](./I18N.md) | [PRE-HOOKS](./Pre-Hooks.md)
 
 # 🏗️ Monorepo Architecture
 
