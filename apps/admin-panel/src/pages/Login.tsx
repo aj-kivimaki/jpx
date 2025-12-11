@@ -1,5 +1,5 @@
 import { supabase } from '../clients';
-import GoogleSignInButton from '../components/auth/GoogleSignInButton';
+import { GoogleSignInButton } from '../components/auth';
 
 import styles from './Login.module.css';
 

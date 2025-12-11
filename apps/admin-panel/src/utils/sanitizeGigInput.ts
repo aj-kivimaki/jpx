@@ -1,7 +1,7 @@
 import type { GigInsert } from '@jpx/shared';
 import DOMPurify from 'dompurify';
 
-import type { GigFormInput } from '../components/form/useGigFormState';
+import type { GigFormInput } from '../hooks';
 
 export type SanitizedGigInput = {
   date: string;

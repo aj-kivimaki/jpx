@@ -213,11 +213,11 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 <summary>Future Add-Ons:</summary>
 
 - Monitoring
-  - Capture client-side errors and sessions for easy reproduction (Highlight).
-  - Produce structured, typed logs on the server with request/context metadata (tslog).
-  - Correlate client & server activity using a request/session ID.
-  - Keep costs and noise low by sampling and by sending only necessary context.
-  - Analytics: Pageview/event tracking, uptime & performance
+  - Capture any errors returned from Supabase calls.
+  - Send to Highlight with session context for reproduction.
+  - Server-side (Supabase Edge Functions)
+  - Log important warnings/errors using tslog or similar.
+  - Only forward critical errors to Highlight, to avoid noise/costs.
 
 - Testing
   - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
@@ -228,17 +228,17 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 
 - Security & Optimization
   - Harden the frontend (CSP, source maps) and backend (rate-limiting and possibly `x-request-id`).
-  - Improve loading performance, and optimize API/database queries.
   - Add automation: dependency updates, scanning, and basic observability.
+  - Improve loading performance, and optimize API/database queries.
+    - CDN layer: (artist promo materials, images)
 
 - README
   - GIFs / Video demos
 
 - Features
   - More diverse CMS:
-    - Manage more content: (Text & Drag and drop promo materials, images)
+    - Manage more content: (Text, and Drag & Drop promo materials, images)
     - Analytics dashboard
-  - CDN layer: (artist promo materials, images)
 
 </details>
 

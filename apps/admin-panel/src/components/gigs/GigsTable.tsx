@@ -15,8 +15,8 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import { queryClient, supabase } from '../../clients';
-import { useToastify } from '../../hooks/useToastify';
 import { useGigStore } from '../../store';
+import { toastify } from '../../utils';
 import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
 
 import styles from './GigsTable.module.css';
@@ -51,7 +51,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
     },
   });
 
-  const { success: toastSuccess, error: toastError } = useToastify();
+  const { success: toastSuccess, error: toastError } = toastify;
 
   if (!gigs?.length) {
     return <p>Ei keikkoja</p>;
