@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import {
+  errorIfMissing,
   navJson,
   NavSchema,
+  parseRequired,
   sectionIds,
   siteJson,
   SiteSchema,
   uiJson,
   UISchema,
+  warnIfMissing,
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
 import useIsScrolling from '../../hooks/useScrolling';
-import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Header.module.css';
 

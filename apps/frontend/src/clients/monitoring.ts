@@ -1,6 +1,7 @@
-import { AppError, env, logger, makeError } from '@jpx/shared';
+import { AppError, logger, makeError } from '@jpx/shared';
 
 import { supabase } from '../clients';
+import { parsedEnv as env } from '../config/env';
 
 type HighlightSDK = {
   init?: (opts?: unknown) => void;

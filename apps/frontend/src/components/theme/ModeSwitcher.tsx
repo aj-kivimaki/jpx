@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
+  errorIfMissing,
   logger,
   makeError,
+  parseRequired,
   siteJson,
   SiteSchema,
   type Theme,
@@ -9,7 +11,7 @@ import {
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { applyTheme, errorIfMissing, parseRequired } from '../../utils';
+import { applyTheme } from '../../utils';
 
 import styles from './ModeSwitcher.module.css';
 

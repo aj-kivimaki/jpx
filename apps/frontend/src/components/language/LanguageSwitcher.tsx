@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { uiJson, UISchema } from '@jpx/shared';
-
-import { parseRequired, warnIfMissing } from '../../utils';
+import { parseRequired, uiJson, UISchema, warnIfMissing } from '@jpx/shared';
 
 import styles from './LanguageSwitcher.module.css';
 

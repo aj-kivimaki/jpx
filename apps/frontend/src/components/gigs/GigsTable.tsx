@@ -2,11 +2,11 @@ import {
   type DbGig,
   type ParsedGig as BaseParsedGig,
   parseGigDates,
+  warnIfMissing,
 } from '@jpx/shared';
 import { GigsCard } from '@jpx/ui';
 
 import useLocalized from '../../hooks/useLocalized';
-import { warnIfMissing } from '../../utils';
 
 interface GigsTableProps {
   gigs: DbGig[];

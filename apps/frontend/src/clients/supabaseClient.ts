@@ -1,8 +1,10 @@
-import { env, logger } from '@jpx/shared';
+import { logger } from '@jpx/shared';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = env.VITE_SUPABASE_URL;
-const supabaseKey = env.VITE_SUPABASE_ANON_KEY;
+import { parsedEnv } from '../config/env';
+
+const supabaseUrl = parsedEnv.VITE_SUPABASE_URL;
+const supabaseKey = parsedEnv.VITE_SUPABASE_ANON_KEY;
 
 // Detect safe localStorage
 let safeStorage: Storage | undefined;

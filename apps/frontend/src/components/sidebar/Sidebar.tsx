@@ -3,10 +3,16 @@ import { CiSettings } from 'react-icons/ci';
 import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { siteJson, SiteSchema, socialJson, SocialSchema } from '@jpx/shared';
+import {
+  errorIfMissing,
+  parseRequired,
+  siteJson,
+  SiteSchema,
+  socialJson,
+  SocialSchema,
+} from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { errorIfMissing, parseRequired } from '../../utils';
 import LanguageSwitcher from '../language/LanguageSwitcher';
 import ModeSwitcher from '../theme/ModeSwitcher';
 

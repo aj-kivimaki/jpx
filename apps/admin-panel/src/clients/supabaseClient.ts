@@ -1,5 +1,7 @@
-import { env, logger } from '@jpx/shared';
+import { logger } from '@jpx/shared';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+
+import { parsedEnv as env } from '../config/env';
 
 const supabaseUrl = env.VITE_SUPABASE_URL;
 const supabaseKey = env.VITE_SUPABASE_ANON_KEY;
