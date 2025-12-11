@@ -11,6 +11,7 @@ interface FormInputProps {
   placeholder?: string;
   required: boolean;
   error?: string;
+  cypress?: string;
 }
 
 const FormInput = ({
@@ -21,6 +22,7 @@ const FormInput = ({
   placeholder,
   required,
   error,
+  cypress,
 }: FormInputProps) => {
   const displayLabel = required ? `${label} *` : label;
   const id = `${register.name}-input`;
@@ -41,6 +43,7 @@ const FormInput = ({
           placeholder={placeholder}
           className={styles.textarea}
           required={required}
+          data-cy={cypress}
         />
       ) : (
         <input
@@ -50,6 +53,7 @@ const FormInput = ({
           type={type}
           className={styles.input}
           required={required}
+          data-cy={cypress}
         />
       )}
     </div>

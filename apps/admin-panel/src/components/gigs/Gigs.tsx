@@ -1,7 +1,6 @@
 import {
   type DbGig,
   fetchGigs,
-  logger,
   QUERY_STALE_TIME_MS,
   VALIDATED_KEYS,
 } from '@jpx/shared';
@@ -24,12 +23,17 @@ const Gigs = () => {
     refetchOnWindowFocus: false,
   });
 
-  if (error) {
-    logger.error('Failed to load gigs (admin)', error);
-    return <p>Error loading events: {error.message}</p>;
-  }
-
-  return isLoading ? <Spinner /> : <GigsTable gigs={gigs || []} />;
+  return (
+    <>
+      {error ? (
+        <p>{error.message}</p>
+      ) : (
+        <div data-cy="gigs-list">
+          {isLoading ? <Spinner /> : <GigsTable gigs={gigs || []} />}
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Gigs;

@@ -34,3 +34,6 @@ coverage/
 
 # Notes
 docs/future-*.*md
+
+# Cypress videos
+**/cypress/videos/

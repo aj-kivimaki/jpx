@@ -134,6 +134,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
             className={styles.confirmButton}
             onClick={handleConfirm}
             aria-label="Poista keikka"
+            data-cy="confirm-delete-gig"
           >
             Kyllä
           </button>

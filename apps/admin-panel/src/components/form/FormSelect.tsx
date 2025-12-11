@@ -12,6 +12,7 @@ interface FormSelectProps {
   reactQueryError?: Error | null;
   disabled?: boolean;
   isLoading?: boolean;
+  cypress?: string;
 }
 
 const FormSelect = ({
@@ -23,6 +24,7 @@ const FormSelect = ({
   reactQueryError,
   disabled,
   isLoading,
+  cypress,
 }: FormSelectProps) => {
   const displayLabel = required ? `${label} *` : label;
 
@@ -56,6 +58,7 @@ const FormSelect = ({
         className={styles.select}
         {...register}
         disabled={isDisabled}
+        data-cy={cypress}
       >
         <option value="" disabled hidden>
           {placeholder}

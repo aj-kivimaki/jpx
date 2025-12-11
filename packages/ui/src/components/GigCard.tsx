@@ -90,7 +90,7 @@ const GigCard = ({
         onClick={() => onDelete(id, venue ?? '', formattedDate)}
         aria-label="Poista keikka"
       >
-        <MdDeleteForever className={styles.deleteIcon} />
+        <MdDeleteForever data-cy="delete-gig" className={styles.deleteIcon} />
       </button>
     )}
 
@@ -100,7 +100,7 @@ const GigCard = ({
         onClick={() => onEdit(id)}
         aria-label="Muokkaa keikkaa"
       >
-        <FaRegEdit className={styles.editIcon} />
+        <FaRegEdit data-cy="edit-gig" className={styles.editIcon} />
       </button>
     )}
   </article>

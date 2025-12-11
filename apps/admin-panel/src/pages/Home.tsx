@@ -5,7 +5,7 @@ import styles from './Home.module.css';
 
 const Home = () => {
   return (
-    <main className={styles.app}>
+    <main data-cy="admin-dashboard" className={styles.app}>
       <section className={styles.left}>
         <Form />
       </section>
