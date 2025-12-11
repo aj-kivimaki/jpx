@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const UISchema = z.object({
-  mobileMenuOpenIcon: z.string(),
-  mobileMenuClosedIcon: z.string(),
-  finnishLanguage: z.string(),
-  englishLanguage: z.string(),
+  mobileMenuOpenIcon: z.string().nonempty(),
+  mobileMenuClosedIcon: z.string().nonempty(),
+  finnishLanguage: z.string().nonempty(),
+  englishLanguage: z.string().nonempty(),
 });

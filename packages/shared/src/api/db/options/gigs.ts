@@ -11,6 +11,7 @@ import {
   VALIDATED_KEYS,
 } from '../../../schemas';
 import { type DbGig, type PaginationResult } from '../../../types';
+import { AppError } from '../../../utils';
 import { fetchGigs } from '../querys';
 
 /** Single-page query options for useQuery */
@@ -32,7 +33,7 @@ export const gigsInfiniteOptions = (
   pageSize: number = 5
 ): UseInfiniteQueryOptions<
   PaginationResult<DbGig>,
-  unknown,
+  AppError,
   InfiniteData<PaginationResult<DbGig>, number>,
   readonly string[]
 > => ({

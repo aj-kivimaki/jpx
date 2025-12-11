@@ -16,6 +16,10 @@
       "title": {
         "fi": "KEIKAT",
         "en": "GIGS"
+      },
+      "errorMessage": {
+        "fi": "Keikkojen lataaminen epäonnistui. Yritä hetken kuluttua uudelleen!",
+        "en": "Could not load gigs. Try again soon!"
       }
     },
     {

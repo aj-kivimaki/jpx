@@ -18,8 +18,7 @@ export const BannerSectionSchema = z.object({
 export const GigsSectionSchema = z.object({
   id: z.literal('gigs'),
   title: SiteLocalizedStringSchema,
-  items: z.array(z.unknown()).optional(),
-  loadingText: SiteLocalizedStringSchema.optional(),
+  errorMessage: SiteLocalizedStringSchema.optional(),
 });
 
 export const InfoSectionSchema = z.object({

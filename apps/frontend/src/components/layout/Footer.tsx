@@ -1,8 +1,6 @@
 import {
   contactJson,
   ContactSchema,
-  logger,
-  makeError,
   sectionIds,
   siteJson,
   type SiteLogo,
@@ -10,7 +8,7 @@ import {
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { parseRequired } from '../../utils';
+import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Footer.module.css';
 
@@ -28,25 +26,27 @@ const Footer = () => {
     'Contact'
   );
 
-  const stagentLogo = siteLogos.find((logo: SiteLogo) => logo.id === 'stagent');
-  if (!stagentLogo) {
-    const err = makeError(
-      'Stagent logo not found in site configuration',
-      'NOT_FOUND'
-    );
-    err.__logged = true;
-    logger.error(err);
-  }
+  const stagentLogo = errorIfMissing(
+    siteLogos.find((logo: SiteLogo) => logo.id === 'stagent'),
+    'Stagent logo not found in site configuration'
+  );
+  const logoSrc = errorIfMissing(
+    stagentLogo.src,
+    'Stagent logo source is required but missing'
+  );
 
-  const logoSrc = stagentLogo?.src ?? '';
-  const logoAlt = localize(stagentLogo?.alt);
-  if (!logoAlt) {
-    const err = makeError('Alt text missing for Stagent logo', 'NOT_FOUND');
-    err.__logged = true;
-    logger.warn(err);
-  }
-
-  const footerTitle = localize(siteLayout.footer.title);
+  const logoAlt = localize(
+    warnIfMissing(stagentLogo.alt, 'Alt text missing for Stagent logo') ?? {
+      fi: '',
+      en: '',
+    }
+  );
+  const footerTitle = localize(
+    warnIfMissing(siteLayout.footer.title, 'Footer title missing') ?? {
+      fi: '',
+      en: '',
+    }
+  );
 
   return (
     <footer id={sectionIds.contact} className={styles.footer}>
