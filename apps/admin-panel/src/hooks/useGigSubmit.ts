@@ -1,9 +1,8 @@
 import type { UseFormReturn } from 'react-hook-form';
 import { createGig, logger, updateGig, VALIDATED_KEYS } from '@jpx/shared';
 
-import { queryClient, supabase } from '../../clients';
-import { mapAppErrorToFormErrors } from '../../utils/mapAppErrorToFormErrors';
-import { sanitizeGigInput } from '../../utils/sanitizeGigInput';
+import { queryClient, supabase } from '../clients';
+import { mapAppErrorToFormErrors, sanitizeGigInput } from '../utils';
 
 import type { GigFormInput } from './useGigFormState';
 

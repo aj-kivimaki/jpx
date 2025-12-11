@@ -5,13 +5,13 @@ import { GigInsertSchema, lineupQueryOptions, logger } from '@jpx/shared';
 import { useQuery } from '@tanstack/react-query';
 import type { z } from 'zod';
 
-import { supabase } from '../../clients';
-import { useToastify } from '../../hooks/useToastify';
+import { supabase } from '../clients';
+import { toastify } from '../utils';
 
 export type GigFormInput = z.input<typeof GigInsertSchema>;
 
 export function useGigFormState() {
-  const { success: toastSuccess, error: toastError } = useToastify();
+  const { success: toastSuccess, error: toastError } = toastify;
   const toastErrorRef = useRef(toastError);
 
   useEffect(() => {
