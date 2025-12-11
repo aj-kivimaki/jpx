@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { MdLogout } from 'react-icons/md';
 import { logger, signOut } from '@jpx/shared';
-import { Spinner } from '@jpx/ui';
 
 import { supabase } from '../../clients';
 
@@ -28,8 +27,9 @@ export default function LogoutButton() {
       onClick={handleLogout}
       disabled={loading}
       aria-label="Log out"
+      data-cy="logout-button"
     >
-      {loading ? <Spinner /> : <MdLogout className={styles.logoutIcon} />}
+      {loading || <MdLogout className={styles.logoutIcon} />}
     </button>
   );
 }

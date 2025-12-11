@@ -73,6 +73,7 @@ export default function GigForm() {
             register={register('date')}
             required
             error={errors.date?.message}
+            cypress="gig-date"
           />
 
           <HookFormInput
@@ -82,6 +83,7 @@ export default function GigForm() {
             register={register('time')}
             required={false}
             error={errors.time?.message}
+            cypress="gig-time"
           />
 
           <HookFormSelect
@@ -93,6 +95,7 @@ export default function GigForm() {
             hookFormError={errors.lineup_id?.message}
             required
             disabled={isFormDisabled || !!reactQueryError}
+            cypress="gig-lineup"
           />
 
           <HookFormInput
@@ -101,6 +104,7 @@ export default function GigForm() {
             register={register('venue')}
             required={false}
             error={errors.venue?.message}
+            cypress="gig-venue"
           />
 
           <HookFormInput
@@ -109,6 +113,7 @@ export default function GigForm() {
             register={register('city')}
             required={false}
             error={errors.city?.message}
+            cypress="gig-city"
           />
 
           <HookFormInput
@@ -118,6 +123,7 @@ export default function GigForm() {
             register={register('notes_fi')}
             required={false}
             error={errors.notes_fi?.message}
+            cypress="gig-notes-fi"
           />
 
           <HookFormInput
@@ -127,10 +133,15 @@ export default function GigForm() {
             register={register('notes_en')}
             required={false}
             error={errors.notes_en?.message}
+            cypress="gig-notes-en"
           />
 
           <div className={styles.buttons}>
-            <button type="submit" className={styles.button}>
+            <button
+              data-cy="gig-submit"
+              type="submit"
+              className={styles.button}
+            >
               {isEditMode ? 'Tallenna muutokset' : 'Lisää keikka'}
             </button>
 
