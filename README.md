@@ -52,6 +52,7 @@
 - [UX Enhancements](#ux-enhancements)
 - [Backend](#backend)
 - [Code Quality](#code-quality)
+- [Tests](#tests)
 - [Error Handling and Logging](#error-handling-and-logging)
 - [Screenshots](#screenshots)
 - [Future Improvements](#future-improvements)
@@ -168,6 +169,18 @@ Ensures a **consistent, high-quality codebase** with automated checks and deploy
 
 See [CI/CD](./docs/CI-CD.md)
 
+## Tests
+
+### Cypress E2E
+
+**Admin Panel**
+
+> **Login** → **Add** → **Edit** → **Delete** → **Confirm Delete** → **Logout**
+
+<img src="./assets/admin_flow.gif" alt="E2E GIF" width="480"/>
+
+See [Tests](./docs/TESTS.md)
+
 ## Error Handling and Logging
 
 Covers **AppError propagation**, **client/server logging**, and **UI feedback** for all operations.
@@ -223,9 +236,7 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 - Testing
   - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
   - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
-  - E2E test (1): a single admin happy-path test using Cypress (create → verify → delete)
   - Optional: MSW for component tests to mock API responses.
-  - CI: run unit + component tests in PRs; E2E in a separate job or nightly.
 
 - Security & Optimization
   - Harden the frontend (CSP, source maps) and backend (rate-limiting and possibly `x-request-id`).
