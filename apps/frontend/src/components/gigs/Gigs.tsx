@@ -66,7 +66,7 @@ const Gigs = () => {
       {error ? (
         <p className={styles.errorMessage}>{errorMessage}</p>
       ) : (
-        <div className={styles.gigsCardContainer}>
+        <div data-cy="gigs-list" className={styles.gigsCardContainer}>
           {isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
         </div>
       )}
@@ -78,6 +78,7 @@ const Gigs = () => {
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
             aria-label="Load more gigs"
+            data-cy="load-more"
           >
             {isFetchingNextPage ? (
               <Spinner />

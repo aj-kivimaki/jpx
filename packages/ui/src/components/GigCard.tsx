@@ -38,7 +38,7 @@ const GigCard = ({
   onDelete,
   onEdit,
 }: GigCardProps) => (
-  <article className={styles.card}>
+  <article data-cy="item" className={styles.card}>
     <div className={styles.leftColumn}>
       {formattedDate && (
         <div className={styles.date}>

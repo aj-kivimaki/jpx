@@ -29,6 +29,7 @@
 - [Error Logging](./docs/ERROR-LOGGING.md)
 - [I18N](./docs/I18N.md)
 - [Pre-Hooks](./docs/PRE-HOOKS.md)
+- [Tests](./docs/TESTS.md)
 
 ### Apps
 
@@ -59,15 +60,15 @@
 
 ## Tech Stack
 
-| Layer            | Technology                                                               |
-| ---------------- | ------------------------------------------------------------------------ |
-| **Frontend**     | `Vite` • `React` • `TypeScript` • `CSS Modules`                          |
-| **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security (RLS)`)           |
-| **Database**     | `PostgreSQL`                                                             |
-| **Deployment**   | `Netlify`                                                                |
-| **Testing**      | `Vitest` • ( React Testing Library and Cypress / Playwright: `planned` ) |
-| **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`                            |
-| **CI/CD**        | `GitHub Actions`                                                         |
+| Layer            | Technology                                                     |
+| ---------------- | -------------------------------------------------------------- |
+| **Frontend**     | `Vite` • `React` • `TypeScript` • `CSS Modules`                |
+| **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security (RLS)`) |
+| **Database**     | `PostgreSQL`                                                   |
+| **Deployment**   | `Netlify`                                                      |
+| **Testing**      | `Vitest` • React Testing Library(planned) • `Cypress`          |
+| **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`                  |
+| **CI/CD**        | `GitHub Actions`                                               |
 
 ## NPM Packages
 
@@ -222,7 +223,7 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 - Testing
   - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
   - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
-  - E2E test (1): a single happy-path test using Playwright or Cypress (create → verify → delete)
+  - E2E test (1): a single admin happy-path test using Cypress (create → verify → delete)
   - Optional: MSW for component tests to mock API responses.
   - CI: run unit + component tests in PRs; E2E in a separate job or nightly.
 
