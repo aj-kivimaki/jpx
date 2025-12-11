@@ -2,7 +2,6 @@ import {
   bandJson,
   BandSchema,
   imageIds,
-  InfoSectionSchema,
   sectionIds,
   siteJson,
   SiteSchema,
@@ -23,12 +22,7 @@ const Info = () => {
   );
   const band = parseRequired(BandSchema, bandJson, 'Band');
 
-  const infoSection = parseRequired(
-    InfoSectionSchema,
-    sections.find((s) => s.id === sectionIds.info),
-    'Info section'
-  );
-
+  const infoSection = sections.find((s) => s.id === sectionIds.info);
   const title = infoSection ? localize(infoSection.title) : '';
   const bandImage = images.find((img) => img.id === imageIds.band);
   const imgAlt = bandImage?.alt ? localize(bandImage.alt) : '';

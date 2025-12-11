@@ -3,17 +3,10 @@ import { CiSettings } from 'react-icons/ci';
 import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import {
-  logger,
-  makeError,
-  siteJson,
-  SiteSchema,
-  socialJson,
-  SocialSchema,
-} from '@jpx/shared';
+import { siteJson, SiteSchema, socialJson, SocialSchema } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { parseRequired } from '../../utils';
+import { errorIfMissing, parseRequired } from '../../utils';
 import LanguageSwitcher from '../language/LanguageSwitcher';
 import ModeSwitcher from '../theme/ModeSwitcher';
 
@@ -26,14 +19,10 @@ const Sidebar = () => {
   const { sections } = parseRequired(SiteSchema, siteJson, 'Site');
   const social = parseRequired(SocialSchema, socialJson, 'Social Links');
 
-  const modalSection = sections.find((s) => s.id === 'modal');
-  if (!modalSection) {
-    const err = makeError('Modal section not found', 'NOT_FOUND');
-    err.__logged = true;
-    logger.error(err);
-    // fallback rendering to avoid crash
-    return null;
-  }
+  const modalSection = errorIfMissing(
+    sections.find((s) => s.id === 'modal'),
+    'Modal section'
+  );
 
   const openModal = () => {
     if (dialogRef.current) dialogRef.current.showModal();

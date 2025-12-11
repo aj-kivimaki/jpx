@@ -1,12 +1,12 @@
 import {
   type DbGig,
-  logger,
   type ParsedGig as BaseParsedGig,
   parseGigDates,
 } from '@jpx/shared';
 import { GigsCard } from '@jpx/ui';
 
 import useLocalized from '../../hooks/useLocalized';
+import { warnIfMissing } from '../../utils';
 
 interface GigsTableProps {
   gigs: DbGig[];
@@ -20,33 +20,23 @@ type LocalizedGig = Omit<BaseParsedGig, 'lineup' | 'notes'> & {
 const GigsTable = ({ gigs }: GigsTableProps) => {
   const localize = useLocalized();
 
-  const parseGigs = (gigs: DbGig[]): BaseParsedGig[] => {
-    return gigs.map(parseGigDates);
-  };
+  const parseGigs = (gigs: DbGig[]): BaseParsedGig[] => gigs.map(parseGigDates);
 
   const localizedGigs: LocalizedGig[] = parseGigs(gigs).map((gig) => {
     const lineup = localize({
       fi: gig.lineup?.name_fi,
       en: gig.lineup?.name_en,
     });
+
     const notes = localize({ fi: gig.notes_fi, en: gig.notes_en });
 
-    if (!lineup) {
-      logger.warn({
-        msg: 'Gig lineup missing',
-        gigId: gig.id,
-        lineup,
-      });
-    }
-
-    if (!gig.formattedDate) {
-      logger.warn({
-        msg: 'Gig formattedDate missing',
-        gigId: gig.id,
-        formattedDate: gig.formattedDate,
-        rawDate: gig.date,
-      });
-    }
+    warnIfMissing(gig.id, 'Gig id', undefined, { gig });
+    warnIfMissing(lineup, 'Gig lineup', undefined, { gigId: gig.id, lineup });
+    warnIfMissing(gig.formattedDate, 'Gig formattedDate', undefined, {
+      gigId: gig.id,
+      formattedDate: gig.formattedDate,
+      rawDate: gig.date,
+    });
 
     return {
       ...gig,

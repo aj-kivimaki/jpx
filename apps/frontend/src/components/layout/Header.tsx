@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import {
-  logger,
-  makeError,
   navJson,
   NavSchema,
   sectionIds,
@@ -13,7 +11,7 @@ import {
 
 import useLocalized from '../../hooks/useLocalized';
 import useIsScrolling from '../../hooks/useScrolling';
-import { parseRequired } from '../../utils';
+import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Header.module.css';
 
@@ -34,25 +32,18 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  const jpxLogo = logos.find((logo) => logo.id === 'jpx');
-  if (!jpxLogo) {
-    const err = makeError(
-      'JPX logo not found in site configuration',
-      'NOT_FOUND'
-    );
-    err.__logged = true;
-    logger.error(err);
-  }
+  const jpxLogo = errorIfMissing(
+    logos.find((logo) => logo.id === 'jpx'),
+    'JPX logo'
+  );
+  const logoSrc = errorIfMissing(jpxLogo.src, 'JPX logo source');
 
-  const logoSrc = jpxLogo?.src ?? '';
-  const logoAlt = localize(jpxLogo?.alt);
-  if (!logoAlt) {
-    const err = makeError('Alt text missing for JPX logo', 'NOT_FOUND');
-    err.__logged = true;
-    logger.warn(err);
-  }
-
-  const headerTitle = localize(layout.header.title);
+  const logoAlt = localize(
+    warnIfMissing(jpxLogo.alt, 'JPX alt text') ?? { fi: '', en: '' }
+  );
+  const headerTitle = localize(
+    warnIfMissing(layout.header.title, 'Header title') ?? { fi: '', en: '' }
+  );
 
   return (
     <header

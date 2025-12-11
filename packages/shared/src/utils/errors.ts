@@ -4,7 +4,8 @@ export type AppErrorCode =
   | 'NOT_FOUND'
   | 'UNKNOWN'
   | 'AUTH_ERROR'
-  | 'WARN_MISSING_DATA';
+  | 'WARN_MISSING_DATA'
+  | 'REQUIRED_DATA_MISSING';
 
 export class AppError extends Error {
   code: AppErrorCode;

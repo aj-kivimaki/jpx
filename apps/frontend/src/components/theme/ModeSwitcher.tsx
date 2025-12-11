@@ -9,7 +9,7 @@ import {
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { applyTheme, parseRequired } from '../../utils';
+import { applyTheme, errorIfMissing, parseRequired } from '../../utils';
 
 import styles from './ModeSwitcher.module.css';
 
@@ -18,13 +18,10 @@ const ModeSwitcher: React.FC = () => {
 
   const { sections } = parseRequired(SiteSchema, siteJson, 'Site');
 
-  const modalSection = sections.find((s) => s.id === 'modal');
-  if (!modalSection) {
-    const err = makeError('Modal section not found', 'NOT_FOUND');
-    err.__logged = true;
-    logger.error(err);
-    throw err;
-  }
+  const modalSection = errorIfMissing(
+    sections.find((s) => s.id === 'modal'),
+    'Modal section'
+  );
 
   // Safe initial theme read
   const getInitialTheme = (): Theme => {
