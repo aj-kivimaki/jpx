@@ -1,7 +1,13 @@
-import { sectionIds, siteJson, SiteSchema } from '@jpx/shared';
+import {
+  errorIfMissing,
+  parseRequired,
+  sectionIds,
+  siteJson,
+  SiteSchema,
+  warnIfMissing,
+} from '@jpx/shared';
 
 import { useLocalized, useLocalizedArray } from '../../hooks';
-import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Banner.module.css';
 

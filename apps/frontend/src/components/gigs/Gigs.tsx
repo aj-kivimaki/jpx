@@ -2,11 +2,14 @@ import { CiCircleMore } from 'react-icons/ci';
 import {
   AppError,
   type DbGig,
+  errorIfMissing,
   logDbError,
   type PaginationResult,
+  parseRequired,
   sectionIds,
   siteJson,
   SiteSchema,
+  warnIfMissing,
 } from '@jpx/shared';
 import { gigsInfiniteOptions } from '@jpx/shared';
 import { Spinner } from '@jpx/ui';
@@ -15,7 +18,6 @@ import { type InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 import { supabase } from '../../clients';
 import { FETCH_GIGS_PAGE_SIZE } from '../../config';
 import useLocalized from '../../hooks/useLocalized';
-import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Gigs.module.css';
 import GigsTable from './GigsTable';

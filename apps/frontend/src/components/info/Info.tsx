@@ -2,13 +2,13 @@ import {
   bandJson,
   BandSchema,
   imageIds,
+  parseRequired,
   sectionIds,
   siteJson,
   SiteSchema,
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { parseRequired } from '../../utils';
 
 import styles from './Info.module.css';
 

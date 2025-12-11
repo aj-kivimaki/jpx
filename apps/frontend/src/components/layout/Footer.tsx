@@ -1,14 +1,16 @@
 import {
   contactJson,
   ContactSchema,
+  errorIfMissing,
+  parseRequired,
   sectionIds,
   siteJson,
   type SiteLogo,
   SiteSchema,
+  warnIfMissing,
 } from '@jpx/shared';
 
 import useLocalized from '../../hooks/useLocalized';
-import { errorIfMissing, parseRequired, warnIfMissing } from '../../utils';
 
 import styles from './Footer.module.css';
 
