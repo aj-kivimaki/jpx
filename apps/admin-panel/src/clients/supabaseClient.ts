@@ -22,19 +22,19 @@ try {
 }
 
 // Create Supabase client with minimal surface
-let supabase: SupabaseClient;
-
-try {
-  supabase = createClient(supabaseUrl, supabaseKey, {
-    auth: {
-      storage: safeStorage,
-      autoRefreshToken: true,
-      persistSession: true,
-    },
-  });
-} catch (err) {
-  logger.error({ msg: 'Failed to create Supabase client', err });
-  throw err;
-}
+const supabase = (() => {
+  try {
+    return createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        storage: safeStorage,
+        autoRefreshToken: true,
+        persistSession: true,
+      },
+    });
+  } catch (err) {
+    logger.error({ msg: 'Failed to create Supabase client', err });
+    throw err;
+  }
+})();
 
 export { supabase };
