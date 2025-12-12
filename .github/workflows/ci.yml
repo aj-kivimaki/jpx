@@ -26,14 +26,14 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Upgrade npm
+      - name: Upgrade npm to v10
         run: npm install -g npm@10
 
-      # Install dependencies (now supports workspace:*)
+      # Install all dependencies (workspace:* now works)
       - name: Install dependencies
         run: npm install
 
-      # Build shared packages first
+      # Build shared packages
       - name: Build shared packages
         run: |
           npm --workspace @jpx/shared run build
@@ -63,7 +63,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Upgrade npm
+      - name: Upgrade npm to v10
         run: npm install -g npm@10
 
       - name: Download shared artifacts
@@ -89,7 +89,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Upgrade npm
+      - name: Upgrade npm to v10
         run: npm install -g npm@10
 
       - name: Download shared artifacts
@@ -117,7 +117,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Upgrade npm
+      - name: Upgrade npm to v10
         run: npm install -g npm@10
 
       - name: Download shared artifacts
@@ -151,7 +151,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Upgrade npm
+      - name: Upgrade npm to v10
         run: npm install -g npm@10
 
       - name: Download shared artifacts
