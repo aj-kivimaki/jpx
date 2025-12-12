@@ -105,7 +105,6 @@ jobs:
     strategy:
       matrix:
         workspace: [frontend, admin-panel]
-        shard: [0, 1]
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -123,11 +122,9 @@ jobs:
           node-version: '22'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Run E2E specs for workspace shard
+      - name: Run E2E specs for workspace
         env:
           WORKSPACE: ${{ matrix.workspace }}
-          SHARD_INDEX: ${{ matrix.shard }}
-          SHARD_COUNT: 2
         run: |
           set -euo pipefail
           spec_dir="apps/${WORKSPACE}/cypress/e2e"
@@ -141,14 +138,7 @@ jobs:
             echo "No specs found for $WORKSPACE"
             exit 0
           fi
-          chunk_size=$(( (total + SHARD_COUNT - 1) / SHARD_COUNT ))
-          start=$(( SHARD_INDEX * chunk_size ))
-          selected=( "${all_specs[@]:start:chunk_size}" )
-          if [ ${#selected[@]} -eq 0 ]; then
-            echo "No specs for this shard (index $SHARD_INDEX)"
-            exit 0
-          fi
-          spec_arg="$(IFS=,; echo "${selected[*]}")"
+          spec_arg="$(IFS=,; echo "${all_specs[*]}")"
           echo "Starting build+preview for $WORKSPACE"
           if [ "$WORKSPACE" = "frontend" ]; then
             PORT=5173
@@ -165,7 +155,7 @@ jobs:
           preview_pid=$!
           echo "Waiting for ${BASE_URL} to be available"
           npx wait-on ${BASE_URL} --timeout 300000
-          echo "Running cypress for $WORKSPACE shard $SHARD_INDEX/$SHARD_COUNT specs: $spec_arg"
+          echo "Running cypress for $WORKSPACE specs: $spec_arg"
           npx cypress run --project "apps/${WORKSPACE}" --config-file "apps/${WORKSPACE}/cypress.config.ts" --config baseUrl=${BASE_URL} --spec "$spec_arg"
           kill ${preview_pid} || true
         shell: bash
