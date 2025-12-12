@@ -37,3 +37,5 @@ docs/future-*.*md
 
 # Cypress videos
 **/cypress/videos/
+# Local Netlify folder
+**/.netlify
