@@ -60,15 +60,22 @@ jobs:
     needs: build-shared
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
           name: shared-artifacts
-          path: .
+          path: shared-artifacts
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      - name: Restore node_modules
+        run: mv shared-artifacts/node_modules ./node_modules
 
       - name: Lint
         run: npm run lint
@@ -80,15 +87,22 @@ jobs:
     needs: build-shared
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
           name: shared-artifacts
-          path: .
+          path: shared-artifacts
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      - name: Restore node_modules
+        run: mv shared-artifacts/node_modules ./node_modules
 
       - name: Typecheck
         run: npm run typecheck
@@ -97,15 +111,22 @@ jobs:
     needs: build-shared
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
           name: shared-artifacts
-          path: .
+          path: shared-artifacts
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      - name: Restore node_modules
+        run: mv shared-artifacts/node_modules ./node_modules
 
       - name: Run Tests
         run: npm run test
@@ -125,15 +146,22 @@ jobs:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
           name: shared-artifacts
-          path: .
+          path: shared-artifacts
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      - name: Restore node_modules
+        run: mv shared-artifacts/node_modules ./node_modules
 
       - name: Build ${{ matrix.app }}
         run: |
