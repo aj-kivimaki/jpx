@@ -150,7 +150,7 @@ jobs:
           fi
           spec_arg="$(IFS=,; echo "${selected[*]}")"
           echo "Running cypress for $WORKSPACE shard $SHARD_INDEX/$SHARD_COUNT specs: $spec_arg"
-          npx cypress run --config-file "apps/${WORKSPACE}/cypress.config.ts" --spec "$spec_arg"
+          npx cypress run --config-file "apps/${WORKSPACE}/cypress.config.ts" --config supportFile=false --spec "$spec_arg"
         shell: bash
 
   # ===========================
