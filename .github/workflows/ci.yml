@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: '22'
 
+      # Upgrade npm to v10 for workspace:* support
+      - name: Upgrade npm to v10
+        run: npm install -g npm@10
+
       # Cache node_modules
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -40,7 +44,7 @@ jobs:
 
       # Install dependencies at root (supports workspace:*)
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Build shared packages first
       - name: Build shared packages
@@ -70,6 +74,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Upgrade npm to v10
+        run: npm install -g npm@10
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
@@ -90,6 +97,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Upgrade npm to v10
+        run: npm install -g npm@10
 
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
@@ -113,6 +123,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Upgrade npm to v10
+        run: npm install -g npm@10
 
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
@@ -147,6 +160,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Upgrade npm to v10
+        run: npm install -g npm@10
 
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
