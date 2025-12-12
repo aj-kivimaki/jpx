@@ -2,5 +2,5 @@
 # Pre-push hook: typecheck + tests
 
 npm run typecheck
-npm test:unit
-npm build:fast
+npm run test:unit
+npm run build:fast
