@@ -1,6 +1,9 @@
+import { startDevServer } from '@cypress/vite-dev-server';
 import { defineConfig } from 'cypress';
 import { config as dotenvConfig } from 'dotenv';
 import { resolve } from 'path';
+
+import viteConfig from './vite.config';
 
 dotenvConfig({ path: resolve(__dirname, '.env.local') });
 
@@ -26,6 +29,13 @@ export default defineConfig({
     supportFile: !!(process.env.CI || process.env.GITHUB_ACTIONS)
       ? false
       : './cypress/support/e2e.ts',
+    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+    setupNodeEvents(on, config) {
+      on('dev-server:start', (options) =>
+        startDevServer({ options, viteConfig })
+      );
+      return config;
+    },
   },
   env,
 });
