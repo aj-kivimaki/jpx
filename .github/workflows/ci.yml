@@ -99,6 +99,11 @@ jobs:
   tests:
     needs: build-shared
     runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
+      VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
@@ -114,8 +119,13 @@ jobs:
       - name: Install dependencies quickly
         run: npm ci --prefer-offline
 
-      - name: Run Tests
+      - name: Run Unit & E2E Tests
         run: npm run test
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
+          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
 
   # ===========================
   # 3️⃣ Parallel frontend/admin-panel build & deploy
