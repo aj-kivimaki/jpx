@@ -23,7 +23,9 @@ const env = {
 export default defineConfig({
   e2e: {
     baseUrl: process.env.CYPRESS_BASE_URL ?? 'http://localhost:5174',
-    supportFile: './cypress/support/e2e.ts',
+    supportFile: !!(process.env.CI || process.env.GITHUB_ACTIONS)
+      ? false
+      : './cypress/support/e2e.ts',
   },
   env,
 });
