@@ -14,7 +14,7 @@
     "build": "turbo run build --force",
     "build:fast": "turbo run build --filter=frontend... --filter=admin-panel... --filter=@jpx/ui... --filter=@jpx/shared...",
     "typecheck": "turbo run typecheck --force",
-    "typecheck:fast": "turbo run typecheck --filter=frontend... --filter=admin-panel...",
+    "typecheck:fast": "turbo run typecheck --filter=frontend... --filter=admin-panel... --filter=@jpx/ui... --filter=@jpx/shared...",
     "test": "turbo run test:ci --force && npm run test:e2e",
     "test:unit": "turbo run test:ci --filter=frontend... --filter=admin-panel...",
     "test:e2e": "npm run test:front:e2e && npm run test:admin:e2e",
