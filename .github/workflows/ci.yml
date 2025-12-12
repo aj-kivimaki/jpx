@@ -45,7 +45,7 @@ jobs:
           npm --workspace @jpx/ui run build
 
       - name: Upload shared artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: shared-artifacts
           path: |
