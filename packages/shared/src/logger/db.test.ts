@@ -44,7 +44,9 @@ describe('logger/db.logDbError', () => {
     const err = new Error('db');
     await logDbError('create', err, { id: 1 });
     expect(mockLogger.error).toHaveBeenCalled();
-    const callArg = mockLogger.error.mock.calls[0][0];
+    const calls = mockLogger.error.mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    const callArg = calls[0]![0];
     expect(callArg).toHaveProperty('op', 'create');
     expect(callArg).toHaveProperty('err');
   });
@@ -60,7 +62,9 @@ describe('logger/db.logDbError', () => {
 
     expect((globalThis as any).supabase.auth.getSession).toHaveBeenCalled();
     expect(mockLogger.error).toHaveBeenCalled();
-    const logged = mockLogger.error.mock.calls[0][0];
+    const calls2 = mockLogger.error.mock.calls;
+    expect(calls2.length).toBeGreaterThan(0);
+    const logged = calls2[0]![0];
     expect(logged).toHaveProperty('session');
     expect(logged.session).toEqual({ id: 'user-1' });
     expect(logged).toHaveProperty('op', 'op2');
