@@ -26,8 +26,12 @@ jobs:
         with:
           node-version: '22'
 
-      # Cache node_modules at root
-      - name: Cache Node Modules
+      # Upgrade npm to latest to support workspace:*
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      # Cache node_modules
+      - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: |
@@ -38,8 +42,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Install dependencies at root (lockfile must exist)
-      - name: Install dependencies at root
+      # Install all dependencies at root
+      - name: Install dependencies
         run: npm ci
 
       # Build shared packages first
@@ -48,12 +52,15 @@ jobs:
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      # Upload node_modules cache for downstream jobs
-      - name: Upload node_modules
+      # Upload node_modules and build artifacts for downstream jobs
+      - name: Upload node_modules + artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: node-modules-cache
-          path: node_modules
+          name: shared-artifacts
+          path: |
+            node_modules
+            packages/shared/dist
+            packages/ui/dist
 
   # ===========================
   # 2️⃣ Lint, Typecheck, Tests (parallel)
@@ -67,11 +74,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Download node_modules cache
+      - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
-          name: node-modules-cache
-          path: node_modules
+          name: shared-artifacts
+          path: .
 
       - name: Lint
         run: npm run lint
@@ -88,11 +95,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Download node_modules cache
+      - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
-          name: node-modules-cache
-          path: node_modules
+          name: shared-artifacts
+          path: .
 
       - name: Typecheck
         run: npm run typecheck
@@ -111,11 +118,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Download node_modules cache
+      - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
-          name: node-modules-cache
-          path: node_modules
+          name: shared-artifacts
+          path: .
 
       - name: Run unit & E2E tests
         run: npm run test
@@ -145,11 +152,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Download node_modules cache
+      - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
-          name: node-modules-cache
-          path: node_modules
+          name: shared-artifacts
+          path: .
 
       - name: Build ${{ matrix.app }}
         run: |
