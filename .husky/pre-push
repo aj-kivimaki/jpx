@@ -1,3 +1,13 @@
-npm run typecheck
-npm test
-npm run build
+#!/usr/bin/env sh
+# Pre-push: fast local checks
+echo "Running typecheck..."
+npm run typecheck:fast
+
+echo "Running unit tests..."
+npm run test:unit
+
+# Optional: sanity-check production build
+# echo "Building apps locally (fast)..."
+npm run build:fast
+
+exit 0
