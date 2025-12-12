@@ -20,7 +20,7 @@ export type SanitizedGigInput = {
  */
 export function sanitizeGigInput(data: GigFormInput): SanitizedGigInput {
   const sanitizeTrim = (value: unknown) =>
-    value != null ? DOMPurify.sanitize(String(value)).trim() : null;
+    value == null ? null : DOMPurify.sanitize(String(value)).trim();
 
   return {
     date: sanitizeTrim(data.date)!, // required
