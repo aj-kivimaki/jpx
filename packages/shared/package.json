@@ -12,8 +12,7 @@
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
-    "test": "echo \"no tests for shared\"",
-    "test:ci": "echo \"no tests for shared\"",
+    "test:unit": "echo \"no tests for shared\"",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
   "dependencies": {

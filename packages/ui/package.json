@@ -8,8 +8,7 @@
   "scripts": {
     "build": "vite build && tsc -b --force tsconfig.build.json && node ./scripts/write-types.cjs",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
-    "test": "vitest",
-    "test:ci": "echo \"no tests for ui\"",
+    "test:unit": "echo \"no tests for ui\"",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
   "dependencies": {
