@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: '22'
 
-      # Clean node_modules
+      # Remove previous node_modules
       - name: Remove previous node_modules
         run: rm -rf node_modules
 
@@ -38,36 +38,36 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Lint
+      # Lint all
       - name: Lint
         run: npm run lint
 
-      # Format check
+      # Format check all
       - name: Format Check
         run: npm run format:check
 
-      # Build packages first
+      # Build shared and ui packages first
       - name: Build Packages
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      # Typecheck
+      # Typecheck repository (all packages & apps)
       - name: Typecheck
         run: npm run typecheck
 
-      # Run unit tests
-      - name: Run Unit Tests
-        run: npm run test:ci
+      # Run unit tests in all packages/apps
+      - name: Unit Tests
+        run: turbo run test --force
 
-      # Run frontend E2E tests
+      # Frontend E2E tests
       - name: Frontend E2E Tests
         run: npm run test:front:e2e
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      # Run admin-panel E2E tests
+      # Admin E2E tests
       - name: Admin E2E Tests
         run: npm run test:admin:e2e
         env:
@@ -76,19 +76,22 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+  # ===========================
+  # Build + Deploy (main only)
+  # ===========================
   build-deploy:
     needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      # Checkout repository
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      # Clean node_modules
+      # Remove cached node_modules
       - name: Remove possible cached node_modules
         run: rm -rf node_modules
 
@@ -102,7 +105,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Build packages
+      # Build shared and ui packages first
       - name: Build shared
         run: npm --workspace @jpx/shared run build
 
