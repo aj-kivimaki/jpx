@@ -72,8 +72,8 @@ jobs:
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      - name: Typecheck (fast)
-        run: npm run typecheck:fast
+      - name: Typecheck
+        run: npm run typecheck
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -135,9 +135,9 @@ jobs:
       - name: Run E2E for workspace
         run: |
           if [ "${{ matrix.workspace }}" = "frontend" ]; then
-            npm run test:front:e2e
+            npm run test:e2e:front
           else
-            npm run test:admin:e2e
+            npm run test:e2e:admin
           fi
 
   # ===========================
