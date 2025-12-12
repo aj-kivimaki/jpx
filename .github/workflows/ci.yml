@@ -102,6 +102,7 @@ jobs:
       - name: Build frontend
         run: npm --workspace frontend run build
         env:
+          NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
@@ -109,6 +110,7 @@ jobs:
       - name: Build admin panel
         run: npm --workspace admin-panel run build
         env:
+          NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
