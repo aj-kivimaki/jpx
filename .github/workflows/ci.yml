@@ -79,7 +79,7 @@ jobs:
     needs: [lint-format, typecheck]
     strategy:
       matrix:
-        workspace: [frontend, admin-panel]
+        workspace: [frontend, admin-panel, '@jpx/shared', '@jpx/ui']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

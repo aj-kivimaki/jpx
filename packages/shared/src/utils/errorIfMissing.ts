@@ -14,6 +14,7 @@ export function errorIfMissing<T>(
   }
 
   const err = makeError(message, code, context);
-  logger.error(err);
+  // Log a concise message with structured context to keep test output readable
+  logger.error(err.message, { code: err.code, details: err.details, context });
   throw err;
 }

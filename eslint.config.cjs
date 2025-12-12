@@ -52,4 +52,17 @@ module.exports = [
       'simple-import-sort/exports': 'error',
     },
   },
+  // Tests: allow `any` usage in test files for concise mocks and fakes
+  {
+    files: [
+      '**/*.test.ts',
+      '**/*.test.tsx',
+      '**/*.spec.ts',
+      '**/*.spec.tsx',
+      '**/__tests__/**',
+    ],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ];

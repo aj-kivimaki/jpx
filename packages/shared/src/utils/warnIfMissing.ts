@@ -18,7 +18,8 @@ export function warnIfMissing<T>(
 
   const err = makeError(message, code, context);
   err.__logged = true;
-  logger.warn(err);
+  // Log a concise message with structured context so test output shows readable text
+  logger.warn(err.message, { code: err.code, details: err.details, context });
 
   return undefined;
 }
