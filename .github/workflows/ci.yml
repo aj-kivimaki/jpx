@@ -166,7 +166,7 @@ jobs:
           echo "Waiting for ${BASE_URL} to be available"
           npx wait-on ${BASE_URL} --timeout 300000
           echo "Running cypress for $WORKSPACE shard $SHARD_INDEX/$SHARD_COUNT specs: $spec_arg"
-          npx cypress run --project "apps/${WORKSPACE}" --config-file "apps/${WORKSPACE}/cypress.config.ts" --config supportFile=false,baseUrl=${BASE_URL} --spec "$spec_arg"
+          npx cypress run --project "apps/${WORKSPACE}" --config-file "apps/${WORKSPACE}/cypress.config.ts" --config baseUrl=${BASE_URL} --spec "$spec_arg"
           kill ${preview_pid} || true
         shell: bash
 

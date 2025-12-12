@@ -26,9 +26,7 @@ const env = {
 export default defineConfig({
   e2e: {
     baseUrl: process.env.CYPRESS_BASE_URL ?? 'http://localhost:5174',
-    supportFile: !!(process.env.CI || process.env.GITHUB_ACTIONS)
-      ? false
-      : './cypress/support/e2e.ts',
+    supportFile: './cypress/support/e2e.ts',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {
       on('dev-server:start', (options) =>
