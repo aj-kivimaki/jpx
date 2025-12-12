@@ -14,8 +14,10 @@ jobs:
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
+      VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
     steps:
-      # Checkout repository
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -28,11 +30,15 @@ jobs:
         with:
           node-version: '22'
 
+      # Clean node_modules
+      - name: Remove previous node_modules
+        run: rm -rf node_modules
+
       # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Lint all packages
+      # Lint
       - name: Lint
         run: npm run lint
 
@@ -40,23 +46,30 @@ jobs:
       - name: Format Check
         run: npm run format:check
 
-      # Build shared and ui packages
+      # Build packages first
       - name: Build Packages
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      # Typecheck all packages & apps
+      # Typecheck
       - name: Typecheck
         run: npm run typecheck
 
       # Run unit tests
-      - name: Run Tests
-        run: npm run test
+      - name: Run Unit Tests
+        run: npm run test:ci
 
-      # Run E2E tests
-      - name: Run E2E Tests
-        run: npm run test:e2e
+      # Run frontend E2E tests
+      - name: Frontend E2E Tests
+        run: npm run test:front:e2e
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      # Run admin-panel E2E tests
+      - name: Admin E2E Tests
+        run: npm run test:admin:e2e
         env:
           CYPRESS_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
           CYPRESS_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
@@ -68,21 +81,28 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
+      # Clean node_modules
+      - name: Remove possible cached node_modules
+        run: rm -rf node_modules
+
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build shared and ui first
+      # Build packages
       - name: Build shared
         run: npm --workspace @jpx/shared run build
 
