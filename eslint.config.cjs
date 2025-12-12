@@ -39,16 +39,20 @@ module.exports = [
         {
           groups: [
             // Packages: react, next, node_modules
-            [String.raw`^\u0000`, '^react', '^@?\\w'],
+            [String.raw`^\u0000`, '^react', String.raw`^@?\w`],
 
             // Internal packages / aliases
             ['^(@|components|utils|config)(/.*|$)'],
 
             // Parent imports
-            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            [String.raw`^\.\.(?!/?$)`, String.raw`^\.\./?$`],
 
             // Other relative imports
-            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            [
+              String.raw`^\./(?=.*/)(?!/?$)`,
+              String.raw`^\.(?!/?$)`,
+              String.raw`^\./?$`,
+            ],
 
             // Side effect imports
             [String.raw`^\u0000`],
