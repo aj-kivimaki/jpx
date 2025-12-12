@@ -156,6 +156,9 @@ jobs:
             PORT=5174
           fi
           BASE_URL="http://localhost:${PORT}"
+          # Ensure shared packages are built so TypeScript references resolve
+          npm --workspace @jpx/shared run build || true
+          npm --workspace @jpx/ui run build || true
           npm --workspace "${WORKSPACE}" run build
           # start preview on desired port in background
           npm --workspace "${WORKSPACE}" run preview -- --port ${PORT} > /tmp/${WORKSPACE}-preview.log 2>&1 &
