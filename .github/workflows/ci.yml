@@ -38,7 +38,6 @@ jobs:
 
   typecheck:
     runs-on: ubuntu-latest
-    needs: lint-format
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -78,6 +77,9 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     needs: [lint-format, typecheck]
+    strategy:
+      matrix:
+        workspace: [frontend, admin-panel]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -101,8 +103,8 @@ jobs:
           path: .turbo
           key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Run unit tests
-        run: npm run test:unit
+      - name: Run unit tests for workspace
+        run: npm --workspace ${{ matrix.workspace }} run test:unit
 
   e2e-tests:
     runs-on: ubuntu-latest
