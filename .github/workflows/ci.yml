@@ -9,93 +9,7 @@ on:
       - '**'
 
 jobs:
-  # ===========================
-  # 1️⃣ Build shared packages first
-  # ===========================
-  build-shared:
-    runs-on: ubuntu-latest
-    env:
-      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build shared packages
-        run: |
-          pnpm --filter @jpx/shared... build
-          pnpm --filter @jpx/ui... build
-
-      - name: Upload shared artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: shared-artifacts
-          path: |
-            node_modules
-            packages/shared/dist
-            packages/ui/dist
-
-  # ===========================
-  # 2️⃣ Parallel lint, typecheck, tests
-  # ===========================
-  lint-format:
-    needs: build-shared
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Download shared artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: shared-artifacts
-          path: .
-
-      - name: Lint
-        run: pnpm run lint
-
-      - name: Format Check
-        run: pnpm run format:check
-
-  typecheck:
-    needs: build-shared
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Download shared artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: shared-artifacts
-          path: .
-
-      - name: Typecheck
-        run: pnpm run typecheck
-
-  tests:
-    needs: build-shared
+  checks:
     runs-on: ubuntu-latest
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -103,62 +17,125 @@ jobs:
       VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
       VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          clean: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Download shared artifacts
-        uses: actions/download-artifact@v4
+      # =========================
+      # Cache node_modules & npm
+      # =========================
+      - name: Cache node_modules
+        uses: actions/cache@v3
         with:
-          name: shared-artifacts
-          path: .
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format Check
+        run: npm run format:check
+
+      - name: Build Packages
+        run: |
+          npm --workspace @jpx/shared run build
+          npm --workspace @jpx/ui run build
+
+      - name: Typecheck
+        run: npm run typecheck
 
       - name: Run Tests
-        run: pnpm run test
+        run: npm run test
 
-  # ===========================
-  # 3️⃣ Build & Deploy apps in parallel
-  # ===========================
+      # =========================
+      # Upload node_modules for reuse
+      # =========================
+      - name: Upload node_modules cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-modules
+          path: node_modules
+
   build-deploy:
-    needs: build-shared
+    needs: checks
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: [frontend, admin-panel]
-    env:
-      NODE_ENV: production
-      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          clean: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Download shared artifacts
+      - name: Download cached node_modules
         uses: actions/download-artifact@v4
         with:
-          name: shared-artifacts
-          path: .
+          name: node-modules
+          path: node_modules
 
-      - name: Build ${{ matrix.app }}
+      # =========================
+      # Build shared packages
+      # =========================
+      - name: Build shared
+        run: npm --workspace @jpx/shared run build
+
+      - name: Build ui
+        run: npm --workspace @jpx/ui run build
+
+      # =========================
+      # Build & deploy apps
+      # =========================
+      - name: Build frontend
         run: |
-          pnpm --filter ${{ matrix.app }}... build
-          cp apps/${{ matrix.app }}/netlify.toml apps/${{ matrix.app }}/dist/netlify.toml
+          npm --workspace frontend run build
+          cp apps/frontend/netlify.toml apps/frontend/dist/netlify.toml
+        env:
+          NODE_ENV: production
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - name: Deploy ${{ matrix.app }}
+      - name: Build admin panel
+        run: |
+          npm --workspace admin-panel run build
+          cp apps/admin-panel/netlify.toml apps/admin-panel/dist/netlify.toml
+        env:
+          NODE_ENV: production
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Deploy Frontend
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
-          publish-dir: apps/${{ matrix.app }}/dist
+          publish-dir: apps/frontend/dist
           production-deploy: true
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets[ matrix.app == 'frontend' && 'NETLIFY_AUTH_TOKEN' || 'ADMIN_NETLIFY_AUTH_TOKEN' ] }}
-          NETLIFY_SITE_ID: ${{ secrets[ matrix.app == 'frontend' && 'NETLIFY_SITE_ID' || 'ADMIN_NETLIFY_SITE_ID' ] }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Deploy Admin Panel
+        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+        with:
+          publish-dir: apps/admin-panel/dist
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.ADMIN_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.ADMIN_NETLIFY_SITE_ID }}
