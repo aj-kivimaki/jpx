@@ -149,8 +149,22 @@ jobs:
             exit 0
           fi
           spec_arg="$(IFS=,; echo "${selected[*]}")"
+          echo "Starting build+preview for $WORKSPACE"
+          if [ "$WORKSPACE" = "frontend" ]; then
+            PORT=5173
+          else
+            PORT=5174
+          fi
+          BASE_URL="http://localhost:${PORT}"
+          npm --workspace "${WORKSPACE}" run build
+          # start preview on desired port in background
+          npm --workspace "${WORKSPACE}" run preview -- --port ${PORT} > /tmp/${WORKSPACE}-preview.log 2>&1 &
+          preview_pid=$!
+          echo "Waiting for ${BASE_URL} to be available"
+          npx wait-on ${BASE_URL} --timeout 300000
           echo "Running cypress for $WORKSPACE shard $SHARD_INDEX/$SHARD_COUNT specs: $spec_arg"
-          npx cypress run --config-file "apps/${WORKSPACE}/cypress.config.ts" --config supportFile=false --spec "$spec_arg"
+          npx cypress run --config-file "apps/${WORKSPACE}/cypress.config.ts" --config supportFile=false,baseUrl=${BASE_URL} --spec "$spec_arg"
+          kill ${preview_pid} || true
         shell: bash
 
   # ===========================
