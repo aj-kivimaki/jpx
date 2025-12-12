@@ -10,7 +10,7 @@ on:
 
 jobs:
   # ===========================
-  # 1️⃣ Install & build shared packages
+  # 1️⃣ Build shared packages first
   # ===========================
   build-shared:
     runs-on: ubuntu-latest
@@ -26,10 +26,6 @@ jobs:
         with:
           node-version: '22'
 
-      # Upgrade npm to latest to support workspace:*
-      - name: Upgrade npm
-        run: npm install -g npm@latest
-
       # Cache node_modules
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -42,9 +38,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Install all dependencies at root
+      # Install dependencies at root (supports workspace:*)
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # Build shared packages first
       - name: Build shared packages
@@ -52,8 +48,8 @@ jobs:
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
 
-      # Upload node_modules and build artifacts for downstream jobs
-      - name: Upload node_modules + artifacts
+      # Upload artifacts for downstream jobs
+      - name: Upload shared artifacts
         uses: actions/upload-artifact@v4
         with:
           name: shared-artifacts
@@ -63,7 +59,7 @@ jobs:
             packages/ui/dist
 
   # ===========================
-  # 2️⃣ Lint, Typecheck, Tests (parallel)
+  # 2️⃣ Parallel lint, typecheck, tests
   # ===========================
   lint-format:
     needs: build-shared
@@ -124,7 +120,7 @@ jobs:
           name: shared-artifacts
           path: .
 
-      - name: Run unit & E2E tests
+      - name: Run tests
         run: npm run test
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -133,7 +129,7 @@ jobs:
           VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
 
   # ===========================
-  # 3️⃣ Build & Deploy apps (frontend/admin-panel) in parallel
+  # 3️⃣ Build & Deploy apps in parallel
   # ===========================
   build-deploy:
     needs: build-shared
