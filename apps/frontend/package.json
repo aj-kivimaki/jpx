@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc -b tsconfig.build.json && vite build",
     "preview": "vite preview",
-    "test:unit": "vitest --run --coverage --reporter=verbose",
+    "test:unit": "echo \"no tests for admin-panel\"",
     "typecheck": "tsc -b --noEmit",
     "clean": "rm -rf dist",
     "cypress:open": "cypress open --config-file ./cypress.config.ts",

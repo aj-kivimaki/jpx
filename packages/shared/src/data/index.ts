@@ -1,8 +1,6 @@
-import bandJson from './band.json';
-import contactJson from './contact.json';
-import navJson from './nav.json';
-import siteJson from './site.json';
-import socialJson from './social.json';
-import uiJson from './ui.json';
-
-export { bandJson, contactJson, navJson, siteJson, socialJson, uiJson };
+export { default as bandJson } from './band.json';
+export { default as contactJson } from './contact.json';
+export { default as navJson } from './nav.json';
+export { default as siteJson } from './site.json';
+export { default as socialJson } from './social.json';
+export { default as uiJson } from './ui.json';

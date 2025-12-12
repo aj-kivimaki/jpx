@@ -15,7 +15,7 @@ Cypress.Commands.add('loginAsAdmin', () => {
     if (error) throw error;
 
     // Store session in localStorage so your app sees the admin as logged in
-    window.localStorage.setItem(
+    globalThis.localStorage.setItem(
       'supabase.auth.token',
       JSON.stringify(data.session)
     );
