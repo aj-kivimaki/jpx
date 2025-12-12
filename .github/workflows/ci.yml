@@ -71,12 +71,16 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     needs: [lint-format, typecheck]
+    strategy:
+      matrix:
+        package: [frontend, admin-panel, '@jpx/ui', '@jpx/shared']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
+
       - name: Setup Node & Install (composite)
         uses: ./.github/actions/setup-node
         with:
@@ -89,8 +93,11 @@ jobs:
           path: .turbo
           key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json','**/package.json','apps/**/src/**','packages/**/src/**') }}
 
-      - name: Run unit tests
-        run: npm run test:unit
+      - name: Run unit tests for workspace
+        run: |
+          echo "Running unit tests for ${{ matrix.package }}"
+          npm --workspace "${{ matrix.package }}" run test:unit
+        shell: bash
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -98,6 +105,7 @@ jobs:
     strategy:
       matrix:
         workspace: [frontend, admin-panel]
+        shard: [0, 1]
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -115,13 +123,35 @@ jobs:
           node-version: '22'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Run E2E for workspace
+      - name: Run E2E specs for workspace shard
+        env:
+          WORKSPACE: ${{ matrix.workspace }}
+          SHARD_INDEX: ${{ matrix.shard }}
+          SHARD_COUNT: 2
         run: |
-          if [ "${{ matrix.workspace }}" = "frontend" ]; then
-            npm run test:e2e:front
-          else
-            npm run test:e2e:admin
+          set -euo pipefail
+          spec_dir="apps/${WORKSPACE}/cypress/e2e"
+          if [ ! -d "$spec_dir" ]; then
+            echo "No e2e specs directory for $WORKSPACE: $spec_dir"
+            exit 0
           fi
+          mapfile -t all_specs < <(ls "$spec_dir"/*.cy.* 2>/dev/null || true)
+          total=${#all_specs[@]}
+          if [ "$total" -eq 0 ]; then
+            echo "No specs found for $WORKSPACE"
+            exit 0
+          fi
+          chunk_size=$(( (total + SHARD_COUNT - 1) / SHARD_COUNT ))
+          start=$(( SHARD_INDEX * chunk_size ))
+          selected=( "${all_specs[@]:start:chunk_size}" )
+          if [ ${#selected[@]} -eq 0 ]; then
+            echo "No specs for this shard (index $SHARD_INDEX)"
+            exit 0
+          fi
+          spec_arg="$(IFS=,; echo "${selected[*]}")"
+          echo "Running cypress for $WORKSPACE shard $SHARD_INDEX/$SHARD_COUNT specs: $spec_arg"
+          npx cypress run --config-file "apps/${WORKSPACE}/cypress.config.ts" --spec "$spec_arg"
+        shell: bash
 
   # ===========================
   # Build + Deploy (main only)
