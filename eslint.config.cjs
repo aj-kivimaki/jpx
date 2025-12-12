@@ -6,6 +6,8 @@ module.exports = [
       '**/build/**',
       '**/node_modules/**',
       '**/coverage/**',
+      'packages/**/coverage/**',
+      'apps/**/coverage/**',
       '**/*.d.ts',
     ],
     languageOptions: {

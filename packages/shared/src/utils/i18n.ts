@@ -18,7 +18,7 @@ i18n
     supportedLngs: ['fi', 'en'],
     load: 'languageOnly',
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+      order: ['localStorage', 'navigator', 'htmlTag', 'node:', 'subdomain'],
       caches: ['localStorage'],
     },
     interpolation: { escapeValue: false },

@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress';
 import { config as dotenvConfig } from 'dotenv';
-import { resolve } from 'path';
+import { resolve } from 'node:';
 
 dotenvConfig({ path: resolve(__dirname, '.env.local') });
 
