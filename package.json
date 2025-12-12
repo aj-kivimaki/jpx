@@ -16,7 +16,7 @@
     "typecheck": "turbo run typecheck --force",
     "typecheck:fast": "turbo run typecheck --filter=frontend... --filter=admin-panel...",
     "test": "turbo run test:ci --force && npm run test:e2e",
-    "test:unit": "turbo run test:unit --filter=frontend... --filter=admin-panel...",
+    "test:unit": "turbo run test --filter=frontend... --filter=admin-panel...",
     "test:e2e": "npm run test:front:e2e && npm run test:admin:e2e",
     "test:front:e2e": "start-server-and-test dev:frontend http://localhost:5173 'npm run cypress:run --workspace=frontend'",
     "test:admin:e2e": "start-server-and-test dev:admin http://localhost:5174 'npm run cypress:run --workspace=admin-panel'",

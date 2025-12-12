@@ -16,7 +16,6 @@
       "outputs": []
     },
     "test": {},
-    "test:ci": {},
-    "test:unit": {}
+    "test:ci": {}
   }
 }
