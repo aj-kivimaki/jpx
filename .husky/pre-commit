@@ -1,11 +1,8 @@
 #!/usr/bin/env sh
 # Pre-commit hook: secret scan + lint-staged
 
-# 1️⃣ Run secret scan on staged files
 SCRIPTDIR="$(cd "$(dirname "$0")/.." && pwd)/scripts"
 sh "$SCRIPTDIR/secret-scan.sh"
 
-# 2️⃣ Run lint-staged (Husky already calls this)
-# If you added lint-staged to pre-commit via Husky, no need for explicit npx call here
-
-exit 0
+# lint-staged runs automatically if you have it in package.json
+npx lint-staged
