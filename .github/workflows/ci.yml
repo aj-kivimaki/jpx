@@ -26,9 +26,12 @@ jobs:
         with:
           node-version: '22'
 
-      # Install dependencies without breaking workspace:* URLs
+      - name: Upgrade npm
+        run: npm install -g npm@10
+
+      # Install dependencies (now supports workspace:*)
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       # Build shared packages first
       - name: Build shared packages
@@ -60,6 +63,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Upgrade npm
+        run: npm install -g npm@10
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
@@ -82,6 +88,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Upgrade npm
+        run: npm install -g npm@10
 
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
@@ -108,6 +117,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Upgrade npm
+        run: npm install -g npm@10
+
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
         with:
@@ -116,11 +128,6 @@ jobs:
 
       - name: Run Tests
         run: npm run test
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
-          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
 
   # ===========================
   # 3️⃣ Build & Deploy apps in parallel
@@ -143,6 +150,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Upgrade npm
+        run: npm install -g npm@10
 
       - name: Download shared artifacts
         uses: actions/download-artifact@v4
