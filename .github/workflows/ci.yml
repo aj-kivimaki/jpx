@@ -100,7 +100,9 @@ jobs:
 
       # Build frontend
       - name: Build frontend
-        run: npm --workspace frontend run build
+        run: |
+          npm --workspace frontend run build
+          cp apps/frontend/netlify.toml apps/frontend/dist/netlify.toml
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -108,7 +110,9 @@ jobs:
 
       # Build admin panel
       - name: Build admin panel
-        run: npm --workspace admin-panel run build
+        run: |
+          npm --workspace admin-panel run build
+          cp apps/admin-panel/netlify.toml apps/admin-panel/dist/netlify.toml
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -118,7 +122,6 @@ jobs:
       - name: Deploy Frontend
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
-          base-dir: apps/frontend
           publish-dir: apps/frontend/dist
           production-deploy: true
         env:
@@ -129,7 +132,6 @@ jobs:
       - name: Deploy Admin Panel
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
-          base-dir: apps/admin-panel
           publish-dir: apps/admin-panel/dist
           production-deploy: true
         env:

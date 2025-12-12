@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { PrivateRoute } from './components/auth';
+// import { PrivateRoute } from './components/auth';
 import Login from './pages/Login';
 import NotFoundRedirect from './pages/NotFoundRedirect';
 import { useAuthRedirect } from './hooks';
@@ -18,9 +18,9 @@ export default function App() {
       <Route
         path="/"
         element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Home />
+          // </PrivateRoute>
         }
       />
 
