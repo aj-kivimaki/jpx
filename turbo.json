@@ -16,6 +16,9 @@
       "outputs": []
     },
     "test": {},
-    "test:unit": {}
+    "test:unit": {},
+    "clean": {
+      "outputs": []
+    }
   }
 }
