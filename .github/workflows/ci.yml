@@ -64,7 +64,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json','packages/config/**','packages/shared/**','packages/ui/**') }}
 
       - name: Build packages (shared & ui & config)
         run: |
@@ -102,7 +102,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json','packages/config/**','packages/shared/**','packages/ui/**') }}
 
       - name: Run unit tests for workspace
         run: npm --workspace ${{ matrix.workspace }} run test:unit
@@ -174,7 +174,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json','packages/config/**','packages/shared/**','packages/ui/**') }}
 
       - name: Build shared
         run: npm --workspace @jpx/shared run build
