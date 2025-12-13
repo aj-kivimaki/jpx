@@ -4,6 +4,8 @@
 
 The project uses GitHub Actions for continuous integration and deployment, ensuring code quality and automated releases.
 
+<img src="../assets/success-cicd.webp" alt="success cicd" width="600"/>
+
 ## Pipeline Overview
 
 ```mermaid
