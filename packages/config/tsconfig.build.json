@@ -7,11 +7,13 @@
     "outDir": "dist",
     "rootDir": "src",
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo/config",
+
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
