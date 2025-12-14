@@ -4,6 +4,8 @@
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo/admin-panel",
     "baseUrl": ".",
     "noEmit": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "skipLibCheck": true,
     "paths": {
       "@jpx/shared/*": ["../../packages/shared/src/*"],
       "@jpx/ui/*": ["../../packages/ui/src/*"],

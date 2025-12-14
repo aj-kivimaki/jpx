@@ -64,7 +64,7 @@
 | **Backend**      | `Supabase` (`Auth` + `Database with Row-Level Security (RLS)`) |
 | **Database**     | `PostgreSQL`                                                   |
 | **Deployment**   | `Netlify`                                                      |
-| **Testing**      | `Vitest` • React Testing Library(planned) • `Cypress`          |
+| **Testing**      | `Vitest` • `React Testing Library` • `Cypress`                 |
 | **Code Quality** | `ESLint` • `Prettier` • `Husky + lint-staged`                  |
 | **CI/CD**        | `GitHub Actions`                                               |
 
