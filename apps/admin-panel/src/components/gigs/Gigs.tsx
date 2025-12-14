@@ -18,7 +18,7 @@ const Gigs = () => {
     error,
   } = useQuery<DbGig[], Error>({
     queryKey: [VALIDATED_KEYS.GIGS, 'all'],
-    queryFn: () => fetchGigs(supabase) as Promise<DbGig[]>,
+    queryFn: () => fetchGigs(supabase),
     staleTime: QUERY_STALE_TIME_MS,
     refetchOnWindowFocus: false,
   });

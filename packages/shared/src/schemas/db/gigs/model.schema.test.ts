@@ -5,9 +5,9 @@ import { GigModelSchema } from './model.schema';
 describe('schemas/db/gigs - GigModelSchema validation', () => {
   it('parses a valid gig model object including nullable fields', () => {
     const model = {
-      id: '00000000-0000-0000-0000-000000000000',
+      id: '11111111-1111-4111-8111-111111111111',
       date: '2025-12-12',
-      lineup_id: 'lineup-1',
+      lineup_id: 'solo',
       venue: null,
       city: null,
       notes_fi: null,

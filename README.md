@@ -8,10 +8,7 @@
 > Designed for a single admin and low traffic, it includes a fast public site  
 > and a simple, secure CMS for easy updates.
 
-## 🚀 Live Demo
-
-> **Public Artist Page**: https://jpartynen.com  
-> **Admin Panel**: https://admin.jpartynen.com
+## **Public Artist Page**: https://jpartynen.com
 
 ### Desktop
 
