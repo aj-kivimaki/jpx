@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { vi } from 'vitest';
 
 vi.mock('@jpx/shared', () => ({
@@ -18,15 +24,26 @@ import GoogleSignInButton from './GoogleSignInButton';
 
 test('calls googleSignIn and shows spinner while loading', async () => {
   const client = {} as unknown as SupabaseClient;
-  // make the mocked googleSignIn resolve after a short delay so loading state is visible
-  (googleSignIn as any).mockImplementation(
-    () => new Promise((res) => setTimeout(res, 20))
-  );
+
+  // controllable promise so we can resolve it before test exit
+  let resolver: (() => void) | null = null;
+  const p = new Promise<void>((res) => {
+    resolver = res;
+  });
+  (googleSignIn as any).mockImplementation(() => p);
 
   render(<GoogleSignInButton client={client} />);
   const btn = screen.getByRole('button');
-  fireEvent.click(btn);
 
-  await waitFor(() => expect(googleSignIn as any).toHaveBeenCalledWith(client));
-  expect(screen.getByTestId('spinner')).toBeInTheDocument();
+  await act(async () => {
+    fireEvent.click(btn);
+    await waitFor(() =>
+      expect(googleSignIn as any).toHaveBeenCalledWith(client)
+    );
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+
+    // resolve the mocked sign-in and await it so no state updates run before act finishes
+    resolver!();
+    await p;
+  });
 });

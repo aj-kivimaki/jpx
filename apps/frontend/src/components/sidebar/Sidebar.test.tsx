@@ -44,17 +44,18 @@ import Sidebar from './Sidebar';
 describe('Sidebar', () => {
   it('renders options button and modal content', () => {
     // ensure dialog methods exist in this jsdom environment, then spy on them
-    if (!(window.HTMLDialogElement.prototype as any).showModal) {
-      (window.HTMLDialogElement.prototype as any).showModal = function () {};
+    if (!(globalThis.HTMLDialogElement.prototype as any).showModal) {
+      (globalThis.HTMLDialogElement.prototype as any).showModal =
+        function () {};
     }
-    if (!(window.HTMLDialogElement.prototype as any).close) {
-      (window.HTMLDialogElement.prototype as any).close = function () {};
+    if (!(globalThis.HTMLDialogElement.prototype as any).close) {
+      (globalThis.HTMLDialogElement.prototype as any).close = function () {};
     }
     const show = vi
-      .spyOn(window.HTMLDialogElement.prototype, 'showModal')
+      .spyOn(globalThis.HTMLDialogElement.prototype, 'showModal')
       .mockImplementation(() => {});
     const close = vi
-      .spyOn(window.HTMLDialogElement.prototype, 'close')
+      .spyOn(globalThis.HTMLDialogElement.prototype, 'close')
       .mockImplementation(() => {});
 
     const { container } = render(<Sidebar />);
