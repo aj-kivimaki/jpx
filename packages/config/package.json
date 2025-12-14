@@ -1,0 +1,31 @@
+{
+  "name": "@jpx/config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "test:unit": "echo \"no tests for @jpx/config\"",
+    "clean": "rm -rf dist node_modules/.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.9.3",
+    "@vitest/coverage-istanbul": "^3.2.4"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}

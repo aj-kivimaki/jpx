@@ -14,27 +14,20 @@ jobs:
   lint-format:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      - name: Setup Node.js (with npm cache)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Format Check
-        run: npm run format:check
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
 
   typecheck:
     runs-on: ubuntu-latest
@@ -44,67 +37,49 @@ jobs:
       VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
       VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      - name: Setup Node.js (with npm cache)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Restore turbo cache
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Build packages (shared & ui)
+      - name: Build packages
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
+          npm --workspace @jpx/config run build
 
-      - name: Typecheck
-        run: npm run typecheck
+      - run: npm run typecheck
 
   unit-tests:
     runs-on: ubuntu-latest
     needs: [lint-format, typecheck]
     strategy:
       matrix:
-        workspace: [frontend, admin-panel, '@jpx/shared', '@jpx/ui']
+        workspace:
+          [frontend, admin-panel, '@jpx/shared', '@jpx/ui', '@jpx/config']
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      - name: Setup Node.js (with npm cache)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Restore turbo cache
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Run unit tests for workspace
-        run: npm --workspace ${{ matrix.workspace }} run test:unit
+      - run: npm --workspace ${{ matrix.workspace }} run test:unit
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -118,21 +93,24 @@ jobs:
       VITE_ADMIN_EMAIL: ${{ secrets.VITE_ADMIN_EMAIL }}
       VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      - name: Setup Node.js (with npm cache)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+
+      - name: Build shared packages
+        run: |
+          npm --workspace @jpx/shared run build
+          npm --workspace @jpx/ui run build
+          npm --workspace @jpx/config run build
 
       - name: Run E2E for workspace
         run: |
@@ -153,33 +131,24 @@ jobs:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           clean: true
 
-      - name: Setup Node.js (with npm cache)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Restore turbo cache
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Build shared
-        run: npm --workspace @jpx/shared run build
-
-      - name: Build ui
-        run: npm --workspace @jpx/ui run build
+      - name: Build shared packages
+        run: |
+          npm --workspace @jpx/shared run build
+          npm --workspace @jpx/ui run build
+          npm --workspace @jpx/config run build
 
       - name: Build frontend
         run: |

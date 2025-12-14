@@ -16,10 +16,12 @@
 
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["packages/ui/src/*"],
-      "@shared/*": ["packages/shared/src/*"],
+      "@jpx/ui": ["packages/ui/src/index.ts"],
       "@jpx/ui/*": ["packages/ui/src/*"],
-      "@jpx/shared/*": ["packages/shared/src/*"]
+      "@jpx/shared": ["packages/shared/src/index.ts"],
+      "@jpx/shared/*": ["packages/shared/src/*"],
+      "@jpx/config": ["packages/config/src/index.ts"],
+      "@jpx/config/*": ["packages/config/src/*"]
     }
   }
 }
