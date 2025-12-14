@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b tsconfig.build.json && vite build",
     "preview": "vite preview",
-    "test:unit": "echo \"no tests for admin-panel\"",
+    "test:unit": "vitest run --config vitest.config.ts --environment jsdom",
     "typecheck": "tsc -b --noEmit",
     "clean": "rm -rf dist",
     "cypress:open": "cypress open --config-file ./cypress.config.ts",
@@ -32,7 +32,11 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/dompurify": "^2.4.0",
+    "@types/jest": "^29.5.5",
     "@types/node": "^20.5.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
