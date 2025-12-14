@@ -1,5 +1,6 @@
-import { makeClientDeleteEqSelectSingle } from '@jpx/shared/test';
 import { describe, expect, it } from 'vitest';
+
+import { makeClientDeleteEqSelectSingle } from '../../../../test';
 
 import { deleteGig } from './deleteGig';
 

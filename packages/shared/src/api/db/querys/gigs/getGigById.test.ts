@@ -1,5 +1,6 @@
-import { makeClientSelectEqSingle } from '@jpx/shared/test';
 import { describe, expect, it } from 'vitest';
+
+import { makeClientSelectEqSingle } from '../../../../test';
 
 import { getGigById } from './getGigById';
 

@@ -1,5 +1,6 @@
-import { makeClientUpdateEqSelectSingle } from '@jpx/shared/test';
 import { describe, expect, it } from 'vitest';
+
+import { makeClientUpdateEqSelectSingle } from '../../../../test';
 
 import { updateGig } from './updateGig';
 

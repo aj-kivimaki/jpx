@@ -1,5 +1,6 @@
-import { makeClientOrderAsync, makeClientOrderRange } from '@jpx/shared/test';
 import { describe, expect, it } from 'vitest';
+
+import { makeClientOrderAsync, makeClientOrderRange } from '../../../../test';
 
 import { fetchGigs } from './getGigs';
 

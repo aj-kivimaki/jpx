@@ -1,5 +1,6 @@
-import { makeClientEqOrder } from '@jpx/shared/test';
 import { describe, expect, it } from 'vitest';
+
+import { makeClientEqOrder } from '../../../../test';
 
 import { fetchLineupOptions } from './lineupOptions';
 

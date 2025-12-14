@@ -1,4 +1,6 @@
-import { type AppErrorCode, logger, makeError } from '@jpx/shared';
+import { logger } from '../logger/logger';
+
+import { type AppErrorCode, makeError } from './errors';
 
 /**
  * Throw an error if a required value is missing
