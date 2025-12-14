@@ -79,6 +79,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Build packages
+        run: npm --workspace @jpx/config run build
+
       - run: npm --workspace ${{ matrix.workspace }} run test:unit
 
   e2e-tests:

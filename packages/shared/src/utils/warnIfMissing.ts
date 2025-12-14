@@ -1,4 +1,6 @@
-import { type AppErrorCode, logger, makeError } from '@jpx/shared';
+import { logger } from '../logger/logger';
+
+import { type AppErrorCode, makeError } from './errors';
 
 export function warnIfMissing<T>(
   value: T | undefined | null,
