@@ -1,34 +1,41 @@
 describe('Gigs – Load More functionality', () => {
   beforeEach(() => {
     cy.visit('/');
+  });
 
-    // Wait for the gigs-list to exist
+  it('loads more gigs until no more pages remain', () => {
+    // Wait for initial UI to appear (not network)
     cy.get('[data-cy=gigs-list]', { timeout: 20000 }).should('exist');
-
-    // Wait until the spinner disappears
-    cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
-
-    // Wait until the first page of items is rendered
     cy.get('[data-cy=item]', { timeout: 20000 }).should(
       'have.length.greaterThan',
       0
     );
-  });
 
-  it('loads more gigs until no more pages remain', () => {
-    function clickUntilGone() {
+    const clickUntilGone = () => {
       cy.get('body').then(($body) => {
-        if ($body.find('[data-cy=load-more]').length > 0) {
-          cy.get('[data-cy=load-more]').click();
-          cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
-          clickUntilGone();
+        // Stop condition
+        if ($body.find('[data-cy=load-more]').length === 0) {
+          return;
         }
+
+        // Intercept ONLY for this click
+        cy.intercept('GET', '**/gigs**').as('nextPage');
+
+        cy.get('[data-cy=load-more]').click();
+
+        // Wait for pagination request caused by the click
+        cy.wait('@nextPage', { timeout: 20000 });
+
+        // Optional spinner sync (safe)
+        cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
+
+        clickUntilGone();
       });
-    }
+    };
 
     clickUntilGone();
 
-    // Finally ensure load-more is gone
+    // Final assertion
     cy.get('[data-cy=load-more]').should('not.exist');
   });
 });

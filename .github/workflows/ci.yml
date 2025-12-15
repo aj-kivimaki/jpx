@@ -117,11 +117,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cypress-
 
-      - name: Ensure Cypress binary is installed
-        run: |
-          # npm was run with --ignore-scripts earlier; explicitly install the Cypress binary
-          npx cypress install --force
-
       - name: Build shared packages
         run: |
           npm --workspace @jpx/shared run build
