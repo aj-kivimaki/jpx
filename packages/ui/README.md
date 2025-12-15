@@ -27,7 +27,7 @@ interface GigCardProps {
   formattedTime?: string; // e.g., "20:30"
   dateTimeDate?: string; // ISO date string for <time> element
   dateTimeTime?: string; // Time string for <time> element
-  lineup?: string; // Artist/band name
+  lineup?: string; // From solo to full band
   venue?: string; // Venue name
   city?: string; // City name
   notes?: string; // Additional notes
@@ -48,7 +48,7 @@ import { GigCard } from '@jpx/ui';
   formattedDate="02.12."
   formattedTime="20:30"
   dateTimeDate="2025-12-02T00:00:00.000Z"
-  lineup="Artist Name"
+  lineup="Band"
   venue="Venue Name"
   city="Helsinki"
   notes="Special acoustic set"
@@ -62,27 +62,12 @@ import { GigCard } from '@jpx/ui';
   id="gig-123"
   formattedDate="02.12."
   formattedTime="20:30"
-  lineup="Artist Name"
+  lineup="Band"
   venue="Venue Name"
   city="Helsinki"
   onDelete={(id, venue, date) => handleDelete(id, venue, date)}
   onEdit={(id) => handleEdit(id)}
 />
-```
-
-#### Visual Structure
-
-```
-┌─────────────────────────────────────┐
-│ ┌─────────┐ ┌─────────────────────┐ │
-│ │ Date    │ │ Lineup: Artist Name  │ │
-│ │ 02.12.  │ │ Venue: Venue Name    │ │
-│ │         │ │ City: Helsinki       │ │
-│ │ Time    │ │ Notes: Special show  │ │
-│ │ 20:30   │ └─────────────────────┘ │
-│ └─────────┘                         │
-│    [Edit] [Delete]  ← Admin controls │
-└─────────────────────────────────────┘
 ```
 
 ## Design System
@@ -175,23 +160,13 @@ import * as UI from '@jpx/ui';
 
 ### Dependencies
 
-- **react-icons**: ^5.5.0
+- **react-icons**
 - **TypeScript**: for development (see devDependencies)
 - **CSS Modules**: for scoped styling
 
 ### Peer Dependencies
 
-- **react**: ^19.2.0
-- **react-dom**: ^19.2.0
+- **react**
+- **react-dom**
 - **Shared Package**: for common types/utilities (`@jpx/shared`)
 - **Config**: optional shared build/test configs (`@jpx/config`)
-
-## Future Components
-
-Potential additions to the UI package:
-
-- **Button**: Consistent button styles and variants
-- **Modal**: Reusable modal/dialog component
-- **Form Elements**: Standardized form inputs and selects
-- **Layout Components**: Grid, flexbox utilities
-- **Notification**: Toast messages and alerts

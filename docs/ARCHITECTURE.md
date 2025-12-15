@@ -72,6 +72,12 @@ graph TD
 
 </details>
 
+## 🧩 Applications
+
+### **`apps/frontend` --- Public-Facing Site**
+
+### **`apps/admin-panel` --- Admin Dashboard**
+
 ## 📦 Packages
 
 ### **`packages/shared`**
@@ -93,24 +99,10 @@ admin panel, including:
 
 ### **`packages/config`**
 
-Shared Vite and Vitest configuration helpers used across apps and packages. This workspace contains utilities like `createSharedVitestConfig()` and `vite.shared.config.ts` that help keep build and test setup consistent across the monorepo.
+Shared **configuration** used across apps and packages.
+This workspace contains utilities that help keep build and test setup consistent across the monorepo.
 
-## 🧩 Applications
-
-### **`apps/frontend` --- Public-Facing Site**
-
-A user-facing website built with **React + TypeScript**, integrating:
-
-- Supabase
-- `packages/ui`
-- `packages/shared`
-
-### **`apps/admin-panel` --- Admin Dashboard**
-
-An isolated admin interface with:
-
-- Protected routes
-- Operational tools
+- Vite and Vitest configuration helpers
 
 ---
 

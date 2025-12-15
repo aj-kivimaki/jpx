@@ -6,29 +6,6 @@ The project uses GitHub Actions for continuous integration and deployment, ensur
 
 <img src="../assets/success-cicd.webp" alt="success cicd" width="600"/>
 
-## Pipeline Overview
-
-```mermaid
-flowchart TD
-    A[Push/PR to any branch] --> B[lint-format]
-    B --> C[typecheck]
-    C --> D[unit-tests]
-    D --> E[e2e-tests]
-
-    E --> F{Checks Pass?}
-
-    F -->|Yes| G[build-deploy]
-    F -->|No| H[Fail & Block Merge]
-
-    G --> I[Build Shared Packages]
-    I --> J[Build UI Package]
-    J --> K[Build Config Package]
-    K --> L[Build Frontend]
-    L --> M[Build Admin Panel]
-    M --> N[Deploy Frontend to Netlify]
-    N --> O[Deploy Admin Panel to Netlify]
-```
-
 ## GitHub Actions Workflow
 
 ### Triggers
@@ -38,14 +15,12 @@ flowchart TD
 
 ### Jobs
 
-#### Checks (split across jobs)
+#### 1. Checks (split across jobs)
 
 - **`lint-format`**: ESLint checks and Prettier format validation (fast feedback on PRs).
 - **`typecheck`**: Builds packages and runs TypeScript validation across packages and apps.
 - **`unit-tests`**: Runs package/app unit tests using a workspace matrix (`frontend`, `admin-panel`, `@jpx/shared`, `@jpx/ui`, `@jpx/config`).
 - **`e2e-tests`**: Runs Cypress E2E jobs per app (requires built artifacts and test secrets).
-
-Each job runs on Ubuntu with Node.js 22 and a clean install of dependencies. Jobs are wired so lint/format run first, `typecheck` runs next, `unit-tests` depends on both, and `e2e-tests` depends on unit tests.
 
 #### 2. Build & Deploy Job (Main branch only)
 

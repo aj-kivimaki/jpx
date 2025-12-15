@@ -25,13 +25,14 @@ flowchart TD
     C --> H[Gigs Section]
     C --> I[Info Section]
 
-    D --> J[Social Sidebar]
-    D --> K[Language Switcher]
-    D --> L[Theme Switcher]
+    D --> J[Sidebar]
 
     I --> N[Band Info]
     J --> O[Social Links]
     J --> P[Settings Modal]
+
+    P --> K[Language Switcher]
+    P --> L[Theme Switcher]
 ```
 
 ## Tech Stack
@@ -68,7 +69,7 @@ flowchart TD
 ## Accessibility & UX
 
 - Semantic HTML, ARIA labels, keyboard navigation, focus indicators, high contrast, alt text
-- Loading states, error handling, touch-friendly, progressive enhancement
+- Loading states, error handling, touch-friendly
 
 ## Development
 

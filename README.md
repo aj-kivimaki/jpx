@@ -71,20 +71,20 @@
 
 ## NPM Packages
 
-| Category               | Packages                                                                                      | Purpose                                                                              |
-| ---------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| **Monorepo & build**   | `turbo`, `npm workspaces`, `vite`                                                             | Monorepo orchestration and build tooling.                                            |
-| **React & build**      | `react`, `react-dom`<br>`typescript`                                                          | Core UI framework and build/tooling.                                                 |
-| **Routing**            | `react-router-dom`                                                                            | Client-side routing for single-page apps.                                            |
-| **Forms & validation** | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`                                           | Form handling and schema validation.                                                 |
-| **Data fetching**      | `@tanstack/react-query`                                                                       | Server data with caching.                                                            |
-| **State management**   | `zustand`                                                                                     | Lightweight global state management for React.                                       |
-| **Sanitization**       | `dompurify`                                                                                   | Sanitize user inputs to prevent XSS when rendering HTML.                             |
-| **Localization**       | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector`                              | Translations and language detection.                                                 |
-| **Backend**            | `@supabase/supabase-js`                                                                       | Auth + Postgres client used by the admin panel.                                      |
-| **UI & utilities**     | `react-icons`<br>`dayjs`<br>`react-toastify`                                                  | Icons, date handling, toast notifications.                                           |
-| **Monorepo packages**  | Local `/shared` and `/ui` packages                                                            | Shared api, data, schemas, global styles, types, utils and components for both apps. |
-| **Dev & CI tooling**   | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`<br>`@tanstack/react-query-devtools` | Linting, formatting, git hooks, tests, and developer tools.                          |
+| Category               | Packages                                                                                      | Purpose                                                                                                  |
+| ---------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Monorepo & build**   | `turbo`, `npm workspaces`, `vite`                                                             | Monorepo orchestration and build tooling.                                                                |
+| **React & build**      | `react`, `react-dom`<br>`typescript`                                                          | Core UI framework and build/tooling.                                                                     |
+| **Routing**            | `react-router-dom`                                                                            | Client-side routing for single-page apps.                                                                |
+| **Forms & validation** | `react-hook-form`<br>`@hookform/resolvers`<br>`zod`                                           | Form handling and schema validation.                                                                     |
+| **Data fetching**      | `@tanstack/react-query`                                                                       | Server data with caching.                                                                                |
+| **State management**   | `zustand`                                                                                     | Lightweight global state management for React.                                                           |
+| **Sanitization**       | `dompurify`                                                                                   | Sanitize user inputs to prevent XSS when rendering HTML.                                                 |
+| **Localization**       | `i18next`, `react-i18next`<br>`i18next-browser-languagedetector`                              | Translations and language detection.                                                                     |
+| **Backend**            | `@supabase/supabase-js`                                                                       | Auth + Postgres client used by the admin panel.                                                          |
+| **UI & utilities**     | `react-icons`<br>`dayjs`<br>`react-toastify`                                                  | Icons, date handling, toast notifications.                                                               |
+| **Monorepo packages**  | Local `/shared`, `/ui` and `/config` packages                                                 | Shared api, data, schemas, global styles, types, utils, <br> components and configuration for both apps. |
+| **Dev & CI tooling**   | `eslint`, `prettier`<br>`husky + lint-staged`<br>`vitest`<br>`@tanstack/react-query-devtools` | Linting, formatting, git hooks, tests, and developer tools.                                              |
 
 ## Project Structure
 
@@ -194,6 +194,10 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 
 <img src="assets/gigs.webp" alt="Gigs section" width="400" />
 
+**Settings modal**
+
+<img src="assets/settings-modal.webp" alt="Settings modal" width="400" />
+
 ### CMS / Admin panel
 
 **Login page**
@@ -226,21 +230,11 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 <summary>Future Add-Ons:</summary>
 
 - Monitoring
-  - Capture any errors returned from Supabase calls.
-  - Send to Highlight with session context for reproduction.
-  - Server-side (Supabase Edge Functions)
-  - Log important warnings/errors using tslog or similar.
-  - Only forward critical errors to Highlight, to avoid noise/costs.
-
-- Testing
-  - Unit tests (5–10): schemas and pure utilities in `packages/shared`.
-  - Component tests (2–3): `GigForm` and `GigsTable` behavior in `apps/admin-panel`.
-  - Optional: MSW for component tests to mock API responses.
+  - Forward critical errors to Highlight.
 
 - Security & Optimization
-  - Harden the frontend (CSP, source maps) and backend (rate-limiting and possibly `x-request-id`).
-  - Add automation: dependency updates, scanning, and basic observability.
-  - Improve loading performance, and optimize API/database queries.
+  - Automated dependency updates.
+  - Improve loading performance
     - CDN layer: (artist promo materials, images)
 
 - README
@@ -248,7 +242,7 @@ See [End-to-End Gig CRUD Lifecycle](./docs/E2E-CRUD-FLOW.md) and [Error Logging]
 
 - Features
   - More diverse CMS:
-    - Manage more content: (Text, and Drag & Drop promo materials, images)
+    - Manage more content (Text, and Drag & Drop promo materials, Images)
     - Analytics dashboard
 
 </details>
