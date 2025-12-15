@@ -22,9 +22,9 @@ vi.mock('../../hooks/useLocalized', () => ({
   },
 }));
 
-// Mock GigsCard from @jpx/ui to render identifiable DOM
+// Mock GigCard from @jpx/ui to render identifiable DOM
 vi.mock('@jpx/ui', () => ({
-  GigsCard: ({ id, lineup }: any) => (
+  GigCard: ({ id, lineup }: any) => (
     <div data-testid={`gig-${id}`}>{lineup}</div>
   ),
 }));
@@ -32,7 +32,7 @@ vi.mock('@jpx/ui', () => ({
 import GigsTable from './GigsTable';
 
 describe('GigsTable', () => {
-  it('renders GigsCard items with localized lineup', () => {
+  it('renders GigCard items with localized lineup', () => {
     const gigs = [
       {
         id: 'a',

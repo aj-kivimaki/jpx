@@ -8,7 +8,7 @@ import {
   scrollToTop,
   VALIDATED_KEYS,
 } from '@jpx/shared';
-import { GigsCard } from '@jpx/ui';
+import { GigCard } from '@jpx/ui';
 import type { PostgrestError } from '@supabase/supabase-js';
 import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -104,7 +104,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           city,
           notes_fi,
         }) => (
-          <GigsCard
+          <GigCard
             key={id}
             id={id}
             formattedDate={formattedDate ?? ''}

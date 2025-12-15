@@ -1,2 +1,2 @@
-export { default as GigsCard } from './components/GigCard';
+export { default as GigCard } from './components/GigCard';
 export { default as Spinner } from './components/Spinner';

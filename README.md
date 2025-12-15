@@ -39,6 +39,7 @@
 - [Overview](./packages/README.md)
 - [Shared](./packages/shared/README.md)
 - [UI](./packages/ui/README.md)
+- [Config](./packages/config/README.md)
 
 ## Table of Contents
 
@@ -98,6 +99,7 @@ graph TD
     Root --> Packages["/packages"]
     Packages --> Shared["/shared - Types, utils, API clients"]
     Packages --> UI["/ui - Reusable React components"]
+    Packages --> Config["/config - Shared build configs (Vite/Vitest)"]
 
     Root --> Others["Other files ..."]
 ```
@@ -261,4 +263,4 @@ Code is licensed separately under MIT (see [LICENSE](./LICENSE))
 
 ## Quickstart & Contributing
 
-See [QUICKSTART](./docs/QUICKSTART.md) for a concise setup guide and [CONTRIBUTING](./CONTRIBUTING.md) for contribution guidelines.
+See [QUICKSTART](./QUICKSTART.md) for a concise setup guide and [CONTRIBUTING](./CONTRIBUTING.md) for contribution guidelines.

@@ -1,4 +1,4 @@
-[⬅ Back to Root README](../../README.md#packages) | [UI](../ui/README.md)
+[⬅ Back to Root README](../../README.md#packages) | [UI](../ui/README.md) | [Config](../config/README.md)
 
 # `/shared` Package
 
@@ -41,12 +41,12 @@ import { fetchGigs } from '@jpx/shared';
 const gigs: DbGig[] = await fetchGigs(supabaseClient);
 ```
 
-#### `addGig(client: SupabaseClient, gig: NewGig): Promise<DbGig[]>`
+#### `createGig(client: SupabaseClient, gig: NewGig): Promise<DbGig>`
 
-Adds a new gig to the database.
+Creates a new gig in the database and returns the created `DbGig`.
 
 ```typescript
-import { addGig, type NewGig } from '@jpx/shared';
+import { createGig, type NewGig } from '@jpx/shared';
 
 // `lineup_id` references the lookup table (lineup_options),
 // keeping creation simple and data consistent.
@@ -60,12 +60,12 @@ const newGig: NewGig = {
   lineup_id: 'options_id', // FK to `lineup_options` (string id)
 };
 
-const addedGigs = await addGig(supabaseClient, newGig);
+const createdGig = await createGig(supabaseClient, newGig);
 ```
 
-#### `updateGig(client: SupabaseClient, gig: DbGig): Promise<DbGig[]>`
+#### `updateGig(client: SupabaseClient, gig: DbGig): Promise<DbGig>`
 
-Updates an existing gig in the database.
+Updates an existing gig in the database and returns the updated `DbGig`.
 
 ```typescript
 import { updateGig } from '@jpx/shared';
@@ -198,10 +198,10 @@ flowchart TD
 
   subgraph Shared["Shared Package API"]
     API1["fetchGigs()"]
-    API2["addGig()"]
+    API2["createGig()"]
     API3["updateGig()"]
     API4["deleteGig()"]
-    API5["signInWithGoogle()"]
+    API5["googleSignIn()"]
     API6["signOut()"]
   end
 

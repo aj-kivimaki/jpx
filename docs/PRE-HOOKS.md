@@ -8,11 +8,11 @@
 
 ```mermaid
 flowchart TD
-    PreCommit["Pre-Commit Hook"] --> ESLint["'eslint --fix' + 'prettier --write' (staged files)"]
-    PreCommit --> TypeCheckTS["'tsc --noEmit' (.ts / .tsx)"]
+    PreCommit["Pre-Commit Hook"] --> SecretScan["secret-scan.sh (repository secrets scan)"]
+    PreCommit --> LintStaged["lint-staged → runs eslint --fix + prettier --write on staged files"]
 
     %% Notes
-    PreCommit --- Note1["Ensures fast code formatting & type correctness before commit"]
+    PreCommit --- Note1["Runs a secret scan, then lint-staged for quick formatting & lint fixes"]
 ```
 
 ---
@@ -21,12 +21,10 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    PrePush["Pre-Push Hook"] --> TypeCheck["Full TypeScript Type-Check (`npm run typecheck`)"]
-    TypeCheck --> Tests["All Tests (`npm run test`)"]
-    Tests --> UnitTests["Unit Tests"]
-    Tests --> CodeCoverage["Code Coverage"]
-    UnitTests --> BuildVerification["Build Verification (`npm run build`)"]
+    PrePush["Pre-Push Hook"] --> TypeCheck["Type-check (`npm run typecheck`)"]
+    TypeCheck --> UnitTests["Unit tests (`npm run test:unit`) (fast feedback)"]
+    UnitTests --> BuildVerification["Build verification (`npm run build`)"]
 
     %% Notes
-    PrePush --- Note1["Thorough checks ensure code is safe and production-ready before push"]
+    PrePush --- Note1["Pre-push runs typecheck, unit tests and a build to verify readiness before push"]
 ```

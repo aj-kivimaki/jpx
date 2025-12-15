@@ -32,8 +32,20 @@ npm run cypress:open --workspace=frontend
 
 ```bash
 # Admin Panel
-npm run test:admin:e2e
+npm run test:e2e:admin
 
-# Fronend
-npm run test:frontend:e2e
+# Frontend
+npm run test:e2e:frontend
 ```
+
+## Unit tests
+
+- Prefer reusing a shared Vitest/Vite config from `packages/config` when available. Example usage from a package's `vitest.config.ts`:
+
+```ts
+import { createSharedVitestConfig } from '@jpx/config';
+
+export default createSharedVitestConfig();
+```
+
+If you don't use a shared config package yet, create a minimal `vitest.config.ts` in the package that runs tests (see package-specific README files for examples).

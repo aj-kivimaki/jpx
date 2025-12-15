@@ -61,14 +61,18 @@ cp .env.example .env.local
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# Scripts
-npm run dev       # Dev server
-npm run build     # Production build
-npm run typecheck # Type checking
-npm run test      # Run tests
+# From repository root (preferred)
+npm run dev --workspace=admin-panel       # Dev server
+npm run build --workspace=admin-panel     # Production build
+npm run typecheck --workspace=admin-panel # Type checking
+npm run test:unit --workspace=admin-panel # Run unit tests
 
-# Install package
-npm install _package_name_ --workspace=admin-panel
+# Or run locally inside the package
+npm install
+npm run dev
+
+# Install only this workspace's dependencies
+npm install --workspace=admin-panel
 ```
 
 ## User Workflow
@@ -84,6 +88,7 @@ npm install _package_name_ --workspace=admin-panel
 ## Integration
 
 - Shared API/types: `@jpx/shared`
-- Reusable UI: `@jpx/ui`
+- Reusable UI: `@jpx/ui` (exports `GigCard` used by apps)
+- Config helpers: `@jpx/config` (shared Vite/Vitest configuration)
 - Public frontend displays updated content after page reload
 - Centralized Supabase backend

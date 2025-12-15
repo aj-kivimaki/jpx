@@ -4,7 +4,7 @@ import {
   parseGigDates,
   warnIfMissing,
 } from '@jpx/shared';
-import { GigsCard } from '@jpx/ui';
+import { GigCard } from '@jpx/ui';
 
 import useLocalized from '../../hooks/useLocalized';
 
@@ -60,7 +60,7 @@ const GigsTable = ({ gigs }: GigsTableProps) => {
           city,
           notes,
         }) => (
-          <GigsCard
+          <GigCard
             key={id}
             id={id}
             formattedDate={formattedDate ?? ''}
