@@ -41,7 +41,7 @@ export function mapAppErrorToFormErrors<
 
     default:
       toast?.(message || 'Palvelinvirhe');
-      logger.error('AppError handled', error as AppError);
+      logger.error('AppError handled', error);
       return true;
   }
 }

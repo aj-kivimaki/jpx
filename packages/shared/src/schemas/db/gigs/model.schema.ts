@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { LineupModelSchema } from '../lineup_options';
 
 export const GigModelSchema = z.object({
-  id: z.string().refine((v) => isUUID(v, 4), { message: 'Invalid UUID v4' }),
+  id: z.string().refine((v) => isUUID(v, '4'), { message: 'Invalid UUID v4' }),
   date: z.string(),
   venue: z.string().nullable(),
   city: z.string().nullable(),
