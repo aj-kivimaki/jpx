@@ -1,38 +1,33 @@
 describe('Gigs – Load More functionality', () => {
   beforeEach(() => {
-    // Mock the Supabase gigs endpoint so CI is deterministic
-    cy.intercept('GET', '**/rest/v1/gigs*', {
-      statusCode: 200,
-      body: [
-        { id: 1, title: 'Gig 1' },
-        { id: 2, title: 'Gig 2' },
-        { id: 3, title: 'Gig 3' },
-      ],
-    }).as('getGigs');
-
     cy.visit('/');
-    cy.wait('@getGigs', { timeout: 20000 });
   });
 
   it('loads more gigs until no more pages remain', () => {
-    // Initial render assertions
+    // Wait for initial UI to appear (not network)
     cy.get('[data-cy=gigs-list]', { timeout: 20000 }).should('exist');
-    cy.get('[data-cy=item]').should('have.length.greaterThan', 0);
+    cy.get('[data-cy=item]', { timeout: 20000 }).should(
+      'have.length.greaterThan',
+      0
+    );
 
     const clickUntilGone = () => {
       cy.get('body').then(($body) => {
+        // Stop condition
         if ($body.find('[data-cy=load-more]').length === 0) {
           return;
         }
 
-        // Mock the next page request
-        cy.intercept('GET', '**/rest/v1/gigs*', {
-          statusCode: 200,
-          body: [],
-        }).as('nextPage');
+        // Intercept ONLY for this click
+        cy.intercept('GET', '**/gigs**').as('nextPage');
 
         cy.get('[data-cy=load-more]').click();
+
+        // Wait for pagination request caused by the click
         cy.wait('@nextPage', { timeout: 20000 });
+
+        // Optional spinner sync (safe)
+        cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
 
         clickUntilGone();
       });
@@ -40,7 +35,7 @@ describe('Gigs – Load More functionality', () => {
 
     clickUntilGone();
 
-    // Final assertion: no more pages
+    // Final assertion
     cy.get('[data-cy=load-more]').should('not.exist');
   });
 });
