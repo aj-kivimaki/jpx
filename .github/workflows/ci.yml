@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npm run lint
       - run: npm run format:check
 
@@ -48,7 +48,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - name: Build packages
         run: |
@@ -77,7 +77,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - name: Build packages
         run: npm --workspace @jpx/config run build
@@ -107,7 +107,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - name: Build shared packages
         run: |
@@ -145,7 +145,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - name: Build shared packages
         run: |
