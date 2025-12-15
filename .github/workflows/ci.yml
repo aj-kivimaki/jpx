@@ -107,7 +107,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci --ignore-scripts
 
       - name: Cache Cypress binary
         uses: actions/cache@v4
