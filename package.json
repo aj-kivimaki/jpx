@@ -17,6 +17,7 @@
     "typecheck:fast": "turbo run typecheck --filter=frontend... --filter=admin-panel... ",
     "test:all": "turbo run test:unit --force && npm run test:e2e",
     "test:unit": "turbo run test:unit --force",
+    "test:unit:coverage": "turbo run test:unit --force -- --coverage",
     "test:e2e": "npm run test:e2e:frontend && npm run test:e2e:admin",
     "test:e2e:frontend": "start-server-and-test dev:frontend http://localhost:5173 'npm run cypress:run --workspace=frontend'",
     "test:e2e:admin": "start-server-and-test dev:admin http://localhost:5174 'npm run cypress:run --workspace=admin-panel'",
@@ -34,7 +35,7 @@
     "@types/node": "^20.5.2",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
     "@typescript-eslint/parser": "^8.48.1",
-    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/coverage-istanbul": "^4.0.15",
     "cross-env": "^10.1.0",
     "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -46,7 +47,7 @@
     "start-server-and-test": "^2.1.3",
     "turbo": "2.6.3",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.15"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

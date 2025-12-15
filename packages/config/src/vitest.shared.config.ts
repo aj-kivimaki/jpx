@@ -1,21 +1,18 @@
-import { defineConfig } from 'vitest/config';
+import type { ViteUserConfig } from 'vitest/config';
 
 import { aliases } from './vite.shared.config.js';
 
-export const createSharedVitestConfig = () =>
-  defineConfig({
-    test: {
-      globals: true,
-      coverage: {
-        provider: 'istanbul',
-        reporter: ['lcov', 'text'],
-        reportsDirectory: './coverage',
-        all: true,
-      },
-      include: ['src/**/*.{test,spec}.{ts,tsx}'],
-      exclude: ['src/.DS_Store', 'src/**/*.d.ts'],
+export const createSharedVitestConfig = (): ViteUserConfig => ({
+  test: {
+    globals: true,
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'json', 'html', 'lcov'],
     },
-    resolve: {
-      alias: aliases,
-    },
-  });
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['src/.DS_Store', 'src/**/*.d.ts'],
+  },
+  resolve: {
+    alias: aliases,
+  },
+});
