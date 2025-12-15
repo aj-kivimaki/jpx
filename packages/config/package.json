@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
-    "test:unit": "vitest --run --coverage --reporter=verbose",
+    "test:unit": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
@@ -17,7 +17,7 @@
     "@typescript-eslint/parser": "^8.47.0",
     "eslint": "^9.0.0",
     "typescript": "^5.9.3",
-    "@vitest/coverage-istanbul": "^3.2.4"
+    "@vitest/coverage-istanbul": "^4.0.15"
   },
   "exports": {
     ".": {

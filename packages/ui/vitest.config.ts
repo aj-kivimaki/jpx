@@ -9,7 +9,7 @@ export default defineConfig({
     ...baseConfig.test,
     coverage: {
       ...baseConfig?.test?.coverage,
-      reportsDirectory: '../../coverage/frontend',
+      reportsDirectory: '../../coverage/@jpx-ui',
     },
   },
 });
