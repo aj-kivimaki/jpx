@@ -19,6 +19,7 @@ vi.mock('@jpx/shared', () => ({
   },
   errorIfMissing: (v: any) => v,
   warnIfMissing: (v: any) => v,
+  formatPhoneNumber: (p: string) => p,
   sectionIds: { contact: 'contact' },
 }));
 
