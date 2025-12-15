@@ -2,6 +2,7 @@ import {
   contactJson,
   ContactSchema,
   errorIfMissing,
+  formatPhoneNumber,
   parseRequired,
   sectionIds,
   siteJson,
@@ -58,7 +59,7 @@ const Footer = () => {
       <div>
         <p>{footerTitle}:</p>
         <p>{name}</p>
-        <p>{phone}</p>
+        <p>{formatPhoneNumber(phone)}</p>
         <p>{email}</p>
       </div>
     </footer>
