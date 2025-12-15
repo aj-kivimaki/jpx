@@ -1,4 +1,6 @@
-# packages/config
+[⬅ Back to Root README](../../README.md#packages) | [Shared](../shared/README.md) | [UI](../ui/README.md)
+
+# `/config` Package
 
 Shared Vite and Vitest configuration helpers used across the monorepo.
 
