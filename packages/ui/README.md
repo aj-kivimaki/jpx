@@ -1,4 +1,4 @@
-[⬅ Back to Root README](../../README.md#packages) | [Shared](../shared/README.md)
+[⬅ Back to Root README](../../README.md#packages) | [Shared](../shared/README.md) | [Config](../config/README.md)
 
 # `/ui` Package
 
@@ -6,9 +6,9 @@ The UI package provides reusable React components and styling utilities shared a
 
 ## Components
 
-### GigCard
+### GigCard (exported)
 
-A versatile card component for displaying gig information with optional admin controls.
+A versatile card component (implemented in `src/components/GigCard.tsx`) exported from the package as `GigCard`. It displays gig information with optional admin controls.
 
 #### Features
 
@@ -41,9 +41,9 @@ interface GigCardProps {
 **Public Display (Read-only):**
 
 ```tsx
-import { GigsCard } from '@jpx/ui';
+import { GigCard } from '@jpx/ui';
 
-<GigsCard
+<GigCard
   id="gig-123"
   formattedDate="02.12."
   formattedTime="20:30"
@@ -58,7 +58,7 @@ import { GigsCard } from '@jpx/ui';
 **Admin Interface (with controls):**
 
 ```tsx
-<GigsCard
+<GigCard
   id="gig-123"
   formattedDate="02.12."
   formattedTime="20:30"
@@ -130,18 +130,20 @@ flowchart TD
 ```bash
 cd packages/ui
 
-# Install dependencies
+# Install dependencies (from repository root prefered)
 npm install
 
-# Development build with watching
-npm run dev
-
-# Production build
+# Build package for consumption by apps
 npm run build
+
+# Run unit tests for the package
+npm run test:unit
 
 # Type checking
 npm run typecheck
 ```
+
+Note: there is no package-local `dev` script. During active app development, run the consuming application's dev server (for example `npm run dev --workspace=frontend`) so the app can import local packages. To iterate on UI components in isolation, build the package and reload the consuming app.
 
 ### Adding New Components
 
@@ -165,7 +167,7 @@ npm run typecheck
 
 ```typescript
 // Individual component
-import { GigsCard } from '@jpx/ui';
+import { GigCard } from '@jpx/ui';
 
 // Or import all components
 import * as UI from '@jpx/ui';
@@ -173,15 +175,16 @@ import * as UI from '@jpx/ui';
 
 ### Dependencies
 
-- **React**: ^18.0.0
-- **React Icons**: For icon components
-- **TypeScript**: For type safety
-- **CSS Modules**: For scoped styling
+- **react-icons**: ^5.5.0
+- **TypeScript**: for development (see devDependencies)
+- **CSS Modules**: for scoped styling
 
 ### Peer Dependencies
 
-- **React DOM**: For rendering components
-- **Shared Package**: For common types and utilities
+- **react**: ^19.2.0
+- **react-dom**: ^19.2.0
+- **Shared Package**: for common types/utilities (`@jpx/shared`)
+- **Config**: optional shared build/test configs (`@jpx/config`)
 
 ## Future Components
 

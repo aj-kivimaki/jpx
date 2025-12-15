@@ -1,4 +1,4 @@
-[⬅ Back to Root README](../README.md#documentation) | [CI/CD](./CI-CD.md) | [E2E-CRUD-Flow](./E2E-CRUD-FLOW.md) | [Error Logging](./ERROR-LOGGING.md) | [I18N](./I18N.md) | [PRE-HOOKS](./Pre-Hooks.md) | [Tests](./TESTS.md)
+[⬅ Back to Root README](../README.md#documentation) | [CI/CD](./CI-CD.md) | [E2E-CRUD-Flow](./E2E-CRUD-FLOW.md) | [Error Logging](./ERROR-LOGGING.md) | [I18N](./I18N.md) | [PRE-HOOKS](./PRE-HOOKS.md) | [Tests](./TESTS.md)
 
 # 🏗️ Monorepo Architecture
 
@@ -13,6 +13,7 @@ graph TD
     root --> packages["packages/"]
     packages --> shared["shared/ - Shared TypeScript utilities, schemas, types, API clients"]
     packages --> ui["ui/ - Reusable React components"]
+    packages --> config["config/ - Shared build & test configs"]
 
     root --> other["Other files ..."]
 ```
@@ -24,21 +25,21 @@ graph TD
   /.github
     /workflows      # GitHub Actions pipelines for apps and packages
 
-  /.husky           # Git hooks for linting, formatting, typecheck, tests and build
+  /.husky           # Git hooks for secret-scan, lint-staged, typecheck, tests and build
 
   /apps
     /admin-panel
       /src
-        /clients    # Supabase and React Query client
+        /clients    # Supabase + React Query client (queryClient, supabaseClient)
         /components
           /auth     # GoogleSignInButton, LogoutButton, PrivateRoute
           /form     # Form components for adding/editing gigs
           /gigs     # Gig display and management components
-        /hooks      # Custom React hooks (useTostify)
-        /pages      # Home, Login
+        /hooks      # Custom React hooks (useToastify, useGigLoader, useGigSubmit)
+        /pages      # Home, Login, NotFound
     /frontend
       /src
-        /clients    # Supabase and React Query client
+        /clients    # Supabase + React Query + monitoring clients
         /components
           /gigs     # Public gigs list/table
           /info     # Band info section
@@ -46,21 +47,27 @@ graph TD
           /layout   # Banner, Header, Footer
           /sidebar  # Social links, settings
           /theme    # ModeSwitcher
-        /hooks      # Custom React hooks (useLocalized)
-        /utils      # Helper functions (applyTheme)
+        /hooks      # Custom React hooks (useLocalized, useScrolling)
+        /utils      # Helper functions (applyTheme, helpers)
 
   /packages
     /shared
       /src
-        /api        # Data Access Layer
-        /data       # Static/shared data
-        /schemas    # Zod validation
-        /styles     # CSS styles (reset, global)
-        /types      # Types
-        /utils      # Helper functions
+        /api        # Data Access Layer (auth, db queries)
+        /data       # Static/shared JSON data (site, nav, social)
+        /schemas    # Zod validation schemas
+        /styles     # CSS styles (reset, global, toast)
+        /types      # Types and DTOs
+        /utils      # Helper utilities (parseGigDates, validators)
     /ui
       /src
-        /components # Shared components (GigCard.tsx)
+        /components # Shared UI components (GigCard, Spinner, RenderField)
+
+    /config
+      /src
+        vite.shared.config.ts   # shared Vite helpers
+        vitest.shared.config.ts # shared Vitest config helpers
+        index.ts                # exports
 ```
 
 </details>
@@ -83,6 +90,10 @@ A shared **UI component library** used by both the public site and the
 admin panel, including:
 
 - Shared React components
+
+### **`packages/config`**
+
+Shared Vite and Vitest configuration helpers used across apps and packages. This workspace contains utilities like `createSharedVitestConfig()` and `vite.shared.config.ts` that help keep build and test setup consistent across the monorepo.
 
 ## 🧩 Applications
 

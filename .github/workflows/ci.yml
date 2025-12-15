@@ -118,7 +118,7 @@ jobs:
       - name: Run E2E for workspace
         run: |
           if [ "${{ matrix.workspace }}" = "frontend" ]; then
-            npm run test:e2e:front
+            npm run test:e2e:frontend
           else
             npm run test:e2e:admin
           fi

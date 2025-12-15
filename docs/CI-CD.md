@@ -10,23 +10,23 @@ The project uses GitHub Actions for continuous integration and deployment, ensur
 
 ```mermaid
 flowchart TD
-    A[Push/PR to any branch] --> B[Checks Job]
-    B --> C[Lint & Format Check]
-    C --> D[Typecheck Packages]
-    D --> E[Build Packages]
-    E --> F[Typecheck Apps]
-    F --> G[Run Tests]
-    G --> H{Checks Pass?}
+    A[Push/PR to any branch] --> B[lint-format]
+    B --> C[typecheck]
+    C --> D[unit-tests]
+    D --> E[e2e-tests]
 
-    H -->|Yes| I[Build & Deploy Job]
-    H -->|No| J[Fail & Block Merge]
+    E --> F{Checks Pass?}
 
-    I --> K[Build Shared Package]
-    K --> L[Build UI Package]
-    L --> M[Build Frontend]
-    M --> N[Build Admin Panel]
-    N --> O[Deploy Frontend to Netlify]
-    O --> P[Deploy Admin Panel to Netlify]
+    F -->|Yes| G[build-deploy]
+    F -->|No| H[Fail & Block Merge]
+
+    G --> I[Build Shared Packages]
+    I --> J[Build UI Package]
+    J --> K[Build Config Package]
+    K --> L[Build Frontend]
+    L --> M[Build Admin Panel]
+    M --> N[Deploy Frontend to Netlify]
+    N --> O[Deploy Admin Panel to Netlify]
 ```
 
 ## GitHub Actions Workflow
@@ -38,31 +38,24 @@ flowchart TD
 
 ### Jobs
 
-#### 1. Checks Job (Runs on all PRs and pushes)
+#### Checks (split across jobs)
 
-**Environment Setup:**
+- **`lint-format`**: ESLint checks and Prettier format validation (fast feedback on PRs).
+- **`typecheck`**: Builds packages and runs TypeScript validation across packages and apps.
+- **`unit-tests`**: Runs package/app unit tests using a workspace matrix (`frontend`, `admin-panel`, `@jpx/shared`, `@jpx/ui`, `@jpx/config`).
+- **`e2e-tests`**: Runs Cypress E2E jobs per app (requires built artifacts and test secrets).
 
-- Ubuntu latest
-- Node.js 22
-- Clean install of dependencies
-
-**Quality Gates:**
-
-1. **Linting**: ESLint checks for code quality issues
-2. **Formatting**: Prettier format validation
-3. **Package Typecheck**: TypeScript validation for `@jpx/shared` and `@jpx/ui`
-4. **Package Build**: Ensures packages can be built successfully
-5. **App Typecheck**: TypeScript validation for `frontend` and `admin-panel`
-6. **Unit Tests**: Runs test suite with coverage reporting
+Each job runs on Ubuntu with Node.js 22 and a clean install of dependencies. Jobs are wired so lint/format run first, `typecheck` runs next, `unit-tests` depends on both, and `e2e-tests` depends on unit tests.
 
 #### 2. Build & Deploy Job (Main branch only)
 
 **Build Process:**
 
-1. **Shared Package**: Builds TypeScript utilities and API functions
-2. **UI Package**: Builds reusable React components
-3. **Frontend App**: Production build with environment variables
-4. **Admin Panel**: Production build with environment variables
+1. **Config Package**: (Optional) Validate shared Vite/Vitest helpers
+2. **Shared Package**: Builds TypeScript utilities and API functions
+3. **UI Package**: Builds reusable React components
+4. **Frontend App**: Production build with environment variables
+5. **Admin Panel**: Production build with environment variables
 
 **Deployment:**
 
@@ -84,7 +77,7 @@ flowchart TD
 
 The monorepo structure requires specific build ordering:
 
-1. **Packages must be built first** (`@jpx/shared`, `@jpx/ui`)
+1. **Packages must be built first** (`@jpx/shared`, `@jpx/ui`, `@jpx/config`)
 2. **Apps depend on packages** for TypeScript types and components
 3. **Apps are built last** with production optimizations
 

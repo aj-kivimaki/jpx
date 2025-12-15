@@ -77,11 +77,16 @@ cp .env.example .env.local
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
+# From repository root (preferred)
+npm run dev --workspace=frontend
+npm run build --workspace=frontend
+npm run preview --workspace=frontend
+npm run typecheck --workspace=frontend
+npm run test:unit --workspace=frontend
+
+# Or run locally inside the package
+npm install
 npm run dev
-npm run build
-npm run preview
-npm run typecheck
-npm run test
 ```
 
 ## User Flow
@@ -91,6 +96,7 @@ Landing → Gigs → Band Info → Social Links → Theme/Language Preferences
 ## Integration
 
 - Shared package: `@jpx/shared`
-- UI components: `@jpx/ui` (GigCard)
+- UI components: `@jpx/ui` (`GigCard`)
+- Config helpers: `@jpx/config` (shared Vite/Vitest helpers)
 - Supabase: dynamic content
 - External services: social media and booking agency

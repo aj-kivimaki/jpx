@@ -66,7 +66,7 @@ const Gigs = () => {
       {error ? (
         <p className={styles.errorMessage}>{errorMessage}</p>
       ) : (
-        <div data-cy="gigs-list" className={styles.gigsCardContainer}>
+        <div data-cy="gigs-list" className={styles.gigCardContainer}>
           {isLoading ? <Spinner /> : <GigsTable gigs={gigs} />}
         </div>
       )}
