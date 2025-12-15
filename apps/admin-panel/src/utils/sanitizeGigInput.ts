@@ -19,8 +19,15 @@ export type SanitizedGigInput = {
  * Uses DOMPurify to prevent XSS attacks.
  */
 export function sanitizeGigInput(data: GigFormInput): SanitizedGigInput {
-  const sanitizeTrim = (value: unknown) =>
-    value == null ? null : DOMPurify.sanitize(String(value)).trim();
+  const sanitizeTrim = (value: unknown) => {
+    if (value == null) return null;
+    if (typeof value === 'string') return DOMPurify.sanitize(value).trim();
+    if (typeof value === 'number' || typeof value === 'boolean')
+      return DOMPurify.sanitize(String(value)).trim();
+    if (value instanceof Date)
+      return DOMPurify.sanitize(value.toISOString()).trim();
+    return null;
+  };
 
   return {
     date: sanitizeTrim(data.date)!, // required
