@@ -26,6 +26,19 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
 
       - run: npm ci --ignore-scripts
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
+      - name: Ensure Cypress binary is installed
+        run: |
+          # npm was run with --ignore-scripts earlier; explicitly install the Cypress binary
+          npx cypress install --yes
       - run: npm run lint
       - run: npm run format:check
 
