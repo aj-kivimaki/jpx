@@ -1,5 +1,6 @@
 export * from './errorIfMissing';
 export * from './errors';
+export * from './formatPhoneNumber';
 export * from './gigs';
 export * from './i18n';
 export * from './react-query';
