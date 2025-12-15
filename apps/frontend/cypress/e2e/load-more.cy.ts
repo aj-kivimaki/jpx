@@ -3,38 +3,31 @@ describe('Gigs – Load More functionality', () => {
     cy.intercept('GET', '**/gigs**').as('getGigs');
     cy.visit('/');
     cy.wait('@getGigs', { timeout: 20000 });
-
-    // Wait for the gigs-list to exist
-    cy.get('[data-cy=gigs-list]', { timeout: 20000 }).should('exist');
-
-    // Wait until the spinner disappears
-    cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
-
-    // Wait until the first page of items is rendered
-    cy.get('[data-cy=item]', { timeout: 20000 }).should(
-      'have.length.greaterThan',
-      0
-    );
   });
 
   it('loads more gigs until no more pages remain', () => {
-    function clickUntilGone() {
-      cy.get('body').then(($body) => {
-        cy.wait('@getGigs').then((res) => {
-          cy.log(JSON.stringify(res.response?.body));
-        });
+    // Assert initial render inside the test
+    cy.get('[data-cy=gigs-list]', { timeout: 20000 }).should('exist');
+    cy.get('[data-cy=item]').should('have.length.greaterThan', 0);
 
-        if ($body.find('[data-cy=load-more]').length > 0) {
-          cy.get('[data-cy=load-more]').click();
-          cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
-          clickUntilGone();
+    const clickUntilGone = () => {
+      cy.get('body').then(($body) => {
+        if ($body.find('[data-cy=load-more]').length === 0) {
+          return;
         }
+
+        cy.intercept('GET', '**/gigs**').as('nextPage');
+        cy.get('[data-cy=load-more]').click();
+
+        cy.wait('@nextPage', { timeout: 20000 });
+        cy.get('[data-cy=spinner]', { timeout: 20000 }).should('not.exist');
+
+        clickUntilGone();
       });
-    }
+    };
 
     clickUntilGone();
 
-    // Finally ensure load-more is gone
     cy.get('[data-cy=load-more]').should('not.exist');
   });
 });
