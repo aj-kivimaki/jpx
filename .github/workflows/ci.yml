@@ -38,7 +38,8 @@ jobs:
       - name: Ensure Cypress binary is installed
         run: |
           # npm was run with --ignore-scripts earlier; explicitly install the Cypress binary
-          npx cypress install --yes
+          # Use --force to ensure binary is downloaded even if cache state is inconsistent
+          npx cypress install --force
       - run: npm run lint
       - run: npm run format:check
 
