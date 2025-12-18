@@ -12,7 +12,7 @@
     "clean": "rm -rf dist node_modules/.tsbuildinfo"
   },
   "devDependencies": {
-    "@types/node": "^20.5.2",
+    "@types/node": "^22.19.3",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
     "eslint": "^9.0.0",
