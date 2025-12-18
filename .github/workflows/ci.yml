@@ -51,7 +51,7 @@ jobs:
       - name: Upgrade npm
         run: npm install -g npm@latest
 
-      - run: npm ci --ignore-scripts
+      - run: npm ci
 
       - name: Build packages
         env:
