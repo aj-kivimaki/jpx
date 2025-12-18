@@ -48,9 +48,14 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci --ignore-scripts
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      - run: npm ci
 
       - name: Build packages
+        env:
+          ROLLUP_DISABLE_NATIVE: true
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
@@ -143,7 +148,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci --ignore-scripts
+      - run: npm ci
 
       - name: Cache Cypress binary
         uses: actions/cache@v4
@@ -152,6 +157,9 @@ jobs:
           key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-cypress-
+
+      - run: npx cypress install --force
+      - run: npx cypress verify
 
       - name: Build shared packages
         run: |
