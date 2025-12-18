@@ -48,9 +48,14 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - run: npm ci --ignore-scripts
 
       - name: Build packages
+        env:
+          ROLLUP_DISABLE_NATIVE: true
         run: |
           npm --workspace @jpx/shared run build
           npm --workspace @jpx/ui run build
